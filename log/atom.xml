@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>https://geometor.github.io/explorer</id>
   <title>GEOMETOR • explorer</title>
-  <updated>2023-11-03T15:12:13.182593+00:00</updated>
+  <updated>2023-11-13T17:56:18.724552+00:00</updated>
   <link href="https://geometor.github.io/explorer"/>
   <link href="https://geometor.github.io/explorer/log/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.org/" version="unknown.dev">ABlog</generator>
