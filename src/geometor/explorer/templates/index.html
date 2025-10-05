@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEOMETOR Explorer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+</head>
+<body>
+    <div id="hover-card"></div>
+    <main>
+        <svg id="drawing"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="-2 -2 4 4"
+          preserveAspectRatio="xMidYMid slice"></svg>
+    </main>
+    <aside>
+        <!-- points -->
+        <div>
+          <table>
+            <caption>points</caption>
+            <thead>
+            <tr>
+              <th>label</th>
+              <th>x</th>
+              <th>y</th>
+            </tr>
+            </thead>
+            <tbody id="pointList">
+            </tbody>
+          </table>
+        </div>
+        <!-- elements -->
+        <div>
+          <table >
+            <caption>structures</caption>
+            <thead>
+            <tr>
+              <th>label</th>
+              <th>equation</th>
+            </tr>
+            </thead>
+            <tbody id="structList">
+            </tbody>
+          </table>
+        </div>
+    </aside>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
