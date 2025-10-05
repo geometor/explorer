@@ -1,28 +1,38 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="GEOMETOR • explorer" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="" />
+<meta property="og:site_name" content="GEOMETOR • explorer" />
+<meta property="og:description" content="recent logs: 23.110- Setting up a UI for Explorer Tried to use PyQt6 as the GUI toolkit but faced issues with platform plugins, 23.109- Next steps for Geometor Explorer separate the UI from the log..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="_images/social_previews/summary_index_8ad19aa5.png" />
+<meta property="og:image:alt" content="recent logs: 23.110- Setting up a UI for Explorer Tried to use PyQt6 as the GUI toolkit but faced issues with platform plugins, 23.109- Next steps for Geometor Explorer separate the UI from the log..." />
+<meta name="description" content="recent logs: 23.110- Setting up a UI for Explorer Tried to use PyQt6 as the GUI toolkit but faced issues with platform plugins, 23.109- Next steps for Geometor Explorer separate the UI from the log..." />
+<meta name="twitter:card" content="summary_large_image" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GEOMETOR • explorer &mdash; GEOMETOR • explorer</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="https://geometor.github.io/model/_static/css/rtd-dark.css" type="text/css" />
-    <link rel="canonical" href="https://geometor.github.io/explorer/index.html" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=ea5fcf70" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+
   
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=187304be"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="canonical" href="https://geometor.github.io/explorer/index.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=187304be"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex/" />
     <link rel="search" title="Search" href="search/" />
-    <link rel="next" title="Usage" href="usage/" />   
+    <link rel="next" title="mission" href="mission/" />   
 <link
   rel="alternate"
   type="application/atom+xml"
@@ -78,8 +88,10 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="usage/">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mission/">mission</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/">usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules/">geometor.explorer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demos/">demos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="refs/">references</a></li>
 <li class="toctree-l1"><a class="reference external" href="/log#https://">log</a></li>
 </ul>
@@ -103,7 +115,7 @@
               <a href="https://github.com/geometor/explorer/blob/main/docsrc/index.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
-        <a href="usage/" class="btn btn-neutral float-right" title="Usage" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="mission/" class="btn btn-neutral float-right" title="mission" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
 </div>
@@ -111,52 +123,8 @@
            <div itemprop="articleBody">
               <section id="geometor-explorer">
 <h1>GEOMETOR • explorer<a class="headerlink" href="#geometor-explorer" title="Link to this heading"></a></h1>
-</section>
-<section id="explorer">
-<h1>explorer<a class="headerlink" href="#explorer" title="Link to this heading"></a></h1>
-<section id="features">
-<h2>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h2>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>TODO: insert features</p>
-</div>
-</section>
-<section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
-<p>You can install <strong>explorer</strong> using pip:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>geometor-explorer
-</pre></div>
-</div>
-</section>
-<section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
-<p>After installation, you can use the <code class="docutils literal notranslate"><span class="pre">explorer</span></code> command to create a new project:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>explorer
-</pre></div>
-</div>
-<div class="admonition-todo admonition" id="id2">
-<p class="admonition-title">Todo</p>
-<p>TODO: list arguments</p>
-</div>
-</section>
-<section id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading"></a></h2>
-<p><strong>explorer</strong> depends on the following Python packages:</p>
-<div class="admonition-todo admonition" id="id3">
-<p class="admonition-title">Todo</p>
-<p>TODO: read from pyproject.toml</p>
-</div>
-</section>
-<section id="contributing">
-<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading"></a></h2>
-<p>Contributions are welcome! Please see our [GitHub issues](<a class="reference external" href="https://github.com/geometor/explorer/issues">https://github.com/geometor/explorer/issues</a>) for ways to contribute.</p>
-</section>
-<section id="license">
-<h2>License<a class="headerlink" href="#license" title="Link to this heading"></a></h2>
-<p><strong>explorer</strong> is licensed under the MIT License. See the <cite>LICENSE</cite> file for more details.</p>
-</section>
 <section id="recent-logs">
-<h2>recent logs:<a class="headerlink" href="#recent-logs" title="Link to this heading"></a></h2>
+<h2>recent logs<a class="headerlink" href="#recent-logs" title="Link to this heading"></a></h2>
 <ul class="postlist-style-none postlist">
 <li class="ablog-post"><p class="ablog-post-title">23.110 - <a class="reference internal" href="log/23.110-131951/">Setting up a UI for Explorer</a></p>
 <p class="ablog-post-excerpt">Tried to use PyQt6 as the GUI toolkit but faced issues with platform plugins</p>
@@ -168,20 +136,17 @@
 <p class="ablog-post-excerpt">search for patterns in logic and nature</p>
 </li>
 </ul>
-</section>
-<section id="contents">
-<h2>contents:<a class="headerlink" href="#contents" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 </div>
 </section>
-</section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
+<section id="indices">
+<h2>indices<a class="headerlink" href="#indices" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex/"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex/"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search/"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
+</section>
 </section>
 
 <div class="section">
@@ -191,13 +156,13 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="usage/" class="btn btn-neutral float-right" title="Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="mission/" class="btn btn-neutral float-right" title="mission" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, GEOMETOR.</p>
+    <p>&#169; Copyright 2025, GEOMETOR.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
