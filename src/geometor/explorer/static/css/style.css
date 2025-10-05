@@ -84,7 +84,14 @@ tbody tr.highlight {
 }
 
 /* Highlighting */
-.selected {
-    stroke: #00f !important;
-    stroke-width: 5px !important;
+.point_outer.selected {
+    stroke: #007bff;
+    fill: #007bff33; /* semi-transparent blue */
+    stroke-width: .02;
+}
+
+/* Point Styles */
+.point_inner {
+    stroke: #f0f0f0;
+    fill: black;
 }

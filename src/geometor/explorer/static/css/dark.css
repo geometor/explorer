@@ -49,11 +49,14 @@ button:hover {
 }
 
 /* SVG styles for dark mode */
-.point_outer {
-    stroke: #1e1e1e; /* Match the main background color */
-}
 .point_inner {
-    stroke: white;
+    stroke: #1e1e1e;
+    fill: white;
+}
+.point_outer.selected {
+    stroke: #007bff;
+    fill: #007bff33;
+    stroke-width: .02;
 }
 .line {
     stroke: #999;
@@ -65,6 +68,4 @@ button:hover {
     stroke: #36c9;
     fill: #36c3;
 }
-.selected {
-    stroke: #00f !important;
-}
+

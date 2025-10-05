@@ -16,8 +16,8 @@ new_model()
 
 # Style definitions adapted from geometor.render
 STYLES = {
-    "point_outer": {"stroke": "white", "stroke-width": 7, "fill": "none", "vector-effect": "non-scaling-stroke"},
-    "point_inner": {"stroke": "black", "stroke-width": 3, "fill": "none", "vector-effect": "non-scaling-stroke"},
+    "point_outer": {"stroke": "none", "fill": "none"},
+    "point_inner": {"stroke-width": 1, "fill": "none"}, # stroke-width will be overwritten
     "line": {"stroke": "#999", "stroke-width": 1, "fill": "none", "vector-effect": "non-scaling-stroke"},
     "circle": {"stroke": "#C09", "stroke-width": 1.5, "fill": "none", "vector-effect": "non-scaling-stroke"},
     "polygon": {"stroke": "#36c9", "stroke-width": 1, "fill": "#36c3", "vector-effect": "non-scaling-stroke"},
@@ -41,24 +41,28 @@ def apply_styles(svg_element, element_type, classes=None):
     svg_element['class'] = f"{element_type} {original_class}".strip()
 
 
-def add_margin_to_limits(x_limits, y_limits, margin_ratio=0.1, default_margin=0.5):
-    """Replicates the bounding box margin logic from the Plotter class."""
+def add_margin_to_limits(x_limits, y_limits, margin_ratio=0.2, default_span=1.0):
+    """Calculates viewBox limits to be square and centered on the geometry."""
     x_range = x_limits[1] - x_limits[0]
     y_range = y_limits[1] - y_limits[0]
 
-    if x_range:
-        x_margin = x_range * margin_ratio
-        y_margin = y_range * margin_ratio if y_range else x_margin
-    elif y_range:
-        y_margin = y_range * margin_ratio
-        x_margin = y_margin
-    else:
-        x_margin = y_margin = default_margin
+    x_center = (x_limits[0] + x_limits[1]) / 2
+    y_center = (y_limits[0] + y_limits[1]) / 2
 
-    x_limits = [x_limits[0] - x_margin, x_limits[1] + x_margin]
-    y_limits = [y_limits[0] - y_margin, y_limits[1] + y_margin]
+    # The span of the square viewbox will be the max of the geometry's ranges
+    span = max(x_range, y_range)
+    if span == 0:
+        span = default_span
+
+    # Add margin to the span
+    span *= (1 + margin_ratio * 2) # Add margin to both sides
+
+    half_span = span / 2
     
-    return x_limits, y_limits
+    final_x_limits = [x_center - half_span, x_center + half_span]
+    final_y_limits = [y_center - half_span, y_center + half_span]
+    
+    return final_x_limits, final_y_limits
 
 @app.route('/')
 def index():
@@ -66,13 +70,39 @@ def index():
 
 def get_model_data():
     """Serializes the current model state into a dictionary."""
-    x_limits, y_limits = model.limits()
-    if not all(x_limits) or not all(y_limits):
+    # Manually calculate the bounding box to include full circles
+    x_min, x_max, y_min, y_max = None, None, None, None
+
+    for el, details in model.items():
+        if isinstance(el, spg.Point):
+            x, y = float(el.x.evalf()), float(el.y.evalf())
+            if x_min is None or x < x_min: x_min = x
+            if x_max is None or x > x_max: x_max = x
+            if y_min is None or y < y_min: y_min = y
+            if y_max is None or y > y_max: y_max = y
+
+        elif isinstance(el, spg.Circle):
+            center = el.center
+            radius = float(el.radius.evalf())
+            cx, cy = float(center.x.evalf()), float(center.y.evalf())
+            
+            # Update bounds to include the full circle
+            if x_min is None or (cx - radius) < x_min: x_min = cx - radius
+            if x_max is None or (cx + radius) > x_max: x_max = cx + radius
+            if y_min is None or (cy - radius) < y_min: y_min = cy - radius
+            if y_max is None or (cy + radius) > y_max: y_max = cy + radius
+
+    if x_min is None:
         x_limits, y_limits = [-2, 2], [-2, 2]
     else:
-        x_limits, y_limits = add_margin_to_limits(x_limits, y_limits)
+        x_limits, y_limits = add_margin_to_limits([x_min, x_max], [y_min, y_max])
     
-    viewBox = f"{x_limits[0]} {y_limits[0]} {x_limits[1] - x_limits[0]} {y_limits[1] - y_limits[0]}"
+    viewBox_width = x_limits[1] - x_limits[0]
+    viewBox_height = y_limits[1] - y_limits[0]
+    point_radius = min(viewBox_width, viewBox_height) * 0.005
+    point_stroke_width = point_radius * 0.15
+
+    viewBox = f"{x_limits[0]} {y_limits[0]} {viewBox_width} {viewBox_height}"
     
     bounds_poly = spg.Polygon(
         spg.Point(x_limits[0], y_limits[1]),
@@ -91,12 +121,15 @@ def get_model_data():
             x, y = float(el.x.evalf()), float(el.y.evalf())
             point_id = details.label
             
-            outer = {'type': 'circle', 'cx': x, 'cy': y, 'r': 0.005, 'id': f'svg-outer-{point_id}', 'data-label': point_id}
+            # Outer circle for halo effect
+            outer = {'type': 'circle', 'cx': x, 'cy': y, 'r': point_radius * 1.6, 'id': f'svg-outer-{point_id}', 'data-label': point_id}
             apply_styles(outer, 'point_outer', details.classes)
             points_svg.append(outer)
 
-            inner = {'type': 'circle', 'cx': x, 'cy': y, 'r': 0.005, 'id': f'svg-inner-{point_id}', 'data-label': point_id}
+            # Inner circle for the actual point
+            inner = {'type': 'circle', 'cx': x, 'cy': y, 'r': point_radius, 'id': f'svg-inner-{point_id}', 'data-label': point_id}
             apply_styles(inner, 'point_inner', details.classes)
+            inner['stroke-width'] = point_stroke_width # Apply dynamic stroke width
             points_svg.append(inner)
             
             points_table.append({

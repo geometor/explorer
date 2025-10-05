@@ -87,13 +87,14 @@ function setupControls() {
     }
 
     function updateSelectionHighlight() {
-        document.querySelectorAll('[data-label]').forEach(el => {
-            const label = el.getAttribute('data-label');
-            if (state.selectedPoints.includes(label)) {
+        // Clear existing selections
+        document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
+
+        // Apply selection to the currently selected points
+        state.selectedPoints.forEach(label => {
+            document.querySelectorAll(`[data-label="${label}"]`).forEach(el => {
                 el.classList.add('selected');
-            } else {
-                el.classList.remove('selected');
-            }
+            });
         });
     }
 
