@@ -1,1 +1,0 @@
-"""The dialog boxes for adding new elements."""
