@@ -1,71 +1,90 @@
+/* Basic Layout */
 body {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 300px;
     font-family: sans-serif;
-    background-color: #1a1a1a;
-    color: #f0f0f0;
+    height: 100vh;
+    margin: 0;
 }
 
 main {
-    flex-grow: 1;
-    height: 100vh;
-    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: #f0f0f0;
 }
 
 aside {
-    width: 350px; /* Increased width for better readability */
     padding: 1em;
-    border-left: 1px solid #444;
-    height: 100vh;
     overflow-y: auto;
-    background-color: #111; /* Darker background for the panel */
+    border-left: 1px solid #ccc;
 }
 
+/* SVG Drawing */
+#drawing {
+    width: 100%;
+    height: 100%;
+    cursor: default;
+}
+
+#drawing.add-point-mode {
+    cursor: crosshair;
+}
+
+#drawing.select-points-mode [data-label] {
+    cursor: pointer;
+}
+
+/* Tables */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1em;
-}
-
-th, td {
-    border: 1px solid #444;
-    padding: 0.5em;
-    text-align: left;
+    margin-bottom: 1em;
 }
 
 caption {
     font-weight: bold;
-    margin-bottom: 0.5em;
     text-align: left;
-    color: #f0f0f0;
+    padding-bottom: 0.5em;
 }
 
-/* SVG Default Styles */
-/* Let the backend control the specific element styles */
-.line {
-    fill: none;
+th, td {
+    padding: 0.5em;
+    border: 1px solid #ddd;
+    text-align: left;
 }
 
-.circle {
-    fill: none; /* Default to no fill unless specified by backend */
+tbody tr.highlight {
+    background-color: #f0f8ff;
 }
 
-/* KaTeX color fix for dark mode */
-.katex {
-    color: #f0f0f0;
-}
-
+/* Hover Card */
 #hover-card {
     display: none;
     position: absolute;
-    background-color: #2a2a2a;
-    border: 1px solid #666;
+    border: 1px solid #ccc;
+    background-color: white;
     padding: 10px;
     border-radius: 5px;
-    pointer-events: none; /* Prevents the card from blocking mouse events */
-    z-index: 100;
-    font-size: 0.9em;
+    pointer-events: none;
+    z-index: 1000;
 }
 
-tr.highlight {
-    background-color: #3a3a3a;
+/* Controls */
+#controls {
+    margin-bottom: 1em;
+}
+
+#status {
+    margin-bottom: 0.5em;
+    font-style: italic;
+    color: #555;
+    min-height: 1.2em;
+}
+
+/* Highlighting */
+.selected {
+    stroke: #00f !important;
+    stroke-width: 5px !important;
 }

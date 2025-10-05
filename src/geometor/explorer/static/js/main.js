@@ -10,8 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function renderModel(data) {
     const drawing = document.getElementById('drawing');
+    drawing.innerHTML = ''; // Clear existing SVG content
     const svgNS = "http://www.w3.org/2000/svg";
     const pointsData = new Map(data.tables.points.map(p => [p.label, p]));
+    const structuresData = new Map(data.tables.structures.map(s => [s.label, s]));
 
     // 1. Set the viewBox
     if (data.viewBox) {
@@ -38,8 +40,134 @@ function renderModel(data) {
     }
 
     // 4. Add event listeners
-    setupHoverListeners(pointsData);
+    setupHoverListeners(pointsData, structuresData);
+    setupControls();
+    setupDarkModeToggle();
 }
+
+function setupDarkModeToggle() {
+    const toggleBtn = document.getElementById('toggleDarkModeBtn');
+    const stylesheet = document.getElementById('dark-mode-stylesheet');
+
+    toggleBtn.addEventListener('click', () => {
+        stylesheet.disabled = !stylesheet.disabled;
+    });
+}
+
+
+function setupControls() {
+    const drawing = document.getElementById('drawing');
+    const addPointBtn = document.getElementById('addPointBtn');
+    const addLineBtn = document.getElementById('addLineBtn');
+    const addCircleBtn = document.getElementById('addCircleBtn');
+    const status = document.getElementById('status');
+
+    let state = {
+        mode: null,
+        selectedPoints: []
+    };
+
+    function updateStatus() {
+        switch (state.mode) {
+            case 'addLine':
+                status.textContent = `Select point 1 for line.`;
+                if (state.selectedPoints.length === 1) {
+                    status.textContent = `Select point 2 for line.`;
+                }
+                break;
+            case 'addCircle':
+                status.textContent = `Select center point for circle.`;
+                if (state.selectedPoints.length === 1) {
+                    status.textContent = `Select point on radius for circle.`;
+                }
+                break;
+            default:
+                status.textContent = '';
+        }
+    }
+
+    function updateSelectionHighlight() {
+        document.querySelectorAll('[data-label]').forEach(el => {
+            const label = el.getAttribute('data-label');
+            if (state.selectedPoints.includes(label)) {
+                el.classList.add('selected');
+            } else {
+                el.classList.remove('selected');
+            }
+        });
+    }
+
+    addPointBtn.addEventListener('click', () => {
+        drawing.classList.toggle('add-point-mode');
+        state.mode = 'addPoint';
+        updateStatus();
+    });
+
+    addLineBtn.addEventListener('click', () => {
+        state.mode = 'addLine';
+        state.selectedPoints = [];
+        drawing.classList.add('select-points-mode');
+        updateStatus();
+    });
+
+    addCircleBtn.addEventListener('click', () => {
+        state.mode = 'addCircle';
+        state.selectedPoints = [];
+        drawing.classList.add('select-points-mode');
+        updateStatus();
+    });
+
+    drawing.addEventListener('click', (e) => {
+        if (drawing.classList.contains('add-point-mode')) {
+            const pt = drawing.createSVGPoint();
+            pt.x = e.clientX;
+            pt.y = e.clientY;
+            const svgP = pt.matrixTransform(drawing.getScreenCTM().inverse());
+            console.log(`Clicked at: (${svgP.x}, ${svgP.y})`);
+            // TODO: Send these coordinates to the backend
+            drawing.classList.remove('add-point-mode');
+            state.mode = null;
+            updateStatus();
+        }
+
+        if (state.mode === 'addLine' || state.mode === 'addCircle') {
+            const target = e.target.closest('[data-label]');
+            if (target) {
+                const label = target.getAttribute('data-label');
+                state.selectedPoints.push(label);
+                updateSelectionHighlight();
+                updateStatus();
+
+                if (state.selectedPoints.length === 2) {
+                    const endpoint = state.mode === 'addLine' ? '/api/construct/line' : '/api/construct/circle';
+                    fetch(endpoint, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            pt1: state.selectedPoints[0],
+                            pt2: state.selectedPoints[1],
+                        }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        renderModel(data);
+                    })
+                    .catch(error => console.error('Error constructing element:', error));
+
+                    state.mode = null;
+                    state.selectedPoints = [];
+                    drawing.classList.remove('select-points-mode');
+                    updateStatus();
+                    // Defer clearing highlights until after the new SVG is rendered
+                    setTimeout(updateSelectionHighlight, 100);
+                }
+            }
+        }
+    });
+}
+
 
 function populateTable(tableId, data, columns) {
     const tableBody = document.getElementById(tableId);
@@ -64,13 +192,14 @@ function populateTable(tableId, data, columns) {
     });
 }
 
-function setupHoverListeners(pointsData) {
+function setupHoverListeners(pointsData, structuresData) {
     const hoverCard = document.getElementById('hover-card');
     
     document.querySelectorAll('[data-label]').forEach(el => {
         const label = el.getAttribute('data-label');
         const row = document.getElementById(`row-${label}`);
         const pointInfo = pointsData.get(label);
+        const structInfo = structuresData.get(label);
 
         el.addEventListener('mouseover', (e) => {
             // Highlight row
@@ -79,8 +208,15 @@ function setupHoverListeners(pointsData) {
             }
 
             // Show and position hover card
+            let content = '';
             if (pointInfo) {
-                hoverCard.innerHTML = `<b>Point ${pointInfo.label}</b><br>x: ${katex.renderToString(pointInfo.x)}<br>y: ${katex.renderToString(pointInfo.y)}`;
+                content = `<b>${pointInfo.label}</b><br>x: ${katex.renderToString(pointInfo.x)}<br>y: ${katex.renderToString(pointInfo.y)}`;
+            } else if (structInfo) {
+                content = `<b>${structInfo.label}</b><br>${katex.renderToString(structInfo.eq)}`;
+            }
+
+            if (content) {
+                hoverCard.innerHTML = content;
                 hoverCard.style.display = 'block';
                 hoverCard.style.left = `${e.pageX + 15}px`;
                 hoverCard.style.top = `${e.pageY + 15}px`;
