@@ -6,6 +6,12 @@
     <link id="dark-mode-stylesheet" rel="stylesheet" href="dark.css">
     <style>
 
+        /* g#points circle {
+            fill: var(--accent-color);
+            stroke: var(--background-color);
+            stroke-width: .01;
+        } */
+
         /* Hover card styling */
         #hover-card {
             position: absolute;
@@ -42,23 +48,23 @@
     </main>
     <script>
         const svg = document.getElementById('drawing');
-        const marker = document.getElementById('point');
-        const outerCircle = marker.querySelector('.outer');
-        const innerCircle = marker.querySelector('.inner');
+        const pointsGroup = document.getElementById('points');
         const hoverCard = document.getElementById('hover-card');
 
-        function scaleMarkers() {
+        function scaleCircles() {
             const svgRect = svg.getBoundingClientRect();
             if (svgRect.width === 0) return;
 
             const currentViewBox = svg.getAttribute('viewBox').split(' ').map(Number);
             const viewBoxWidth = currentViewBox[2];
             const unitsPerPixel = viewBoxWidth / svgRect.width;
-            const desiredMarkerSizePixels = 20; 
-            const newMarkerSize = desiredMarkerSizePixels * unitsPerPixel;
+            const desiredRadiusPixels = 5; 
+            const newRadius = desiredRadiusPixels * unitsPerPixel;
 
-            marker.setAttribute('markerWidth', newMarkerSize);
-            marker.setAttribute('markerHeight', newMarkerSize);
+            const circles = pointsGroup.querySelectorAll('circle');
+            circles.forEach(circle => {
+                circle.setAttribute('r', newRadius);
+            });
         }
 
         svg.addEventListener('wheel', (event) => {
@@ -79,10 +85,10 @@
             x = mousePoint.x - (svgX / svgRect.width) * width;
             y = mousePoint.y - (svgY / svgRect.height) * height;
             svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
-            scaleMarkers();
+            scaleCircles();
         });
 
-        const hoverableElements = svg.querySelectorAll('line, circle, polyline');
+        const hoverableElements = svg.querySelectorAll('line, circle, g#points circle');
         hoverableElements.forEach(el => {
             el.addEventListener('mouseover', (event) => {
                 if (el.id) {
@@ -99,8 +105,8 @@
             });
         });
 
-        const resizeObserver = new ResizeObserver(scaleMarkers);
+        const resizeObserver = new ResizeObserver(scaleCircles);
         resizeObserver.observe(svg);
-        scaleMarkers();
+        scaleCircles();
     </script>
 </body></html>
