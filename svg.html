@@ -4,37 +4,103 @@
     <title>GEOMETOR Explorer</title>
     <link rel="stylesheet" href="style.css">
     <link id="dark-mode-stylesheet" rel="stylesheet" href="dark.css">
-    <style></style>
+    <style>
+
+        /* Hover card styling */
+        #hover-card {
+            position: absolute;
+            display: none;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-family: sans-serif;
+            font-size: 12px;
+            pointer-events: none; /* Prevents the card from interfering with mouse events */
+            z-index: 10;
+        }
+    </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-<body class="web">
-    <!-- <div id="hover-card" style="display: none; left: 522px; top: 598px;"></div> -->
+</head><body class="web">
+    <div id="hover-card"></div>
     <main>
-        <svg id="drawing" xmlns="http://www.w3.org/2000/svg" viewBox="-1.6 -2.1 4.2 4.2" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <!-- Dot marker definition -->
-          <marker
-            id="point"
-            viewBox="0 0 14 14"
-            refX="7"
-            refY="7"
-            markerWidth="7"
-            markerHeight="7">
-              <circle class="outer" cx="7" cy="7" r=".06" />
-              <circle class="inner" cx="7" cy="7" r=".03" />
-          </marker>
-        </defs>
-        <line id="[ A B ]" x1="-1.6" x2="2.6" y1="0" y2="0"/>
-        <circle id="( A B )" cx="0" cy="0" r="1" />
-        <circle id="( B A )" cx="1" cy="0" r="1" />
+        <svg id="drawing" xmlns="http://www.w.org/2000/svg" viewBox="-1.6 -2.1 4.2 4.2" preserveAspectRatio="xMidYMid slice">
+        <line id="[ A B ]" x1="-1.6" x2="2.6" y1="0" y2="0"></line>
+        <circle id="( A B )" cx="0" cy="0" r="1"></circle>
+        <circle id="( B A )" cx="1" cy="0" r="1"></circle>
+        <circle id="( x A )" cx=".5" cy="0" r=".5" ></circle>
 
         <g id="points">
-        <polyline id="A" points="0,0" />
-        <polyline id="B" points="1,0" />
-        <polyline id="C" points="-1,0" />
-        <polyline id="D" points="2,0" />
-        <polyline id="E" points="0.5,-0.8660254037844386" />
-        <polyline id="G" points="0.5,0.8660254037844386" />
+        <circle id="A" cx="0" cy="0" r=".02"></circle>
+        <circle id="B" cx="1" cy="0" r=".02"></circle>
+        <circle id="C" cx="-1" cy="0" r=".02"></circle>
+        <circle id="D" cx="2" cy="0" r=".02"></circle>
+        <circle id="E" cx="0.5" cy="-0.8660254037844386" r=".02"></circle>
+        <circle id="G" cx="0.5" cy="0.8660254037844386" r=".02"></circle>
         </g>
     </main>
-    <!-- <script src="/static/js/main.js"></script> -->
+    <script>
+        const svg = document.getElementById('drawing');
+        const marker = document.getElementById('point');
+        const outerCircle = marker.querySelector('.outer');
+        const innerCircle = marker.querySelector('.inner');
+        const hoverCard = document.getElementById('hover-card');
+
+        function scaleMarkers() {
+            const svgRect = svg.getBoundingClientRect();
+            if (svgRect.width === 0) return;
+
+            const currentViewBox = svg.getAttribute('viewBox').split(' ').map(Number);
+            const viewBoxWidth = currentViewBox[2];
+            const unitsPerPixel = viewBoxWidth / svgRect.width;
+            const desiredMarkerSizePixels = 20; 
+            const newMarkerSize = desiredMarkerSizePixels * unitsPerPixel;
+
+            marker.setAttribute('markerWidth', newMarkerSize);
+            marker.setAttribute('markerHeight', newMarkerSize);
+        }
+
+        svg.addEventListener('wheel', (event) => {
+            event.preventDefault();
+            const currentViewBox = svg.getAttribute('viewBox').split(' ').map(Number);
+            let [x, y, width, height] = currentViewBox;
+            const scaleFactor = event.deltaY > 0 ? 1.1 : 1 / 1.1;
+            const { clientX, clientY } = event;
+            const svgRect = svg.getBoundingClientRect();
+            const svgX = clientX - svgRect.left;
+            const svgY = clientY - svgRect.top;
+            const mousePoint = {
+                x: x + (svgX / svgRect.width) * width,
+                y: y + (svgY / svgRect.height) * height
+            };
+            width *= scaleFactor;
+            height *= scaleFactor;
+            x = mousePoint.x - (svgX / svgRect.width) * width;
+            y = mousePoint.y - (svgY / svgRect.height) * height;
+            svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
+            scaleMarkers();
+        });
+
+        const hoverableElements = svg.querySelectorAll('line, circle, polyline');
+        hoverableElements.forEach(el => {
+            el.addEventListener('mouseover', (event) => {
+                if (el.id) {
+                    hoverCard.textContent = el.id;
+                    hoverCard.style.display = 'block';
+                }
+            });
+            el.addEventListener('mousemove', (event) => {
+                hoverCard.style.left = `${event.clientX + 15}px`;
+                hoverCard.style.top = `${event.clientY + 15}px`;
+            });
+            el.addEventListener('mouseout', () => {
+                hoverCard.style.display = 'none';
+            });
+        });
+
+        const resizeObserver = new ResizeObserver(scaleMarkers);
+        resizeObserver.observe(svg);
+        scaleMarkers();
+    </script>
+</body></html>
