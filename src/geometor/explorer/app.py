@@ -68,8 +68,16 @@ def add_margin_to_limits(x_limits, y_limits, margin_ratio=0.2, default_span=1.0)
 def index():
     return render_template('index.html')
 
-def get_model_data():
-    """Serializes the current model state into a dictionary."""
+@app.route('/three')
+def three():
+    return render_template('index_three.html')
+
+@app.route('/markers')
+def markers():
+    return render_template('index_markers.html')
+
+def get_model_data_markers():
+    """Serializes the current model state into a dictionary for marker-based rendering."""
     # Manually calculate the bounding box to include full circles
     x_min, x_max, y_min, y_max = None, None, None, None
 
@@ -99,8 +107,6 @@ def get_model_data():
     
     viewBox_width = x_limits[1] - x_limits[0]
     viewBox_height = y_limits[1] - y_limits[0]
-    point_radius = min(viewBox_width, viewBox_height) * 0.005
-    point_stroke_width = point_radius * 0.15
 
     viewBox = f"{x_limits[0]} {y_limits[0]} {viewBox_width} {viewBox_height}"
     
@@ -121,16 +127,15 @@ def get_model_data():
             x, y = float(el.x.evalf()), float(el.y.evalf())
             point_id = details.label
             
-            # Outer circle for halo effect
-            outer = {'type': 'circle', 'cx': x, 'cy': y, 'r': point_radius * 1.6, 'id': f'svg-outer-{point_id}', 'data-label': point_id}
-            apply_styles(outer, 'point_outer', details.classes)
-            points_svg.append(outer)
-
-            # Inner circle for the actual point
-            inner = {'type': 'circle', 'cx': x, 'cy': y, 'r': point_radius, 'id': f'svg-inner-{point_id}', 'data-label': point_id}
-            apply_styles(inner, 'point_inner', details.classes)
-            inner['stroke-width'] = point_stroke_width # Apply dynamic stroke width
-            points_svg.append(inner)
+            # Use a zero-length path with a marker for non-scaling points
+            path = {
+                'type': 'path',
+                'd': f'M {x},{y} L {x},{y}',
+                'marker-start': 'url(#point-marker)',
+                'stroke': 'transparent',
+                'data-label': point_id
+            }
+            points_svg.append(path)
             
             points_table.append({
                 'id': f'row-{point_id}',
@@ -207,6 +212,11 @@ def api_model():
     return jsonify(get_model_data())
 
 
+@app.route('/api/model_markers', methods=['GET'])
+def api_model_markers():
+    return jsonify(get_model_data_markers())
+
+
 @app.route('/api/construct/line', methods=['POST'])
 def construct_line():
     data = request.get_json()
@@ -235,6 +245,17 @@ def construct_circle():
 
     return jsonify(get_model_data())
 
+
+@app.route('/api/construct/point', methods=['POST'])
+def construct_point():
+    data = request.get_json()
+    x = data.get('x')
+    y = data.get('y')
+
+    if x is not None and y is not None:
+        model.set_point(x, y)
+
+    return jsonify(get_model_data())
 
 
 def run():

@@ -1,0 +1,40 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEOMETOR Explorer</title>
+    <link rel="stylesheet" href="style.css">
+    <link id="dark-mode-stylesheet" rel="stylesheet" href="dark.css">
+    <style></style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<body class="web">
+    <!-- <div id="hover-card" style="display: none; left: 522px; top: 598px;"></div> -->
+    <main>
+        <svg id="drawing" xmlns="http://www.w3.org/2000/svg" viewBox="-1.6 -2.1 4.2 4.2" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <!-- Dot marker definition -->
+          <marker
+            id="point"
+            viewBox="0 0 14 14"
+            refX="7"
+            refY="7"
+            markerWidth="7"
+            markerHeight="7">
+              <circle class="outer" cx="7" cy="7" r=".06" />
+              <circle class="inner" cx="7" cy="7" r=".03" />
+          </marker>
+        </defs>
+        <line id="[ A B ]" x1="-1.6" x2="2.6" y1="0" y2="0"/>
+        <circle id="( A B )" cx="0" cy="0" r="1" />
+        <circle id="( B A )" cx="1" cy="0" r="1" />
+
+        <g id="points">
+        <polyline id="A" points="0,0" />
+        <polyline id="B" points="1,0" />
+        <polyline id="C" points="-1,0" />
+        <polyline id="D" points="2,0" />
+        <polyline id="E" points="0.5,-0.8660254037844386" />
+        <polyline id="G" points="0.5,0.8660254037844386" />
+        </g>
+    </main>
+    <!-- <script src="/static/js/main.js"></script> -->

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEOMETOR Explorer - Three.js</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link id="dark-mode-stylesheet" rel="stylesheet" href="{{ url_for('static', filename='css/dark.css') }}" disabled>
+    <style>
+        #three-canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <canvas id="three-canvas"></canvas>
+    </main>
+    <aside>
+        <!-- controls -->
+        <div id="controls">
+          <div id="status"></div>
+          <button id="toggleDarkModeBtn">Toggle Dark Mode</button>
+        </div>
+        <!-- points -->
+        <div>
+          <table>
+            <caption>points</caption>
+            <thead>
+            <tr>
+              <th>label</th>
+              <th>x</th>
+              <th>y</th>
+              <th>z</th>
+            </tr>
+            </thead>
+            <tbody id="pointList">
+            </tbody>
+          </table>
+        </div>
+        <!-- elements -->
+        <div>
+          <table >
+            <caption>structures</caption>
+            <thead>
+            <tr>
+              <th>label</th>
+              <th>equation</th>
+            </tr>
+            </thead>
+            <tbody id="structList">
+            </tbody>
+          </table>
+        </div>
+    </aside>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main_three.js') }}"></script>
+</body>
+</html>

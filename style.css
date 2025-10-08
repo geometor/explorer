@@ -1,0 +1,42 @@
+
+/* Hover Card */
+#hover-card {
+    display: none;
+    position: absolute;
+    border: 1px solid #ccc;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+#points polyline {
+  marker-start: url(#point);
+  marker-end: url(#point);
+}
+
+#point .outer { fill: white; stroke: none }
+#point .inner { fill: black ; stroke: none }
+
+line {
+  fill: none;
+  stroke: #999;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+circle {
+  fill: none;
+  stroke: #C09;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+polygon {
+  stroke: #36c9;
+  fill: #36c3;
+  stroke-width: 4;
+  vector-effect: non-scaling-stroke;
+}
+

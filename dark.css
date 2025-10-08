@@ -1,0 +1,22 @@
+
+/* SVG styles for dark mode */
+.point_inner {
+    stroke: #1e1e1e;
+    fill: white;
+}
+.point_outer.selected {
+    stroke: #007bff;
+    fill: #007bff33;
+}
+
+line {
+   stroke: #999;
+}
+circle {
+    stroke: #C09;
+}
+.polygon {
+    stroke: #36c9;
+    fill: #36c3;
+}
+
