@@ -1,3 +1,8 @@
+:root {
+    --background-color: #fff;
+    --accent-color: #000;
+    --select-color: #f0f;
+}
 
 /* Hover Card */
 #hover-card {
@@ -21,6 +26,10 @@
   stroke: white;
   stroke-width: 3;
   vector-effect: non-scaling-stroke;
+}
+#points circle.selected {
+  fill: var(--select-color);
+  filter: drop-shadow(0px 0px 3px #116466);
 }
 
 #point .outer { fill: white; stroke: none }
@@ -46,4 +55,3 @@ polygon {
   stroke-width: 4;
   vector-effect: non-scaling-stroke;
 }
-

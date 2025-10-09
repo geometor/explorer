@@ -6,11 +6,8 @@
     <link id="dark-mode-stylesheet" rel="stylesheet" href="dark.css">
     <style>
 
-        /* g#points circle {
-            fill: var(--accent-color);
-            stroke: var(--background-color);
-            stroke-width: .01;
-        } */
+        g#points circle.selected {
+        }
 
         /* Hover card styling */
         #hover-card {
@@ -32,6 +29,15 @@
     <div id="hover-card"></div>
     <main>
         <svg id="drawing" xmlns="http://www.w.org/2000/svg" viewBox="-1.6 -2.1 4.2 4.2" preserveAspectRatio="xMidYMid slice">
+        <defs>
+            <filter id="glow" x="-250%" y="-250%" width="500%" height="500%">
+                <feGaussianBlur stdDeviation="0.01" result="coloredBlur"/>
+                <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
+        </defs>
         <line id="[ A B ]" x1="-1.6" x2="2.6" y1="0" y2="0"></line>
         <circle id="( A B )" cx="0" cy="0" r="1"></circle>
         <circle id="( B A )" cx="1" cy="0" r="1"></circle>
@@ -50,6 +56,25 @@
         const svg = document.getElementById('drawing');
         const pointsGroup = document.getElementById('points');
         const hoverCard = document.getElementById('hover-card');
+        let selectedPoints = [];
+
+        pointsGroup.addEventListener('click', (event) => {
+            const target = event.target;
+            if (target.tagName === 'circle') {
+                const index = selectedPoints.indexOf(target);
+                if (index > -1) {
+                    // Point is already selected, so deselect it
+                    selectedPoints.splice(index, 1);
+                    target.classList.remove('selected');
+                    // target.style.filter = '';
+                } else {
+                    // Point is not selected, so select it
+                    selectedPoints.push(target);
+                    target.classList.add('selected');
+                    // target.style.filter = 'url(#glow)';
+                }
+            }
+        });
 
         function scaleCircles() {
             const svgRect = svg.getBoundingClientRect();
@@ -88,6 +113,39 @@
             scaleCircles();
         });
 
+        let isPanning = false;
+        let startPoint = { x: 0, y: 0 };
+
+        svg.addEventListener('mousedown', (event) => {
+            isPanning = true;
+            startPoint = { x: event.clientX, y: event.clientY };
+            svg.style.cursor = 'grabbing';
+        });
+
+        svg.addEventListener('mousemove', (event) => {
+            if (!isPanning) return;
+            const svgRect = svg.getBoundingClientRect();
+            const currentViewBox = svg.getAttribute('viewBox').split(' ').map(Number);
+            let [x, y, width, height] = currentViewBox;
+            const dx = (event.clientX - startPoint.x) * (width / svgRect.width);
+            const dy = (event.clientY - startPoint.y) * (height / svgRect.height);
+            x -= dx;
+            y -= dy;
+            svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
+            startPoint = { x: event.clientX, y: event.clientY };
+        });
+
+        svg.addEventListener('mouseup', () => {
+            isPanning = false;
+            svg.style.cursor = 'default';
+        });
+
+        svg.addEventListener('mouseleave', () => {
+            isPanning = false;
+            svg.style.cursor = 'default';
+        });
+
+
         const hoverableElements = svg.querySelectorAll('line, circle, g#points circle');
         hoverableElements.forEach(el => {
             el.addEventListener('mouseover', (event) => {
@@ -97,8 +155,8 @@
                 }
             });
             el.addEventListener('mousemove', (event) => {
-                hoverCard.style.left = `${event.clientX + 15}px`;
-                hoverCard.style.top = `${event.clientY + 15}px`;
+                hoverCard.style.left = `${event.clientX + 10}px`;
+                hoverCard.style.top = `${event.clientY + 10}px`;
             });
             el.addEventListener('mouseout', () => {
                 hoverCard.style.display = 'none';
