@@ -5,10 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GEOMETOR Explorer</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link id="dark-mode-stylesheet" rel="stylesheet" href="{{ url_for('static', filename='css/dark.css') }}">
     <style>
         g#points circle.selected {
             fill: var(--select-color);
+        }
+        #points-table th:nth-child(2),
+        #points-table th:nth-child(3),
+        #points-table td:nth-child(2),
+        #points-table td:nth-child(3) {
+            text-align: center;
         }
         #hover-card {
             position: absolute;
@@ -26,7 +31,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 </head>
-<body class="web">
+<body class="web dark-mode">
+    <header>
+        <button id="add-line-btn" disabled>Add Line</button>
+        <button id="add-circle-btn" disabled>Add Circle</button>
+        <button id="theme-toggle">Toggle Theme</button>
+    </header>
     <div id="hover-card"></div>
     <main>
         <svg id="drawing" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 4 4" preserveAspectRatio="xMidYMid slice">
@@ -39,12 +49,13 @@
                     </feMerge>
                 </filter>
             </defs>
-            <g id="elements-container"></g>
-            <g id="points-container"></g>
+            <g id="graphics"></g>
+            <g id="elements"></g>
+            <g id="points"></g>
         </svg>
     </main>
     <aside>
-        <div class="tables-container">
+        <div class="tables">
             <h2>Points</h2>
             <table id="points-table">
                 <thead>
@@ -74,8 +85,8 @@
 
     <script>
         const svg = document.getElementById('drawing');
-        const elementsContainer = document.getElementById('elements-container');
-        const pointsContainer = document.getElementById('points-container');
+        const elementsContainer = document.getElementById('elements');
+        const pointsContainer = document.getElementById('points');
         const hoverCard = document.getElementById('hover-card');
         const pointsTableBody = document.querySelector('#points-table tbody');
         const structuresTableBody = document.querySelector('#structures-table tbody');
@@ -116,10 +127,10 @@
                     const pt1 = points[el.pt1];
                     const pt2 = points[el.pt2];
                     // Approximate line drawing for now, needs proper calculation
-                    svgEl.setAttribute('x1', pt1.x * 10 - 1000 * (pt2.x - pt1.x));
-                    svgEl.setAttribute('y1', pt1.y * 10 - 1000 * (pt2.y - pt1.y));
-                    svgEl.setAttribute('x2', pt1.x * 10 + 1000 * (pt2.x - pt1.x));
-                    svgEl.setAttribute('y2', pt1.y * 10 + 1000 * (pt2.y - pt1.y));
+                    svgEl.setAttribute('x1', pt1.x - 1000 * (pt2.x - pt1.x));
+                    svgEl.setAttribute('y1', pt1.y - 1000 * (pt2.y - pt1.y));
+                    svgEl.setAttribute('x2', pt1.x + 1000 * (pt2.x - pt1.x));
+                    svgEl.setAttribute('y2', pt1.y + 1000 * (pt2.y - pt1.y));
                     break;
                 case 'circle':
                     svgEl = document.createElementNS(SVG_NS, 'circle');
@@ -159,13 +170,22 @@
 
         function addPointToTable(el) {
             const row = pointsTableBody.insertRow();
-            row.innerHTML = `<td>${el.label}</td><td>${el.latex_x}</td><td>${el.latex_y}</td>`;
+            const labelCell = row.insertCell();
+            const xCell = row.insertCell();
+            const yCell = row.insertCell();
+
+            labelCell.innerHTML = el.label;
+            katex.render(el.latex_x, xCell);
+            katex.render(el.latex_y, yCell);
         }
 
         function addStructureToTable(el) {
             const row = structuresTableBody.insertRow();
             row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td>`;
         }
+
+        const addLineBtn = document.getElementById('add-line-btn');
+        const addCircleBtn = document.getElementById('add-circle-btn');
 
         pointsContainer.addEventListener('click', (event) => {
             const target = event.target;
@@ -178,8 +198,54 @@
                     selectedPoints.push(target);
                     target.classList.add('selected');
                 }
+                const twoPointsSelected = selectedPoints.length === 2;
+                addLineBtn.disabled = !twoPointsSelected;
+                addCircleBtn.disabled = !twoPointsSelected;
             }
         });
+
+        addLineBtn.addEventListener('click', () => {
+            if (selectedPoints.length === 2) {
+                const [pt1, pt2] = selectedPoints.map(p => p.id);
+                fetch('/api/construct/line', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ pt1, pt2 }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    renderModel(data);
+                    selectedPoints.forEach(p => p.classList.remove('selected'));
+                    selectedPoints = [];
+                    addLineBtn.disabled = true;
+                    addCircleBtn.disabled = true;
+                });
+            }
+        });
+
+        addCircleBtn.addEventListener('click', () => {
+            if (selectedPoints.length === 2) {
+                const [pt1, pt2] = selectedPoints.map(p => p.id);
+                fetch('/api/construct/circle', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ pt1, pt2 }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    renderModel(data);
+                    selectedPoints.forEach(p => p.classList.remove('selected'));
+                    selectedPoints = [];
+                    addLineBtn.disabled = true;
+                    addCircleBtn.disabled = true;
+                });
+            }
+        });
+
 
         function scaleCircles() {
             const svgRect = svg.getBoundingClientRect();
@@ -281,6 +347,23 @@
             .then(data => {
                 renderModel(data);
             });
+
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        });
+
+        // Apply saved theme on load
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
+        }
 
     </script>
 </body>

@@ -77,18 +77,6 @@ This document outlines a strategic plan for the development of the GEOMETOR Expl
 -   **Scrollable Lists:** The point and structure lists will be placed in containers with `overflow-y: auto` to make them scrollable.
 -   **Recomposable Lists:** Implement sorting and filtering options for the lists. For example, users could sort elements by creation time, label, or type. This will require the backend to provide the necessary data (e.g., creation timestamps).
 
-### 6. 3D Rendering with Three.js and GSAP
-
-**Objective:** Create an alternative 3D rendering engine for the geometric constructions.
-
-**Strategy:**
-
--   **Backend:**
-    -   Add a new route to serve an alternative HTML page (`index_three.html`).
--   **Frontend:**
-    -   Use Three.js to create a 3D scene and render the geometric elements.
-    -   Use GSAP to animate the construction process.
-    -   This will provide a foundation for future 3D capabilities.
 
 ## Next Steps
 

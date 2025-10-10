@@ -1,10 +1,49 @@
-/* Basic Layout */
+:root {
+    --background-color-light: #fff;
+    --text-color-light: #000;
+    --accent-color-light: #f0f0f0;
+    --border-color-light: #ccc;
+    --button-bg-light: #f0f0f0;
+    --button-text-light: #000;
+    --highlight-bg-light: #f0f8ff;
+
+    --background-color-dark: #121212;
+    --text-color-dark: #e0e0e0;
+    --accent-color-dark: #1e1e1e;
+    --border-color-dark: #333;
+    --button-bg-dark: #333;
+    --button-text-dark: #e0e0e0;
+    --highlight-bg-dark: #333;
+
+    --select-color: #f0f;
+}
+
 body {
     display: grid;
+    grid-template-rows: auto 1fr;
     grid-template-columns: 1fr 300px;
     font-family: sans-serif;
     height: 100vh;
     margin: 0;
+    background-color: var(--background-color-light);
+    color: var(--text-color-light);
+}
+
+body.dark-mode {
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
+}
+
+header {
+    grid-column: 1 / -1;
+    padding: 0.5em 1em;
+    border-bottom: 1px solid var(--border-color-light);
+    display: flex;
+    justify-content: flex-end;
+}
+
+body.dark-mode header {
+    border-bottom: 1px solid var(--border-color-dark);
 }
 
 main {
@@ -12,16 +51,23 @@ main {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    background-color: #f0f0f0;
+    background-color: var(--accent-color-light);
+}
+
+body.dark-mode main {
+    background-color: var(--accent-color-dark);
 }
 
 aside {
     padding: 1em;
     overflow-y: auto;
-    border-left: 1px solid #ccc;
+    border-left: 1px solid var(--border-color-light);
 }
 
-/* SVG Drawing */
+body.dark-mode aside {
+    border-left: 1px solid var(--border-color-dark);
+}
+
 #drawing {
     width: 100%;
     height: 100%;
@@ -36,7 +82,6 @@ aside {
     cursor: pointer;
 }
 
-/* Tables */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -51,27 +96,22 @@ caption {
 
 th, td {
     padding: 0.5em;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color-light);
     text-align: left;
 }
 
+body.dark-mode th, body.dark-mode td {
+    border: 1px solid var(--border-color-dark);
+}
+
 tbody tr.highlight {
-    background-color: #f0f8ff;
+    background-color: var(--highlight-bg-light);
 }
 
-/* Hover Card */
-#hover-card {
-    display: none;
-    position: absolute;
-    border: 1px solid #ccc;
-    background-color: white;
-    padding: 10px;
-    border-radius: 5px;
-    pointer-events: none;
-    z-index: 1000;
+body.dark-mode tbody tr.highlight {
+    background-color: var(--highlight-bg-dark);
 }
 
-/* Controls */
 #controls {
     margin-bottom: 1em;
 }
@@ -83,15 +123,90 @@ tbody tr.highlight {
     min-height: 1.2em;
 }
 
-/* Highlighting */
-.point_outer.selected {
-    stroke: #007bff;
-    fill: #007bff33; /* semi-transparent blue */
-    stroke-width: .02;
+#hover-card {
+    display: none;
+    position: absolute;
+    border: 1px solid var(--border-color-light);
+    background-color: var(--background-color-light);
+    padding: 10px;
+    border-radius: 5px;
+    pointer-events: none;
+    z-index: 1000;
 }
 
-/* Point Styles */
-.point_inner {
-    stroke: #f0f0f0;
-    fill: black;
+body.dark-mode #hover-card {
+    border: 1px solid var(--border-color-dark);
+    background-color: var(--accent-color-dark);
+}
+
+#points polyline {
+  marker-start: url(#point);
+  marker-end: url(#point);
+}
+
+#points circle {
+  fill: var(--text-color-light);
+  stroke: var(--background-color-light);
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+}
+
+body.dark-mode #points circle {
+    fill: var(--text-color-dark);
+    stroke: var(--background-color-dark);
+}
+
+#points circle.selected {
+  fill: var(--select-color);
+  filter: drop-shadow(0px 0px 3px #116466);
+}
+
+#point .outer { fill: var(--background-color-light); stroke: none }
+#point .inner { fill: var(--text-color-light) ; stroke: none }
+
+body.dark-mode #point .outer { fill: var(--background-color-dark); }
+body.dark-mode #point .inner { fill: var(--text-color-dark); }
+
+line {
+  fill: none;
+  stroke: #999;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+circle {
+  fill: none;
+  stroke: #C09;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+polygon {
+  stroke: #36c9;
+  fill: #36c3;
+  stroke-width: 4;
+  vector-effect: non-scaling-stroke;
+}
+
+button {
+    background-color: var(--button-bg-light);
+    color: var(--button-text-light);
+    border: 1px solid var(--border-color-light);
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e0e0e0;
+}
+
+body.dark-mode button {
+    background-color: var(--button-bg-dark);
+    color: var(--button-text-dark);
+    border: 1px solid var(--border-color-dark);
+}
+
+body.dark-mode button:hover {
+    background-color: #444;
 }
