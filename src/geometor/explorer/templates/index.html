@@ -5,57 +5,283 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GEOMETOR Explorer</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link id="dark-mode-stylesheet" rel="stylesheet" href="{{ url_for('static', filename='css/dark.css') }}" disabled>
+    <link id="dark-mode-stylesheet" rel="stylesheet" href="{{ url_for('static', filename='css/dark.css') }}">
+    <style>
+        g#points circle.selected {
+            fill: var(--select-color);
+        }
+        #hover-card {
+            position: absolute;
+            display: none;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-family: sans-serif;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 10;
+        }
+    </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 </head>
-<body>
+<body class="web">
     <div id="hover-card"></div>
     <main>
-        <svg id="drawing"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="-2 -2 4 4"
-          preserveAspectRatio="xMidYMid slice"></svg>
+        <svg id="drawing" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 4 4" preserveAspectRatio="xMidYMid slice">
+            <defs>
+                <filter id="glow" x="-250%" y="-250%" width="500%" height="500%">
+                    <feGaussianBlur stdDeviation="0.01" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+            <g id="elements-container"></g>
+            <g id="points-container"></g>
+        </svg>
     </main>
     <aside>
-        <!-- controls -->
-        <div id="controls">
-          <div id="status"></div>
-          <button id="addPointBtn">Add Point</button>
-          <button id="addLineBtn">Add Line</button>
-          <button id="addCircleBtn">Add Circle</button>
-          <button id="toggleDarkModeBtn">Toggle Dark Mode</button>
-        </div>
-        <!-- points -->
-        <div>
-          <table>
-            <caption>points</caption>
-            <thead>
-            <tr>
-              <th>label</th>
-              <th>x</th>
-              <th>y</th>
-            </tr>
-            </thead>
-            <tbody id="pointList">
-            </tbody>
-          </table>
-        </div>
-        <!-- elements -->
-        <div>
-          <table >
-            <caption>structures</caption>
-            <thead>
-            <tr>
-              <th>label</th>
-              <th>equation</th>
-            </tr>
-            </thead>
-            <tbody id="structList">
-            </tbody>
-          </table>
+        <div class="tables-container">
+            <h2>Points</h2>
+            <table id="points-table">
+                <thead>
+                    <tr>
+                        <th>Label</th>
+                        <th>X</th>
+                        <th>Y</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <h2>Structures</h2>
+            <table id="structures-table">
+                <thead>
+                    <tr>
+                        <th>Label</th>
+                        <th>Type</th>
+                        <th>Parents</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </aside>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <script>
+        const svg = document.getElementById('drawing');
+        const elementsContainer = document.getElementById('elements-container');
+        const pointsContainer = document.getElementById('points-container');
+        const hoverCard = document.getElementById('hover-card');
+        const pointsTableBody = document.querySelector('#points-table tbody');
+        const structuresTableBody = document.querySelector('#structures-table tbody');
+
+        let selectedPoints = [];
+        let modelData = {};
+
+        const SVG_NS = "http://www.w3.org/2000/svg";
+
+        function renderModel(data) {
+            modelData = data;
+            elementsContainer.innerHTML = '';
+            pointsContainer.innerHTML = '';
+            pointsTableBody.innerHTML = '';
+            structuresTableBody.innerHTML = '';
+
+            const points = {};
+
+            data.elements.forEach(el => {
+                if (el.type === 'point') {
+                    points[el.label] = el;
+                    renderPoint(el);
+                    addPointToTable(el);
+                } else {
+                    renderElement(el, points);
+                    addStructureToTable(el);
+                }
+            });
+            
+            scaleCircles();
+        }
+
+        function renderElement(el, points) {
+            let svgEl;
+            switch (el.type) {
+                case 'line':
+                    svgEl = document.createElementNS(SVG_NS, 'line');
+                    const pt1 = points[el.pt1];
+                    const pt2 = points[el.pt2];
+                    // Approximate line drawing for now, needs proper calculation
+                    svgEl.setAttribute('x1', pt1.x * 10 - 1000 * (pt2.x - pt1.x));
+                    svgEl.setAttribute('y1', pt1.y * 10 - 1000 * (pt2.y - pt1.y));
+                    svgEl.setAttribute('x2', pt1.x * 10 + 1000 * (pt2.x - pt1.x));
+                    svgEl.setAttribute('y2', pt1.y * 10 + 1000 * (pt2.y - pt1.y));
+                    break;
+                case 'circle':
+                    svgEl = document.createElementNS(SVG_NS, 'circle');
+                    const center = points[el.center];
+                    svgEl.setAttribute('cx', center.x);
+                    svgEl.setAttribute('cy', center.y);
+                    svgEl.setAttribute('r', el.radius);
+                    svgEl.setAttribute('fill', 'none');
+                    break;
+                case 'polygon':
+                    svgEl = document.createElementNS(SVG_NS, 'polygon');
+                    const pointsStr = el.points.map(p_label => {
+                        const p = points[p_label];
+                        return `${p.x},${p.y}`;
+                    }).join(' ');
+                    svgEl.setAttribute('points', pointsStr);
+                    break;
+                // Add cases for other types: segment, wedge, section, chain
+            }
+
+            if (svgEl) {
+                svgEl.id = el.label;
+                el.classes.forEach(c => svgEl.classList.add(c));
+                elementsContainer.appendChild(svgEl);
+            }
+        }
+
+        function renderPoint(el) {
+            const circle = document.createElementNS(SVG_NS, 'circle');
+            circle.id = el.label;
+            circle.setAttribute('cx', el.x);
+            circle.setAttribute('cy', el.y);
+            circle.setAttribute('r', 0.02); // Initial radius, will be scaled
+            el.classes.forEach(c => circle.classList.add(c));
+            pointsContainer.appendChild(circle);
+        }
+
+        function addPointToTable(el) {
+            const row = pointsTableBody.insertRow();
+            row.innerHTML = `<td>${el.label}</td><td>${el.latex_x}</td><td>${el.latex_y}</td>`;
+        }
+
+        function addStructureToTable(el) {
+            const row = structuresTableBody.insertRow();
+            row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td>`;
+        }
+
+        pointsContainer.addEventListener('click', (event) => {
+            const target = event.target;
+            if (target.tagName === 'circle') {
+                const index = selectedPoints.indexOf(target);
+                if (index > -1) {
+                    selectedPoints.splice(index, 1);
+                    target.classList.remove('selected');
+                } else {
+                    selectedPoints.push(target);
+                    target.classList.add('selected');
+                }
+            }
+        });
+
+        function scaleCircles() {
+            const svgRect = svg.getBoundingClientRect();
+            if (svgRect.width === 0) return;
+
+            const currentViewBox = svg.getAttribute('viewBox').split(' ').map(Number);
+            const viewBoxWidth = currentViewBox[2];
+            const unitsPerPixel = viewBoxWidth / svgRect.width;
+            const desiredRadiusPixels = 5; 
+            const newRadius = desiredRadiusPixels * unitsPerPixel;
+
+            const circles = pointsContainer.querySelectorAll('circle');
+            circles.forEach(circle => {
+                circle.setAttribute('r', newRadius);
+            });
+        }
+
+        svg.addEventListener('wheel', (event) => {
+            event.preventDefault();
+            const currentViewBox = svg.getAttribute('viewBox').split(' ').map(Number);
+            let [x, y, width, height] = currentViewBox;
+            const scaleFactor = event.deltaY > 0 ? 1.1 : 1 / 1.1;
+            const { clientX, clientY } = event;
+            const svgRect = svg.getBoundingClientRect();
+            const svgX = clientX - svgRect.left;
+            const svgY = clientY - svgRect.top;
+            const mousePoint = {
+                x: x + (svgX / svgRect.width) * width,
+                y: y + (svgY / svgRect.height) * height
+            };
+            width *= scaleFactor;
+            height *= scaleFactor;
+            x = mousePoint.x - (svgX / svgRect.width) * width;
+            y = mousePoint.y - (svgY / svgRect.height) * height;
+            svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
+            scaleCircles();
+        });
+
+        let isPanning = false;
+        let startPoint = { x: 0, y: 0 };
+
+        svg.addEventListener('mousedown', (event) => {
+            isPanning = true;
+            startPoint = { x: event.clientX, y: event.clientY };
+            svg.style.cursor = 'grabbing';
+        });
+
+        svg.addEventListener('mousemove', (event) => {
+            if (!isPanning) return;
+            const svgRect = svg.getBoundingClientRect();
+            const currentViewBox = svg.getAttribute('viewBox').split(' ').map(Number);
+            let [x, y, width, height] = currentViewBox;
+            const dx = (event.clientX - startPoint.x) * (width / svgRect.width);
+            const dy = (event.clientY - startPoint.y) * (height / svgRect.height);
+            x -= dx;
+            y -= dy;
+            svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
+            startPoint = { x: event.clientX, y: event.clientY };
+        });
+
+        svg.addEventListener('mouseup', () => {
+            isPanning = false;
+            svg.style.cursor = 'default';
+        });
+
+        svg.addEventListener('mouseleave', () => {
+            isPanning = false;
+            svg.style.cursor = 'default';
+        });
+
+        document.addEventListener('mouseover', (event) => {
+            const target = event.target;
+            if (target.namespaceURI === SVG_NS && target.id) {
+                hoverCard.textContent = target.id;
+                hoverCard.style.display = 'block';
+            }
+        });
+
+        document.addEventListener('mousemove', (event) => {
+            if (hoverCard.style.display === 'block') {
+                hoverCard.style.left = `${event.clientX + 10}px`;
+                hoverCard.style.top = `${event.clientY + 10}px`;
+            }
+        });
+        
+        document.addEventListener('mouseout', (event) => {
+            const target = event.target;
+            if (target.namespaceURI === SVG_NS && target.id) {
+                hoverCard.style.display = 'none';
+            }
+        });
+
+        const resizeObserver = new ResizeObserver(scaleCircles);
+        resizeObserver.observe(svg);
+
+        // Initial fetch
+        fetch('/api/model')
+            .then(response => response.json())
+            .then(data => {
+                renderModel(data);
+            });
+
+    </script>
 </body>
 </html>
