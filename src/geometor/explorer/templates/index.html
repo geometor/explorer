@@ -7,7 +7,31 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
         g#points circle.selected {
+            stroke: var(--select-color);
+            fill: black;
+        }
+        g#points circle.given {
+            fill: #9F9;
+        }
+        g#points circle:hover,
+        g#points circle.hover {
             fill: var(--select-color);
+        }
+        line:hover, line.hover,
+        circle:hover, circle.hover {
+            stroke: var(--select-color);
+        }
+        polyline {
+            fill: none;
+            stroke: #36c;
+            stroke-width: 2;
+            vector-effect: non-scaling-stroke;
+        }
+        tbody tr.row-hover {
+            background-color: #e6f2ff;
+        }
+        body.dark-mode tbody tr.row-hover {
+            background-color: #2a2a2a;
         }
         #points-table th:nth-child(2),
         #points-table th:nth-child(3),
@@ -18,14 +42,114 @@
         #hover-card {
             position: absolute;
             display: none;
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
+            background-color: var(--background-color-light);
+            border: 1px solid var(--border-color-light);
             border-radius: 4px;
-            padding: 5px 10px;
+            padding: 0.5em;
             font-family: sans-serif;
-            font-size: 12px;
+            font-size: 14px;
             pointer-events: none;
             z-index: 10;
+            min-width: 200px;
+        }
+        body.dark-mode #hover-card {
+            background-color: var(--accent-color-dark);
+            border: 1px solid var(--border-color-dark);
+        }
+        #hover-card p {
+            margin: 0.2em 0;
+        }
+        #hover-card .label {
+            font-weight: bold;
+        }
+        #hover-card .classes {
+            font-style: italic;
+        }
+        #hover-card .coords-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.2em 0.8em;
+            align-items: center;
+        }
+        #hover-card .coords-grid span:nth-child(odd) {
+            font-weight: bold;
+        }
+        aside {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            padding: 1em;
+        }
+        .view-switcher {
+            display: flex;
+            gap: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .view-switcher button {
+            flex-grow: 1;
+            background-color: transparent;
+            border: 1px solid var(--border-color-light);
+        }
+        body.dark-mode .view-switcher button {
+            border: 1px solid var(--border-color-dark);
+        }
+        .view-switcher button.active {
+            background-color: var(--button-bg-light);
+            font-weight: bold;
+        }
+        body.dark-mode .view-switcher button.active {
+            background-color: var(--button-bg-dark);
+        }
+        #category-view {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            flex-grow: 1;
+            min-height: 0;
+        }
+        #chronological-view {
+            flex-grow: 1;
+            min-height: 0;
+            display: none; /* Initially hidden */
+        }
+        #chronological-view .table-container {
+            height: 100%;
+        }
+        .collapsible-section {
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            flex-grow: 1;
+            flex-basis: 0;
+            transition: flex-grow 0.3s ease;
+        }
+        .collapsible-section.collapsed {
+            flex-grow: 0;
+        }
+        .collapsible-section h2 {
+            margin: 0 0 0.5em 0;
+            display: flex;
+            align-items: center;
+        }
+        .table-container {
+            overflow-y: auto;
+            border: 1px solid var(--border-color-light);
+        }
+        body.dark-mode .table-container {
+            border: 1px solid var(--border-color-dark);
+        }
+        .collapse-btn {
+            margin-right: 0.5em;
+            padding: 0 0.5em;
+            font-size: 1.2em;
+            line-height: 1;
+        }
+        .delete-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            font-size: 1.2em;
         }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -35,6 +159,9 @@
     <header>
         <button id="add-line-btn" disabled>Add Line</button>
         <button id="add-circle-btn" disabled>Add Circle</button>
+        <button id="add-segment-btn" disabled>Add Segment</button>
+        <button id="add-section-btn" disabled>Add Section</button>
+        <button id="add-chain-btn" disabled>Add Chain</button>
         <button id="theme-toggle">Toggle Theme</button>
     </header>
     <div id="hover-card"></div>
@@ -55,31 +182,62 @@
         </svg>
     </main>
     <aside>
-        <div class="tables">
-            <h2>Points</h2>
-            <table id="points-table">
-                <thead>
-                    <tr>
-                        <th>Label</th>
-                        <th>X</th>
-                        <th>Y</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-            <h2>Structures</h2>
-            <table id="structures-table">
-                <thead>
-                    <tr>
-                        <th>Label</th>
-                        <th>Type</th>
-                        <th>Parents</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+        <div class="view-switcher">
+            <button id="category-view-btn" class="active">By Category</button>
+            <button id="chrono-view-btn">Chronological</button>
+        </div>
+
+        <div id="category-view">
+            <div class="collapsible-section">
+                <h2><button class="collapse-btn">-</button> Points</h2>
+                <div class="table-container">
+                    <table id="points-table">
+                        <thead>
+                            <tr>
+                                <th>Label</th>
+                                <th>X</th>
+                                <th>Y</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="collapsible-section">
+                <h2><button class="collapse-btn">-</button> Structures</h2>
+                <div class="table-container">
+                    <table id="structures-table">
+                        <thead>
+                            <tr>
+                                <th>Label</th>
+                                <th>Type</th>
+                                <th>Parents</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="chronological-view" style="display: none;">
+            <div class="table-container">
+                <table id="chrono-table">
+                    <thead>
+                        <tr>
+                            <th>Label</th>
+                            <th>Type</th>
+                            <th>Parents</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </aside>
 
@@ -90,6 +248,7 @@
         const hoverCard = document.getElementById('hover-card');
         const pointsTableBody = document.querySelector('#points-table tbody');
         const structuresTableBody = document.querySelector('#structures-table tbody');
+        const chronoTableBody = document.querySelector('#chrono-table tbody');
 
         let selectedPoints = [];
         let modelData = {};
@@ -98,20 +257,33 @@
 
         function renderModel(data) {
             modelData = data;
+            // Clear all containers
             elementsContainer.innerHTML = '';
             pointsContainer.innerHTML = '';
             pointsTableBody.innerHTML = '';
             structuresTableBody.innerHTML = '';
+            chronoTableBody.innerHTML = '';
 
             const points = {};
 
+            // First pass: Process all points to populate the lookup object
             data.elements.forEach(el => {
                 if (el.type === 'point') {
                     points[el.label] = el;
+                }
+            });
+
+            // Second pass: Render everything in order
+            data.elements.forEach(el => {
+                // Populate chronological table
+                addChronologicalRow(el);
+
+                // Render SVG and populate category tables
+                if (el.type === 'point') {
                     renderPoint(el);
                     addPointToTable(el);
                 } else {
-                    renderElement(el, points);
+                    renderElement(el, points); // Now `points` is guaranteed to be complete
                     addStructureToTable(el);
                 }
             });
@@ -121,6 +293,7 @@
 
         function renderElement(el, points) {
             let svgEl;
+            let pointsStr;
             switch (el.type) {
                 case 'line':
                     svgEl = document.createElementNS(SVG_NS, 'line');
@@ -142,13 +315,22 @@
                     break;
                 case 'polygon':
                     svgEl = document.createElementNS(SVG_NS, 'polygon');
-                    const pointsStr = el.points.map(p_label => {
+                    pointsStr = el.points.map(p_label => {
                         const p = points[p_label];
                         return `${p.x},${p.y}`;
                     }).join(' ');
                     svgEl.setAttribute('points', pointsStr);
                     break;
-                // Add cases for other types: segment, wedge, section, chain
+                case 'segment':
+                case 'section':
+                case 'chain':
+                    svgEl = document.createElementNS(SVG_NS, 'polyline');
+                    pointsStr = el.points.map(p_label => {
+                        const p = points[p_label];
+                        return `${p.x},${p.y}`;
+                    }).join(' ');
+                    svgEl.setAttribute('points', pointsStr);
+                    break;
             }
 
             if (svgEl) {
@@ -170,6 +352,7 @@
 
         function addPointToTable(el) {
             const row = pointsTableBody.insertRow();
+            row.dataset.label = el.label;
             const labelCell = row.insertCell();
             const xCell = row.insertCell();
             const yCell = row.insertCell();
@@ -181,68 +364,149 @@
 
         function addStructureToTable(el) {
             const row = structuresTableBody.insertRow();
-            row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td>`;
+            row.dataset.label = el.label;
+            row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td><td><button class="delete-btn">🗑️</button></td>`;
+        }
+
+        function addChronologicalRow(el) {
+            const row = chronoTableBody.insertRow();
+            row.dataset.label = el.label;
+            let parents = el.parents || [];
+            if (el.type === 'line') {
+                parents = [el.pt1, el.pt2];
+            } else if (el.type === 'circle') {
+                parents = [el.center, el.pt_on_rad];
+            }
+            // Defensively check for el.classes
+            const isGiven = el.classes && el.classes.includes('given');
+            let deleteBtnHtml = (el.type !== 'point' && !isGiven) ? `<td><button class="delete-btn" data-label="${el.label}">🗑️</button></td>` : '<td></td>';
+            row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${parents.join(', ')}</td>${deleteBtnHtml}`;
         }
 
         const addLineBtn = document.getElementById('add-line-btn');
         const addCircleBtn = document.getElementById('add-circle-btn');
+        const addSegmentBtn = document.getElementById('add-segment-btn');
+        const addSectionBtn = document.getElementById('add-section-btn');
+        const addChainBtn = document.getElementById('add-chain-btn');
+
+        function updateConstructionButtons() {
+            const numPoints = selectedPoints.length;
+            addLineBtn.disabled = numPoints !== 2;
+            addCircleBtn.disabled = numPoints !== 2;
+            addSegmentBtn.disabled = numPoints !== 2;
+            addSectionBtn.disabled = numPoints !== 3;
+            addChainBtn.disabled = numPoints < 2;
+        }
+
+        function toggleSelection(label) {
+            const svgPoint = document.getElementById(label);
+            const tableRow = pointsTableBody.querySelector(`tr[data-label="${label}"]`);
+            const chronoRow = chronoTableBody.querySelector(`tr[data-label="${label}"]`);
+
+            const index = selectedPoints.indexOf(label);
+            if (index > -1) {
+                // Deselect
+                selectedPoints.splice(index, 1);
+                svgPoint.classList.remove('selected');
+                tableRow.classList.remove('highlight');
+                if (chronoRow) chronoRow.classList.remove('highlight');
+            } else {
+                // Select
+                selectedPoints.push(label);
+                svgPoint.classList.add('selected');
+                tableRow.classList.add('highlight');
+                if (chronoRow) chronoRow.classList.add('highlight');
+            }
+            updateConstructionButtons();
+        }
+
+        function clearSelection() {
+            selectedPoints.forEach(label => {
+                const svgPoint = document.getElementById(label);
+                const tableRow = pointsTableBody.querySelector(`tr[data-label="${label}"]`);
+                const chronoRow = chronoTableBody.querySelector(`tr[data-label="${label}"]`);
+                if (svgPoint) svgPoint.classList.remove('selected');
+                if (tableRow) tableRow.classList.remove('highlight');
+                if (chronoRow) chronoRow.classList.remove('highlight');
+            });
+            selectedPoints = [];
+            updateConstructionButtons();
+        }
 
         pointsContainer.addEventListener('click', (event) => {
             const target = event.target;
-            if (target.tagName === 'circle') {
-                const index = selectedPoints.indexOf(target);
-                if (index > -1) {
-                    selectedPoints.splice(index, 1);
-                    target.classList.remove('selected');
-                } else {
-                    selectedPoints.push(target);
-                    target.classList.add('selected');
-                }
-                const twoPointsSelected = selectedPoints.length === 2;
-                addLineBtn.disabled = !twoPointsSelected;
-                addCircleBtn.disabled = !twoPointsSelected;
+            if (target.tagName === 'circle' && target.id) {
+                toggleSelection(target.id);
+            }
+        });
+
+        pointsTableBody.addEventListener('click', (event) => {
+            const row = event.target.closest('tr');
+            if (row && row.dataset.label) {
+                toggleSelection(row.dataset.label);
             }
         });
 
         addLineBtn.addEventListener('click', () => {
             if (selectedPoints.length === 2) {
-                const [pt1, pt2] = selectedPoints.map(p => p.id);
+                const [pt1, pt2] = selectedPoints;
                 fetch('/api/construct/line', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ pt1, pt2 }),
                 })
                 .then(response => response.json())
                 .then(data => {
                     renderModel(data);
-                    selectedPoints.forEach(p => p.classList.remove('selected'));
-                    selectedPoints = [];
-                    addLineBtn.disabled = true;
-                    addCircleBtn.disabled = true;
+                    clearSelection();
                 });
             }
         });
 
         addCircleBtn.addEventListener('click', () => {
             if (selectedPoints.length === 2) {
-                const [pt1, pt2] = selectedPoints.map(p => p.id);
+                const [pt1, pt2] = selectedPoints;
                 fetch('/api/construct/circle', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ pt1, pt2 }),
                 })
                 .then(response => response.json())
                 .then(data => {
                     renderModel(data);
-                    selectedPoints.forEach(p => p.classList.remove('selected'));
-                    selectedPoints = [];
-                    addLineBtn.disabled = true;
-                    addCircleBtn.disabled = true;
+                    clearSelection();
                 });
+            }
+        });
+
+        function constructPoly(endpoint, points) {
+            fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ points: points }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                renderModel(data);
+                clearSelection();
+            });
+        }
+
+        addSegmentBtn.addEventListener('click', () => {
+            if (selectedPoints.length === 2) {
+                constructPoly('/api/construct/segment', selectedPoints);
+            }
+        });
+
+        addSectionBtn.addEventListener('click', () => {
+            if (selectedPoints.length === 3) {
+                constructPoly('/api/construct/section', selectedPoints);
+            }
+        });
+
+        addChainBtn.addEventListener('click', () => {
+            if (selectedPoints.length >= 2) {
+                constructPoly('/api/construct/chain', selectedPoints);
             }
         });
 
@@ -316,18 +580,159 @@
             svg.style.cursor = 'default';
         });
 
+        function updateHoverCard(element) {
+            if (!element) {
+                hoverCard.style.display = 'none';
+                return;
+            }
+
+            let content = `<p><span class="label">${element.label}</span> ${element.type}`;
+            if (element.classes && element.classes.length > 0) {
+                content += ` <span class="classes">(${element.classes.join(', ')})</span>`;
+            }
+            content += `</p>`;
+
+            if (element.type === 'point') {
+                content += '<hr>';
+                content += '<div class="coords-grid">';
+                // Algebraic X
+                content += `<span>X:</span>`;
+                const xAlg = document.createElement('span');
+                katex.render(element.latex_x, xAlg);
+                content += `<span>${xAlg.innerHTML}</span>`;
+                // Algebraic Y
+                content += `<span>Y:</span>`;
+                const yAlg = document.createElement('span');
+                katex.render(element.latex_y, yAlg);
+                content += `<span>${yAlg.innerHTML}</span>`;
+                
+                // Floating point X
+                content += `<span> </span><span>(${element.x.toFixed(4)})</span>`;
+                // Floating point Y
+                content += `<span> </span><span>(${element.y.toFixed(4)})</span>`;
+
+                content += '</div>';
+            }
+
+            hoverCard.innerHTML = content;
+            hoverCard.style.display = 'block';
+        }
+
+        let isPositionedByTable = false;
+
+        function setElementHover(label, hoverState) {
+            const elementData = modelData.elements.find(el => el.label === label);
+            if (!elementData) return;
+
+            const svgElement = document.getElementById(label);
+            const pointsRow = pointsTableBody.querySelector(`tr[data-label="${label}"]`);
+            const structuresRow = structuresTableBody.querySelector(`tr[data-label="${label}"]`);
+            const chronoRow = chronoTableBody.querySelector(`tr[data-label="${label}"]`);
+
+            const action = hoverState ? 'add' : 'remove';
+            if (svgElement) svgElement.classList[action]('hover');
+            if (pointsRow) pointsRow.classList[action]('row-hover');
+            if (structuresRow) structuresRow.classList[action]('row-hover');
+            if (chronoRow) chronoRow.classList[action]('row-hover');
+
+            // Handle parents
+            let parentLabels = [];
+            if (elementData.type === 'line') {
+                parentLabels = [elementData.pt1, elementData.pt2];
+            } else if (elementData.type === 'circle') {
+                parentLabels = [elementData.center, elementData.pt_on_rad];
+            }
+
+            parentLabels.forEach(parentLabel => {
+                if (parentLabel) {
+                    setElementHover(parentLabel, hoverState);
+                }
+            });
+        }
+
+        // SVG hover
         document.addEventListener('mouseover', (event) => {
             const target = event.target;
+            if (target.namespaceURI === SVG_NS && target.id && target.id !== 'drawing') {
+                isPositionedByTable = false;
+                setElementHover(target.id, true);
+                const elementData = modelData.elements.find(el => el.label === target.id);
+                updateHoverCard(elementData);
+            }
+        });
+
+        document.addEventListener('mouseout', (event) => {
+            const target = event.target;
             if (target.namespaceURI === SVG_NS && target.id) {
-                hoverCard.textContent = target.id;
-                hoverCard.style.display = 'block';
+                setElementHover(target.id, false);
+                hoverCard.style.display = 'none';
+            }
+        });
+
+        // Table hovers
+        [pointsTableBody, structuresTableBody, chronoTableBody].forEach(tableBody => {
+            tableBody.addEventListener('mouseover', (event) => {
+                const row = event.target.closest('tr');
+                if (row && row.dataset.label) {
+                    const label = row.dataset.label;
+                    setElementHover(label, true);
+
+                    const elementData = modelData.elements.find(el => el.label === label);
+                    const svgElement = document.getElementById(label);
+                    if (elementData && svgElement) {
+                        updateHoverCard(elementData);
+                        // Position card next to element in SVG
+                        isPositionedByTable = true;
+                        const elemRect = svgElement.getBoundingClientRect();
+                        hoverCard.style.left = `${elemRect.right + 10}px`;
+                        hoverCard.style.top = `${elemRect.top}px`;
+                    }
+                }
+            });
+
+            tableBody.addEventListener('mouseout', (event) => {
+                const row = event.target.closest('tr');
+                if (row && row.dataset.label) {
+                    setElementHover(row.dataset.label, false);
+                }
+                hoverCard.style.display = 'none';
+            });
+
+            // Handle delete button clicks
+            tableBody.addEventListener('click', (event) => {
+                if (event.target.classList.contains('delete-btn')) {
+                    const row = event.target.closest('tr');
+                    const label = row.dataset.label;
+                    if (confirm(`Are you sure you want to delete ${label} and all its dependents?`)) {
+                        fetch('/api/model/delete', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ label: label }),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            renderModel(data);
+                        });
+                    }
+                }
+            });
+        });
+
+        // Chronological Table selection
+        chronoTableBody.addEventListener('click', (event) => {
+            const row = event.target.closest('tr');
+            if (row && row.dataset.label) {
+                const elementData = modelData.elements.find(el => el.label === row.dataset.label);
+                if (elementData && elementData.type === 'point') {
+                    toggleSelection(row.dataset.label);
+                }
             }
         });
 
         document.addEventListener('mousemove', (event) => {
-            if (hoverCard.style.display === 'block') {
-                hoverCard.style.left = `${event.clientX + 10}px`;
-                hoverCard.style.top = `${event.clientY + 10}px`;
+            if (hoverCard.style.display === 'block' && !isPositionedByTable) {
+                hoverCard.style.left = `${event.clientX + 15}px`;
+                hoverCard.style.top = `${event.clientY + 15}px`;
             }
         });
         
@@ -365,6 +770,40 @@
             }
         }
 
+        // View Switcher
+        const categoryViewBtn = document.getElementById('category-view-btn');
+        const chronoViewBtn = document.getElementById('chrono-view-btn');
+        const categoryView = document.getElementById('category-view');
+        const chronologicalView = document.getElementById('chronological-view');
+
+        categoryViewBtn.addEventListener('click', () => {
+            categoryView.style.display = 'flex';
+            chronologicalView.style.display = 'none';
+            categoryViewBtn.classList.add('active');
+            chronoViewBtn.classList.remove('active');
+        });
+
+        chronoViewBtn.addEventListener('click', () => {
+            categoryView.style.display = 'none';
+            chronologicalView.style.display = 'flex';
+            chronoViewBtn.classList.add('active');
+            categoryViewBtn.classList.remove('active');
+        });
+
+        // Collapsible sections
+        const collapseBtns = document.querySelectorAll('.collapse-btn');
+        collapseBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const section = btn.closest('.collapsible-section');
+                section.classList.toggle('collapsed');
+                
+                const isCollapsed = section.classList.contains('collapsed');
+                btn.textContent = isCollapsed ? '+' : '-';
+                
+                const tableContainer = section.querySelector('.table-container');
+                tableContainer.style.display = isCollapsed ? 'none' : '';
+            });
+        });
     </script>
 </body>
 </html>

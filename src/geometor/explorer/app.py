@@ -90,6 +90,46 @@ def construct_point():
     return jsonify(model.to_browser_dict())
 
 
+@app.route('/api/model/delete', methods=['POST'])
+def delete_element():
+    """Deletes an element and its dependents from the model."""
+    data = request.get_json()
+    label = data.get('label')
+    
+    if not label:
+        return jsonify({"error": "Element label is required."}), 400
+
+    # Call the delete_element method on the model
+    model.delete_element(label)
+    
+    # Return the updated model to the browser
+    return jsonify(model.to_browser_dict())
+
+
+@app.route('/api/construct/segment', methods=['POST'])
+def construct_segment():
+    data = request.get_json()
+    points = [model.get_element_by_label(label) for label in data.get('points', [])]
+    if len(points) == 2:
+        model.construct_segment(*points)
+    return jsonify(model.to_browser_dict())
+
+@app.route('/api/construct/section', methods=['POST'])
+def construct_section():
+    data = request.get_json()
+    points = [model.get_element_by_label(label) for label in data.get('points', [])]
+    if len(points) == 3:
+        model.construct_section(*points)
+    return jsonify(model.to_browser_dict())
+
+@app.route('/api/construct/chain', methods=['POST'])
+def construct_chain():
+    data = request.get_json()
+    points = [model.get_element_by_label(label) for label in data.get('points', [])]
+    if len(points) >= 2:
+        model.construct_chain(*points)
+    return jsonify(model.to_browser_dict())
+
 
 def run():
     app.run(debug=True, port=4445)
