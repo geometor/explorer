@@ -1,0 +1,89 @@
+#drawing {
+    width: 100%;
+    height: 100%;
+    cursor: default;
+}
+
+/* #drawing.add-point-mode {
+    cursor: crosshair;
+}
+
+#drawing.select-points-mode [data-label] {
+    cursor: pointer;
+} */
+
+/* #points polyline {
+  marker-start: url(#point);
+  marker-end: url(#point);
+} */
+
+#points circle {
+  fill: var(--text-color-light);
+  stroke: var(--background-color-light);
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+}
+
+body.dark-mode #points circle {
+    fill: var(--text-color-dark);
+    stroke: var(--background-color-dark);
+}
+
+#points circle.given.selected {
+  stroke: var(--select-color);
+  fill: black;
+}
+
+#points circle.selected {
+  stroke: var(--select-color);
+  fill: black;
+}
+
+#points circle.given {
+    fill: #6F6;
+}
+#points circle:hover,
+#points circle.hover {
+    fill: var(--select-color);
+}
+/* #point .outer { fill: var(--background-color-light); stroke: none } */
+/* #point .inner { fill: var(--text-color-light) ; stroke: none } */
+
+/* body.dark-mode #point .outer { fill: var(--background-color-dark); } */
+/* body.dark-mode #point .inner { fill: var(--text-color-dark); } */
+
+line {
+  fill: none;
+  stroke: #999;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+circle {
+  fill: none;
+  stroke: #C09;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+polyline {
+  stroke: #36c9;
+  fill: none;
+  stroke-width: 8;
+  vector-effect: non-scaling-stroke;
+}
+
+polygon {
+  stroke: #36c9;
+  fill: #36c3;
+  stroke-width: 8;
+  vector-effect: non-scaling-stroke;
+}
+
+line:hover, line.hover,
+circle:hover, circle.hover,
+polygon:hover, polygon.hover,
+polyline:hover, polyline.hover {
+  stroke: var(--select-color);
+}
+
