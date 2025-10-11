@@ -21,12 +21,12 @@
         circle:hover, circle.hover {
             stroke: var(--select-color);
         }
-        polyline {
+        /* polyline {
             fill: none;
             stroke: #36c;
             stroke-width: 2;
             vector-effect: non-scaling-stroke;
-        }
+        } */
         tbody tr.row-hover {
             background-color: #e6f2ff;
         }
@@ -161,7 +161,7 @@
         <button id="add-circle-btn" disabled>Add Circle</button>
         <button id="add-segment-btn" disabled>Add Segment</button>
         <button id="add-section-btn" disabled>Add Section</button>
-        <button id="add-chain-btn" disabled>Add Chain</button>
+        <button id="add-polygon-btn" disabled>Add Polygon</button>
         <button id="theme-toggle">Toggle Theme</button>
     </header>
     <div id="hover-card"></div>
@@ -221,6 +221,23 @@
                     </table>
                 </div>
             </div>
+            <div class="collapsible-section">
+                <h2><button class="collapse-btn">-</button> Graphics</h2>
+                <div class="table-container">
+                    <table id="graphics-table">
+                        <thead>
+                            <tr>
+                                <th>Label</th>
+                                <th>Type</th>
+                                <th>Parents</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
         <div id="chronological-view" style="display: none;">
@@ -243,11 +260,13 @@
 
     <script>
         const svg = document.getElementById('drawing');
+        const graphicsContainer = document.getElementById('graphics');
         const elementsContainer = document.getElementById('elements');
         const pointsContainer = document.getElementById('points');
         const hoverCard = document.getElementById('hover-card');
         const pointsTableBody = document.querySelector('#points-table tbody');
         const structuresTableBody = document.querySelector('#structures-table tbody');
+        const graphicsTableBody = document.querySelector('#graphics-table tbody');
         const chronoTableBody = document.querySelector('#chrono-table tbody');
 
         let selectedPoints = [];
@@ -258,10 +277,12 @@
         function renderModel(data) {
             modelData = data;
             // Clear all containers
+            graphicsContainer.innerHTML = '';
             elementsContainer.innerHTML = '';
             pointsContainer.innerHTML = '';
             pointsTableBody.innerHTML = '';
             structuresTableBody.innerHTML = '';
+            graphicsTableBody.innerHTML = '';
             chronoTableBody.innerHTML = '';
 
             const points = {};
@@ -284,7 +305,11 @@
                     addPointToTable(el);
                 } else {
                     renderElement(el, points); // Now `points` is guaranteed to be complete
-                    addStructureToTable(el);
+                    if (['line', 'circle'].includes(el.type)) {
+                        addStructureToTable(el);
+                    } else {
+                        addGraphicToTable(el);
+                    }
                 }
             });
             
@@ -336,7 +361,11 @@
             if (svgEl) {
                 svgEl.id = el.label;
                 el.classes.forEach(c => svgEl.classList.add(c));
-                elementsContainer.appendChild(svgEl);
+                if (['polygon', 'segment', 'section', 'chain'].includes(el.type)) {
+                    graphicsContainer.appendChild(svgEl);
+                } else {
+                    elementsContainer.appendChild(svgEl);
+                }
             }
         }
 
@@ -368,6 +397,12 @@
             row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td><td><button class="delete-btn">🗑️</button></td>`;
         }
 
+        function addGraphicToTable(el) {
+            const row = graphicsTableBody.insertRow();
+            row.dataset.label = el.label;
+            row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td><td><button class="delete-btn">🗑️</button></td>`;
+        }
+
         function addChronologicalRow(el) {
             const row = chronoTableBody.insertRow();
             row.dataset.label = el.label;
@@ -387,7 +422,7 @@
         const addCircleBtn = document.getElementById('add-circle-btn');
         const addSegmentBtn = document.getElementById('add-segment-btn');
         const addSectionBtn = document.getElementById('add-section-btn');
-        const addChainBtn = document.getElementById('add-chain-btn');
+        const addPolygonButton = document.getElementById('add-polygon-btn');
 
         function updateConstructionButtons() {
             const numPoints = selectedPoints.length;
@@ -395,7 +430,7 @@
             addCircleBtn.disabled = numPoints !== 2;
             addSegmentBtn.disabled = numPoints !== 2;
             addSectionBtn.disabled = numPoints !== 3;
-            addChainBtn.disabled = numPoints < 2;
+            addPolygonButton.disabled = numPoints < 2;
         }
 
         function toggleSelection(label) {
@@ -480,7 +515,7 @@
         });
 
         function constructPoly(endpoint, points) {
-            console.log("constructPoly");
+            // console.log("constructPoly");
             fetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -488,7 +523,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 renderModel(data);
                 clearSelection();
             });
@@ -496,19 +531,19 @@
 
         addSegmentBtn.addEventListener('click', () => {
             if (selectedPoints.length === 2) {
-                constructPoly('/api/construct/segment', selectedPoints);
+                constructPoly('/api/set/segment', selectedPoints);
             }
         });
 
         addSectionBtn.addEventListener('click', () => {
             if (selectedPoints.length === 3) {
-                constructPoly('/api/construct/section', selectedPoints);
+                constructPoly('/api/set/section', selectedPoints);
             }
         });
 
-        addChainBtn.addEventListener('click', () => {
+        addPolygonButton.addEventListener('click', () => {
             if (selectedPoints.length >= 2) {
-                constructPoly('/api/construct/chain', selectedPoints);
+                constructPoly('/api/set/polygon', selectedPoints);
             }
         });
 
@@ -629,12 +664,14 @@
             const svgElement = document.getElementById(label);
             const pointsRow = pointsTableBody.querySelector(`tr[data-label="${label}"]`);
             const structuresRow = structuresTableBody.querySelector(`tr[data-label="${label}"]`);
+            const graphicsRow = graphicsTableBody.querySelector(`tr[data-label="${label}"]`);
             const chronoRow = chronoTableBody.querySelector(`tr[data-label="${label}"]`);
 
             const action = hoverState ? 'add' : 'remove';
             if (svgElement) svgElement.classList[action]('hover');
             if (pointsRow) pointsRow.classList[action]('row-hover');
             if (structuresRow) structuresRow.classList[action]('row-hover');
+            if (graphicsRow) graphicsRow.classList[action]('row-hover');
             if (chronoRow) chronoRow.classList[action]('row-hover');
 
             // Handle parents
@@ -672,7 +709,7 @@
         });
 
         // Table hovers
-        [pointsTableBody, structuresTableBody, chronoTableBody].forEach(tableBody => {
+        [pointsTableBody, structuresTableBody, graphicsTableBody, chronoTableBody].forEach(tableBody => {
             tableBody.addEventListener('mouseover', (event) => {
                 const row = event.target.closest('tr');
                 if (row && row.dataset.label) {

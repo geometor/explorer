@@ -107,12 +107,31 @@ def delete_element():
     return jsonify(model.to_browser_dict())
 
 
-@app.route('/api/construct/segment', methods=['POST'])
-def construct_segment():
+@app.route('/api/set/segment', methods=['POST'])
+def set_segment():
     data = request.get_json()
     points = [model.get_element_by_label(label) for label in data.get('points', [])]
     if len(points) == 2:
         segment = model.set_segment(*points)
+        print(model.to_browser_dict())
+    return jsonify(model.to_browser_dict())
+
+@app.route('/api/set/section', methods=['POST'])
+def set_section():
+    data = request.get_json()
+    points = [model.get_element_by_label(label) for label in data.get('points', [])]
+    if len(points) == 3:
+        section = model.set_section(points)
+        print(model.to_browser_dict())
+    return jsonify(model.to_browser_dict())
+
+
+@app.route('/api/set/polygon', methods=['POST'])
+def set_polygon():
+    data = request.get_json()
+    points = [model.get_element_by_label(label) for label in data.get('points', [])]
+    if len(points) >= 3:
+        polygon = model.set_polygon(points)
         print(model.to_browser_dict())
     return jsonify(model.to_browser_dict())
 

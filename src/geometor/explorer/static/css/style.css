@@ -181,10 +181,17 @@ circle {
   vector-effect: non-scaling-stroke;
 }
 
+polyline {
+  stroke: #36c9;
+  fill: none;
+  stroke-width: 8;
+  vector-effect: non-scaling-stroke;
+}
+
 polygon {
   stroke: #36c9;
   fill: #36c3;
-  stroke-width: 4;
+  stroke-width: 8;
   vector-effect: non-scaling-stroke;
 }
 
@@ -209,4 +216,11 @@ body.dark-mode button {
 
 body.dark-mode button:hover {
     background-color: #444;
+}
+
+line:hover,
+circle:hover,
+polygon:hover,
+polyline:hover {
+  stroke: var(--select-color);
 }
