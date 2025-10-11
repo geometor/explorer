@@ -33,6 +33,16 @@ function renderModel(data) {
         });
     }
 
+    // Render points from pointsData
+    for (const [label, point] of pointsData.entries()) {
+        const circle = document.createElementNS(svgNS, 'circle');
+        circle.setAttribute('cx', point.x);
+        circle.setAttribute('cy', point.y);
+        circle.setAttribute('r', 5);  // Example radius, adjust as needed
+        circle.setAttribute('data-label', label);
+        drawing.appendChild(circle);
+    }
+
     // 3. Populate tables
     if (data.tables) {
         populateTable('pointList', data.tables.points, ['label', 'x', 'y']);
@@ -179,7 +189,7 @@ function populateTable(tableId, data, columns) {
     data.forEach(rowData => {
         const row = tableBody.insertRow();
         // Use the ID from the data to set the row's ID
-        row.id = rowData.id || ''; 
+        row.id = `row-${rowData.label}` || ''; 
         columns.forEach(colName => {
             const cell = row.insertCell();
             let content = rowData[colName] || '';

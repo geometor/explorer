@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify, request
 from geometor.model import Model
 import sympy as sp
 import sympy.geometry as spg
+from sympy.polys.specialpolys import w_polys
 
 app = Flask(__name__)
 model = Model()
@@ -111,23 +112,8 @@ def construct_segment():
     data = request.get_json()
     points = [model.get_element_by_label(label) for label in data.get('points', [])]
     if len(points) == 2:
-        model.construct_segment(*points)
-    return jsonify(model.to_browser_dict())
-
-@app.route('/api/construct/section', methods=['POST'])
-def construct_section():
-    data = request.get_json()
-    points = [model.get_element_by_label(label) for label in data.get('points', [])]
-    if len(points) == 3:
-        model.construct_section(*points)
-    return jsonify(model.to_browser_dict())
-
-@app.route('/api/construct/chain', methods=['POST'])
-def construct_chain():
-    data = request.get_json()
-    points = [model.get_element_by_label(label) for label in data.get('points', [])]
-    if len(points) >= 2:
-        model.construct_chain(*points)
+        segment = model.set_segment(*points)
+        print(model.to_browser_dict())
     return jsonify(model.to_browser_dict())
 
 
