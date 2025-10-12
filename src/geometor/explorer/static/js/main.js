@@ -264,9 +264,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const center = document.createElement('div');
                 center.innerHTML = `center: ${element.center}`;
                 content += center.innerHTML;
+                content += '<br>';
                 const radius = document.createElement('div');
                 katex.render(`r = ${element.latex_radius}`, radius);
                 content += radius.innerHTML;
+                content += '<br>';
             }
             const equation = document.createElement('div');
             katex.render(element.latex_equation, equation);
@@ -281,6 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const lengths = document.createElement('div');
             katex.render(`[${element.latex_lengths.join(', ')}]`, lengths);
             content += lengths.innerHTML;
+            content += '<br>';
             const ratio = document.createElement('div');
             katex.render(`ratio = ${element.latex_ratio}`, ratio);
             content += ratio.innerHTML;

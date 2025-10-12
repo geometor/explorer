@@ -1,55 +1,11 @@
-body {
-    background-color: var(--background-color-dark);
-    color: var(--text-color-dark);
-}
-
-header {
-    border-bottom: 1px solid var(--border-color-dark);
-}
-
-main {
-    background-color: var(--accent-color-dark);
-}
-
-aside {
-    border-left: 1px solid var(--border-color-dark);
-}
-
-th, td {
-    border: 1px solid var(--border-color-dark);
-}
-
-tbody tr.highlight {
-    background-color: var(--highlight-bg-dark);
-}
-
-#hover-card {
-    background-color: var(--accent-color-dark);
-    border: 1px solid var(--border-color-dark);
-}
-
-button {
-    background-color: var(--button-bg-dark);
-    color: var(--button-text-dark);
-    border: 1px solid var(--border-color-dark);
-}
-
-button:hover {
-    background-color: #444;
-}
-
-tbody tr.row-hover {
-    background-color: #2a2a2a;
-}
-
-.view-switcher button {
-    border: 1px solid var(--border-color-dark);
-}
-
-.view-switcher button.active {
-    background-color: var(--button-bg-dark);
-}
-
-.table-container {
-    border: 1px solid var(--border-color-dark);
+:root {
+    --background-color: #121212;
+    --text-color: #e0e0e0;
+    --accent-color: #1e1e1e;
+    --border-color: #333;
+    --button-bg: #333;
+    --button-text: #e0e0e0;
+    --highlight-bg: #333;
+    --button-hover-bg: #444;
+    --row-hover-bg: #2a2a2a;
 }

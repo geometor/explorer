@@ -1,21 +1,14 @@
 :root {
-    --background-color-light: #fff;
-    --text-color-light: #000;
-    --accent-color-light: #f0f0f0;
-    --border-color-light: #ccc;
-    --button-bg-light: #f0f0f0;
-    --button-text-light: #000;
-    --highlight-bg-light: #f0f8ff;
-
-    --background-color-dark: #121212;
-    --text-color-dark: #e0e0e0;
-    --accent-color-dark: #1e1e1e;
-    --border-color-dark: #333;
-    --button-bg-dark: #333;
-    --button-text-dark: #e0e0e0;
-    --highlight-bg-dark: #333;
-
+    --background-color: #fff;
+    --text-color: #000;
+    --accent-color: #f0f0f0;
+    --border-color: #ccc;
+    --button-bg: #f0f0f0;
+    --button-text: #000;
+    --highlight-bg: #f0f8ff;
     --select-color: #0ff;
+    --button-hover-bg: #e0e0e0;
+    --row-hover-bg: #e6f2ff;
 }
 
 body {
@@ -25,14 +18,14 @@ body {
     font-family: sans-serif;
     height: 100vh;
     margin: 0;
-    background-color: var(--background-color-light);
-    color: var(--text-color-light);
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 header {
     grid-column: 1 / -1;
     padding: 0.5em 1em;
-    border-bottom: 1px solid var(--border-color-light);
+    border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: flex-end;
 }
@@ -42,7 +35,7 @@ main {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    background-color: var(--accent-color-light);
+    background-color: var(--accent-color);
 }
 
 aside {
@@ -51,7 +44,7 @@ aside {
     gap: 1em;
     padding: 1em;
     overflow-y: auto;
-    border-left: 1px solid var(--border-color-light);
+    border-left: 1px solid var(--border-color);
 }
 
 table {
@@ -68,12 +61,12 @@ caption {
 
 th, td {
     padding: 0.5em;
-    border: 1px solid var(--border-color-light);
+    border: 1px solid var(--border-color);
     text-align: left;
 }
 
 tbody tr.highlight {
-    background-color: var(--highlight-bg-light);
+    background-color: var(--highlight-bg);
 }
 
 #controls {
@@ -90,8 +83,8 @@ tbody tr.highlight {
 #hover-card {
     position: absolute;
     display: none;
-    background-color: var(--background-color-light);
-    border: 1px solid var(--border-color-light);
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     padding: 0.5em;
     font-family: sans-serif;
@@ -102,22 +95,22 @@ tbody tr.highlight {
 }
 
 button {
-    background-color: var(--button-bg-light);
-    color: var(--button-text-light);
-    border: 1px solid var(--border-color-light);
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: 1px solid var(--border-color);
     padding: 0.5em 1em;
     border-radius: 5px;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #e0e0e0;
+    background-color: var(--button-hover-bg);
 }
 
 /* FROM INLINE */
 
 tbody tr.row-hover {
-    background-color: #e6f2ff;
+    background-color: var(--row-hover-bg);
 }
 
 #points-table th:nth-child(2),
@@ -154,11 +147,11 @@ tbody tr.row-hover {
 .view-switcher button {
     flex-grow: 1;
     background-color: transparent;
-    border: 1px solid var(--border-color-light);
+    border: 1px solid var(--border-color);
 }
 
 .view-switcher button.active {
-    background-color: var(--button-bg-light);
+    background-color: var(--button-bg);
     font-weight: bold;
 }
 
@@ -195,7 +188,7 @@ tbody tr.row-hover {
 }
 .table-container {
     overflow-y: auto;
-    border: 1px solid var(--border-color-light);
+    border: 1px solid var(--border-color);
 }
 
 .collapse-btn {

@@ -18,15 +18,10 @@
 } */
 
 #points circle {
-  fill: var(--text-color-light);
-  stroke: var(--background-color-light);
+  fill: var(--text-color);
+  stroke: var(--accent-color);
   stroke-width: 3;
   vector-effect: non-scaling-stroke;
-}
-
-body.dark-mode #points circle {
-    fill: var(--text-color-dark);
-    stroke: var(--background-color-dark);
 }
 
 #points circle.given.selected {
