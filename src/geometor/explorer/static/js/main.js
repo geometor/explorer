@@ -241,22 +241,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (element.type === 'point') {
             content += '<hr>';
             content += '<div class="coords-grid">';
-            // Algebraic X
+            // X value
             content += `<span>X:</span>`;
             const xAlg = document.createElement('span');
             katex.render(element.latex_x, xAlg);
-            content += `<span>${xAlg.innerHTML}</span>`;
-            // Algebraic Y
+            content += `<span>${xAlg.innerHTML} <span class="decimal">(${element.x.toFixed(4)})</span></span>`;
+            // Y value
             content += `<span>Y:</span>`;
             const yAlg = document.createElement('span');
             katex.render(element.latex_y, yAlg);
-            content += `<span>${yAlg.innerHTML}</span>`;
-            
-            // Floating point X
-            content += `<span> </span><span>(${element.x.toFixed(4)})</span>`;
-            // Floating point Y
-            content += `<span> </span><span>(${element.y.toFixed(4)})</span>`;
-
+            content += `<span>${yAlg.innerHTML} <span class="decimal">(${element.y.toFixed(4)})</span></span>`;
             content += '</div>';
         } else if (element.type === 'line' || element.type === 'circle') {
             content += '<hr>';
