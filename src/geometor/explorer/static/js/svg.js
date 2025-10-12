@@ -1,5 +1,6 @@
 const SVG_NS = "http://www.w3.org/2000/svg";
 
+
 function renderElement(el, points) {
     let svgEl;
     let pointsStr;
@@ -44,6 +45,7 @@ function renderElement(el, points) {
 
     if (svgEl) {
         svgEl.id = el.label;
+        svgEl.classList.add(el.type);
         el.classes.forEach(c => svgEl.classList.add(c));
         if (['polygon', 'segment', 'section', 'chain'].includes(el.type)) {
             GEOMETOR.graphicsContainer.appendChild(svgEl);
@@ -136,6 +138,9 @@ function initSvgEventListeners() {
     document.addEventListener('mouseover', (event) => {
         const target = event.target;
         if (target.namespaceURI === SVG_NS && target.id && target.id !== 'drawing') {
+            if (target.parentElement) {
+                target.parentElement.appendChild(target);
+            }
             GEOMETOR.isPositionedByTable = false;
             GEOMETOR.setElementHover(target.id, true);
             const elementData = GEOMETOR.modelData.elements.find(el => el.label === target.id);

@@ -28,13 +28,9 @@
     <main>
         <svg id="drawing" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 4 4" preserveAspectRatio="xMidYMid slice">
             <defs>
-                <filter id="glow" x="-250%" y="-250%" width="500%" height="500%">
-                    <feGaussianBlur stdDeviation="0.01" result="coloredBlur"/>
-                    <feMerge>
-                        <feMergeNode in="coloredBlur"/>
-                        <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                </filter>
+                <marker id="marker" viewBox="0 0 12 12" refX="6" refY="6" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <circle cx="6" cy="6" r="6" style="fill: var(--accent-color);" vector-effect="non-scaling-stroke"></circle>
+                </marker>
             </defs>
             <g id="graphics"></g>
             <g id="elements"></g>

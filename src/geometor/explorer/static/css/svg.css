@@ -73,15 +73,30 @@ polygon {
   fill: #36c3;
   stroke-width: 8;
   vector-effect: non-scaling-stroke;
+  marker-start: url(#marker);
+  marker-mid: url(#marker);
+  marker-end: url(#marker);
 }
 
 line:hover, line.hover,
-circle:hover, circle.hover,
-polygon:hover, polygon.hover,
-polyline:hover, polyline.hover {
+circle:hover, circle.hover {
   stroke: var(--select-color);
+  stroke-opacity: 1;
 }
 
 .golden {
     stroke: gold;
+}
+
+.section {
+  stroke-opacity: 0.1;
+  marker-start: url(#marker);
+  marker-mid: url(#marker);
+  marker-end: url(#marker);
+}
+
+polygon:hover, polygon.hover,
+polyline:hover, polyline.hover,
+.section:hover {
+  stroke-opacity: 1;
 }
