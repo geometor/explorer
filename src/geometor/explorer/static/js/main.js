@@ -77,8 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const yCell = row.insertCell();
 
         labelCell.innerHTML = el.label;
-        katex.render(el.latex_x, xCell);
-        katex.render(el.latex_y, yCell);
+        xCell.innerHTML = el.x.toFixed(4);
+        yCell.innerHTML = el.y.toFixed(4);
     }
 
     function addStructureToTable(el) {
@@ -243,14 +243,10 @@ document.addEventListener('DOMContentLoaded', () => {
             content += '<div class="coords-grid">';
             // X value
             content += `<span>X:</span>`;
-            const xAlg = document.createElement('span');
-            katex.render(element.latex_x, xAlg);
-            content += `<span>${xAlg.innerHTML} <span class="decimal">(${element.x.toFixed(4)})</span></span>`;
+            content += `<span>${element.x.toFixed(4)}</span>`;
             // Y value
             content += `<span>Y:</span>`;
-            const yAlg = document.createElement('span');
-            katex.render(element.latex_y, yAlg);
-            content += `<span>${yAlg.innerHTML} <span class="decimal">(${element.y.toFixed(4)})</span></span>`;
+            content += `<span>${element.y.toFixed(4)}</span>`;
             content += '</div>';
         } else if (element.type === 'line' || element.type === 'circle') {
             content += '<hr>';

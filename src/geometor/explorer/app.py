@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 from geometor.model import Model, save_model, load_model
+from geometor.divine import analyze_model
 import sympy as sp
 import sympy.geometry as spg
 from sympy.polys.specialpolys import w_polys
@@ -9,6 +10,7 @@ import tempfile
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 model = Model()
+analyze_model(model)
 
 # CONSTRUCTIONS_DIR = os.path.join(os.path.dirname(__file__), 'constructions')
 CONSTRUCTIONS_DIR = './constructions'
@@ -17,6 +19,7 @@ os.makedirs(CONSTRUCTIONS_DIR, exist_ok=True)
 def new_model():
     global model
     model = Model("new")
+    analyze_model(model)
     A = model.set_point(0, 0, classes=["given"])
     B = model.set_point(1, 0, classes=["given"])
 

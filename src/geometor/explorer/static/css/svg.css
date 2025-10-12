@@ -82,3 +82,7 @@ polyline:hover, polyline.hover {
   stroke: var(--select-color);
 }
 
+.golden {
+    stroke: gold;
+    stroke-width: 0.02;
+}
