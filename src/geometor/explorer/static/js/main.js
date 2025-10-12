@@ -429,6 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('/api/model')
         .then(response => response.json())
         .then(data => {
+            console.log(JSON.stringify(data, null, 2));
             renderModel(data);
         });
 

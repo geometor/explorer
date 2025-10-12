@@ -1,3 +1,4 @@
+from geometor.explorer.serialize import to_browser_dict
 from flask import Flask, render_template, jsonify, request
 from geometor.model import Model, save_model, load_model
 from geometor.divine import analyze_model
@@ -32,7 +33,7 @@ def index():
 @app.route('/api/model', methods=['GET'])
 def get_model():
     """Returns the complete model data using the new to_browser_dict method."""
-    return jsonify(model.to_browser_dict())
+    return jsonify(to_browser_dict(model))
 
 @app.route('/api/model/save', methods=['POST'])
 def save_model_endpoint():
@@ -65,7 +66,7 @@ def load_model_endpoint():
         finally:
             os.remove(tmp_path)
         
-        return jsonify(model.to_browser_dict())
+        return jsonify(to_browser_dict(model))
 
     elif 'filename' in data:
         filename = data.get('filename')
@@ -75,7 +76,7 @@ def load_model_endpoint():
         file_path = os.path.join(CONSTRUCTIONS_DIR, filename)
         if os.path.exists(file_path):
             model = load_model(file_path)
-            return jsonify(model.to_browser_dict())
+            return jsonify(to_browser_dict(model))
         else:
             return jsonify({"success": False, "message": "File not found."}), 404
             
@@ -90,7 +91,7 @@ def list_constructions():
 @app.route('/api/model/new', methods=['POST'])
 def new_model_endpoint():
     new_model()
-    return jsonify(model.to_browser_dict())
+    return jsonify(to_browser_dict(model))
 
 
 @app.route('/api/construct/line', methods=['POST'])
@@ -105,7 +106,7 @@ def construct_line():
     if pt1 and pt2:
         model.construct_line(pt1, pt2)
 
-    return jsonify(model.to_browser_dict())
+    return jsonify(to_browser_dict(model))
 
 @app.route('/api/construct/circle', methods=['POST'])
 def construct_circle():
@@ -119,7 +120,7 @@ def construct_circle():
     if pt1 and pt2:
         model.construct_circle(pt1, pt2)
 
-    return jsonify(model.to_browser_dict())
+    return jsonify(to_browser_dict(model))
 
 
 @app.route('/api/construct/point', methods=['POST'])
@@ -131,7 +132,7 @@ def construct_point():
     if x is not None and y is not None:
         model.set_point(x, y)
 
-    return jsonify(model.to_browser_dict())
+    return jsonify(to_browser_dict(model))
 
 
 @app.route('/api/model/delete', methods=['POST'])
@@ -147,7 +148,7 @@ def delete_element():
     model.delete_element(label)
     
     # Return the updated model to the browser
-    return jsonify(model.to_browser_dict())
+    return jsonify(to_browser_dict(model))
 
 
 @app.route('/api/set/segment', methods=['POST'])
@@ -156,8 +157,8 @@ def set_segment():
     points = [model.get_element_by_label(label) for label in data.get('points', [])]
     if len(points) == 2:
         segment = model.set_segment(*points)
-        print(model.to_browser_dict())
-    return jsonify(model.to_browser_dict())
+        print(to_browser_dict(model))
+    return jsonify(to_browser_dict(model))
 
 @app.route('/api/set/section', methods=['POST'])
 def set_section():
@@ -165,8 +166,8 @@ def set_section():
     points = [model.get_element_by_label(label) for label in data.get('points', [])]
     if len(points) == 3:
         section = model.set_section(points)
-        print(model.to_browser_dict())
-    return jsonify(model.to_browser_dict())
+        print(to_browser_dict(model))
+    return jsonify(to_browser_dict(model))
 
 
 @app.route('/api/set/polygon', methods=['POST'])
@@ -175,8 +176,8 @@ def set_polygon():
     points = [model.get_element_by_label(label) for label in data.get('points', [])]
     if len(points) >= 3:
         polygon = model.set_polygon(points)
-        print(model.to_browser_dict())
-    return jsonify(model.to_browser_dict())
+        print(to_browser_dict(model))
+    return jsonify(to_browser_dict(model))
 
 
 def run():
