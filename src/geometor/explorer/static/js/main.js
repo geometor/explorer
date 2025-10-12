@@ -1,29 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const svg = document.getElementById('drawing');
-    const graphicsContainer = document.getElementById('graphics');
-    const elementsContainer = document.getElementById('elements');
-    const pointsContainer = document.getElementById('points');
-    const hoverCard = document.getElementById('hover-card');
-    const pointsTableBody = document.querySelector('#points-table tbody');
-    const structuresTableBody = document.querySelector('#structures-table tbody');
-    const graphicsTableBody = document.querySelector('#graphics-table tbody');
-    const chronoTableBody = document.querySelector('#chrono-table tbody');
+    window.GEOMETOR = {
+        tables: {}
+    };
 
-    let selectedPoints = [];
-    let modelData = {};
+    GEOMETOR.svg = document.getElementById('drawing');
+    GEOMETOR.graphicsContainer = document.getElementById('graphics');
+    GEOMETOR.elementsContainer = document.getElementById('elements');
+    GEOMETOR.pointsContainer = document.getElementById('points');
+    GEOMETOR.hoverCard = document.getElementById('hover-card');
+    GEOMETOR.tables.points = document.querySelector('#points-table tbody');
+    GEOMETOR.tables.structures = document.querySelector('#structures-table tbody');
+    GEOMETOR.tables.graphics = document.querySelector('#graphics-table tbody');
+    GEOMETOR.tables.chrono = document.querySelector('#chrono-table tbody');
 
-    const SVG_NS = "http://www.w3.org/2000/svg";
+    GEOMETOR.selectedPoints = [];
+    GEOMETOR.modelData = {};
+    GEOMETOR.isPositionedByTable = false;
 
     function renderModel(data) {
-        modelData = data;
+        GEOMETOR.modelData = data;
         // Clear all containers
-        graphicsContainer.innerHTML = '';
-        elementsContainer.innerHTML = '';
-        pointsContainer.innerHTML = '';
-        pointsTableBody.innerHTML = '';
-        structuresTableBody.innerHTML = '';
-        graphicsTableBody.innerHTML = '';
-        chronoTableBody.innerHTML = '';
+        GEOMETOR.graphicsContainer.innerHTML = '';
+        GEOMETOR.elementsContainer.innerHTML = '';
+        GEOMETOR.pointsContainer.innerHTML = '';
+        GEOMETOR.tables.points.innerHTML = '';
+        GEOMETOR.tables.structures.innerHTML = '';
+        GEOMETOR.tables.graphics.innerHTML = '';
+        GEOMETOR.tables.chrono.innerHTML = '';
 
         const points = {};
 
@@ -54,10 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         // Re-apply selection visuals
-        selectedPoints.forEach(label => {
+        GEOMETOR.selectedPoints.forEach(label => {
             const svgPoint = document.getElementById(label);
-            const tableRow = pointsTableBody.querySelector(`tr[data-label="${label}"]`);
-            const chronoRow = chronoTableBody.querySelector(`tr[data-label="${label}"]`);
+            const tableRow = GEOMETOR.tables.points.querySelector(`tr[data-label="${label}"]`);
+            const chronoRow = GEOMETOR.tables.chrono.querySelector(`tr[data-label="${label}"]`);
             if (svgPoint) svgPoint.classList.add('selected');
             if (tableRow) tableRow.classList.add('highlight');
             if (chronoRow) chronoRow.classList.add('highlight');
@@ -66,71 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
         scaleCircles();
     }
 
-    function renderElement(el, points) {
-        let svgEl;
-        let pointsStr;
-        switch (el.type) {
-            case 'line':
-                svgEl = document.createElementNS(SVG_NS, 'line');
-                const pt1 = points[el.pt1];
-                const pt2 = points[el.pt2];
-                // Approximate line drawing for now, needs proper calculation
-                svgEl.setAttribute('x1', pt1.x - 1000 * (pt2.x - pt1.x));
-                svgEl.setAttribute('y1', pt1.y - 1000 * (pt2.y - pt1.y));
-                svgEl.setAttribute('x2', pt1.x + 1000 * (pt2.x - pt1.x));
-                svgEl.setAttribute('y2', pt1.y + 1000 * (pt2.y - pt1.y));
-                break;
-            case 'circle':
-                svgEl = document.createElementNS(SVG_NS, 'circle');
-                const center = points[el.center];
-                svgEl.setAttribute('cx', center.x);
-                svgEl.setAttribute('cy', center.y);
-                svgEl.setAttribute('r', el.radius);
-                svgEl.setAttribute('fill', 'none');
-                break;
-            case 'polygon':
-                svgEl = document.createElementNS(SVG_NS, 'polygon');
-                pointsStr = el.points.map(p_label => {
-                    const p = points[p_label];
-                    return `${p.x},${p.y}`;
-                }).join(' ');
-                svgEl.setAttribute('points', pointsStr);
-                break;
-            case 'segment':
-            case 'section':
-            case 'chain':
-                svgEl = document.createElementNS(SVG_NS, 'polyline');
-                pointsStr = el.points.map(p_label => {
-                    const p = points[p_label];
-                    return `${p.x},${p.y}`;
-                }).join(' ');
-                svgEl.setAttribute('points', pointsStr);
-                break;
-        }
-
-        if (svgEl) {
-            svgEl.id = el.label;
-            el.classes.forEach(c => svgEl.classList.add(c));
-            if (['polygon', 'segment', 'section', 'chain'].includes(el.type)) {
-                graphicsContainer.appendChild(svgEl);
-            } else {
-                elementsContainer.appendChild(svgEl);
-            }
-        }
-    }
-
-    function renderPoint(el) {
-        const circle = document.createElementNS(SVG_NS, 'circle');
-        circle.id = el.label;
-        circle.setAttribute('cx', el.x);
-        circle.setAttribute('cy', el.y);
-        circle.setAttribute('r', 0.02); // Initial radius, will be scaled
-        el.classes.forEach(c => circle.classList.add(c));
-        pointsContainer.appendChild(circle);
-    }
-
     function addPointToTable(el) {
-        const row = pointsTableBody.insertRow();
+        const row = GEOMETOR.tables.points.insertRow();
         row.dataset.label = el.label;
         const labelCell = row.insertCell();
         const xCell = row.insertCell();
@@ -142,19 +82,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function addStructureToTable(el) {
-        const row = structuresTableBody.insertRow();
+        const row = GEOMETOR.tables.structures.insertRow();
         row.dataset.label = el.label;
         row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td><td><button class="delete-btn">🗑️</button></td>`;
     }
 
     function addGraphicToTable(el) {
-        const row = graphicsTableBody.insertRow();
+        const row = GEOMETOR.tables.graphics.insertRow();
         row.dataset.label = el.label;
         row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td><td><button class="delete-btn">🗑️</button></td>`;
     }
 
     function addChronologicalRow(el) {
-        const row = chronoTableBody.insertRow();
+        const row = GEOMETOR.tables.chrono.insertRow();
         row.dataset.label = el.label;
         let parents = el.parents || [];
         if (el.type === 'line') {
@@ -175,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addPolygonButton = document.getElementById('add-polygon-btn');
 
     function updateConstructionButtons() {
-        const numPoints = selectedPoints.length;
+        const numPoints = GEOMETOR.selectedPoints.length;
         addLineBtn.disabled = numPoints !== 2;
         addCircleBtn.disabled = numPoints !== 2;
         addSegmentBtn.disabled = numPoints !== 2;
@@ -184,33 +124,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function toggleSelection(label) {
-        const index = selectedPoints.indexOf(label);
+        const index = GEOMETOR.selectedPoints.indexOf(label);
         if (index > -1) {
             // Deselect
-            selectedPoints.splice(index, 1);
+            GEOMETOR.selectedPoints.splice(index, 1);
         } else {
             // Select
-            selectedPoints.push(label);
+            GEOMETOR.selectedPoints.push(label);
         }
         // Re-render to apply/remove selection styles consistently
-        renderModel(modelData);
+        renderModel(GEOMETOR.modelData);
         updateConstructionButtons();
     }
 
     function clearSelection() {
-        selectedPoints = [];
-        renderModel(modelData);
+        GEOMETOR.selectedPoints = [];
+        renderModel(GEOMETOR.modelData);
         updateConstructionButtons();
     }
 
-    pointsContainer.addEventListener('click', (event) => {
+    GEOMETOR.pointsContainer.addEventListener('click', (event) => {
         const target = event.target;
         if (target.tagName === 'circle' && target.id) {
             toggleSelection(target.id);
         }
     });
 
-    pointsTableBody.addEventListener('click', (event) => {
+    GEOMETOR.tables.points.addEventListener('click', (event) => {
         const row = event.target.closest('tr');
         if (row && row.dataset.label) {
             toggleSelection(row.dataset.label);
@@ -218,8 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     addLineBtn.addEventListener('click', () => {
-        if (selectedPoints.length === 2) {
-            const [pt1, pt2] = selectedPoints;
+        if (GEOMETOR.selectedPoints.length === 2) {
+            const [pt1, pt2] = GEOMETOR.selectedPoints;
             fetch('/api/construct/line', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -234,8 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     addCircleBtn.addEventListener('click', () => {
-        if (selectedPoints.length === 2) {
-            const [pt1, pt2] = selectedPoints;
+        if (GEOMETOR.selectedPoints.length === 2) {
+            const [pt1, pt2] = GEOMETOR.selectedPoints;
             fetch('/api/construct/circle', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -265,102 +205,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     addSegmentBtn.addEventListener('click', () => {
-        if (selectedPoints.length === 2) {
-            constructPoly('/api/set/segment', selectedPoints);
+        if (GEOMETOR.selectedPoints.length === 2) {
+            constructPoly('/api/set/segment', GEOMETOR.selectedPoints);
         }
     });
 
     addSectionBtn.addEventListener('click', () => {
-        if (selectedPoints.length === 3) {
-            constructPoly('/api/set/section', selectedPoints);
+        if (GEOMETOR.selectedPoints.length === 3) {
+            constructPoly('/api/set/section', GEOMETOR.selectedPoints);
         }
     });
 
     addPolygonButton.addEventListener('click', () => {
-        if (selectedPoints.length >= 2) {
-            constructPoly('/api/set/polygon', selectedPoints);
+        if (GEOMETOR.selectedPoints.length >= 2) {
+            constructPoly('/api/set/polygon', GEOMETOR.selectedPoints);
         }
     });
 
 
-    function scaleCircles() {
-        const svgRect = svg.getBoundingClientRect();
-        if (svgRect.width === 0) return;
-
-        const currentViewBox = svg.getAttribute('viewBox').split(' ').map(Number);
-        const viewBoxWidth = currentViewBox[2];
-        const unitsPerPixel = viewBoxWidth / svgRect.width;
-        const desiredRadiusPixels = 5; 
-        const newRadius = desiredRadiusPixels * unitsPerPixel;
-
-        const circles = pointsContainer.querySelectorAll('circle');
-        circles.forEach(circle => {
-            circle.setAttribute('r', newRadius);
-        });
-    }
-
-    svg.addEventListener('wheel', (event) => {
-        event.preventDefault();
-        const currentViewBox = svg.getAttribute('viewBox').split(' ').map(Number);
-        let [x, y, width, height] = currentViewBox;
-        const scaleFactor = event.deltaY > 0 ? 1.1 : 1 / 1.1;
-        const { clientX, clientY } = event;
-        const svgRect = svg.getBoundingClientRect();
-        const svgX = clientX - svgRect.left;
-        const svgY = clientY - svgRect.top;
-        const mousePoint = {
-            x: x + (svgX / svgRect.width) * width,
-            y: y + (svgY / svgRect.height) * height
-        };
-        width *= scaleFactor;
-        height *= scaleFactor;
-        x = mousePoint.x - (svgX / svgRect.width) * width;
-        y = mousePoint.y - (svgY / svgRect.height) * height;
-        svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
-        scaleCircles();
-    });
-
-    let isPanning = false;
-    let startPoint = { x: 0, y: 0 };
-
-    svg.addEventListener('mousedown', (event) => {
-        isPanning = true;
-        startPoint = { x: event.clientX, y: event.clientY };
-        svg.style.cursor = 'grabbing';
-    });
-
-    svg.addEventListener('mousemove', (event) => {
-        if (!isPanning) return;
-        const svgRect = svg.getBoundingClientRect();
-        const currentViewBox = svg.getAttribute('viewBox').split(' ').map(Number);
-        let [x, y, width, height] = currentViewBox;
-        const dx = (event.clientX - startPoint.x) * (width / svgRect.width);
-        const dy = (event.clientY - startPoint.y) * (height / svgRect.height);
-        x -= dx;
-        y -= dy;
-        svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
-        startPoint = { x: event.clientX, y: event.clientY };
-    });
-
-    svg.addEventListener('mouseup', () => {
-        isPanning = false;
-        svg.style.cursor = 'default';
-    });
-
-    svg.addEventListener('mouseleave', () => {
-        isPanning = false;
-        svg.style.cursor = 'default';
-    });
-
-    function updateHoverCard(element) {
+    GEOMETOR.updateHoverCard = function(element) {
         if (!element) {
-            hoverCard.style.display = 'none';
+            GEOMETOR.hoverCard.style.display = 'none';
             return;
         }
 
         let content = `<p><span class="label">${element.label}</span> ${element.type}`;
         if (element.classes && element.classes.length > 0) {
             content += ` <span class="classes">(${element.classes.join(', ')})</span>`;
+        }
+        if (element.parents && element.parents.length > 0) {
+            content += ` <span class="parents">[${element.parents.join(', ')}]</span>`;
         }
         content += `</p>`;
 
@@ -384,23 +258,52 @@ document.addEventListener('DOMContentLoaded', () => {
             content += `<span> </span><span>(${element.y.toFixed(4)})</span>`;
 
             content += '</div>';
+        } else if (element.type === 'line' || element.type === 'circle') {
+            content += '<hr>';
+            if (element.type === 'circle') {
+                const radius = document.createElement('div');
+                katex.render(`r = ${element.latex_radius}`, radius);
+                content += radius.innerHTML;
+            }
+            const equation = document.createElement('div');
+            katex.render(element.latex_equation, equation);
+            content += equation.innerHTML;
+        } else if (element.type === 'segment') {
+            content += '<hr>';
+            const length = document.createElement('div');
+            katex.render(`l = ${element.latex_length}`, length);
+            content += length.innerHTML;
+        } else if (element.type === 'section') {
+            content += '<hr>';
+            const lengths = document.createElement('div');
+            katex.render(`[${element.latex_lengths.join(', ')}]`, lengths);
+            content += lengths.innerHTML;
+            const ratio = document.createElement('div');
+            katex.render(`ratio = ${element.latex_ratio}`, ratio);
+            content += ratio.innerHTML;
+        } else if (element.type === 'wedge') {
+            content += '<hr>';
+            const radius = document.createElement('div');
+            katex.render(`r = ${element.latex_radius}`, radius);
+            content += radius.innerHTML;
+            const radians = document.createElement('div');
+            katex.render(`rad = ${element.latex_radians}`, radians);
+            content += radians.innerHTML;
         }
 
-        hoverCard.innerHTML = content;
-        hoverCard.style.display = 'block';
+        GEOMETOR.hoverCard.innerHTML = content;
+        GEOMETOR.hoverCard.style.display = 'block';
     }
 
-    let isPositionedByTable = false;
-
-    function setElementHover(label, hoverState) {
-        const elementData = modelData.elements.find(el => el.label === label);
+    GEOMETOR.setElementHover = function(label, hoverState) {
+        const elementData = GEOMETOR.modelData.elements.find(el => el.label === label);
         if (!elementData) return;
 
         const svgElement = document.getElementById(label);
-        const pointsRow = pointsTableBody.querySelector(`tr[data-label="${label}"]`);
-        const structuresRow = structuresTableBody.querySelector(`tr[data-label="${label}"]`);
-        const graphicsRow = graphicsTableBody.querySelector(`tr[data-label="${label}"]`);
-        const chronoRow = chronoTableBody.querySelector(`tr[data-label="${label}"]`);
+        const pointsRow = GEOMETOR.tables.points.querySelector(`tr[data-label="${label}"]`);
+        const structuresRow = GEOMETOR.tables.structures.querySelector(`tr[data-label="${label}"]`);
+        const graphicsRow = GEOMETOR.tables.graphics.querySelector(`tr[data-label="${label}"]`);
+        const chronoRow = GEOMETOR.tables.chrono.querySelector(`tr[data-label="${label}"]`);
 
         const action = hoverState ? 'add' : 'remove';
         if (svgElement) svgElement.classList[action]('hover');
@@ -419,47 +322,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
         parentLabels.forEach(parentLabel => {
             if (parentLabel) {
-                setElementHover(parentLabel, hoverState);
+                GEOMETOR.setElementHover(parentLabel, hoverState);
             }
         });
     }
 
-    // SVG hover
-    document.addEventListener('mouseover', (event) => {
-        const target = event.target;
-        if (target.namespaceURI === SVG_NS && target.id && target.id !== 'drawing') {
-            isPositionedByTable = false;
-            setElementHover(target.id, true);
-            const elementData = modelData.elements.find(el => el.label === target.id);
-            updateHoverCard(elementData);
-        }
-    });
-
-    document.addEventListener('mouseout', (event) => {
-        const target = event.target;
-        if (target.namespaceURI === SVG_NS && target.id) {
-            setElementHover(target.id, false);
-            hoverCard.style.display = 'none';
-        }
-    });
-
     // Table hovers
-    [pointsTableBody, structuresTableBody, graphicsTableBody, chronoTableBody].forEach(tableBody => {
+    Object.values(GEOMETOR.tables).forEach(tableBody => {
         tableBody.addEventListener('mouseover', (event) => {
             const row = event.target.closest('tr');
             if (row && row.dataset.label) {
                 const label = row.dataset.label;
-                setElementHover(label, true);
+                GEOMETOR.setElementHover(label, true);
 
-                const elementData = modelData.elements.find(el => el.label === label);
+                const elementData = GEOMETOR.modelData.elements.find(el => el.label === label);
                 const svgElement = document.getElementById(label);
                 if (elementData && svgElement) {
-                    updateHoverCard(elementData);
+                    GEOMETOR.updateHoverCard(elementData);
                     // Position card next to element in SVG
-                    isPositionedByTable = true;
+                    GEOMETOR.isPositionedByTable = true;
                     const elemRect = svgElement.getBoundingClientRect();
-                    hoverCard.style.left = `${elemRect.right + 10}px`;
-                    hoverCard.style.top = `${elemRect.top}px`;
+                    GEOMETOR.hoverCard.style.left = `${elemRect.right + 10}px`;
+                    GEOMETOR.hoverCard.style.top = `${elemRect.top}px`;
                 }
             }
         });
@@ -467,9 +351,9 @@ document.addEventListener('DOMContentLoaded', () => {
         tableBody.addEventListener('mouseout', (event) => {
             const row = event.target.closest('tr');
             if (row && row.dataset.label) {
-                setElementHover(row.dataset.label, false);
+                GEOMETOR.setElementHover(row.dataset.label, false);
             }
-            hoverCard.style.display = 'none';
+            GEOMETOR.hoverCard.style.display = 'none';
         });
 
         // Handle delete button clicks
@@ -493,10 +377,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Chronological Table selection
-    chronoTableBody.addEventListener('click', (event) => {
+    GEOMETOR.tables.chrono.addEventListener('click', (event) => {
         const row = event.target.closest('tr');
         if (row && row.dataset.label) {
-            const elementData = modelData.elements.find(el => el.label === row.dataset.label);
+            const elementData = GEOMETOR.modelData.elements.find(el => el.label === row.dataset.label);
             if (elementData && elementData.type === 'point') {
                 toggleSelection(row.dataset.label);
             }
@@ -504,21 +388,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.addEventListener('mousemove', (event) => {
-        if (hoverCard.style.display === 'block' && !isPositionedByTable) {
-            hoverCard.style.left = `${event.clientX + 15}px`;
-            hoverCard.style.top = `${event.clientY + 15}px`;
+        if (GEOMETOR.hoverCard.style.display === 'block' && !GEOMETOR.isPositionedByTable) {
+            GEOMETOR.hoverCard.style.left = `${event.clientX + 15}px`;
+            GEOMETOR.hoverCard.style.top = `${event.clientY + 15}px`;
         }
     });
     
     document.addEventListener('mouseout', (event) => {
         const target = event.target;
         if (target.namespaceURI === SVG_NS && target.id) {
-            hoverCard.style.display = 'none';
+            GEOMETOR.hoverCard.style.display = 'none';
         }
     });
 
     const resizeObserver = new ResizeObserver(scaleCircles);
-    resizeObserver.observe(svg);
+    resizeObserver.observe(GEOMETOR.svg);
 
     // Initial fetch
     fetch('/api/model')
@@ -656,4 +540,6 @@ document.addEventListener('DOMContentLoaded', () => {
     saveAsBtn.addEventListener('click', () => {
         saveModel();
     });
+
+    initSvgEventListeners();
 });
