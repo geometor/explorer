@@ -1,0 +1,4438 @@
+{
+    "name": "new",
+    "next_label": "RRRR",
+    "sympy_objects": [
+        "Point2D(Integer(0), Integer(0))",
+        "Point2D(Integer(1), Integer(0))",
+        "Line2D(Point2D(Integer(0), Integer(0)), Point2D(Integer(1), Integer(0)))",
+        "Circle(Point2D(Integer(0), Integer(0)), Integer(1))",
+        "Point2D(Integer(-1), Integer(0))",
+        "Circle(Point2D(Integer(1), Integer(0)), Integer(1))",
+        "Point2D(Integer(2), Integer(0))",
+        "Point2D(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "Point2D(Rational(1, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "Line2D(Point2D(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Rational(1, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Rational(1, 2), Integer(0))",
+        "Line2D(Point2D(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Integer(0), Integer(0)))",
+        "Point2D(Rational(-1, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "Line2D(Point2D(Rational(-1, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Integer(1), Integer(0)))",
+        "Point2D(Add(Integer(1), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Rational(1, 2))",
+        "Point2D(Add(Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))), Integer(1)), Rational(-1, 2))",
+        "Point2D(Rational(1, 2), Mul(Rational(1, 6), Pow(Integer(3), Rational(1, 2))))",
+        "Circle(Point2D(Rational(1, 2), Mul(Rational(1, 6), Pow(Integer(3), Rational(1, 2)))), Mul(Rational(2, 3), Pow(Integer(3), Rational(1, 2))))",
+        "Point2D(Add(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Integer(0))",
+        "<geometor.model.sections.Section object at 0x7143278510d0>",
+        "<geometor.model.sections.Section object at 0x714327869c70>",
+        "<geometor.model.sections.Section object at 0x714327869e50>",
+        "Point2D(Add(Rational(1, 2), Mul(Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Integer(0))",
+        "<geometor.model.sections.Section object at 0x7143278b8ef0>",
+        "<geometor.model.sections.Section object at 0x7143278b9550>",
+        "<geometor.model.sections.Section object at 0x7143278bb2f0>",
+        "Point2D(Rational(3, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "Point2D(Rational(1, 2), Mul(Rational(5, 6), Pow(Integer(3), Rational(1, 2))))",
+        "Point2D(Rational(3, 2), Mul(Integer(-1), Rational(1, 6), Pow(Integer(3), Rational(1, 2))))",
+        "Line2D(Point2D(Integer(0), Integer(0)), Point2D(Rational(1, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Rational(-1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "Point2D(Rational(1, 4), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))",
+        "Point2D(Add(Rational(1, 4), Mul(Integer(-1), Rational(1, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x71432776b8f0>",
+        "<geometor.model.sections.Section object at 0x71432776be90>",
+        "Point2D(Add(Rational(1, 4), Mul(Rational(1, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x71432786ba10>",
+        "<geometor.model.sections.Section object at 0x71432799e390>",
+        "Line2D(Point2D(Rational(1, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Integer(1), Integer(0)))",
+        "Point2D(Rational(3, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "Point2D(Add(Mul(Rational(1, 4), Pow(Integer(5), Rational(1, 2))), Rational(3, 4)), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x7143277e13d0>",
+        "<geometor.model.sections.Section object at 0x7143277e0c50>",
+        "Point2D(Add(Rational(3, 4), Mul(Integer(-1), Rational(1, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x71432776bd70>",
+        "<geometor.model.sections.Section object at 0x7143279d38f0>",
+        "Line2D(Point2D(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Rational(3, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))))",
+        "Line2D(Point2D(Rational(-1, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Rational(3, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))))",
+        "Line2D(Point2D(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Rational(1, 4), Mul(Integer(-1), Rational(1, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))))",
+        "Point2D(Add(Mul(Integer(-1), Rational(1, 2), Pow(Integer(5), Rational(1, 2))), Rational(-1, 2)), Integer(0))",
+        "<geometor.model.sections.Section object at 0x714327674ef0>",
+        "<geometor.model.sections.Section object at 0x714327675190>",
+        "<geometor.model.sections.Section object at 0x7143276774d0>",
+        "<geometor.model.sections.Section object at 0x714327677650>",
+        "<geometor.model.sections.Section object at 0x714327677890>",
+        "<geometor.model.sections.Section object at 0x714327677b90>",
+        "Point2D(Add(Mul(Integer(-1), Rational(3, 8), Pow(Integer(5), Rational(1, 2))), Rational(-1, 8)), Add(Mul(Integer(-1), Rational(1, 16), Pow(Integer(15), Rational(1, 2))), Mul(Pow(Integer(3), Rational(1, 2)), Add(Rational(1, 8), Mul(Integer(-1), Rational(1, 16), Pow(Integer(5), Rational(1, 2)))))))",
+        "Point2D(Rational(3, 4), Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))))",
+        "<geometor.model.sections.Section object at 0x7143276a7c50>",
+        "Point2D(Add(Mul(Rational(3, 2), Pow(Integer(5), Rational(1, 2))), Integer(4)), Add(Mul(Integer(-1), Rational(1, 2), Pow(Integer(15), Rational(1, 2))), Mul(Integer(-1), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Add(Mul(Rational(1, 4), Pow(Integer(5), Rational(1, 2))), Rational(5, 4)), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x71432750b6b0>",
+        "<geometor.model.sections.Section object at 0x71432750a090>",
+        "<geometor.model.sections.Section object at 0x7143275b8470>",
+        "<geometor.model.sections.Section object at 0x71432750a3f0>",
+        "<geometor.model.sections.Section object at 0x7143275b9550>",
+        "<geometor.model.sections.Section object at 0x7143276a6750>",
+        "<geometor.model.sections.Section object at 0x71432750a1b0>",
+        "<geometor.model.sections.Section object at 0x714327509fd0>",
+        "<geometor.model.sections.Section object at 0x71432796a0f0>",
+        "<geometor.model.sections.Section object at 0x714327927110>",
+        "Point2D(Add(Mul(Integer(-1), Pow(Integer(5), Rational(1, 2))), Rational(-3, 2)), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "<geometor.model.sections.Section object at 0x714327ab5d30>",
+        "<geometor.model.sections.Section object at 0x71432799c830>",
+        "<geometor.model.sections.Section object at 0x714327823b90>",
+        "<geometor.model.sections.Section object at 0x7143279d10d0>",
+        "<geometor.model.sections.Section object at 0x7143275b83b0>",
+        "<geometor.model.sections.Section object at 0x7143275b88f0>",
+        "Line2D(Point2D(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Integer(0)))",
+        "Point2D(Add(Mul(Integer(-1), Rational(3, 8), Pow(Integer(5), Rational(1, 2))), Rational(-1, 8)), Add(Mul(Pow(Integer(3), Rational(1, 2)), Add(Rational(-1, 8), Mul(Rational(1, 16), Pow(Integer(5), Rational(1, 2))))), Mul(Rational(1, 16), Pow(Integer(15), Rational(1, 2)))))",
+        "Point2D(Add(Rational(9, 8), Mul(Integer(-1), Rational(3, 8), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Pow(Integer(3), Rational(1, 2)), Add(Mul(Integer(-1), Rational(1, 16), Pow(Integer(5), Rational(1, 2))), Rational(-1, 8))), Mul(Integer(-1), Rational(1, 16), Pow(Integer(15), Rational(1, 2)))))",
+        "Point2D(Add(Mul(Integer(-1), Rational(3, 2), Pow(Integer(5), Rational(1, 2))), Integer(-2)), Add(Pow(Integer(3), Rational(1, 2)), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x71432786a3f0>",
+        "Point2D(Add(Rational(-3, 4), Mul(Rational(1, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x71432799d190>",
+        "<geometor.model.sections.Section object at 0x7143278b8b30>",
+        "<geometor.model.sections.Section object at 0x7143275b9130>",
+        "<geometor.model.sections.Section object at 0x7143277e37d0>",
+        "<geometor.model.sections.Section object at 0x7143275bab10>",
+        "Point2D(Add(Mul(Rational(1, 4), Pow(Integer(5), Rational(1, 2))), Rational(7, 4)), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x7143276749b0>",
+        "<geometor.model.sections.Section object at 0x714327969d30>",
+        "<geometor.model.sections.Section object at 0x71432799fcb0>",
+        "<geometor.model.sections.Section object at 0x714327af8b30>",
+        "<geometor.model.sections.Section object at 0x7143277e0050>",
+        "<geometor.model.sections.Section object at 0x714327add190>",
+        "<geometor.model.sections.Section object at 0x7143276a49b0>",
+        "<geometor.model.sections.Section object at 0x7143274b2b10>",
+        "Point2D(Add(Rational(1, 2), Mul(Integer(-1), Pow(Integer(5), Rational(1, 2)))), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "<geometor.model.sections.Section object at 0x7143274b1970>",
+        "<geometor.model.sections.Section object at 0x7143274b0cb0>",
+        "<geometor.model.sections.Section object at 0x7143274b0a70>",
+        "<geometor.model.sections.Section object at 0x7143274b18b0>",
+        "<geometor.model.sections.Section object at 0x7143274b13d0>",
+        "<geometor.model.sections.Section object at 0x7143274b29f0>",
+        "Line2D(Point2D(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Rational(3, 4), Mul(Integer(-1), Rational(1, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))))",
+        "Point2D(Add(Rational(3, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Integer(0))",
+        "<geometor.model.sections.Section object at 0x7143274b3770>",
+        "<geometor.model.sections.Section object at 0x7143274b27b0>",
+        "<geometor.model.sections.Section object at 0x7143274b34d0>",
+        "<geometor.model.sections.Section object at 0x7143274b3a70>",
+        "<geometor.model.sections.Section object at 0x7143274b1850>",
+        "<geometor.model.sections.Section object at 0x7143274b3f50>",
+        "<geometor.model.sections.Section object at 0x7143274b3b90>",
+        "Point2D(Rational(1, 4), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))",
+        "Point2D(Add(Rational(9, 8), Mul(Integer(-1), Rational(3, 8), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 16), Pow(Integer(15), Rational(1, 2))), Mul(Pow(Integer(3), Rational(1, 2)), Add(Rational(1, 8), Mul(Rational(1, 16), Pow(Integer(5), Rational(1, 2)))))))",
+        "<geometor.model.sections.Section object at 0x7143274b2e10>",
+        "Point2D(Add(Integer(1), Mul(Integer(-1), Rational(3, 10), Pow(Integer(5), Rational(1, 2)))), Mul(Rational(1, 10), Pow(Integer(15), Rational(1, 2))))",
+        "Point2D(Add(Rational(-1, 4), Mul(Rational(1, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x7143274e8410>",
+        "<geometor.model.sections.Section object at 0x7143234cf1d0>",
+        "<geometor.model.sections.Section object at 0x7143234cf710>",
+        "<geometor.model.sections.Section object at 0x714327850a70>",
+        "<geometor.model.sections.Section object at 0x71432750a750>",
+        "<geometor.model.sections.Section object at 0x7143278b8410>",
+        "<geometor.model.sections.Section object at 0x7143279d1310>",
+        "<geometor.model.sections.Section object at 0x71432799ec30>",
+        "<geometor.model.sections.Section object at 0x7143275b9d90>",
+        "<geometor.model.sections.Section object at 0x71432750af90>",
+        "<geometor.model.sections.Section object at 0x714327508290>",
+        "Point2D(Add(Rational(5, 2), Mul(Integer(-1), Pow(Integer(5), Rational(1, 2)))), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "<geometor.model.sections.Section object at 0x71432342d3d0>",
+        "<geometor.model.sections.Section object at 0x7143279d2690>",
+        "<geometor.model.sections.Section object at 0x714337f66990>",
+        "<geometor.model.sections.Section object at 0x7143278686b0>",
+        "<geometor.model.sections.Section object at 0x7143279261b0>",
+        "<geometor.model.sections.Section object at 0x714327adf8f0>",
+        "<geometor.model.sections.Section object at 0x71432776b290>",
+        "Line2D(Point2D(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Rational(1, 4), Mul(Rational(1, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))))",
+        "Point2D(Add(Rational(-1, 2), Mul(Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Integer(0))",
+        "<geometor.model.sections.Section object at 0x7143274ea5d0>",
+        "<geometor.model.sections.Section object at 0x7143279695b0>",
+        "<geometor.model.sections.Section object at 0x714327afbbf0>",
+        "<geometor.model.sections.Section object at 0x714327afb590>",
+        "<geometor.model.sections.Section object at 0x7143274ea3f0>",
+        "<geometor.model.sections.Section object at 0x7143274e9730>",
+        "<geometor.model.sections.Section object at 0x71432342e270>",
+        "<geometor.model.sections.Section object at 0x714321bcd370>",
+        "<geometor.model.sections.Section object at 0x71432799c170>",
+        "Point2D(Add(Rational(-1, 8), Mul(Rational(3, 8), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 16), Pow(Integer(15), Rational(1, 2))), Mul(Pow(Integer(3), Rational(1, 2)), Add(Rational(1, 8), Mul(Rational(1, 16), Pow(Integer(5), Rational(1, 2)))))))",
+        "Point2D(Rational(3, 4), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))",
+        "<geometor.model.sections.Section object at 0x714327adec90>",
+        "Point2D(Add(Integer(4), Mul(Integer(-1), Rational(3, 2), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2)))))",
+        "Point2D(Add(Rational(5, 4), Mul(Integer(-1), Rational(1, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x714321b27ef0>",
+        "<geometor.model.sections.Section object at 0x714327852810>",
+        "<geometor.model.sections.Section object at 0x714327adeab0>",
+        "<geometor.model.sections.Section object at 0x7143279242f0>",
+        "<geometor.model.sections.Section object at 0x714327926a50>",
+        "<geometor.model.sections.Section object at 0x714327925eb0>",
+        "<geometor.model.sections.Section object at 0x714327707110>",
+        "<geometor.model.sections.Section object at 0x714327adf050>",
+        "<geometor.model.sections.Section object at 0x714327926330>",
+        "<geometor.model.sections.Section object at 0x714327af9fd0>",
+        "<geometor.model.sections.Section object at 0x7143278b9490>",
+        "Point2D(Add(Rational(-3, 2), Pow(Integer(5), Rational(1, 2))), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "<geometor.model.sections.Section object at 0x7143274b3590>",
+        "<geometor.model.sections.Section object at 0x7143274b3290>",
+        "<geometor.model.sections.Section object at 0x7143275bbf50>",
+        "<geometor.model.sections.Section object at 0x714327adfdd0>",
+        "<geometor.model.sections.Section object at 0x714327821910>",
+        "<geometor.model.sections.Section object at 0x71432750aff0>",
+        "<geometor.model.sections.Section object at 0x7143278b8950>",
+        "<geometor.model.sections.Section object at 0x7143274b0d10>",
+        "Line2D(Point2D(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Rational(1, 2), Mul(Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Integer(0)))",
+        "Point2D(Add(Rational(-1, 8), Mul(Rational(3, 8), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Pow(Integer(3), Rational(1, 2)), Add(Mul(Integer(-1), Rational(1, 16), Pow(Integer(5), Rational(1, 2))), Rational(-1, 8))), Mul(Integer(-1), Rational(1, 16), Pow(Integer(15), Rational(1, 2)))))",
+        "Point2D(Add(Mul(Rational(3, 8), Pow(Integer(5), Rational(1, 2))), Rational(9, 8)), Add(Mul(Pow(Integer(3), Rational(1, 2)), Add(Rational(-1, 8), Mul(Rational(1, 16), Pow(Integer(5), Rational(1, 2))))), Mul(Rational(1, 16), Pow(Integer(15), Rational(1, 2)))))",
+        "Point2D(Add(Integer(-2), Mul(Rational(3, 2), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 2), Pow(Integer(15), Rational(1, 2))), Pow(Integer(3), Rational(1, 2))))",
+        "<geometor.model.sections.Section object at 0x7143276a6330>",
+        "Point2D(Add(Rational(-3, 4), Mul(Integer(-1), Rational(1, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x71432799d9d0>",
+        "<geometor.model.sections.Section object at 0x71432799e1b0>",
+        "<geometor.model.sections.Section object at 0x71432750bb90>",
+        "<geometor.model.sections.Section object at 0x7143275b8bf0>",
+        "<geometor.model.sections.Section object at 0x7143275b8170>",
+        "<geometor.model.sections.Section object at 0x7143275b9370>",
+        "<geometor.model.sections.Section object at 0x7143275bb110>",
+        "Point2D(Add(Rational(7, 4), Mul(Integer(-1), Rational(1, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x71432786bcb0>",
+        "<geometor.model.sections.Section object at 0x7143278b9190>",
+        "<geometor.model.sections.Section object at 0x7143278b8590>",
+        "<geometor.model.sections.Section object at 0x71432776a690>",
+        "<geometor.model.sections.Section object at 0x714327ab5a90>",
+        "<geometor.model.sections.Section object at 0x714327822390>",
+        "<geometor.model.sections.Section object at 0x7143273e1610>",
+        "<geometor.model.sections.Section object at 0x7143277686b0>",
+        "<geometor.model.sections.Section object at 0x714327afa150>",
+        "<geometor.model.sections.Section object at 0x71432786b590>",
+        "Point2D(Add(Rational(1, 2), Pow(Integer(5), Rational(1, 2))), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "<geometor.model.sections.Section object at 0x714327851a30>",
+        "<geometor.model.sections.Section object at 0x7143276a6f30>",
+        "<geometor.model.sections.Section object at 0x714321bcf770>",
+        "<geometor.model.sections.Section object at 0x714321bcfad0>",
+        "<geometor.model.sections.Section object at 0x7143276a5790>",
+        "<geometor.model.sections.Section object at 0x71432776bf50>",
+        "<geometor.model.sections.Section object at 0x7143273e2a50>",
+        "Line2D(Point2D(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Mul(Rational(1, 4), Pow(Integer(5), Rational(1, 2))), Rational(3, 4)), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))))",
+        "Point2D(Add(Mul(Rational(1, 2), Pow(Integer(5), Rational(1, 2))), Rational(3, 2)), Integer(0))",
+        "<geometor.model.sections.Section object at 0x714321bcccb0>",
+        "<geometor.model.sections.Section object at 0x714321bcf0b0>",
+        "<geometor.model.sections.Section object at 0x7143278ba270>",
+        "<geometor.model.sections.Section object at 0x71432776b050>",
+        "<geometor.model.sections.Section object at 0x714321bcce90>",
+        "<geometor.model.sections.Section object at 0x714321bcc830>",
+        "<geometor.model.sections.Section object at 0x7143274eaff0>",
+        "<geometor.model.sections.Section object at 0x714327768590>",
+        "<geometor.model.sections.Section object at 0x71432776ab70>",
+        "<geometor.model.sections.Section object at 0x7143274ea210>",
+        "Point2D(Rational(1, 4), Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))))",
+        "Point2D(Add(Mul(Rational(3, 8), Pow(Integer(5), Rational(1, 2))), Rational(9, 8)), Add(Mul(Integer(-1), Rational(1, 16), Pow(Integer(15), Rational(1, 2))), Mul(Pow(Integer(3), Rational(1, 2)), Add(Rational(1, 8), Mul(Integer(-1), Rational(1, 16), Pow(Integer(5), Rational(1, 2)))))))",
+        "<geometor.model.sections.Section object at 0x7143279688f0>",
+        "Point2D(Add(Mul(Rational(3, 10), Pow(Integer(5), Rational(1, 2))), Integer(1)), Mul(Integer(-1), Rational(1, 10), Pow(Integer(15), Rational(1, 2))))",
+        "<geometor.model.sections.Section object at 0x7143274b1c10>",
+        "Point2D(Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(5), Rational(1, 2))), Rational(-1, 4)), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x714327704d70>",
+        "<geometor.model.sections.Section object at 0x7143279d13d0>",
+        "<geometor.model.sections.Section object at 0x714321b26570>",
+        "<geometor.model.sections.Section object at 0x714327853ef0>",
+        "<geometor.model.sections.Section object at 0x71432796a150>",
+        "<geometor.model.sections.Section object at 0x714327969250>",
+        "<geometor.model.sections.Section object at 0x7143276757f0>",
+        "<geometor.model.sections.Section object at 0x714327ab69f0>",
+        "<geometor.model.sections.Section object at 0x714327927ad0>",
+        "<geometor.model.sections.Section object at 0x714327705430>",
+        "<geometor.model.sections.Section object at 0x7143279d3470>",
+        "<geometor.model.sections.Section object at 0x714327ab4890>",
+        "Point2D(Add(Pow(Integer(5), Rational(1, 2)), Rational(5, 2)), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "<geometor.model.sections.Section object at 0x714327af8a10>",
+        "<geometor.model.sections.Section object at 0x714327addd30>",
+        "<geometor.model.sections.Section object at 0x714327af9970>",
+        "<geometor.model.sections.Section object at 0x7143274ebbf0>",
+        "<geometor.model.sections.Section object at 0x7143279d0350>",
+        "<geometor.model.sections.Section object at 0x7143278bb5f0>",
+        "<geometor.model.sections.Section object at 0x714327853b90>",
+        "<geometor.model.sections.Section object at 0x714327afb5f0>",
+        "<geometor.model.sections.Section object at 0x714327853530>",
+        "<geometor.model.sections.Section object at 0x7143272d5010>",
+        "Line2D(Point2D(Add(Rational(1, 4), Mul(Integer(-1), Rational(1, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Add(Rational(1, 2), Mul(Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Integer(0)))",
+        "Point2D(Add(Rational(-3, 32), Mul(Rational(1, 32), Pow(Integer(13), Rational(1, 2))), Mul(Rational(3, 32), Pow(Integer(5), Rational(1, 2))), Mul(Rational(3, 32), Pow(Integer(65), Rational(1, 2)))), Add(Mul(Pow(Integer(15), Rational(1, 2)), Add(Rational(-3, 32), Mul(Integer(-1), Rational(1, 160), Pow(Integer(65), Rational(1, 2))), Mul(Rational(1, 32), Pow(Integer(13), Rational(1, 2))))), Mul(Integer(-1), Rational(1, 32), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Add(Mul(Integer(-1), Rational(3, 32), Pow(Integer(65), Rational(1, 2))), Mul(Integer(-1), Rational(1, 32), Pow(Integer(13), Rational(1, 2))), Rational(-3, 32), Mul(Rational(3, 32), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Pow(Integer(15), Rational(1, 2)), Add(Mul(Integer(-1), Rational(1, 32), Pow(Integer(13), Rational(1, 2))), Rational(-3, 32), Mul(Rational(1, 160), Pow(Integer(65), Rational(1, 2))))), Mul(Integer(-1), Rational(1, 32), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Add(Mul(Integer(-1), Rational(1, 4), Pow(Add(Integer(-3), Mul(Integer(4), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Integer(-1), Rational(1, 16), Pow(Add(Integer(-15), Mul(Integer(20), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Rational(3, 16), Pow(Integer(5), Rational(1, 2))), Rational(5, 8)), Add(Mul(Integer(-1), Rational(1, 8), Pow(Integer(15), Rational(1, 2))), Mul(Integer(-1), Rational(1, 16), Pow(Add(Integer(-9), Mul(Integer(12), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Rational(3, 16), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Add(Mul(Rational(1, 16), Pow(Add(Integer(-15), Mul(Integer(20), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Rational(3, 16), Pow(Integer(5), Rational(1, 2))), Mul(Rational(1, 4), Pow(Add(Integer(-3), Mul(Integer(4), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Rational(5, 8)), Add(Mul(Integer(-1), Rational(1, 8), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 16), Pow(Add(Integer(-9), Mul(Integer(12), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Rational(3, 16), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Rational(1, 2), Add(Mul(Integer(-1), Rational(2, 11), Pow(Integer(15), Rational(1, 2))), Mul(Rational(5, 22), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Mul(Rational(1, 10), Pow(Integer(5), Rational(1, 2))), Mul(Integer(-1), Rational(1, 10), Pow(Integer(15), Rational(1, 2))))",
+        "Point2D(Add(Rational(13, 22), Mul(Rational(3, 11), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 11), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 22), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Add(Mul(Rational(3, 20), Pow(Integer(5), Rational(1, 2))), Rational(3, 4)), Add(Mul(Integer(-1), Rational(3, 20), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x714327173ef0>",
+        "<geometor.model.sections.Section object at 0x7143278bae10>",
+        "Point2D(Add(Integer(2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 2), Pow(Integer(15), Rational(1, 2))), Pow(Integer(3), Rational(1, 2))))",
+        "<geometor.model.sections.Section object at 0x714327823530>",
+        "<geometor.model.sections.Section object at 0x714327afa3f0>",
+        "Point2D(Add(Rational(-9, 2), Mul(Integer(2), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(5, 2), Pow(Integer(3), Rational(1, 2))), Pow(Integer(15), Rational(1, 2))))",
+        "Point2D(Add(Rational(-5, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x714326f9e2d0>",
+        "<geometor.model.sections.Section object at 0x714326f9eed0>",
+        "<geometor.model.sections.Section object at 0x7143279d2150>",
+        "<geometor.model.sections.Section object at 0x71432715cb90>",
+        "<geometor.model.sections.Section object at 0x7143272d46b0>",
+        "<geometor.model.sections.Section object at 0x714327925610>",
+        "<geometor.model.sections.Section object at 0x7143272d4470>",
+        "Point2D(Add(Rational(-1, 6), Mul(Rational(1, 3), Pow(Integer(5), Rational(1, 2)))), Mul(Integer(-1), Rational(1, 6), Pow(Integer(3), Rational(1, 2))))",
+        "Line2D(Point2D(Add(Rational(1, 4), Mul(Integer(-1), Rational(1, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Add(Mul(Rational(1, 4), Pow(Integer(5), Rational(1, 2))), Rational(3, 4)), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))))",
+        "Point2D(Mul(Rational(1, 4), Pow(Add(Integer(-2), Mul(Integer(6), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Mul(Integer(-1), Rational(1, 4), Pow(Add(Integer(-2), Mul(Integer(6), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Add(Integer(1), Mul(Integer(-1), Rational(1, 4), Pow(Add(Integer(-2), Mul(Integer(6), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Add(Mul(Rational(1, 4), Pow(Add(Integer(-2), Mul(Integer(6), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Integer(1)), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Rational(1, 2), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x7143278682f0>",
+        "<geometor.model.sections.Section object at 0x71432750be90>",
+        "Point2D(Add(Rational(-1, 4), Mul(Rational(1, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x7143272d48f0>",
+        "<geometor.model.sections.Section object at 0x7143273e1670>",
+        "<geometor.model.sections.Section object at 0x714327af9af0>",
+        "Point2D(Add(Rational(1, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x71432799e270>",
+        "<geometor.model.sections.Section object at 0x714321b272f0>",
+        "<geometor.model.sections.Section object at 0x714327509bb0>",
+        "Point2D(Add(Rational(5, 4), Mul(Integer(-1), Rational(1, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x71432715dcd0>",
+        "<geometor.model.sections.Section object at 0x7143271e6a50>",
+        "<geometor.model.sections.Section object at 0x7143270434d0>",
+        "<geometor.model.sections.Section object at 0x714327afb170>",
+        "<geometor.model.sections.Section object at 0x71432799e5d0>",
+        "<geometor.model.sections.Section object at 0x714327add370>",
+        "Point2D(Add(Rational(7, 4), Mul(Integer(-1), Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x714326c2a630>",
+        "<geometor.model.sections.Section object at 0x714326b19a90>",
+        "<geometor.model.sections.Section object at 0x714326c29190>",
+        "<geometor.model.sections.Section object at 0x714326c28650>",
+        "<geometor.model.sections.Section object at 0x714326b19850>",
+        "<geometor.model.sections.Section object at 0x714327062b70>",
+        "<geometor.model.sections.Section object at 0x714327adeff0>",
+        "<geometor.model.sections.Section object at 0x71432719a270>",
+        "Point2D(Add(Rational(13, 4), Mul(Integer(-1), Rational(5, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x714326b1a150>",
+        "<geometor.model.sections.Section object at 0x714326b190d0>",
+        "<geometor.model.sections.Section object at 0x71432799d250>",
+        "<geometor.model.sections.Section object at 0x714326b18dd0>",
+        "<geometor.model.sections.Section object at 0x714326b1af90>",
+        "<geometor.model.sections.Section object at 0x7143273e27b0>",
+        "<geometor.model.sections.Section object at 0x7143275babd0>",
+        "Point2D(Add(Rational(-9, 4), Mul(Rational(5, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x7143272bab10>",
+        "<geometor.model.sections.Section object at 0x714326b19f70>",
+        "<geometor.model.sections.Section object at 0x714326b18a10>",
+        "<geometor.model.sections.Section object at 0x714327676b10>",
+        "<geometor.model.sections.Section object at 0x714326b18ad0>",
+        "<geometor.model.sections.Section object at 0x714326c28050>",
+        "<geometor.model.sections.Section object at 0x714326d1cfb0>",
+        "<geometor.model.sections.Section object at 0x714327508e90>",
+        "Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x714326f129f0>",
+        "<geometor.model.sections.Section object at 0x7143272d4590>",
+        "<geometor.model.sections.Section object at 0x7143271708f0>",
+        "<geometor.model.sections.Section object at 0x714327199010>",
+        "<geometor.model.sections.Section object at 0x7143271b03b0>",
+        "<geometor.model.sections.Section object at 0x7143271b3230>",
+        "<geometor.model.sections.Section object at 0x714327170470>",
+        "<geometor.model.sections.Section object at 0x714326b1b710>",
+        "<geometor.model.sections.Section object at 0x714327924f50>",
+        "<geometor.model.sections.Section object at 0x714326b808f0>",
+        "<geometor.model.sections.Section object at 0x714326b18590>",
+        "<geometor.model.sections.Section object at 0x714326b19b50>",
+        "<geometor.model.sections.Section object at 0x714326b187d0>",
+        "<geometor.model.sections.Section object at 0x714326b1b6b0>",
+        "Line2D(Point2D(Add(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Integer(0)), Point2D(Add(Mul(Rational(1, 4), Pow(Integer(5), Rational(1, 2))), Rational(3, 4)), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))))",
+        "Point2D(Add(Mul(Integer(-1), Rational(3, 16), Pow(Integer(5), Rational(1, 2))), Mul(Rational(1, 16), Pow(Add(Integer(-15), Mul(Integer(20), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Rational(3, 8), Mul(Rational(1, 4), Pow(Add(Integer(-3), Mul(Integer(4), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 8), Pow(Integer(15), Rational(1, 2))), Mul(Integer(-1), Rational(1, 16), Pow(Add(Integer(-9), Mul(Integer(12), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Rational(3, 16), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Add(Mul(Integer(-1), Rational(1, 4), Pow(Add(Integer(-3), Mul(Integer(4), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Integer(-1), Rational(3, 16), Pow(Integer(5), Rational(1, 2))), Mul(Integer(-1), Rational(1, 16), Pow(Add(Integer(-15), Mul(Integer(20), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Rational(3, 8)), Add(Mul(Integer(-1), Rational(1, 8), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 16), Pow(Add(Integer(-9), Mul(Integer(12), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Rational(3, 16), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Add(Mul(Integer(-1), Rational(3, 32), Pow(Integer(65), Rational(1, 2))), Mul(Integer(-1), Rational(3, 32), Pow(Integer(5), Rational(1, 2))), Mul(Integer(-1), Rational(1, 32), Pow(Integer(13), Rational(1, 2))), Rational(35, 32)), Add(Mul(Pow(Integer(15), Rational(1, 2)), Add(Rational(-3, 32), Mul(Integer(-1), Rational(1, 160), Pow(Integer(65), Rational(1, 2))), Mul(Rational(1, 32), Pow(Integer(13), Rational(1, 2))))), Mul(Integer(-1), Rational(1, 32), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Add(Mul(Integer(-1), Rational(3, 32), Pow(Integer(5), Rational(1, 2))), Mul(Rational(1, 32), Pow(Integer(13), Rational(1, 2))), Mul(Rational(3, 32), Pow(Integer(65), Rational(1, 2))), Rational(35, 32)), Add(Mul(Pow(Integer(15), Rational(1, 2)), Add(Mul(Integer(-1), Rational(1, 32), Pow(Integer(13), Rational(1, 2))), Rational(-3, 32), Mul(Rational(1, 160), Pow(Integer(65), Rational(1, 2))))), Mul(Integer(-1), Rational(1, 32), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Add(Integer(-1), Mul(Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 2), Pow(Integer(15), Rational(1, 2))), Pow(Integer(3), Rational(1, 2))))",
+        "<geometor.model.sections.Section object at 0x714326bce090>",
+        "<geometor.model.sections.Section object at 0x714326bcdb50>",
+        "<geometor.model.sections.Section object at 0x7143277e24b0>",
+        "Point2D(Rational(5, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "<geometor.model.sections.Section object at 0x714326d1ffb0>",
+        "<geometor.model.sections.Section object at 0x714327675670>",
+        "<geometor.model.sections.Section object at 0x714326b1b350>",
+        "<geometor.model.sections.Section object at 0x714326b1a5d0>",
+        "<geometor.model.sections.Section object at 0x71432776bc50>",
+        "<geometor.model.sections.Section object at 0x714327677350>",
+        "<geometor.model.sections.Section object at 0x714326e204d0>",
+        "<geometor.model.sections.Section object at 0x714326f12c90>",
+        "<geometor.model.sections.Section object at 0x714326dda330>",
+        "<geometor.model.sections.Section object at 0x714326bce2d0>",
+        "Point2D(Add(Rational(1, 4), Mul(Integer(-1), Rational(3, 20), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 20), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Add(Integer(1), Mul(Integer(-1), Rational(1, 10), Pow(Integer(5), Rational(1, 2)))), Mul(Integer(-1), Rational(1, 10), Pow(Integer(15), Rational(1, 2))))",
+        "<geometor.model.sections.Section object at 0x714326bcda30>",
+        "<geometor.model.sections.Section object at 0x714326c2b350>",
+        "Point2D(Add(Rational(7, 6), Mul(Integer(-1), Rational(1, 3), Pow(Integer(5), Rational(1, 2)))), Mul(Integer(-1), Rational(1, 6), Pow(Integer(3), Rational(1, 2))))",
+        "Point2D(Add(Rational(9, 4), Mul(Integer(-1), Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+        "<geometor.model.sections.Section object at 0x714326a3dc70>",
+        "<geometor.model.sections.Section object at 0x714326a3dd30>",
+        "<geometor.model.sections.Section object at 0x714326a3c8f0>",
+        "<geometor.model.sections.Section object at 0x714326b82630>",
+        "<geometor.model.sections.Section object at 0x7143272d45f0>",
+        "<geometor.model.sections.Section object at 0x7143234cfb90>",
+        "<geometor.model.sections.Section object at 0x71432717f890>",
+        "<geometor.model.sections.Section object at 0x714326a3e2d0>",
+        "<geometor.model.sections.Section object at 0x71432715c6b0>",
+        "<geometor.model.sections.Section object at 0x714326a3c110>",
+        "<geometor.model.sections.Section object at 0x714326a3ce30>",
+        "<geometor.model.sections.Section object at 0x714326e20d70>",
+        "Point2D(Add(Rational(11, 2), Mul(Integer(-1), Integer(2), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(5, 2), Pow(Integer(3), Rational(1, 2))), Pow(Integer(15), Rational(1, 2))))",
+        "<geometor.model.sections.Section object at 0x714327addc10>",
+        "<geometor.model.sections.Section object at 0x714327adce30>",
+        "<geometor.model.sections.Section object at 0x714326e21f70>",
+        "<geometor.model.sections.Section object at 0x714326f13a70>"
+    ],
+    "elements": [
+        {
+            "label": "A",
+            "classes": [
+                "given"
+            ],
+            "parents": [
+                2,
+                5,
+                11,
+                29
+            ]
+        },
+        {
+            "label": "B",
+            "classes": [
+                "given"
+            ],
+            "parents": [
+                2,
+                3,
+                13,
+                38,
+                46
+            ]
+        },
+        {
+            "label": "[ A B ]",
+            "classes": [],
+            "parents": [
+                0,
+                1,
+                4,
+                6,
+                10,
+                18,
+                22,
+                49,
+                106,
+                139,
+                207
+            ]
+        },
+        {
+            "label": "( A B )",
+            "classes": [],
+            "parents": [
+                0,
+                1,
+                4,
+                7,
+                8,
+                12,
+                30,
+                56,
+                79,
+                114,
+                149,
+                175,
+                218,
+                248,
+                249,
+                272,
+                273,
+                336,
+                337
+            ],
+            "pt_radius": 1
+        },
+        {
+            "label": "C",
+            "classes": [],
+            "parents": [
+                2,
+                3
+            ]
+        },
+        {
+            "label": "( B A )",
+            "classes": [],
+            "parents": [
+                1,
+                0,
+                6,
+                7,
+                8,
+                14,
+                15,
+                26,
+                39,
+                57,
+                80,
+                115,
+                150,
+                176,
+                219,
+                250,
+                251,
+                274,
+                275,
+                338,
+                339
+            ],
+            "pt_radius": 0
+        },
+        {
+            "label": "D",
+            "classes": [],
+            "parents": [
+                2,
+                5
+            ]
+        },
+        {
+            "label": "E",
+            "classes": [],
+            "parents": [
+                3,
+                5,
+                9,
+                11,
+                17,
+                46,
+                48,
+                78,
+                105,
+                138,
+                174,
+                206
+            ]
+        },
+        {
+            "label": "F",
+            "classes": [],
+            "parents": [
+                3,
+                5,
+                9,
+                29,
+                38,
+                47
+            ]
+        },
+        {
+            "label": "[ E F ]",
+            "classes": [],
+            "parents": [
+                7,
+                8,
+                10,
+                16,
+                27,
+                252,
+                276
+            ]
+        },
+        {
+            "label": "G",
+            "classes": [],
+            "parents": [
+                2,
+                9
+            ]
+        },
+        {
+            "label": "[ E A ]",
+            "classes": [],
+            "parents": [
+                7,
+                0,
+                12,
+                253,
+                279,
+                340
+            ]
+        },
+        {
+            "label": "H",
+            "classes": [],
+            "parents": [
+                3,
+                11,
+                13,
+                17,
+                47
+            ]
+        },
+        {
+            "label": "[ H B ]",
+            "classes": [],
+            "parents": [
+                12,
+                1,
+                14,
+                15,
+                16,
+                28,
+                31,
+                59,
+                81,
+                117,
+                152,
+                177,
+                221,
+                254,
+                283,
+                344
+            ]
+        },
+        {
+            "label": "I",
+            "classes": [],
+            "parents": [
+                5,
+                13
+            ]
+        },
+        {
+            "label": "J",
+            "classes": [],
+            "parents": [
+                5,
+                13
+            ]
+        },
+        {
+            "label": "K",
+            "classes": [],
+            "parents": [
+                9,
+                13
+            ]
+        },
+        {
+            "label": "( K E )",
+            "classes": [],
+            "parents": [
+                16,
+                7,
+                18,
+                22,
+                12,
+                26,
+                27,
+                28,
+                32,
+                35,
+                40,
+                43
+            ],
+            "pt_radius": 7
+        },
+        {
+            "label": "L",
+            "classes": [],
+            "parents": [
+                2,
+                17,
+                78,
+                335
+            ]
+        },
+        {
+            "label": "/ C L A /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                4,
+                18,
+                0
+            ]
+        },
+        {
+            "label": "/ L A B /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                0,
+                1
+            ]
+        },
+        {
+            "label": "/ L B D /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                1,
+                6
+            ]
+        },
+        {
+            "label": "M",
+            "classes": [],
+            "parents": [
+                2,
+                17,
+                174,
+                247
+            ]
+        },
+        {
+            "label": "/ C A M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                4,
+                0,
+                22
+            ]
+        },
+        {
+            "label": "/ A B M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                0,
+                1,
+                22
+            ]
+        },
+        {
+            "label": "/ B M D /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                1,
+                22,
+                6
+            ]
+        },
+        {
+            "label": "N",
+            "classes": [],
+            "parents": [
+                5,
+                17,
+                46,
+                47
+            ]
+        },
+        {
+            "label": "O",
+            "classes": [],
+            "parents": [
+                9,
+                17
+            ]
+        },
+        {
+            "label": "P",
+            "classes": [],
+            "parents": [
+                13,
+                17
+            ]
+        },
+        {
+            "label": "[ A F ]",
+            "classes": [],
+            "parents": [
+                0,
+                8,
+                30,
+                31,
+                32,
+                35,
+                83,
+                118,
+                179,
+                223,
+                355
+            ]
+        },
+        {
+            "label": "R",
+            "classes": [],
+            "parents": [
+                3,
+                29
+            ]
+        },
+        {
+            "label": "S",
+            "classes": [],
+            "parents": [
+                13,
+                29
+            ]
+        },
+        {
+            "label": "T",
+            "classes": [],
+            "parents": [
+                17,
+                29,
+                48,
+                247,
+                271
+            ]
+        },
+        {
+            "label": "/ R T A /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                30,
+                32,
+                0
+            ]
+        },
+        {
+            "label": "/ T A F /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                32,
+                0,
+                8
+            ]
+        },
+        {
+            "label": "U",
+            "classes": [],
+            "parents": [
+                17,
+                29,
+                138
+            ]
+        },
+        {
+            "label": "/ R A U /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                30,
+                0,
+                35
+            ]
+        },
+        {
+            "label": "/ A F U /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                0,
+                8,
+                35
+            ]
+        },
+        {
+            "label": "[ F B ]",
+            "classes": [],
+            "parents": [
+                8,
+                1,
+                39,
+                40,
+                43,
+                60,
+                89,
+                153,
+                187,
+                255
+            ]
+        },
+        {
+            "label": "V",
+            "classes": [],
+            "parents": [
+                5,
+                38
+            ]
+        },
+        {
+            "label": "W",
+            "classes": [],
+            "parents": [
+                17,
+                38,
+                206,
+                271,
+                335
+            ]
+        },
+        {
+            "label": "/ F B W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                8,
+                1,
+                40
+            ]
+        },
+        {
+            "label": "/ B W V /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                1,
+                40,
+                39
+            ]
+        },
+        {
+            "label": "X",
+            "classes": [],
+            "parents": [
+                17,
+                38,
+                105
+            ]
+        },
+        {
+            "label": "/ X F B /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                43,
+                8,
+                1
+            ]
+        },
+        {
+            "label": "/ X B V /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                43,
+                1,
+                39
+            ]
+        },
+        {
+            "label": "[ E N ]",
+            "classes": [],
+            "parents": [
+                7,
+                26,
+                1,
+                258,
+                287,
+                356
+            ]
+        },
+        {
+            "label": "[ H N ]",
+            "classes": [],
+            "parents": [
+                12,
+                26,
+                8,
+                71,
+                98,
+                130,
+                165,
+                198,
+                236
+            ]
+        },
+        {
+            "label": "[ E T ]",
+            "classes": [],
+            "parents": [
+                7,
+                32,
+                49,
+                56,
+                57,
+                59,
+                60,
+                71
+            ]
+        },
+        {
+            "label": "Y",
+            "classes": [],
+            "parents": [
+                2,
+                48
+            ]
+        },
+        {
+            "label": "/ Y C L /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                49,
+                4,
+                18
+            ]
+        },
+        {
+            "label": "/ Y C A /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                49,
+                4,
+                0
+            ]
+        },
+        {
+            "label": "/ Y L A /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                49,
+                18,
+                0
+            ]
+        },
+        {
+            "label": "/ Y L B /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                49,
+                18,
+                1
+            ]
+        },
+        {
+            "label": "/ Y A B /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                49,
+                0,
+                1
+            ]
+        },
+        {
+            "label": "/ Y T E /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                49,
+                32,
+                7
+            ]
+        },
+        {
+            "label": "Z",
+            "classes": [],
+            "parents": [
+                3,
+                48
+            ]
+        },
+        {
+            "label": "AA",
+            "classes": [],
+            "parents": [
+                5,
+                48
+            ]
+        },
+        {
+            "label": "/ Z T AA /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                56,
+                32,
+                57
+            ]
+        },
+        {
+            "label": "BB",
+            "classes": [],
+            "parents": [
+                13,
+                48
+            ]
+        },
+        {
+            "label": "CC",
+            "classes": [],
+            "parents": [
+                38,
+                48
+            ]
+        },
+        {
+            "label": "/ F B CC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                8,
+                1,
+                60
+            ]
+        },
+        {
+            "label": "/ F W CC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                8,
+                40,
+                60
+            ]
+        },
+        {
+            "label": "/ B W CC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                1,
+                40,
+                60
+            ]
+        },
+        {
+            "label": "/ B V CC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                1,
+                39,
+                60
+            ]
+        },
+        {
+            "label": "/ W V CC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                40,
+                39,
+                60
+            ]
+        },
+        {
+            "label": "/ Y T CC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                49,
+                32,
+                60
+            ]
+        },
+        {
+            "label": "/ Y E CC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                49,
+                7,
+                60
+            ]
+        },
+        {
+            "label": "/ Y CC BB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                49,
+                60,
+                59
+            ]
+        },
+        {
+            "label": "/ Z AA CC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                56,
+                57,
+                60
+            ]
+        },
+        {
+            "label": "/ T E CC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                32,
+                7,
+                60
+            ]
+        },
+        {
+            "label": "DD",
+            "classes": [],
+            "parents": [
+                47,
+                48,
+                335
+            ]
+        },
+        {
+            "label": "/ DD H N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                71,
+                12,
+                26
+            ]
+        },
+        {
+            "label": "/ DD Y T /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                71,
+                49,
+                32
+            ]
+        },
+        {
+            "label": "/ DD Y CC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                71,
+                49,
+                60
+            ]
+        },
+        {
+            "label": "/ DD Z AA /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                71,
+                56,
+                57
+            ]
+        },
+        {
+            "label": "/ DD T CC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                71,
+                32,
+                60
+            ]
+        },
+        {
+            "label": "/ DD E BB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                71,
+                7,
+                59
+            ]
+        },
+        {
+            "label": "[ E L ]",
+            "classes": [],
+            "parents": [
+                7,
+                18,
+                79,
+                80,
+                81,
+                83,
+                89,
+                98,
+                261,
+                294
+            ]
+        },
+        {
+            "label": "EE",
+            "classes": [],
+            "parents": [
+                3,
+                78
+            ]
+        },
+        {
+            "label": "FF",
+            "classes": [],
+            "parents": [
+                5,
+                78
+            ]
+        },
+        {
+            "label": "GG",
+            "classes": [],
+            "parents": [
+                13,
+                78
+            ]
+        },
+        {
+            "label": "/ GG H BB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                81,
+                12,
+                59
+            ]
+        },
+        {
+            "label": "HH",
+            "classes": [],
+            "parents": [
+                29,
+                78
+            ]
+        },
+        {
+            "label": "/ R T HH /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                30,
+                32,
+                83
+            ]
+        },
+        {
+            "label": "/ R HH A /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                30,
+                83,
+                0
+            ]
+        },
+        {
+            "label": "/ T HH A /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                32,
+                83,
+                0
+            ]
+        },
+        {
+            "label": "/ EE HH FF /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                79,
+                83,
+                80
+            ]
+        },
+        {
+            "label": "/ L HH E /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                83,
+                7
+            ]
+        },
+        {
+            "label": "II",
+            "classes": [],
+            "parents": [
+                38,
+                78
+            ]
+        },
+        {
+            "label": "/ X B II /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                43,
+                1,
+                89
+            ]
+        },
+        {
+            "label": "/ X V II /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                43,
+                39,
+                89
+            ]
+        },
+        {
+            "label": "/ B V II /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                1,
+                39,
+                89
+            ]
+        },
+        {
+            "label": "/ B CC II /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                1,
+                60,
+                89
+            ]
+        },
+        {
+            "label": "/ V CC II /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                39,
+                60,
+                89
+            ]
+        },
+        {
+            "label": "/ GG L II /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                81,
+                18,
+                89
+            ]
+        },
+        {
+            "label": "/ EE FF II /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                79,
+                80,
+                89
+            ]
+        },
+        {
+            "label": "/ L E II /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                7,
+                89
+            ]
+        },
+        {
+            "label": "JJ",
+            "classes": [],
+            "parents": [
+                47,
+                78
+            ]
+        },
+        {
+            "label": "/ DD JJ H /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                71,
+                98,
+                12
+            ]
+        },
+        {
+            "label": "/ DD JJ N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                71,
+                98,
+                26
+            ]
+        },
+        {
+            "label": "/ JJ H N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                98,
+                12,
+                26
+            ]
+        },
+        {
+            "label": "/ GG JJ E /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                81,
+                98,
+                7
+            ]
+        },
+        {
+            "label": "/ JJ EE FF /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                98,
+                79,
+                80
+            ]
+        },
+        {
+            "label": "/ JJ HH II /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                98,
+                83,
+                89
+            ]
+        },
+        {
+            "label": "[ E X ]",
+            "classes": [],
+            "parents": [
+                7,
+                43,
+                106,
+                114,
+                115,
+                117,
+                118,
+                130,
+                262,
+                303,
+                359
+            ]
+        },
+        {
+            "label": "KK",
+            "classes": [],
+            "parents": [
+                2,
+                105
+            ]
+        },
+        {
+            "label": "/ Y KK M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                49,
+                106,
+                22
+            ]
+        },
+        {
+            "label": "/ L A KK /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                0,
+                106
+            ]
+        },
+        {
+            "label": "/ L KK B /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                106,
+                1
+            ]
+        },
+        {
+            "label": "/ L KK D /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                106,
+                6
+            ]
+        },
+        {
+            "label": "/ A KK B /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                0,
+                106,
+                1
+            ]
+        },
+        {
+            "label": "/ KK B D /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                106,
+                1,
+                6
+            ]
+        },
+        {
+            "label": "/ X KK E /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                43,
+                106,
+                7
+            ]
+        },
+        {
+            "label": "LL",
+            "classes": [],
+            "parents": [
+                3,
+                105
+            ]
+        },
+        {
+            "label": "MM",
+            "classes": [],
+            "parents": [
+                5,
+                105
+            ]
+        },
+        {
+            "label": "/ X LL MM /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                43,
+                114,
+                115
+            ]
+        },
+        {
+            "label": "NN",
+            "classes": [],
+            "parents": [
+                13,
+                105
+            ]
+        },
+        {
+            "label": "OO",
+            "classes": [],
+            "parents": [
+                29,
+                105
+            ]
+        },
+        {
+            "label": "/ R HH OO /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                30,
+                83,
+                118
+            ]
+        },
+        {
+            "label": "/ R A OO /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                30,
+                0,
+                118
+            ]
+        },
+        {
+            "label": "/ R OO U /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                30,
+                118,
+                35
+            ]
+        },
+        {
+            "label": "/ HH A OO /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                83,
+                0,
+                118
+            ]
+        },
+        {
+            "label": "/ A OO F /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                0,
+                118,
+                8
+            ]
+        },
+        {
+            "label": "/ A OO U /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                0,
+                118,
+                35
+            ]
+        },
+        {
+            "label": "/ OO F U /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                118,
+                8,
+                35
+            ]
+        },
+        {
+            "label": "/ X OO KK /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                43,
+                118,
+                106
+            ]
+        },
+        {
+            "label": "/ X OO E /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                43,
+                118,
+                7
+            ]
+        },
+        {
+            "label": "/ LL MM OO /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                114,
+                115,
+                118
+            ]
+        },
+        {
+            "label": "/ OO KK E /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                118,
+                106,
+                7
+            ]
+        },
+        {
+            "label": "PP",
+            "classes": [],
+            "parents": [
+                47,
+                105
+            ]
+        },
+        {
+            "label": "/ JJ H PP /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                98,
+                12,
+                130
+            ]
+        },
+        {
+            "label": "/ JJ PP N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                98,
+                130,
+                26
+            ]
+        },
+        {
+            "label": "/ H PP N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                12,
+                130,
+                26
+            ]
+        },
+        {
+            "label": "/ X PP OO /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                43,
+                130,
+                118
+            ]
+        },
+        {
+            "label": "/ X PP KK /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                43,
+                130,
+                106
+            ]
+        },
+        {
+            "label": "/ LL PP MM /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                114,
+                130,
+                115
+            ]
+        },
+        {
+            "label": "/ PP OO KK /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                130,
+                118,
+                106
+            ]
+        },
+        {
+            "label": "[ E U ]",
+            "classes": [],
+            "parents": [
+                7,
+                35,
+                139,
+                149,
+                150,
+                152,
+                153,
+                165,
+                270,
+                311,
+                360
+            ]
+        },
+        {
+            "label": "QQ",
+            "classes": [],
+            "parents": [
+                2,
+                138
+            ]
+        },
+        {
+            "label": "/ Y QQ D /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                49,
+                139,
+                6
+            ]
+        },
+        {
+            "label": "/ C A QQ /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                4,
+                0,
+                139
+            ]
+        },
+        {
+            "label": "/ C QQ M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                4,
+                139,
+                22
+            ]
+        },
+        {
+            "label": "/ A KK QQ /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                0,
+                106,
+                139
+            ]
+        },
+        {
+            "label": "/ A QQ B /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                0,
+                139,
+                1
+            ]
+        },
+        {
+            "label": "/ A QQ M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                0,
+                139,
+                22
+            ]
+        },
+        {
+            "label": "/ KK QQ B /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                106,
+                139,
+                1
+            ]
+        },
+        {
+            "label": "/ QQ B M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                139,
+                1,
+                22
+            ]
+        },
+        {
+            "label": "/ E QQ U /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                7,
+                139,
+                35
+            ]
+        },
+        {
+            "label": "RR",
+            "classes": [],
+            "parents": [
+                3,
+                138
+            ]
+        },
+        {
+            "label": "SS",
+            "classes": [],
+            "parents": [
+                5,
+                138
+            ]
+        },
+        {
+            "label": "/ RR SS U /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                149,
+                150,
+                35
+            ]
+        },
+        {
+            "label": "TT",
+            "classes": [],
+            "parents": [
+                13,
+                138
+            ]
+        },
+        {
+            "label": "UU",
+            "classes": [],
+            "parents": [
+                38,
+                138
+            ]
+        },
+        {
+            "label": "/ X F UU /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                43,
+                8,
+                153
+            ]
+        },
+        {
+            "label": "/ X UU B /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                43,
+                153,
+                1
+            ]
+        },
+        {
+            "label": "/ X UU V /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                43,
+                153,
+                39
+            ]
+        },
+        {
+            "label": "/ F UU B /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                8,
+                153,
+                1
+            ]
+        },
+        {
+            "label": "/ UU B V /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                153,
+                1,
+                39
+            ]
+        },
+        {
+            "label": "/ UU W II /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                153,
+                40,
+                89
+            ]
+        },
+        {
+            "label": "/ E QQ UU /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                7,
+                139,
+                153
+            ]
+        },
+        {
+            "label": "/ E UU U /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                7,
+                153,
+                35
+            ]
+        },
+        {
+            "label": "/ QQ TT UU /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                139,
+                152,
+                153
+            ]
+        },
+        {
+            "label": "/ QQ UU U /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                139,
+                153,
+                35
+            ]
+        },
+        {
+            "label": "/ UU RR SS /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                153,
+                149,
+                150
+            ]
+        },
+        {
+            "label": "VV",
+            "classes": [],
+            "parents": [
+                47,
+                138
+            ]
+        },
+        {
+            "label": "/ H PP VV /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                12,
+                130,
+                165
+            ]
+        },
+        {
+            "label": "/ H VV N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                12,
+                165,
+                26
+            ]
+        },
+        {
+            "label": "/ PP VV N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                130,
+                165,
+                26
+            ]
+        },
+        {
+            "label": "/ E TT VV /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                7,
+                152,
+                165
+            ]
+        },
+        {
+            "label": "/ QQ UU VV /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                139,
+                153,
+                165
+            ]
+        },
+        {
+            "label": "/ QQ VV U /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                139,
+                165,
+                35
+            ]
+        },
+        {
+            "label": "/ UU VV U /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                153,
+                165,
+                35
+            ]
+        },
+        {
+            "label": "/ RR VV SS /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                149,
+                165,
+                150
+            ]
+        },
+        {
+            "label": "[ E M ]",
+            "classes": [],
+            "parents": [
+                7,
+                22,
+                175,
+                176,
+                177,
+                179,
+                187,
+                198,
+                320,
+                373
+            ]
+        },
+        {
+            "label": "WW",
+            "classes": [],
+            "parents": [
+                3,
+                174
+            ]
+        },
+        {
+            "label": "XX",
+            "classes": [],
+            "parents": [
+                5,
+                174
+            ]
+        },
+        {
+            "label": "YY",
+            "classes": [],
+            "parents": [
+                13,
+                174
+            ]
+        },
+        {
+            "label": "/ H TT YY /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                12,
+                152,
+                177
+            ]
+        },
+        {
+            "label": "ZZ",
+            "classes": [],
+            "parents": [
+                29,
+                174
+            ]
+        },
+        {
+            "label": "/ ZZ R A /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                179,
+                30,
+                0
+            ]
+        },
+        {
+            "label": "/ ZZ R U /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                179,
+                30,
+                35
+            ]
+        },
+        {
+            "label": "/ ZZ T OO /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                179,
+                32,
+                118
+            ]
+        },
+        {
+            "label": "/ ZZ HH F /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                179,
+                83,
+                8
+            ]
+        },
+        {
+            "label": "/ ZZ A U /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                179,
+                0,
+                35
+            ]
+        },
+        {
+            "label": "/ ZZ E M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                179,
+                7,
+                22
+            ]
+        },
+        {
+            "label": "/ ZZ WW XX /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                179,
+                175,
+                176
+            ]
+        },
+        {
+            "label": "AAA",
+            "classes": [],
+            "parents": [
+                38,
+                174
+            ]
+        },
+        {
+            "label": "/ X AAA CC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                43,
+                187,
+                60
+            ]
+        },
+        {
+            "label": "/ F AAA II /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                8,
+                187,
+                89
+            ]
+        },
+        {
+            "label": "/ UU B AAA /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                153,
+                1,
+                187
+            ]
+        },
+        {
+            "label": "/ UU AAA V /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                153,
+                187,
+                39
+            ]
+        },
+        {
+            "label": "/ B AAA W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                1,
+                187,
+                40
+            ]
+        },
+        {
+            "label": "/ B AAA V /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                1,
+                187,
+                39
+            ]
+        },
+        {
+            "label": "/ AAA W V /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                187,
+                40,
+                39
+            ]
+        },
+        {
+            "label": "/ E AAA M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                7,
+                187,
+                22
+            ]
+        },
+        {
+            "label": "/ WW AAA XX /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                175,
+                187,
+                176
+            ]
+        },
+        {
+            "label": "/ AAA YY M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                187,
+                177,
+                22
+            ]
+        },
+        {
+            "label": "BBB",
+            "classes": [],
+            "parents": [
+                47,
+                174
+            ]
+        },
+        {
+            "label": "/ DD PP BBB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                71,
+                130,
+                198
+            ]
+        },
+        {
+            "label": "/ H VV BBB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                12,
+                165,
+                198
+            ]
+        },
+        {
+            "label": "/ H N BBB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                12,
+                26,
+                198
+            ]
+        },
+        {
+            "label": "/ VV N BBB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                165,
+                26,
+                198
+            ]
+        },
+        {
+            "label": "/ ZZ AAA BBB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                179,
+                187,
+                198
+            ]
+        },
+        {
+            "label": "/ E YY BBB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                7,
+                177,
+                198
+            ]
+        },
+        {
+            "label": "/ WW XX BBB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                175,
+                176,
+                198
+            ]
+        },
+        {
+            "label": "[ E W ]",
+            "classes": [],
+            "parents": [
+                7,
+                40,
+                207,
+                218,
+                219,
+                221,
+                223,
+                236
+            ]
+        },
+        {
+            "label": "CCC",
+            "classes": [],
+            "parents": [
+                2,
+                206
+            ]
+        },
+        {
+            "label": "/ Y A CCC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                49,
+                0,
+                207
+            ]
+        },
+        {
+            "label": "/ Y B CCC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                49,
+                1,
+                207
+            ]
+        },
+        {
+            "label": "/ C KK CCC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                4,
+                106,
+                207
+            ]
+        },
+        {
+            "label": "/ L QQ CCC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                139,
+                207
+            ]
+        },
+        {
+            "label": "/ A B CCC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                0,
+                1,
+                207
+            ]
+        },
+        {
+            "label": "/ A M CCC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                0,
+                22,
+                207
+            ]
+        },
+        {
+            "label": "/ B M CCC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                1,
+                22,
+                207
+            ]
+        },
+        {
+            "label": "/ B D CCC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                1,
+                6,
+                207
+            ]
+        },
+        {
+            "label": "/ M D CCC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                22,
+                6,
+                207
+            ]
+        },
+        {
+            "label": "/ E W CCC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                7,
+                40,
+                207
+            ]
+        },
+        {
+            "label": "DDD",
+            "classes": [],
+            "parents": [
+                3,
+                206
+            ]
+        },
+        {
+            "label": "EEE",
+            "classes": [],
+            "parents": [
+                5,
+                206
+            ]
+        },
+        {
+            "label": "/ DDD W EEE /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                218,
+                40,
+                219
+            ]
+        },
+        {
+            "label": "FFF",
+            "classes": [],
+            "parents": [
+                13,
+                206
+            ]
+        },
+        {
+            "label": "/ H NN FFF /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                12,
+                117,
+                221
+            ]
+        },
+        {
+            "label": "GGG",
+            "classes": [],
+            "parents": [
+                29,
+                206
+            ]
+        },
+        {
+            "label": "/ ZZ GGG R /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                179,
+                223,
+                30
+            ]
+        },
+        {
+            "label": "/ ZZ GGG A /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                179,
+                223,
+                0
+            ]
+        },
+        {
+            "label": "/ GGG R T /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                223,
+                30,
+                32
+            ]
+        },
+        {
+            "label": "/ GGG R A /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                223,
+                30,
+                0
+            ]
+        },
+        {
+            "label": "/ GGG T A /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                223,
+                32,
+                0
+            ]
+        },
+        {
+            "label": "/ GGG T F /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                223,
+                32,
+                8
+            ]
+        },
+        {
+            "label": "/ GGG HH U /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                223,
+                83,
+                35
+            ]
+        },
+        {
+            "label": "/ GGG A F /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                223,
+                0,
+                8
+            ]
+        },
+        {
+            "label": "/ GGG DDD EEE /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                223,
+                218,
+                219
+            ]
+        },
+        {
+            "label": "/ GGG E W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                223,
+                7,
+                40
+            ]
+        },
+        {
+            "label": "/ GGG E CCC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                223,
+                7,
+                207
+            ]
+        },
+        {
+            "label": "/ GGG W CCC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                223,
+                40,
+                207
+            ]
+        },
+        {
+            "label": "HHH",
+            "classes": [],
+            "parents": [
+                47,
+                206,
+                247
+            ]
+        },
+        {
+            "label": "/ DD H HHH /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                71,
+                12,
+                236
+            ]
+        },
+        {
+            "label": "/ DD N HHH /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                71,
+                26,
+                236
+            ]
+        },
+        {
+            "label": "/ JJ VV HHH /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                98,
+                165,
+                236
+            ]
+        },
+        {
+            "label": "/ H N HHH /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                12,
+                26,
+                236
+            ]
+        },
+        {
+            "label": "/ H BBB HHH /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                12,
+                198,
+                236
+            ]
+        },
+        {
+            "label": "/ N BBB HHH /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                26,
+                198,
+                236
+            ]
+        },
+        {
+            "label": "/ GGG W HHH /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                223,
+                40,
+                236
+            ]
+        },
+        {
+            "label": "/ GGG CCC HHH /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                223,
+                207,
+                236
+            ]
+        },
+        {
+            "label": "/ DDD EEE HHH /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                218,
+                219,
+                236
+            ]
+        },
+        {
+            "label": "/ W CCC HHH /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                40,
+                207,
+                236
+            ]
+        },
+        {
+            "label": "[ T M ]",
+            "classes": [],
+            "parents": [
+                32,
+                22,
+                248,
+                249,
+                250,
+                251,
+                252,
+                253,
+                254,
+                255,
+                258,
+                236,
+                261,
+                262,
+                270
+            ]
+        },
+        {
+            "label": "III",
+            "classes": [],
+            "parents": [
+                3,
+                247
+            ]
+        },
+        {
+            "label": "JJJ",
+            "classes": [],
+            "parents": [
+                3,
+                247
+            ]
+        },
+        {
+            "label": "KKK",
+            "classes": [],
+            "parents": [
+                5,
+                247
+            ]
+        },
+        {
+            "label": "LLL",
+            "classes": [],
+            "parents": [
+                5,
+                247
+            ]
+        },
+        {
+            "label": "MMM",
+            "classes": [],
+            "parents": [
+                9,
+                247,
+                335
+            ]
+        },
+        {
+            "label": "NNN",
+            "classes": [],
+            "parents": [
+                11,
+                247
+            ]
+        },
+        {
+            "label": "OOO",
+            "classes": [],
+            "parents": [
+                13,
+                247
+            ]
+        },
+        {
+            "label": "PPP",
+            "classes": [],
+            "parents": [
+                38,
+                247
+            ]
+        },
+        {
+            "label": "/ T NNN PPP /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                32,
+                253,
+                255
+            ]
+        },
+        {
+            "label": "/ NNN PPP M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                253,
+                255,
+                22
+            ]
+        },
+        {
+            "label": "QQQ",
+            "classes": [],
+            "parents": [
+                46,
+                247
+            ]
+        },
+        {
+            "label": "/ E QQQ N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                7,
+                258,
+                26
+            ]
+        },
+        {
+            "label": "/ T QQQ M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                32,
+                258,
+                22
+            ]
+        },
+        {
+            "label": "RRR",
+            "classes": [],
+            "parents": [
+                78,
+                247
+            ]
+        },
+        {
+            "label": "SSS",
+            "classes": [],
+            "parents": [
+                105,
+                247
+            ]
+        },
+        {
+            "label": "/ OO KK SSS /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                118,
+                106,
+                262
+            ]
+        },
+        {
+            "label": "/ OO SSS E /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                118,
+                262,
+                7
+            ]
+        },
+        {
+            "label": "/ KK SSS E /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                106,
+                262,
+                7
+            ]
+        },
+        {
+            "label": "/ T RRR SSS /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                32,
+                261,
+                262
+            ]
+        },
+        {
+            "label": "/ T SSS QQQ /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                32,
+                262,
+                258
+            ]
+        },
+        {
+            "label": "/ T SSS M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                32,
+                262,
+                22
+            ]
+        },
+        {
+            "label": "/ SSS QQQ M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                262,
+                258,
+                22
+            ]
+        },
+        {
+            "label": "TTT",
+            "classes": [],
+            "parents": [
+                138,
+                247
+            ]
+        },
+        {
+            "label": "[ T W ]",
+            "classes": [],
+            "parents": [
+                32,
+                40,
+                272,
+                273,
+                274,
+                275,
+                276,
+                279,
+                283,
+                287,
+                294,
+                303,
+                311,
+                320
+            ]
+        },
+        {
+            "label": "UUU",
+            "classes": [],
+            "parents": [
+                3,
+                271
+            ]
+        },
+        {
+            "label": "VVV",
+            "classes": [],
+            "parents": [
+                3,
+                271
+            ]
+        },
+        {
+            "label": "WWW",
+            "classes": [],
+            "parents": [
+                5,
+                271
+            ]
+        },
+        {
+            "label": "XXX",
+            "classes": [],
+            "parents": [
+                5,
+                271
+            ]
+        },
+        {
+            "label": "YYY",
+            "classes": [],
+            "parents": [
+                9,
+                271
+            ]
+        },
+        {
+            "label": "/ E YYY G /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                7,
+                276,
+                10
+            ]
+        },
+        {
+            "label": "/ YYY G F /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                276,
+                10,
+                8
+            ]
+        },
+        {
+            "label": "ZZZ",
+            "classes": [],
+            "parents": [
+                11,
+                271
+            ]
+        },
+        {
+            "label": "/ H A ZZZ /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                12,
+                0,
+                279
+            ]
+        },
+        {
+            "label": "/ A ZZZ E /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                0,
+                279,
+                7
+            ]
+        },
+        {
+            "label": "/ T ZZZ W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                32,
+                279,
+                40
+            ]
+        },
+        {
+            "label": "AAAA",
+            "classes": [],
+            "parents": [
+                13,
+                271
+            ]
+        },
+        {
+            "label": "/ H B AAAA /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                12,
+                1,
+                283
+            ]
+        },
+        {
+            "label": "/ B YY AAAA /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                1,
+                177,
+                283
+            ]
+        },
+        {
+            "label": "/ ZZZ W AAAA /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                279,
+                40,
+                283
+            ]
+        },
+        {
+            "label": "BBBB",
+            "classes": [],
+            "parents": [
+                46,
+                271
+            ]
+        },
+        {
+            "label": "/ E BBBB B /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                7,
+                287,
+                1
+            ]
+        },
+        {
+            "label": "/ BBBB QQQ B /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                287,
+                258,
+                1
+            ]
+        },
+        {
+            "label": "/ BBBB B N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                287,
+                1,
+                26
+            ]
+        },
+        {
+            "label": "/ T ZZZ BBBB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                32,
+                279,
+                287
+            ]
+        },
+        {
+            "label": "/ T BBBB W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                32,
+                287,
+                40
+            ]
+        },
+        {
+            "label": "/ ZZZ BBBB W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                279,
+                287,
+                40
+            ]
+        },
+        {
+            "label": "CCCC",
+            "classes": [],
+            "parents": [
+                78,
+                271
+            ]
+        },
+        {
+            "label": "/ JJ L CCCC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                98,
+                18,
+                294
+            ]
+        },
+        {
+            "label": "/ L HH CCCC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                83,
+                294
+            ]
+        },
+        {
+            "label": "/ L CCCC E /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                294,
+                7
+            ]
+        },
+        {
+            "label": "/ HH RRR CCCC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                83,
+                261,
+                294
+            ]
+        },
+        {
+            "label": "/ HH CCCC E /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                83,
+                294,
+                7
+            ]
+        },
+        {
+            "label": "/ T CCCC ZZZ /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                32,
+                294,
+                279
+            ]
+        },
+        {
+            "label": "/ T CCCC BBBB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                32,
+                294,
+                287
+            ]
+        },
+        {
+            "label": "/ CCCC ZZZ BBBB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                294,
+                279,
+                287
+            ]
+        },
+        {
+            "label": "DDDD",
+            "classes": [],
+            "parents": [
+                105,
+                271
+            ]
+        },
+        {
+            "label": "/ PP KK DDDD /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                130,
+                106,
+                303
+            ]
+        },
+        {
+            "label": "/ KK SSS DDDD /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                106,
+                262,
+                303
+            ]
+        },
+        {
+            "label": "/ KK DDDD E /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                106,
+                303,
+                7
+            ]
+        },
+        {
+            "label": "/ SSS DDDD E /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                262,
+                303,
+                7
+            ]
+        },
+        {
+            "label": "/ CCCC ZZZ DDDD /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                294,
+                279,
+                303
+            ]
+        },
+        {
+            "label": "/ CCCC DDDD BBBB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                294,
+                303,
+                287
+            ]
+        },
+        {
+            "label": "/ ZZZ DDDD BBBB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                279,
+                303,
+                287
+            ]
+        },
+        {
+            "label": "EEEE",
+            "classes": [],
+            "parents": [
+                138,
+                271
+            ]
+        },
+        {
+            "label": "/ E EEEE QQ /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                7,
+                311,
+                139
+            ]
+        },
+        {
+            "label": "/ EEEE QQ VV /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                311,
+                139,
+                165
+            ]
+        },
+        {
+            "label": "/ EEEE TT U /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                311,
+                152,
+                35
+            ]
+        },
+        {
+            "label": "/ T EEEE AAAA /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                32,
+                311,
+                283
+            ]
+        },
+        {
+            "label": "/ CCCC EEEE W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                294,
+                311,
+                40
+            ]
+        },
+        {
+            "label": "/ ZZZ DDDD EEEE /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                279,
+                303,
+                311
+            ]
+        },
+        {
+            "label": "/ ZZZ EEEE BBBB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                279,
+                311,
+                287
+            ]
+        },
+        {
+            "label": "/ DDDD EEEE BBBB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                303,
+                311,
+                287
+            ]
+        },
+        {
+            "label": "FFFF",
+            "classes": [],
+            "parents": [
+                174,
+                271
+            ]
+        },
+        {
+            "label": "/ E FFFF AAA /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                7,
+                320,
+                187
+            ]
+        },
+        {
+            "label": "/ E FFFF M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                7,
+                320,
+                22
+            ]
+        },
+        {
+            "label": "/ FFFF AAA YY /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                320,
+                187,
+                177
+            ]
+        },
+        {
+            "label": "/ FFFF AAA M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                320,
+                187,
+                22
+            ]
+        },
+        {
+            "label": "/ FFFF YY M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                320,
+                177,
+                22
+            ]
+        },
+        {
+            "label": "/ FFFF M BBB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                320,
+                22,
+                198
+            ]
+        },
+        {
+            "label": "/ T DDDD FFFF /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                32,
+                303,
+                320
+            ]
+        },
+        {
+            "label": "/ ZZZ EEEE FFFF /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                279,
+                311,
+                320
+            ]
+        },
+        {
+            "label": "/ ZZZ BBBB FFFF /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                279,
+                287,
+                320
+            ]
+        },
+        {
+            "label": "/ ZZZ FFFF W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                279,
+                320,
+                40
+            ]
+        },
+        {
+            "label": "/ ZZZ FFFF AAAA /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                279,
+                320,
+                283
+            ]
+        },
+        {
+            "label": "/ EEEE BBBB FFFF /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                311,
+                287,
+                320
+            ]
+        },
+        {
+            "label": "/ BBBB FFFF W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                287,
+                320,
+                40
+            ]
+        },
+        {
+            "label": "/ FFFF W AAAA /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                320,
+                40,
+                283
+            ]
+        },
+        {
+            "label": "[ L W ]",
+            "classes": [],
+            "parents": [
+                18,
+                40,
+                336,
+                337,
+                338,
+                339,
+                252,
+                340,
+                344,
+                355,
+                356,
+                71,
+                359,
+                360,
+                373
+            ]
+        },
+        {
+            "label": "GGGG",
+            "classes": [],
+            "parents": [
+                3,
+                335
+            ]
+        },
+        {
+            "label": "HHHH",
+            "classes": [],
+            "parents": [
+                3,
+                335
+            ]
+        },
+        {
+            "label": "IIII",
+            "classes": [],
+            "parents": [
+                5,
+                335
+            ]
+        },
+        {
+            "label": "JJJJ",
+            "classes": [],
+            "parents": [
+                5,
+                335
+            ]
+        },
+        {
+            "label": "KKKK",
+            "classes": [],
+            "parents": [
+                11,
+                335
+            ]
+        },
+        {
+            "label": "/ H KKKK E /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                12,
+                340,
+                7
+            ]
+        },
+        {
+            "label": "/ A KKKK ZZZ /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                0,
+                340,
+                279
+            ]
+        },
+        {
+            "label": "/ L KKKK W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                340,
+                40
+            ]
+        },
+        {
+            "label": "LLLL",
+            "classes": [],
+            "parents": [
+                13,
+                335
+            ]
+        },
+        {
+            "label": "/ GG H LLLL /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                81,
+                12,
+                344
+            ]
+        },
+        {
+            "label": "/ GG LLLL BB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                81,
+                344,
+                59
+            ]
+        },
+        {
+            "label": "/ H TT LLLL /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                12,
+                152,
+                344
+            ]
+        },
+        {
+            "label": "/ H YY LLLL /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                12,
+                177,
+                344
+            ]
+        },
+        {
+            "label": "/ H LLLL BB /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                12,
+                344,
+                59
+            ]
+        },
+        {
+            "label": "/ NN FFF LLLL /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                117,
+                221,
+                344
+            ]
+        },
+        {
+            "label": "/ TT YY LLLL /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                152,
+                177,
+                344
+            ]
+        },
+        {
+            "label": "/ B AAAA LLLL /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                1,
+                283,
+                344
+            ]
+        },
+        {
+            "label": "/ DD KKKK LLLL /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                71,
+                340,
+                344
+            ]
+        },
+        {
+            "label": "/ L W LLLL /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                40,
+                344
+            ]
+        },
+        {
+            "label": "MMMM",
+            "classes": [],
+            "parents": [
+                29,
+                335
+            ]
+        },
+        {
+            "label": "NNNN",
+            "classes": [],
+            "parents": [
+                46,
+                335
+            ]
+        },
+        {
+            "label": "/ L MMMM NNNN /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                355,
+                356
+            ]
+        },
+        {
+            "label": "/ MMMM NNNN W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                355,
+                356,
+                40
+            ]
+        },
+        {
+            "label": "OOOO",
+            "classes": [],
+            "parents": [
+                105,
+                335
+            ]
+        },
+        {
+            "label": "PPPP",
+            "classes": [],
+            "parents": [
+                138,
+                335
+            ]
+        },
+        {
+            "label": "/ E EEEE PPPP /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                7,
+                311,
+                360
+            ]
+        },
+        {
+            "label": "/ E PPPP QQ /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                7,
+                360,
+                139
+            ]
+        },
+        {
+            "label": "/ E PPPP UU /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                7,
+                360,
+                153
+            ]
+        },
+        {
+            "label": "/ EEEE PPPP QQ /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                311,
+                360,
+                139
+            ]
+        },
+        {
+            "label": "/ PPPP QQ TT /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                360,
+                139,
+                152
+            ]
+        },
+        {
+            "label": "/ PPPP QQ UU /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                360,
+                139,
+                153
+            ]
+        },
+        {
+            "label": "/ PPPP TT UU /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                360,
+                152,
+                153
+            ]
+        },
+        {
+            "label": "/ L KKKK PPPP /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                340,
+                360
+            ]
+        },
+        {
+            "label": "/ L PPPP W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                360,
+                40
+            ]
+        },
+        {
+            "label": "/ L PPPP LLLL /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                360,
+                344
+            ]
+        },
+        {
+            "label": "/ KKKK PPPP W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                340,
+                360,
+                40
+            ]
+        },
+        {
+            "label": "/ PPPP W LLLL /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                360,
+                40,
+                344
+            ]
+        },
+        {
+            "label": "QQQQ",
+            "classes": [],
+            "parents": [
+                174,
+                335
+            ]
+        },
+        {
+            "label": "/ E QQQQ YY /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                7,
+                373,
+                177
+            ]
+        },
+        {
+            "label": "/ FFFF QQQQ AAA /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                320,
+                373,
+                187
+            ]
+        },
+        {
+            "label": "/ KKKK QQQQ LLLL /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                340,
+                373,
+                344
+            ]
+        },
+        {
+            "label": "/ PPPP QQQQ W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                360,
+                373,
+                40
+            ]
+        }
+    ]
+}

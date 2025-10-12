@@ -128,6 +128,24 @@ def to_browser_dict(model):
                 'is_golden': el.is_golden,
             })
 
+        elif isinstance(el, sp.FiniteSet):
+            # Reconstruct a Section object to get its properties
+            points = list(el.args)
+            section = Section(points)
+            lengths_val = [l.evalf() for l in section.lengths]
+            ratio_val = section.ratio.evalf()
+            element_dict.update({
+                'type': 'section',
+                'points': [model[p].label for p in section.points],
+                'lengths': [float(l) for l in lengths_val],
+                'decimal_lengths': [f'{l:.4f}' for l in lengths_val],
+                'latex_lengths': [sp.latex(l) for l in section.lengths],
+                'ratio': float(ratio_val),
+                'decimal_ratio': f'{ratio_val:.4f}',
+                'latex_ratio': sp.latex(section.ratio),
+                'is_golden': section.is_golden,
+            })
+
         elif isinstance(el, Chain):
             element_dict.update({
                 'type': 'chain',
