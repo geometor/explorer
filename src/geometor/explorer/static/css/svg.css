@@ -54,10 +54,6 @@
   fill: none;
   stroke-width: 8;
   vector-effect: non-scaling-stroke;
-  marker-start: url(#marker);
-  marker-mid: url(#marker);
-  marker-end: url(#marker);
-  --marker-opacity: 0.1;
 }
 
 #graphics polygon {
@@ -68,22 +64,28 @@
   marker-start: url(#marker);
   marker-mid: url(#marker);
   marker-end: url(#marker);
-  --marker-opacity: 0.1;
 }
 
-
-#graphics .golden {
-    stroke: gold;
+#graphics polyline.section {
+  stroke: rgba(51, 102, 204, 0.1);
+  marker-start: url(#marker);
+  marker-mid: url(#marker);
+  marker-end: url(#marker);
 }
 
-#graphics .section {
-  stroke-opacity: 0.1;
-  --marker-opacity: 0.1;
+#graphics polyline.section.golden {
+    stroke: rgba(255, 215, 0, 0.1);
 }
 
-#graphics polygon:hover, #graphics polygon.hover,
-#graphics polyline:hover, #graphics polyline.hover,
-#graphics .section:hover {
+#graphics polygon:hover,
+#graphics polyline:hover,
+#graphics polyline.section:hover {
+  stroke: #36c9;
   stroke-opacity: 1;
-  --marker-opacity: 1;
+}
+
+#graphics polyline.section.golden.hover,
+#graphics polyline.section.golden:hover {
+  stroke-opacity: 1;
+  stroke: gold;
 }
