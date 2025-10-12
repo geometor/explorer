@@ -261,6 +261,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (element.type === 'line' || element.type === 'circle') {
             content += '<hr>';
             if (element.type === 'circle') {
+                const center = document.createElement('div');
+                center.innerHTML = `center: ${element.center}`;
+                content += center.innerHTML;
                 const radius = document.createElement('div');
                 katex.render(`r = ${element.latex_radius}`, radius);
                 content += radius.innerHTML;
@@ -289,6 +292,29 @@ document.addEventListener('DOMContentLoaded', () => {
             const radians = document.createElement('div');
             katex.render(`rad = ${element.latex_radians}`, radians);
             content += radians.innerHTML;
+        } else if (element.type === 'polygon') {
+            content += '<hr>';
+            const lengths = document.createElement('div');
+            lengths.innerHTML = 'Lengths:';
+            element.latex_lengths.forEach(l => {
+                const length = document.createElement('div');
+                katex.render(l, length);
+                lengths.appendChild(length);
+            });
+            content += lengths.innerHTML;
+
+            const angles = document.createElement('div');
+            angles.innerHTML = 'Angles:';
+            for (const [p, a] of Object.entries(element.latex_angles)) {
+                const angle = document.createElement('div');
+                katex.render(`${p}: ${a}`, angle);
+                angles.appendChild(angle);
+            }
+            content += angles.innerHTML;
+
+            const area = document.createElement('div');
+            katex.render(`Area = ${element.latex_area}`, area);
+            content += area.innerHTML;
         }
 
         GEOMETOR.hoverCard.innerHTML = content;
