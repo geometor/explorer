@@ -76,6 +76,8 @@ polygon {
   marker-start: url(#marker);
   marker-mid: url(#marker);
   marker-end: url(#marker);
+  --marker-fill: #36c9;
+  --marker-opacity: 0.1;
 }
 
 line:hover, line.hover,
@@ -93,10 +95,13 @@ circle:hover, circle.hover {
   marker-start: url(#marker);
   marker-mid: url(#marker);
   marker-end: url(#marker);
+  --marker-fill: #36c9;
+  --marker-opacity: 0.1;
 }
 
 polygon:hover, polygon.hover,
 polyline:hover, polyline.hover,
 .section:hover {
   stroke-opacity: 1;
+  --marker-opacity: 1;
 }
