@@ -29,21 +29,12 @@ body {
     color: var(--text-color-light);
 }
 
-body.dark-mode {
-    background-color: var(--background-color-dark);
-    color: var(--text-color-dark);
-}
-
 header {
     grid-column: 1 / -1;
     padding: 0.5em 1em;
     border-bottom: 1px solid var(--border-color-light);
     display: flex;
     justify-content: flex-end;
-}
-
-body.dark-mode header {
-    border-bottom: 1px solid var(--border-color-dark);
 }
 
 main {
@@ -54,10 +45,6 @@ main {
     background-color: var(--accent-color-light);
 }
 
-body.dark-mode main {
-    background-color: var(--accent-color-dark);
-}
-
 aside {
     display: flex;
     flex-direction: column;
@@ -65,10 +52,6 @@ aside {
     padding: 1em;
     overflow-y: auto;
     border-left: 1px solid var(--border-color-light);
-}
-
-body.dark-mode aside {
-    border-left: 1px solid var(--border-color-dark);
 }
 
 table {
@@ -89,16 +72,8 @@ th, td {
     text-align: left;
 }
 
-body.dark-mode th, body.dark-mode td {
-    border: 1px solid var(--border-color-dark);
-}
-
 tbody tr.highlight {
     background-color: var(--highlight-bg-light);
-}
-
-body.dark-mode tbody tr.highlight {
-    background-color: var(--highlight-bg-dark);
 }
 
 #controls {
@@ -126,11 +101,6 @@ body.dark-mode tbody tr.highlight {
     min-width: 200px;
 }
 
-body.dark-mode #hover-card {
-    background-color: var(--accent-color-dark);
-    border: 1px solid var(--border-color-dark);
-}
-
 button {
     background-color: var(--button-bg-light);
     color: var(--button-text-light);
@@ -144,24 +114,12 @@ button:hover {
     background-color: #e0e0e0;
 }
 
-body.dark-mode button {
-    background-color: var(--button-bg-dark);
-    color: var(--button-text-dark);
-    border: 1px solid var(--border-color-dark);
-}
-
-body.dark-mode button:hover {
-    background-color: #444;
-}
-
 /* FROM INLINE */
 
 tbody tr.row-hover {
     background-color: #e6f2ff;
 }
-body.dark-mode tbody tr.row-hover {
-    background-color: #2a2a2a;
-}
+
 #points-table th:nth-child(2),
 #points-table th:nth-child(3),
 #points-table td:nth-child(2),
@@ -198,16 +156,12 @@ body.dark-mode tbody tr.row-hover {
     background-color: transparent;
     border: 1px solid var(--border-color-light);
 }
-body.dark-mode .view-switcher button {
-    border: 1px solid var(--border-color-dark);
-}
+
 .view-switcher button.active {
     background-color: var(--button-bg-light);
     font-weight: bold;
 }
-body.dark-mode .view-switcher button.active {
-    background-color: var(--button-bg-dark);
-}
+
 #category-view {
     display: flex;
     flex-direction: column;
@@ -243,9 +197,7 @@ body.dark-mode .view-switcher button.active {
     overflow-y: auto;
     border: 1px solid var(--border-color-light);
 }
-body.dark-mode .table-container {
-    border: 1px solid var(--border-color-dark);
-}
+
 .collapse-btn {
     margin-right: 0.5em;
     padding: 0 0.5em;
