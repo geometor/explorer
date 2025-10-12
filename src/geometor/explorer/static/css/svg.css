@@ -4,19 +4,6 @@
     cursor: default;
 }
 
-/* #drawing.add-point-mode {
-    cursor: crosshair;
-}
-
-#drawing.select-points-mode [data-label] {
-    cursor: pointer;
-} */
-
-/* #points polyline {
-  marker-start: url(#point);
-  marker-end: url(#point);
-} */
-
 #points circle {
   fill: var(--text-color);
   stroke: var(--accent-color);
@@ -41,34 +28,39 @@
 #points circle.hover {
     fill: var(--select-color);
 }
-/* #point .outer { fill: var(--background-color-light); stroke: none } */
-/* #point .inner { fill: var(--text-color-light) ; stroke: none } */
 
-/* body.dark-mode #point .outer { fill: var(--background-color-dark); } */
-/* body.dark-mode #point .inner { fill: var(--text-color-dark); } */
-
-line {
+#elements line {
   fill: none;
   stroke: #999;
   stroke-width: 2;
   vector-effect: non-scaling-stroke;
 }
 
-circle {
+#elements circle {
   fill: none;
   stroke: #C09;
   stroke-width: 2;
   vector-effect: non-scaling-stroke;
 }
 
-polyline {
+#elements line:hover, #elements line.hover,
+#elements circle:hover, #elements circle.hover {
+  stroke: var(--select-color);
+  stroke-opacity: 1;
+}
+
+#graphics polyline {
   stroke: #36c9;
   fill: none;
   stroke-width: 8;
   vector-effect: non-scaling-stroke;
+  marker-start: url(#marker);
+  marker-mid: url(#marker);
+  marker-end: url(#marker);
+  --marker-opacity: 0.1;
 }
 
-polygon {
+#graphics polygon {
   stroke: #36c9;
   fill: #36c3;
   stroke-width: 8;
@@ -76,32 +68,22 @@ polygon {
   marker-start: url(#marker);
   marker-mid: url(#marker);
   marker-end: url(#marker);
-  --marker-fill: #36c9;
   --marker-opacity: 0.1;
 }
 
-line:hover, line.hover,
-circle:hover, circle.hover {
-  stroke: var(--select-color);
-  stroke-opacity: 1;
-}
 
-.golden {
+#graphics .golden {
     stroke: gold;
 }
 
-.section {
+#graphics .section {
   stroke-opacity: 0.1;
-  marker-start: url(#marker);
-  marker-mid: url(#marker);
-  marker-end: url(#marker);
-  --marker-fill: #36c9;
   --marker-opacity: 0.1;
 }
 
-polygon:hover, polygon.hover,
-polyline:hover, polyline.hover,
-.section:hover {
+#graphics polygon:hover, #graphics polygon.hover,
+#graphics polyline:hover, #graphics polyline.hover,
+#graphics .section:hover {
   stroke-opacity: 1;
   --marker-opacity: 1;
 }
