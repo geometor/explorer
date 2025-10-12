@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 content += '<br>';
                 const radius = document.createElement('div');
                 katex.render(`r = ${element.latex_radius}`, radius);
-                content += radius.innerHTML;
+                content += `<span>${radius.innerHTML}</span> <span class="decimal">(${element.decimal_radius})</span>`;
                 content += '<br>';
             }
             const equation = document.createElement('div');
@@ -277,31 +277,32 @@ document.addEventListener('DOMContentLoaded', () => {
             content += '<hr>';
             const length = document.createElement('div');
             katex.render(`l = ${element.latex_length}`, length);
-            content += length.innerHTML;
+            content += `<span>${length.innerHTML}</span> <span class="decimal">(${element.decimal_length})</span>`;
         } else if (element.type === 'section') {
             content += '<hr>';
             const lengths = document.createElement('div');
             katex.render(`[${element.latex_lengths.join(', ')}]`, lengths);
-            content += lengths.innerHTML;
+            content += `<span>${lengths.innerHTML}</span> <span class="decimal">([${element.decimal_lengths.join(', ')}])</span>`;
             content += '<br>';
             const ratio = document.createElement('div');
             katex.render(`ratio = ${element.latex_ratio}`, ratio);
-            content += ratio.innerHTML;
+            content += `<span>${ratio.innerHTML}</span> <span class="decimal">(${element.decimal_ratio})</span>`;
         } else if (element.type === 'wedge') {
             content += '<hr>';
             const radius = document.createElement('div');
             katex.render(`r = ${element.latex_radius}`, radius);
-            content += radius.innerHTML;
+            content += `<span>${radius.innerHTML}</span> <span class="decimal">(${element.decimal_radius})</span>`;
             const radians = document.createElement('div');
             katex.render(`rad = ${element.latex_radians}`, radians);
-            content += radians.innerHTML;
+            content += `<span>${radians.innerHTML}</span> <span class="decimal">(${element.degrees})</span>`;
         } else if (element.type === 'polygon') {
             content += '<hr>';
             const lengths = document.createElement('div');
             lengths.innerHTML = 'Lengths:';
-            element.latex_lengths.forEach(l => {
+            element.latex_lengths.forEach((l, i) => {
                 const length = document.createElement('div');
                 katex.render(l, length);
+                length.innerHTML = `<span>${length.innerHTML}</span> <span class="decimal">(${element.decimal_lengths[i]})</span>`;
                 lengths.appendChild(length);
             });
             content += lengths.innerHTML;
@@ -311,13 +312,14 @@ document.addEventListener('DOMContentLoaded', () => {
             for (const [p, a] of Object.entries(element.latex_angles)) {
                 const angle = document.createElement('div');
                 katex.render(`${p}: ${a}`, angle);
+                angle.innerHTML = `<span>${angle.innerHTML}</span> <span class="decimal">(${element.degree_angles[p]})</span>`;
                 angles.appendChild(angle);
             }
             content += angles.innerHTML;
 
             const area = document.createElement('div');
             katex.render(`Area = ${element.latex_area}`, area);
-            content += area.innerHTML;
+            content += `<span>${area.innerHTML}</span> <span class="decimal">(${element.decimal_area})</span>`;
         }
 
         GEOMETOR.hoverCard.innerHTML = content;
