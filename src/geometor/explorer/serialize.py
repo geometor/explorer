@@ -40,8 +40,8 @@ def to_browser_dict(model):
                 'type': 'point',
                 'x': float(el.x.evalf()),
                 'y': float(el.y.evalf()),
-                'latex_x': sp.latex(el.x),
-                'latex_y': sp.latex(el.y),
+                'latex_x': sp.latex(clean_expr(el.x)),
+                'latex_y': sp.latex(clean_expr(el.y)),
             })
 
         elif isinstance(el, spg.Line):
@@ -67,7 +67,7 @@ def to_browser_dict(model):
             })
 
         elif isinstance(el, spg.Polygon):
-            lengths_val = [l.evalf() for l in el.side_lengths]
+            lengths_val = [l.evalf() for l in data.side_lengths]
             angles_val = {p: a.evalf() for p, a in el.angles.items()}
             area_val = el.area.evalf()
             element_dict.update({
@@ -75,7 +75,7 @@ def to_browser_dict(model):
                 'points': [model[p].label for p in el.vertices],
                 'lengths': [float(l) for l in lengths_val],
                 'decimal_lengths': [f'{l:.4f}' for l in lengths_val],
-                'latex_lengths': [sp.latex(clean_expr(l)) for l in el.side_lengths],
+                'latex_lengths': [sp.latex(clean_expr(l)) for l in data.side_lengths],
                 'angles': {model[p].label: float(a) for p, a in angles_val.items()},
                 'degree_angles': {model[p].label: f'{a * 180 / sp.pi:.3f}°' for p, a in angles_val.items()},
                 'latex_angles': {model[p].label: sp.latex(clean_expr(a)) for p, a in el.angles.items()},

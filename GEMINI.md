@@ -6,7 +6,7 @@ A web-based UI for the GEOMETOR model, allowing for interactive creation, visual
 
 ### Backend (Flask)
 
--   **`src/geometor/explorer/app.py`**: The main Flask application, serving the frontend and providing an API to the `geometor.model` library.
+-   **`src/geometor/explorer/app.py`**: The main Flask application, serving the frontend and providing an API to the `geometor.model` library. It also integrates with `geometor.divine` for analysis.
 -   **`templates/`**: HTML templates.
 -   **`static/`**: Frontend assets (JS, CSS, images).
 

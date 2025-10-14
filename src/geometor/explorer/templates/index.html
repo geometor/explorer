@@ -12,10 +12,13 @@
 </head>
 <body class="web">
     <header>
-        <button id="new-btn">New</button>
-        <button id="open-btn">Open</button>
-        <button id="save-btn">Save</button>
-        <button id="save-as-btn">Save As</button>
+        <div id="file-manager">
+            <button id="new-btn">New</button>
+            <button id="open-btn">Open</button>
+            <button id="save-btn">Save</button>
+            <button id="save-as-btn">Save As</button>
+            <select id="file-dropdown"></select>
+        </div>
         <input type="file" id="file-input" style="display: none;" />
         <button id="add-line-btn" disabled>Add Line</button>
         <button id="add-circle-btn" disabled>Add Circle</button>
@@ -23,6 +26,10 @@
         <button id="add-section-btn" disabled>Add Section</button>
         <button id="add-polygon-btn" disabled>Add Polygon</button>
         <button id="theme-toggle">Toggle Theme</button>
+        <div id="status-bar">
+            <span id="status-filename">Unsaved Model</span>
+            <span id="status-message">Ready</span>
+        </div>
     </header>
     <div id="hover-card"></div>
     <main>

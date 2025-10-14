@@ -12,6 +12,62 @@ document.addEventListener('DOMContentLoaded', () => {
     GEOMETOR.tables.structures = document.querySelector('#structures-table tbody');
     GEOMETOR.tables.graphics = document.querySelector('#graphics-table tbody');
     GEOMETOR.tables.chrono = document.querySelector('#chrono-table tbody');
+    const fileDropdown = document.getElementById('file-dropdown');
+    const statusFilename = document.getElementById('status-filename');
+    const statusMessage = document.getElementById('status-message');
+    let currentFilename = '';
+    let isDirty = false;
+
+    function updateStatus(message, isError = false) {
+        statusMessage.textContent = message;
+        statusMessage.classList.toggle('error', isError);
+        setTimeout(() => {
+            statusMessage.textContent = 'Ready';
+            statusMessage.classList.remove('error');
+        }, 3000);
+    }
+
+    function updateFilenameDisplay() {
+        statusFilename.textContent = currentFilename || 'Unsaved Model';
+    }
+
+    function loadConstructions() {
+        fetch('/api/constructions')
+            .then(response => response.json())
+            .then(files => {
+                fileDropdown.innerHTML = '<option value="">Select a file</option>';
+                files.forEach(file => {
+                    const option = document.createElement('option');
+                    option.value = file;
+                    option.textContent = file;
+                    fileDropdown.appendChild(option);
+                });
+            });
+    }
+
+    fileDropdown.addEventListener('change', (event) => {
+        const filename = event.target.value;
+        if (filename) {
+            fetch('/api/model/load', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ filename: filename }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success === false) {
+                    updateStatus(`Error loading file: ${data.message}`, true);
+                } else {
+                    renderModel(data);
+                    currentFilename = filename;
+                    updateFilenameDisplay();
+                    updateCurrentFilenameDisplay();
+                    clearSelection();
+                }
+            });
+        }
+    });
+
 
     GEOMETOR.selectedPoints = [];
     GEOMETOR.modelData = {};
@@ -77,8 +133,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const yCell = row.insertCell();
 
         labelCell.innerHTML = el.label;
-        xCell.innerHTML = el.x.toFixed(4);
-        yCell.innerHTML = el.y.toFixed(4);
+        katex.render(el.latex_x, xCell);
+        xCell.title = el.x.toFixed(4);
+        katex.render(el.latex_y, yCell);
+        yCell.title = el.y.toFixed(4);
     }
 
     function addStructureToTable(el) {
@@ -169,6 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 renderModel(data);
                 clearSelection();
+                isDirty = true;
             });
         }
     });
@@ -185,6 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 renderModel(data);
                 clearSelection();
+                isDirty = true;
             });
         }
     });
@@ -201,6 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // console.log(data);
             renderModel(data);
             clearSelection();
+            isDirty = true;
         });
     }
 
@@ -242,11 +303,15 @@ document.addEventListener('DOMContentLoaded', () => {
             content += '<hr>';
             content += '<div class="coords-grid">';
             // X value
-            content += `<span>X:</span>`;
-            content += `<span>${element.x.toFixed(4)}</span>`;
+            let x_div = document.createElement('div');
+            katex.render(`x = ${element.latex_x}`, x_div);
+            content += `<span>${x_div.innerHTML}</span>`;
+            content += `<span class="decimal">(${element.x.toFixed(4)})</span>`;
             // Y value
-            content += `<span>Y:</span>`;
-            content += `<span>${element.y.toFixed(4)}</span>`;
+            let y_div = document.createElement('div');
+            katex.render(`y = ${element.latex_y}`, y_div);
+            content += `<span>${y_div.innerHTML}</span>`;
+            content += `<span class="decimal">(${element.y.toFixed(4)})</span>`;
             content += '</div>';
         } else if (element.type === 'line' || element.type === 'circle') {
             content += '<hr>';
@@ -391,6 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(response => response.json())
                     .then(data => {
                         renderModel(data);
+                        isDirty = true;
                     });
                 }
             }
@@ -499,6 +565,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(data => {
                     renderModel(data);
                     clearSelection();
+                    currentFilename = 'untitled.json';
+                    updateFilenameDisplay();
+                    isDirty = false;
                 });
         }
     });
@@ -521,10 +590,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success === false) {
-                        alert(`Error loading file: ${data.message}`);
+                        updateStatus(`Error loading file: ${data.message}`, true);
                     } else {
                         renderModel(data);
                         clearSelection();
+                        currentFilename = file.name;
+                        updateFilenameDisplay();
+                        isDirty = false;
                     }
                 });
             };
@@ -534,34 +606,47 @@ document.addEventListener('DOMContentLoaded', () => {
         event.target.value = null;
     });
 
-    function saveModel(defaultFilename = 'construction.json') {
-        const filename = prompt('Enter filename:', defaultFilename);
+    function save(filename) {
+        fetch('/api/model/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ filename: filename }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                updateStatus('File saved successfully.');
+                currentFilename = filename;
+                updateFilenameDisplay();
+                updateCurrentFilenameDisplay();
+                loadConstructions();
+                isDirty = false;
+            } else {
+                updateStatus(`Error saving file: ${data.message}`, true);
+            }
+        });
+    }
+
+    function saveAs() {
+        const filename = prompt('Enter filename:', currentFilename || 'construction.json');
         if (filename) {
-            fetch('/api/model/save', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ filename: filename }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-                } else {
-                    alert(`Error saving file: ${data.message}`);
-                }
-            });
+            save(filename);
         }
     }
 
     saveBtn.addEventListener('click', () => {
-        // For now, save and save as are the same.
-        // Later, we can store the current filename in a variable.
-        saveModel();
+        if (currentFilename && currentFilename !== 'untitled.json') {
+            save(currentFilename);
+        } else {
+            saveAs();
+        }
     });
 
     saveAsBtn.addEventListener('click', () => {
-        saveModel();
+        saveAs();
     });
 
     initSvgEventListeners();
+    loadConstructions();
+    updateFilenameDisplay();
 });
