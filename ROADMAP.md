@@ -30,3 +30,27 @@
 
 -   **Objective:** Redesign the user interface to efficiently display complex models, provide real-time process feedback, and improve data interaction.
 -   **Plan:** See the detailed implementation plan in `UI_UX_IMPROVEMENTS.md`.
+
+### 5. Element Properties and Visibility
+
+-   **Objective:** Give users more control over the appearance and behavior of elements in the construction.
+-   **Features:**
+    -   **Dynamic Styling:** Add the ability to assign a CSS class to any element at any time, allowing for dynamic style changes.
+    -   **Visibility Toggles:** Implement controls to toggle the visibility of individual elements and groups of elements (e.g., hide all points, lines, or circles).
+    -   **Guide Elements:** Introduce a "guide" property for lines and circles. Guide elements will be visually distinct (e.g., dashed lines) and will be excluded from intersection checks, preventing them from creating new points. This is useful for construction lines that are not part of the a final figure.
+
+### 6. Interactive Point Placement
+
+-   **Objective:** Allow users to place points directly in the UI.
+-   **Phased Implementation:**
+    -   **Phase 1: Manual Input:** Create a dialog box that allows users to enter `x` and `y` coordinates to define a new point.
+    -   **Phase 2: Mouse and Grid:** Implement point placement using the mouse, with a "snap-to-grid" feature for precision.
+
+### 7. Robust Element Deletion and Debugging
+
+-   **Objective:** Safely handle element deletion without breaking the model and provide better debugging tools.
+-   **Challenges:** Deleting an element that other elements depend on can lead to an invalid model state.
+-   **Plan:**
+    -   **Dependency Graph:** Implement a dependency graph in the backend to track relationships between elements. Before deleting an element, analyze the graph to determine the impact. This will allow for either preventing the deletion or performing a cascading delete of all dependent elements.
+    -   **Comprehensive Logging:** Implement detailed logging for all model operations (creation, deletion, modification) on both the frontend and backend. This will be crucial for debugging complex dependency issues.
+    -   **Testing:** Develop a comprehensive test suite specifically for element deletion scenarios, covering various dependency situations to ensure model integrity.
