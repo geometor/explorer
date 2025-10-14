@@ -131,24 +131,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const labelCell = row.insertCell();
         const xCell = row.insertCell();
         const yCell = row.insertCell();
+        const actionCell = row.insertCell();
 
         labelCell.innerHTML = el.label;
         katex.render(el.latex_x, xCell);
         xCell.title = el.x.toFixed(4);
         katex.render(el.latex_y, yCell);
         yCell.title = el.y.toFixed(4);
+
+        actionCell.innerHTML = `<button class="delete-btn" data-label="${el.label}">🗑️</button>`;
     }
 
     function addStructureToTable(el) {
         const row = GEOMETOR.tables.structures.insertRow();
         row.dataset.label = el.label;
-        row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td><td><button class="delete-btn">🗑️</button></td>`;
+        row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td><td><button class="delete-btn" data-label="${el.label}">🗑️</button></td>`;
     }
 
     function addGraphicToTable(el) {
         const row = GEOMETOR.tables.graphics.insertRow();
         row.dataset.label = el.label;
-        row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td><td><button class="delete-btn">🗑️</button></td>`;
+        row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td><td><button class="delete-btn" data-label="${el.label}">🗑️</button></td>`;
     }
 
     function addChronologicalRow(el) {
@@ -280,6 +283,25 @@ document.addEventListener('DOMContentLoaded', () => {
     addPolygonButton.addEventListener('click', () => {
         if (GEOMETOR.selectedPoints.length >= 2) {
             constructPoly('/api/set/polygon', GEOMETOR.selectedPoints);
+        }
+    });
+
+    const addPointBtn = document.getElementById('add-point-btn');
+    addPointBtn.addEventListener('click', () => {
+        const x = prompt('Enter x coordinate:');
+        const y = prompt('Enter y coordinate:');
+
+        if (x !== null && y !== null) {
+            fetch('/api/construct/point', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ x: parseFloat(x), y: parseFloat(y) }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                renderModel(data);
+                isDirty = true;
+            });
         }
     });
 
@@ -445,20 +467,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Handle delete button clicks
         tableBody.addEventListener('click', (event) => {
             if (event.target.classList.contains('delete-btn')) {
-                const row = event.target.closest('tr');
-                const label = row.dataset.label;
-                if (confirm(`Are you sure you want to delete ${label} and all its dependents?`)) {
-                    fetch('/api/model/delete', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ label: label }),
-                    })
+                const label = event.target.dataset.label;
+                if (!label) return;
+
+                // First, fetch dependents
+                fetch(`/api/model/dependents?label=${label}`)
                     .then(response => response.json())
-                    .then(data => {
-                        renderModel(data);
-                        isDirty = true;
+                    .then(dependents => {
+                        let message = `Are you sure you want to delete ${label}?`;
+                        if (dependents.length > 0) {
+                            message += `\n\nThe following elements will also be deleted: ${dependents.join(', ')}`;
+                        }
+
+                        if (confirm(message)) {
+                            fetch('/api/model/delete', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ label: label }),
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                renderModel(data);
+                                isDirty = true;
+                            });
+                        }
                     });
-                }
             }
         });
     });

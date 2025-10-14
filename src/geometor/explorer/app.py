@@ -130,7 +130,7 @@ def construct_point():
     y = data.get('y')
 
     if x is not None and y is not None:
-        model.set_point(x, y)
+        model.set_point(x, y, classes=["given"])
 
     return jsonify(to_browser_dict(model))
 
@@ -149,6 +149,19 @@ def delete_element():
     
     # Return the updated model to the browser
     return jsonify(to_browser_dict(model))
+
+
+@app.route('/api/model/dependents', methods=['GET'])
+def get_dependents_endpoint():
+    """Returns a list of dependent elements for a given element label."""
+    label = request.args.get('label')
+    if not label:
+        return jsonify({"error": "Element label is required."}), 400
+
+    dependents = model.get_dependents(label)
+    dependent_labels = [model[el].label for el in dependents]
+    
+    return jsonify(dependent_labels)
 
 
 @app.route('/api/set/segment', methods=['POST'])

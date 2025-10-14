@@ -4,10 +4,9 @@
     "sympy_objects": [
         "Point2D(Integer(0), Integer(0))",
         "Point2D(Integer(1), Integer(0))",
+        "Line2D(Point2D(Integer(0), Integer(0)), Point2D(Integer(1), Integer(0)))",
         "Circle(Point2D(Integer(0), Integer(0)), Integer(1))",
-        "Circle(Point2D(Integer(1), Integer(0)), Integer(1))",
-        "Point2D(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
-        "Point2D(Rational(1, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))"
+        "Point2D(Integer(-1), Integer(0))"
     ],
     "elements": [
         {
@@ -22,7 +21,19 @@
             "classes": [
                 "given"
             ],
-            "parents": []
+            "parents": [
+                2,
+                3
+            ]
+        },
+        {
+            "label": "[ A B ]",
+            "classes": [],
+            "parents": [
+                0,
+                1,
+                4
+            ]
         },
         {
             "label": "( A B )",
@@ -30,29 +41,9 @@
             "parents": [
                 0,
                 1,
-                4,
-                5
+                4
             ],
             "pt_radius": 1
-        },
-        {
-            "label": "( B A )",
-            "classes": [],
-            "parents": [
-                1,
-                0,
-                4,
-                5
-            ],
-            "pt_radius": 0
-        },
-        {
-            "label": "C",
-            "classes": [],
-            "parents": [
-                2,
-                3
-            ]
         },
         {
             "label": "D",
