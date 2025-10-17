@@ -67,9 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Second pass: Render everything in order
         data.elements.forEach(el => {
-            // Populate chronological table
-            addChronologicalRow(el);
-
             // Render SVG and populate category tables
             if (el.type === 'point') {
                 renderPoint(el);
@@ -82,6 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     addGraphicToTable(el);
                 }
             }
+            // Populate chronological table AFTER the element is rendered
+            addChronologicalRow(el);
         });
         
         // Re-apply selection visuals
@@ -112,18 +111,51 @@ document.addEventListener('DOMContentLoaded', () => {
         yCell.title = el.y.toFixed(4);
 
         actionCell.innerHTML = `<button class="delete-btn" data-id="${el.ID}">🗑️</button>`;
+
+        const svgEl = document.getElementById(el.ID);
+        if (svgEl) {
+            const color = window.getComputedStyle(svgEl).getPropertyValue('fill');
+            IDCell.style.color = color;
+        }
     }
 
     function addStructureToTable(el) {
         const row = GEOMETOR.tables.structures.insertRow();
         row.dataset.id = el.ID;
-        row.innerHTML = `<td>${el.ID}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td><td><button class="delete-btn" data-id="${el.ID}">🗑️</button></td>`;
+        const IDCell = row.insertCell();
+        const parentsCell = row.insertCell();
+        const deleteCell = row.insertCell();
+
+        IDCell.innerHTML = el.ID;
+        parentsCell.innerHTML = el.parents.join(', ');
+        deleteCell.innerHTML = `<button class="delete-btn" data-id="${el.ID}">🗑️</button>`;
+
+        const svgEl = document.getElementById(el.ID);
+        if (svgEl) {
+            const color = window.getComputedStyle(svgEl).getPropertyValue('stroke');
+            IDCell.style.color = color;
+        }
     }
 
     function addGraphicToTable(el) {
         const row = GEOMETOR.tables.graphics.insertRow();
         row.dataset.id = el.ID;
-        row.innerHTML = `<td>${el.ID}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td><td><button class="delete-btn" data-id="${el.ID}">🗑️</button></td>`;
+        const IDCell = row.insertCell();
+        const parentsCell = row.insertCell();
+        const deleteCell = row.insertCell();
+
+        IDCell.innerHTML = el.ID;
+        parentsCell.innerHTML = el.parents.join(', ');
+        deleteCell.innerHTML = `<button class="delete-btn" data-id="${el.ID}">🗑️</button>`;
+
+        const svgEl = document.getElementById(el.ID);
+        if (svgEl) {
+            let color = window.getComputedStyle(svgEl).getPropertyValue('stroke');
+            if (svgEl.classList.contains('golden')) {
+                color = 'gold';
+            }
+            IDCell.style.color = color;
+        }
     }
 
     function addChronologicalRow(el) {
@@ -137,8 +169,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         // Defensively check for el.classes
         const isGiven = el.classes && el.classes.includes('given');
-        let deleteBtnHtml = (el.type !== 'point' && !isGiven) ? `<td><button class="delete-btn" data-id="${el.ID}">🗑️</button></td>` : '<td></td>';
-        row.innerHTML = `<td>${el.ID}</td><td>${el.type}</td><td>${parents.join(', ')}</td>${deleteBtnHtml}`;
+        
+        const IDCell = row.insertCell();
+        const parentsCell = row.insertCell();
+        const deleteCell = row.insertCell();
+
+        IDCell.innerHTML = el.ID;
+        parentsCell.innerHTML = parents.join(', ');
+        if (el.type !== 'point' && !isGiven) {
+            deleteCell.innerHTML = `<button class="delete-btn" data-id="${el.ID}">🗑️</button>`;
+        }
+
+        const svgEl = document.getElementById(el.ID);
+        if (svgEl) {
+            let color;
+            if (el.type === 'point') {
+                color = window.getComputedStyle(svgEl).getPropertyValue('fill');
+            } else {
+                color = window.getComputedStyle(svgEl).getPropertyValue('stroke');
+                if (color === 'none' || color === '') {
+                    color = window.getComputedStyle(svgEl).getPropertyValue('fill');
+                }
+                if (svgEl.classList.contains('golden')) {
+                    color = 'gold';
+                }
+            }
+            IDCell.style.color = color;
+        }
     }
 
     const addLineBtn = document.getElementById('add-line-btn');
@@ -372,6 +429,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         GEOMETOR.hoverCard.innerHTML = content;
+
+        const svgEl = document.getElementById(element.ID);
+        if (svgEl) {
+            let color;
+            if (element.type === 'point') {
+                color = window.getComputedStyle(svgEl).getPropertyValue('fill');
+            } else {
+                color = window.getComputedStyle(svgEl).getPropertyValue('stroke');
+                if (color === 'none' || color === '') {
+                    color = window.getComputedStyle(svgEl).getPropertyValue('fill');
+                }
+                if (svgEl.classList.contains('golden')) {
+                    color = 'gold';
+                }
+            }
+            const idSpan = GEOMETOR.hoverCard.querySelector('.ID');
+            idSpan.style.color = color;
+            idSpan.style.fontWeight = 'bold';
+        }
+
         GEOMETOR.hoverCard.style.display = 'block';
     }
 

@@ -65,6 +65,11 @@ th, td {
     text-align: left;
 }
 
+td:first-child {
+    white-space: nowrap;
+    font-weight: bold;
+}
+
 tbody tr.highlight {
     background-color: var(--highlight-bg);
 }
