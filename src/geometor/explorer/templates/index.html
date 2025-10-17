@@ -26,10 +26,6 @@
         <button id="add-polygon-btn" disabled>Add Polygon</button>
         <button id="add-point-btn">Add Point</button>
         <button id="theme-toggle">Toggle Theme</button>
-        <div id="status-bar">
-            <span id="status-filename">Unsaved Model</span>
-            <span id="status-message">Ready</span>
-        </div>
     </header>
     <div id="hover-card"></div>
     <main>
@@ -117,6 +113,13 @@
             </div>
         </div>
     </aside>
+
+    <footer>
+        <div id="status-bar">
+            <span id="status-filename">Unsaved Model</span>
+            <span id="status-message">Ready</span>
+        </div>
+    </footer>
 
     <script src="{{ url_for('static', filename='js/svg.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
