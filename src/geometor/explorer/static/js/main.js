@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     GEOMETOR.tables.structures = document.querySelector('#structures-table tbody');
     GEOMETOR.tables.graphics = document.querySelector('#graphics-table tbody');
     GEOMETOR.tables.chrono = document.querySelector('#chrono-table tbody');
-    const fileDropdown = document.getElementById('file-dropdown');
     const statusFilename = document.getElementById('status-filename');
     const statusMessage = document.getElementById('status-message');
     let currentFilename = '';
@@ -35,38 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch('/api/constructions')
             .then(response => response.json())
             .then(files => {
-                fileDropdown.innerHTML = '<option value="">Select a file</option>';
-                files.forEach(file => {
-                    const option = document.createElement('option');
-                    option.value = file;
-                    option.textContent = file;
-                    fileDropdown.appendChild(option);
-                });
+                // TODO: hook in the new file dialog
             });
     }
 
-    fileDropdown.addEventListener('change', (event) => {
-        const filename = event.target.value;
-        if (filename) {
-            fetch('/api/model/load', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ filename: filename }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success === false) {
-                    updateStatus(`Error loading file: ${data.message}`, true);
-                } else {
-                    renderModel(data);
-                    currentFilename = filename;
-                    updateFilenameDisplay();
-                    updateCurrentFilenameDisplay();
-                    clearSelection();
-                }
-            });
-        }
-    });
+
 
 
     GEOMETOR.selectedPoints = [];
