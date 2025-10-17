@@ -97,11 +97,11 @@ def new_model_endpoint():
 @app.route('/api/construct/line', methods=['POST'])
 def construct_line():
     data = request.get_json()
-    pt1_label = data.get('pt1')
-    pt2_label = data.get('pt2')
+    pt1_ID = data.get('pt1')
+    pt2_ID = data.get('pt2')
 
-    pt1 = model.get_element_by_label(pt1_label)
-    pt2 = model.get_element_by_label(pt2_label)
+    pt1 = model.get_element_by_ID(pt1_ID)
+    pt2 = model.get_element_by_ID(pt2_ID)
 
     if pt1 and pt2:
         model.construct_line(pt1, pt2)
@@ -111,11 +111,11 @@ def construct_line():
 @app.route('/api/construct/circle', methods=['POST'])
 def construct_circle():
     data = request.get_json()
-    pt1_label = data.get('pt1')
-    pt2_label = data.get('pt2')
+    pt1_ID = data.get('pt1')
+    pt2_ID = data.get('pt2')
 
-    pt1 = model.get_element_by_label(pt1_label)
-    pt2 = model.get_element_by_label(pt2_label)
+    pt1 = model.get_element_by_ID(pt1_ID)
+    pt2 = model.get_element_by_ID(pt2_ID)
 
     if pt1 and pt2:
         model.construct_circle(pt1, pt2)
@@ -139,13 +139,13 @@ def construct_point():
 def delete_element():
     """Deletes an element and its dependents from the model."""
     data = request.get_json()
-    label = data.get('label')
+    ID = data.get('ID')
     
-    if not label:
-        return jsonify({"error": "Element label is required."}), 400
+    if not ID:
+        return jsonify({"error": "Element ID is required."}), 400
 
     # Call the delete_element method on the model
-    model.delete_element(label)
+    model.delete_element(ID)
     
     # Return the updated model to the browser
     return jsonify(to_browser_dict(model))
@@ -153,21 +153,21 @@ def delete_element():
 
 @app.route('/api/model/dependents', methods=['GET'])
 def get_dependents_endpoint():
-    """Returns a list of dependent elements for a given element label."""
-    label = request.args.get('label')
-    if not label:
-        return jsonify({"error": "Element label is required."}), 400
+    """Returns a list of dependent elements for a given element ID."""
+    ID = request.args.get('ID')
+    if not ID:
+        return jsonify({"error": "Element ID is required."}), 400
 
-    dependents = model.get_dependents(label)
-    dependent_labels = [model[el].label for el in dependents]
+    dependents = model.get_dependents(ID)
+    dependent_IDs = [model[el].ID for el in dependents]
     
-    return jsonify(dependent_labels)
+    return jsonify(dependent_IDs)
 
 
 @app.route('/api/set/segment', methods=['POST'])
 def set_segment():
     data = request.get_json()
-    points = [model.get_element_by_label(label) for label in data.get('points', [])]
+    points = [model.get_element_by_ID(ID) for ID in data.get('points', [])]
     if len(points) == 2:
         segment = model.set_segment(*points)
         print(to_browser_dict(model))
@@ -176,7 +176,7 @@ def set_segment():
 @app.route('/api/set/section', methods=['POST'])
 def set_section():
     data = request.get_json()
-    points = [model.get_element_by_label(label) for label in data.get('points', [])]
+    points = [model.get_element_by_ID(ID) for ID in data.get('points', [])]
     if len(points) == 3:
         section = model.set_section(points)
         print(to_browser_dict(model))
@@ -186,7 +186,7 @@ def set_section():
 @app.route('/api/set/polygon', methods=['POST'])
 def set_polygon():
     data = request.get_json()
-    points = [model.get_element_by_label(label) for label in data.get('points', [])]
+    points = [model.get_element_by_ID(ID) for ID in data.get('points', [])]
     if len(points) >= 3:
         polygon = model.set_polygon(points)
         print(to_browser_dict(model))

@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // First pass: Process all points to populate the lookup object
         data.elements.forEach(el => {
             if (el.type === 'point') {
-                points[el.label] = el;
+                points[el.ID] = el;
             }
         });
 
@@ -85,10 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         // Re-apply selection visuals
-        GEOMETOR.selectedPoints.forEach(label => {
-            const svgPoint = document.getElementById(label);
-            const tableRow = GEOMETOR.tables.points.querySelector(`tr[data-label="${label}"]`);
-            const chronoRow = GEOMETOR.tables.chrono.querySelector(`tr[data-label="${label}"]`);
+        GEOMETOR.selectedPoints.forEach(ID => {
+            const svgPoint = document.getElementById(ID);
+            const tableRow = GEOMETOR.tables.points.querySelector(`tr[data-id="${ID}"]`);
+            const chronoRow = GEOMETOR.tables.chrono.querySelector(`tr[data-id="${ID}"]`);
             if (svgPoint) svgPoint.classList.add('selected');
             if (tableRow) tableRow.classList.add('highlight');
             if (chronoRow) chronoRow.classList.add('highlight');
@@ -99,36 +99,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function addPointToTable(el) {
         const row = GEOMETOR.tables.points.insertRow();
-        row.dataset.label = el.label;
-        const labelCell = row.insertCell();
+        row.dataset.id = el.ID;
+        const IDCell = row.insertCell();
         const xCell = row.insertCell();
         const yCell = row.insertCell();
         const actionCell = row.insertCell();
 
-        labelCell.innerHTML = el.label;
+        IDCell.innerHTML = el.ID;
         katex.render(el.latex_x, xCell);
         xCell.title = el.x.toFixed(4);
         katex.render(el.latex_y, yCell);
         yCell.title = el.y.toFixed(4);
 
-        actionCell.innerHTML = `<button class="delete-btn" data-label="${el.label}">🗑️</button>`;
+        actionCell.innerHTML = `<button class="delete-btn" data-id="${el.ID}">🗑️</button>`;
     }
 
     function addStructureToTable(el) {
         const row = GEOMETOR.tables.structures.insertRow();
-        row.dataset.label = el.label;
-        row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td><td><button class="delete-btn" data-label="${el.label}">🗑️</button></td>`;
+        row.dataset.id = el.ID;
+        row.innerHTML = `<td>${el.ID}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td><td><button class="delete-btn" data-id="${el.ID}">🗑️</button></td>`;
     }
 
     function addGraphicToTable(el) {
         const row = GEOMETOR.tables.graphics.insertRow();
-        row.dataset.label = el.label;
-        row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td><td><button class="delete-btn" data-label="${el.label}">🗑️</button></td>`;
+        row.dataset.id = el.ID;
+        row.innerHTML = `<td>${el.ID}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td><td><button class="delete-btn" data-id="${el.ID}">🗑️</button></td>`;
     }
 
     function addChronologicalRow(el) {
         const row = GEOMETOR.tables.chrono.insertRow();
-        row.dataset.label = el.label;
+        row.dataset.id = el.ID;
         let parents = el.parents || [];
         if (el.type === 'line') {
             parents = [el.pt1, el.pt2];
@@ -137,8 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         // Defensively check for el.classes
         const isGiven = el.classes && el.classes.includes('given');
-        let deleteBtnHtml = (el.type !== 'point' && !isGiven) ? `<td><button class="delete-btn" data-label="${el.label}">🗑️</button></td>` : '<td></td>';
-        row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${parents.join(', ')}</td>${deleteBtnHtml}`;
+        let deleteBtnHtml = (el.type !== 'point' && !isGiven) ? `<td><button class="delete-btn" data-id="${el.ID}">🗑️</button></td>` : '<td></td>';
+        row.innerHTML = `<td>${el.ID}</td><td>${el.type}</td><td>${parents.join(', ')}</td>${deleteBtnHtml}`;
     }
 
     const addLineBtn = document.getElementById('add-line-btn');
@@ -156,14 +156,14 @@ document.addEventListener('DOMContentLoaded', () => {
         addPolygonButton.disabled = numPoints < 2;
     }
 
-    function toggleSelection(label) {
-        const index = GEOMETOR.selectedPoints.indexOf(label);
+    function toggleSelection(ID) {
+        const index = GEOMETOR.selectedPoints.indexOf(ID);
         if (index > -1) {
             // Deselect
             GEOMETOR.selectedPoints.splice(index, 1);
         } else {
             // Select
-            GEOMETOR.selectedPoints.push(label);
+            GEOMETOR.selectedPoints.push(ID);
         }
         // Re-render to apply/remove selection styles consistently
         renderModel(GEOMETOR.modelData);
@@ -185,8 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     GEOMETOR.tables.points.addEventListener('click', (event) => {
         const row = event.target.closest('tr');
-        if (row && row.dataset.label) {
-            toggleSelection(row.dataset.label);
+        if (row && row.dataset.id) {
+            toggleSelection(row.dataset.id);
         }
     });
 
@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        let content = `<p><span class="label">${element.label}</span> ${element.type}`;
+        let content = `<p><span class="ID">${element.ID}</span> ${element.type}`;
         if (element.classes && element.classes.length > 0) {
             content += ` <span class="classes">(${element.classes.join(', ')})</span>`;
         }
@@ -375,15 +375,15 @@ document.addEventListener('DOMContentLoaded', () => {
         GEOMETOR.hoverCard.style.display = 'block';
     }
 
-    GEOMETOR.setElementHover = function(label, hoverState) {
-        const elementData = GEOMETOR.modelData.elements.find(el => el.label === label);
+    GEOMETOR.setElementHover = function(ID, hoverState) {
+        const elementData = GEOMETOR.modelData.elements.find(el => el.ID === ID);
         if (!elementData) return;
 
-        const svgElement = document.getElementById(label);
-        const pointsRow = GEOMETOR.tables.points.querySelector(`tr[data-label="${label}"]`);
-        const structuresRow = GEOMETOR.tables.structures.querySelector(`tr[data-label="${label}"]`);
-        const graphicsRow = GEOMETOR.tables.graphics.querySelector(`tr[data-label="${label}"]`);
-        const chronoRow = GEOMETOR.tables.chrono.querySelector(`tr[data-label="${label}"]`);
+        const svgElement = document.getElementById(ID);
+        const pointsRow = GEOMETOR.tables.points.querySelector(`tr[data-id="${ID}"]`);
+        const structuresRow = GEOMETOR.tables.structures.querySelector(`tr[data-id="${ID}"]`);
+        const graphicsRow = GEOMETOR.tables.graphics.querySelector(`tr[data-id="${ID}"]`);
+        const chronoRow = GEOMETOR.tables.chrono.querySelector(`tr[data-id="${ID}"]`);
 
         const action = hoverState ? 'add' : 'remove';
         if (svgElement) svgElement.classList[action]('hover');
@@ -393,16 +393,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (chronoRow) chronoRow.classList[action]('row-hover');
 
         // Handle parents
-        let parentLabels = [];
+        let parentIDs = [];
         if (elementData.type === 'line') {
-            parentLabels = [elementData.pt1, elementData.pt2];
+            parentIDs = [elementData.pt1, elementData.pt2];
         } else if (elementData.type === 'circle') {
-            parentLabels = [elementData.center, elementData.pt_on_rad];
+            parentIDs = [elementData.center, elementData.pt_on_rad];
         }
 
-        parentLabels.forEach(parentLabel => {
-            if (parentLabel) {
-                GEOMETOR.setElementHover(parentLabel, hoverState);
+        parentIDs.forEach(parentID => {
+            if (parentID) {
+                GEOMETOR.setElementHover(parentID, hoverState);
             }
         });
     }
@@ -411,12 +411,12 @@ document.addEventListener('DOMContentLoaded', () => {
     Object.values(GEOMETOR.tables).forEach(tableBody => {
         tableBody.addEventListener('mouseover', (event) => {
             const row = event.target.closest('tr');
-            if (row && row.dataset.label) {
-                const label = row.dataset.label;
-                GEOMETOR.setElementHover(label, true);
+            if (row && row.dataset.id) {
+                const ID = row.dataset.id;
+                GEOMETOR.setElementHover(ID, true);
 
-                const elementData = GEOMETOR.modelData.elements.find(el => el.label === label);
-                const svgElement = document.getElementById(label);
+                const elementData = GEOMETOR.modelData.elements.find(el => el.ID === ID);
+                const svgElement = document.getElementById(ID);
                 if (elementData && svgElement) {
                     GEOMETOR.updateHoverCard(elementData);
                     // Position card next to element in SVG
@@ -430,8 +430,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tableBody.addEventListener('mouseout', (event) => {
             const row = event.target.closest('tr');
-            if (row && row.dataset.label) {
-                GEOMETOR.setElementHover(row.dataset.label, false);
+            if (row && row.dataset.id) {
+                GEOMETOR.setElementHover(row.dataset.id, false);
             }
             GEOMETOR.hoverCard.style.display = 'none';
         });
@@ -439,14 +439,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Handle delete button clicks
         tableBody.addEventListener('click', (event) => {
             if (event.target.classList.contains('delete-btn')) {
-                const label = event.target.dataset.label;
-                if (!label) return;
+                const ID = event.target.dataset.id;
+                if (!ID) return;
 
                 // First, fetch dependents
-                fetch(`/api/model/dependents?label=${label}`)
+                fetch(`/api/model/dependents?ID=${ID}`)
                     .then(response => response.json())
                     .then(dependents => {
-                        let message = `Are you sure you want to delete ${label}?`;
+                        let message = `Are you sure you want to delete ${ID}?`;
                         if (dependents.length > 0) {
                             message += `\n\nThe following elements will also be deleted: ${dependents.join(', ')}`;
                         }
@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             fetch('/api/model/delete', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ label: label }),
+                                body: JSON.stringify({ ID: ID }),
                             })
                             .then(response => response.json())
                             .then(data => {
@@ -471,10 +471,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Chronological Table selection
     GEOMETOR.tables.chrono.addEventListener('click', (event) => {
         const row = event.target.closest('tr');
-        if (row && row.dataset.label) {
-            const elementData = GEOMETOR.modelData.elements.find(el => el.label === row.dataset.label);
+        if (row && row.dataset.id) {
+            const elementData = GEOMETOR.modelData.elements.find(el => el.ID === row.dataset.id);
             if (elementData && elementData.type === 'point') {
-                toggleSelection(row.dataset.label);
+                toggleSelection(row.dataset.id);
             }
         }
     });

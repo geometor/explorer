@@ -1,6 +1,6 @@
 {
     "name": "new",
-    "next_label": "G",
+    "next_ID": "G",
     "sympy_objects": [
         "Point2D(Integer(0), Integer(0))",
         "Point2D(Integer(1), Integer(0))",
@@ -14,7 +14,7 @@
     ],
     "elements": [
         {
-            "label": "A",
+            "ID": "A",
             "classes": [
                 "given"
             ],
@@ -24,7 +24,7 @@
             ]
         },
         {
-            "label": "B",
+            "ID": "B",
             "classes": [
                 "given"
             ],
@@ -34,7 +34,7 @@
             ]
         },
         {
-            "label": "[ A B ]",
+            "ID": "[ A B ]",
             "classes": [],
             "parents": [
                 0,
@@ -44,7 +44,7 @@
             ]
         },
         {
-            "label": "( A B )",
+            "ID": "( A B )",
             "classes": [],
             "parents": [
                 0,
@@ -56,7 +56,7 @@
             "pt_radius": 1
         },
         {
-            "label": "C",
+            "ID": "C",
             "classes": [],
             "parents": [
                 2,
@@ -64,7 +64,7 @@
             ]
         },
         {
-            "label": "( B A )",
+            "ID": "( B A )",
             "classes": [],
             "parents": [
                 1,
@@ -76,7 +76,7 @@
             "pt_radius": 0
         },
         {
-            "label": "D",
+            "ID": "D",
             "classes": [],
             "parents": [
                 2,
@@ -84,7 +84,7 @@
             ]
         },
         {
-            "label": "E",
+            "ID": "E",
             "classes": [],
             "parents": [
                 3,
@@ -92,7 +92,7 @@
             ]
         },
         {
-            "label": "F",
+            "ID": "F",
             "classes": [],
             "parents": [
                 3,

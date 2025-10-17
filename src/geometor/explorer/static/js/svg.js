@@ -25,8 +25,8 @@ function renderElement(el, points) {
             break;
         case 'polygon':
             svgEl = document.createElementNS(SVG_NS, 'polygon');
-            pointsStr = el.points.map(p_label => {
-                const p = points[p_label];
+            pointsStr = el.points.map(p_ID => {
+                const p = points[p_ID];
                 return `${p.x},${p.y}`;
             }).join(' ');
             svgEl.setAttribute('points', pointsStr);
@@ -35,8 +35,8 @@ function renderElement(el, points) {
         case 'section':
         case 'chain':
             svgEl = document.createElementNS(SVG_NS, 'polyline');
-            pointsStr = el.points.map(p_label => {
-                const p = points[p_label];
+            pointsStr = el.points.map(p_ID => {
+                const p = points[p_ID];
                 return `${p.x},${p.y}`;
             }).join(' ');
             svgEl.setAttribute('points', pointsStr);
@@ -44,7 +44,7 @@ function renderElement(el, points) {
     }
 
     if (svgEl) {
-        svgEl.id = el.label;
+        svgEl.id = el.ID;
         svgEl.classList.add(el.type);
         el.classes.forEach(c => svgEl.classList.add(c));
         if (['polygon', 'segment', 'section', 'chain'].includes(el.type)) {
@@ -57,7 +57,7 @@ function renderElement(el, points) {
 
 function renderPoint(el) {
     const circle = document.createElementNS(SVG_NS, 'circle');
-    circle.id = el.label;
+    circle.id = el.ID;
     circle.setAttribute('cx', el.x);
     circle.setAttribute('cy', el.y);
     circle.setAttribute('r', 0.02); // Initial radius, will be scaled
@@ -143,7 +143,7 @@ function initSvgEventListeners() {
             }
             GEOMETOR.isPositionedByTable = false;
             GEOMETOR.setElementHover(target.id, true);
-            const elementData = GEOMETOR.modelData.elements.find(el => el.label === target.id);
+            const elementData = GEOMETOR.modelData.elements.find(el => el.ID === target.id);
             GEOMETOR.updateHoverCard(elementData);
         }
     });
