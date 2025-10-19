@@ -83,6 +83,11 @@ document.addEventListener('DOMContentLoaded', () => {
             addChronologicalRow(el);
         });
         
+        // Update counts
+        document.getElementById('points-count').textContent = `(${GEOMETOR.tables.points.rows.length})`;
+        document.getElementById('structures-count').textContent = `(${GEOMETOR.tables.structures.rows.length})`;
+        document.getElementById('graphics-count').textContent = `(${GEOMETOR.tables.graphics.rows.length})`;
+
         // Re-apply selection visuals
         GEOMETOR.selectedPoints.forEach(ID => {
             const svgPoint = document.getElementById(ID);

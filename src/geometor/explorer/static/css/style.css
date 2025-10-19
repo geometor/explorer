@@ -198,7 +198,7 @@ tbody tr.row-hover {
 .collapsible-section.collapsed {
     flex-grow: 0;
 }
-.collapsible-section h2 {
+.collapsible-section h3 {
     margin: 0 0 0.5em 0;
     display: flex;
     align-items: center;
@@ -210,8 +210,8 @@ tbody tr.row-hover {
 
 .collapse-btn {
     margin-right: 0.5em;
-    padding: 0 0.5em;
-    font-size: 1.2em;
+    padding: 0 0.3em;
+    font-size: 1em;
     line-height: 1;
 }
 .delete-btn {
