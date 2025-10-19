@@ -11,6 +11,10 @@ function renderHighlight(el, points) {
     let pt1, pt2;
 
     switch (el.type) {
+        case 'point':
+            pt1 = el;
+            pt2 = el;
+            break;
         case 'line':
             pt1 = points[el.pt1];
             pt2 = points[el.pt2];
@@ -105,6 +109,7 @@ function renderPoint(el) {
     circle.setAttribute('r', 0.02); // Initial radius, will be scaled
     el.classes.forEach(c => circle.classList.add(c));
     GEOMETOR.pointsContainer.appendChild(circle);
+    renderHighlight(el);
 }
 
 /**
