@@ -517,6 +517,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function transformPoint(svg, x, y) {
+        const pt = svg.createSVGPoint();
+        pt.x = x;
+        pt.y = y;
+        const screenCTM = svg.getScreenCTM();
+        if (screenCTM) {
+            return pt.matrixTransform(screenCTM);
+        }
+        return null;
+    }
+
     // Table hovers
     Object.values(GEOMETOR.tables).forEach(tableBody => {
         tableBody.addEventListener('mouseover', (event) => {
@@ -529,11 +540,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 const svgElement = document.getElementById(ID);
                 if (elementData && svgElement) {
                     GEOMETOR.updateHoverCard(elementData);
-                    // Position card next to element in SVG
                     GEOMETOR.isPositionedByTable = true;
-                    const elemRect = svgElement.getBoundingClientRect();
-                    GEOMETOR.hoverCard.style.left = `${elemRect.right + 10}px`;
-                    GEOMETOR.hoverCard.style.top = `${elemRect.top}px`;
+
+                    let screenPoint;
+
+                    if (elementData.type === 'point') {
+                        screenPoint = transformPoint(GEOMETOR.svg, elementData.x, elementData.y);
+                    } else if (elementData.type === 'line') {
+                        const pt1 = GEOMETOR.modelData.elements.find(p => p.ID === elementData.pt1);
+                        const pt2 = GEOMETOR.modelData.elements.find(p => p.ID === elementData.pt2);
+                        if (pt1 && pt2) {
+                            const midX = (pt1.x + pt2.x) / 2;
+                            const midY = (pt1.y + pt2.y) / 2;
+                            screenPoint = transformPoint(GEOMETOR.svg, midX, midY);
+                        }
+                    } else if (elementData.parents && elementData.parents.length > 0) {
+                        const parentPoints = elementData.parents.map(pID => GEOMETOR.modelData.elements.find(p => p.ID === pID)).filter(p => p && p.type === 'point');
+                        if (parentPoints.length > 0) {
+                            const totalX = parentPoints.reduce((sum, p) => sum + p.x, 0);
+                            const totalY = parentPoints.reduce((sum, p) => sum + p.y, 0);
+                            const midX = totalX / parentPoints.length;
+                            const midY = totalY / parentPoints.length;
+                            screenPoint = transformPoint(GEOMETOR.svg, midX, midY);
+                        }
+                    }
+
+                    if (screenPoint) {
+                        GEOMETOR.hoverCard.style.left = `${screenPoint.x + 15}px`;
+                        GEOMETOR.hoverCard.style.top = `${screenPoint.y + 15}px`;
+                    } else {
+                        // Fallback for elements without points or if transform fails
+                        const elemRect = svgElement.getBoundingClientRect();
+                        GEOMETOR.hoverCard.style.left = `${elemRect.right + 10}px`;
+                        GEOMETOR.hoverCard.style.top = `${elemRect.top}px`;
+                    }
                 }
             }
         });
