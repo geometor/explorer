@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     GEOMETOR.svg = document.getElementById('drawing');
     GEOMETOR.graphicsContainer = document.getElementById('graphics');
+    GEOMETOR.highlightsContainer = document.getElementById('highlights');
     GEOMETOR.elementsContainer = document.getElementById('elements');
     GEOMETOR.pointsContainer = document.getElementById('points');
     GEOMETOR.hoverCard = document.getElementById('hover-card');
@@ -61,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         GEOMETOR.modelData = data;
         // Clear all containers
         GEOMETOR.graphicsContainer.innerHTML = '';
+        GEOMETOR.highlightsContainer.innerHTML = '';
         GEOMETOR.elementsContainer.innerHTML = '';
         GEOMETOR.pointsContainer.innerHTML = '';
         GEOMETOR.tables.points.innerHTML = '';
@@ -510,19 +512,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const graphicsRow = GEOMETOR.tables.graphics.querySelector(`tr[data-id="${ID}"]`);
         const chronoRow = GEOMETOR.tables.chrono.querySelector(`tr[data-id="${ID}"]`);
 
+        const highlightElement = document.getElementById(`highlight-${ID}`);
+
         const action = hoverState ? 'add' : 'remove';
         if (svgElement) svgElement.classList[action]('hover');
         if (pointsRow) pointsRow.classList[action]('row-hover');
         if (structuresRow) structuresRow.classList[action]('row-hover');
         if (graphicsRow) graphicsRow.classList[action]('row-hover');
         if (chronoRow) chronoRow.classList[action]('row-hover');
+        if (highlightElement) highlightElement.style.display = hoverState ? 'inline' : 'none';
 
         // Handle parents
         let parentIDs = [];
         if (elementData.type === 'line') {
             parentIDs = [elementData.pt1, elementData.pt2];
         } else if (elementData.type === 'circle') {
-            parentIDs = [elementData.center, elementData.pt_on_rad];
+            parentIDs = [elementData.center, elementData.radius_pt];
         }
 
         parentIDs.forEach(parentID => {
@@ -716,7 +721,6 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('/api/model')
         .then(response => response.json())
         .then(data => {
-            console.log(JSON.stringify(data, null, 2));
             renderModel(data);
         })
         .finally(() => {

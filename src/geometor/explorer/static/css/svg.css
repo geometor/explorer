@@ -97,3 +97,12 @@
   stroke-opacity: 1;
   stroke: gold;
 }
+
+#highlights .highlight-segment {
+  stroke: var(--select-color);
+  fill: none;
+  stroke-width: 8;
+  vector-effect: non-scaling-stroke;
+  marker-start: url(#marker);
+  marker-end: url(#marker);
+}

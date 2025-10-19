@@ -1,6 +1,42 @@
 const SVG_NS = "http://www.w3.org/2000/svg";
 
 
+/**
+ * Renders a highlight segment for a line or circle.
+ * @param {object} el The element to highlight.
+ * @param {object} points The points object from the model.
+ */
+function renderHighlight(el, points) {
+    let highlightEl = document.createElementNS(SVG_NS, 'polyline');
+    let pt1, pt2;
+
+    switch (el.type) {
+        case 'line':
+            pt1 = points[el.pt1];
+            pt2 = points[el.pt2];
+            break;
+        case 'circle':
+            pt1 = points[el.center];
+            pt2 = points[el.radius_pt];
+            break;
+        default:
+            return;
+    }
+
+    if (pt1 && pt2) {
+        highlightEl.setAttribute('points', `${pt1.x},${pt1.y} ${pt2.x},${pt2.y}`);
+        highlightEl.id = `highlight-${el.ID}`;
+        highlightEl.classList.add('highlight-segment');
+        highlightEl.style.display = 'none';
+        GEOMETOR.highlightsContainer.appendChild(highlightEl);
+    }
+}
+
+/**
+ * Renders a geometric element to the SVG canvas.
+ * @param {object} el The element to render.
+ * @param {object} points The points object from the model.
+ */
 function renderElement(el, points) {
     let svgEl;
     let pointsStr;
@@ -14,6 +50,7 @@ function renderElement(el, points) {
             svgEl.setAttribute('y1', pt1.y - 1000 * (pt2.y - pt1.y));
             svgEl.setAttribute('x2', pt1.x + 1000 * (pt2.x - pt1.x));
             svgEl.setAttribute('y2', pt1.y + 1000 * (pt2.y - pt1.y));
+            renderHighlight(el, points);
             break;
         case 'circle':
             svgEl = document.createElementNS(SVG_NS, 'circle');
@@ -22,6 +59,7 @@ function renderElement(el, points) {
             svgEl.setAttribute('cy', center.y);
             svgEl.setAttribute('r', el.radius);
             svgEl.setAttribute('fill', 'none');
+            renderHighlight(el, points);
             break;
         case 'polygon':
             svgEl = document.createElementNS(SVG_NS, 'polygon');
@@ -55,6 +93,10 @@ function renderElement(el, points) {
     }
 }
 
+/**
+ * Renders a point to the SVG canvas.
+ * @param {object} el The point to render.
+ */
 function renderPoint(el) {
     const circle = document.createElementNS(SVG_NS, 'circle');
     circle.id = el.ID;
@@ -65,6 +107,9 @@ function renderPoint(el) {
     GEOMETOR.pointsContainer.appendChild(circle);
 }
 
+/**
+ * Scales the radius of the points so they are always the same size on the screen.
+ */
 function scaleCircles() {
     const svgRect = GEOMETOR.svg.getBoundingClientRect();
     if (svgRect.width === 0) return;
@@ -81,6 +126,9 @@ function scaleCircles() {
     });
 }
 
+/**
+ * Initializes the event listeners for the SVG canvas.
+ */
 function initSvgEventListeners() {
     GEOMETOR.svg.addEventListener('wheel', (event) => {
         event.preventDefault();

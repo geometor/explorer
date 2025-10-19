@@ -1,0 +1,335 @@
+{
+    "name": "new",
+    "next_ID": "Q",
+    "sympy_objects": [
+        "Point2D(Integer(0), Integer(0))",
+        "Point2D(Integer(1), Integer(0))",
+        "Line2D(Point2D(Integer(0), Integer(0)), Point2D(Integer(1), Integer(0)))",
+        "Circle(Point2D(Integer(0), Integer(0)), Integer(1))",
+        "Point2D(Integer(-1), Integer(0))",
+        "Circle(Point2D(Integer(1), Integer(0)), Integer(1))",
+        "Point2D(Integer(2), Integer(0))",
+        "Point2D(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "Point2D(Rational(1, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "Line2D(Point2D(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Integer(0), Integer(0)))",
+        "Point2D(Rational(-1, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "Line2D(Point2D(Rational(-1, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Integer(1), Integer(0)))",
+        "Point2D(Add(Integer(1), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Rational(1, 2))",
+        "Point2D(Add(Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))), Integer(1)), Rational(-1, 2))",
+        "Line2D(Point2D(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Rational(1, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Rational(1, 2), Integer(0))",
+        "Point2D(Rational(1, 2), Mul(Rational(1, 6), Pow(Integer(3), Rational(1, 2))))",
+        "Circle(Point2D(Rational(1, 2), Mul(Rational(1, 6), Pow(Integer(3), Rational(1, 2)))), Mul(Rational(2, 3), Pow(Integer(3), Rational(1, 2))))",
+        "Point2D(Add(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Integer(0))",
+        "FiniteSet(Point2D(Integer(-1), Integer(0)), Point2D(Integer(0), Integer(0)), Point2D(Add(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Integer(0)))",
+        "FiniteSet(Point2D(Integer(0), Integer(0)), Point2D(Integer(1), Integer(0)), Point2D(Add(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Integer(0)))",
+        "FiniteSet(Point2D(Integer(1), Integer(0)), Point2D(Integer(2), Integer(0)), Point2D(Add(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Integer(0)))",
+        "Point2D(Add(Rational(1, 2), Mul(Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Integer(0))",
+        "FiniteSet(Point2D(Integer(-1), Integer(0)), Point2D(Integer(0), Integer(0)), Point2D(Add(Rational(1, 2), Mul(Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Integer(0)))",
+        "FiniteSet(Point2D(Integer(0), Integer(0)), Point2D(Integer(1), Integer(0)), Point2D(Add(Rational(1, 2), Mul(Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Integer(0)))",
+        "FiniteSet(Point2D(Integer(1), Integer(0)), Point2D(Integer(2), Integer(0)), Point2D(Add(Rational(1, 2), Mul(Rational(1, 2), Pow(Integer(5), Rational(1, 2)))), Integer(0)))",
+        "Point2D(Rational(3, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "Point2D(Rational(3, 2), Mul(Integer(-1), Rational(1, 6), Pow(Integer(3), Rational(1, 2))))",
+        "Point2D(Rational(1, 2), Mul(Rational(5, 6), Pow(Integer(3), Rational(1, 2))))"
+    ],
+    "elements": [
+        {
+            "ID": "A",
+            "classes": [
+                "given"
+            ],
+            "parents": [
+                2,
+                5,
+                9
+            ]
+        },
+        {
+            "ID": "B",
+            "classes": [
+                "given"
+            ],
+            "parents": [
+                2,
+                3,
+                11
+            ]
+        },
+        {
+            "ID": "- A B -",
+            "classes": [
+                "gold"
+            ],
+            "parents": [
+                0,
+                1,
+                4,
+                6,
+                15,
+                18,
+                22
+            ]
+        },
+        {
+            "ID": "( A B )",
+            "classes": [],
+            "parents": [
+                0,
+                1,
+                4,
+                7,
+                8,
+                10
+            ],
+            "pt_radius": 1
+        },
+        {
+            "ID": "C",
+            "classes": [],
+            "parents": [
+                2,
+                3
+            ]
+        },
+        {
+            "ID": "( B A )",
+            "classes": [],
+            "parents": [
+                1,
+                0,
+                6,
+                7,
+                8,
+                12,
+                13,
+                26
+            ],
+            "pt_radius": 0
+        },
+        {
+            "ID": "D",
+            "classes": [],
+            "parents": [
+                2,
+                5
+            ]
+        },
+        {
+            "ID": "E",
+            "classes": [],
+            "parents": [
+                3,
+                5,
+                9,
+                14,
+                17
+            ]
+        },
+        {
+            "ID": "F",
+            "classes": [],
+            "parents": [
+                3,
+                5,
+                14
+            ]
+        },
+        {
+            "ID": "- E A -",
+            "classes": [],
+            "parents": [
+                7,
+                0,
+                10
+            ]
+        },
+        {
+            "ID": "G",
+            "classes": [],
+            "parents": [
+                3,
+                9,
+                11,
+                17
+            ]
+        },
+        {
+            "ID": "- G B -",
+            "classes": [],
+            "parents": [
+                10,
+                1,
+                12,
+                13,
+                16,
+                27
+            ]
+        },
+        {
+            "ID": "H",
+            "classes": [],
+            "parents": [
+                5,
+                11
+            ]
+        },
+        {
+            "ID": "I",
+            "classes": [],
+            "parents": [
+                5,
+                11
+            ]
+        },
+        {
+            "ID": "- E F -",
+            "classes": [],
+            "parents": [
+                7,
+                8,
+                15,
+                16,
+                28
+            ]
+        },
+        {
+            "ID": "J",
+            "classes": [],
+            "parents": [
+                2,
+                14
+            ]
+        },
+        {
+            "ID": "K",
+            "classes": [],
+            "parents": [
+                11,
+                14
+            ]
+        },
+        {
+            "ID": "( K G )",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                16,
+                10,
+                18,
+                22,
+                7,
+                26,
+                27,
+                28
+            ],
+            "pt_radius": 10
+        },
+        {
+            "ID": "L",
+            "classes": [],
+            "parents": [
+                2,
+                17
+            ]
+        },
+        {
+            "ID": "/ C L A /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                4,
+                18,
+                0
+            ]
+        },
+        {
+            "ID": "/ L A B /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                0,
+                1
+            ]
+        },
+        {
+            "ID": "/ L B D /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                18,
+                1,
+                6
+            ]
+        },
+        {
+            "ID": "M",
+            "classes": [],
+            "parents": [
+                2,
+                17
+            ]
+        },
+        {
+            "ID": "/ C A M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                4,
+                0,
+                22
+            ]
+        },
+        {
+            "ID": "/ A B M /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                0,
+                1,
+                22
+            ]
+        },
+        {
+            "ID": "/ B M D /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                1,
+                22,
+                6
+            ]
+        },
+        {
+            "ID": "N",
+            "classes": [],
+            "parents": [
+                5,
+                17
+            ]
+        },
+        {
+            "ID": "O",
+            "classes": [],
+            "parents": [
+                11,
+                17
+            ]
+        },
+        {
+            "ID": "P",
+            "classes": [],
+            "parents": [
+                14,
+                17
+            ]
+        }
+    ]
+}
