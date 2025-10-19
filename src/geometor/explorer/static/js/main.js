@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         yCell.title = el.y.toFixed(4);
         classCell.innerHTML = el.classes.join(', ');
 
-        actionCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}">✏️</button><button class="delete-btn" data-id="${el.ID}">🗑️</button>`;
+        actionCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}"><span class="material-icons">edit</span></button><button class="delete-btn" data-id="${el.ID}"><span class="material-icons">delete</span></button>`;
 
         const svgEl = document.getElementById(el.ID);
         if (svgEl) {
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         IDCell.innerHTML = el.ID;
         classCell.innerHTML = el.classes.join(', ');
-        deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}">✏️</button><button class="delete-btn" data-id="${el.ID}">🗑️</button>`;
+        deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}"><span class="material-icons">edit</span></button><button class="delete-btn" data-id="${el.ID}"><span class="material-icons">delete</span></button>`;
 
         const svgEl = document.getElementById(el.ID);
         if (svgEl) {
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         IDCell.innerHTML = el.ID;
         classCell.innerHTML = el.classes.join(', ');
-        deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}">✏️</button><button class="delete-btn" data-id="${el.ID}">🗑️</button>`;
+        deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}"><span class="material-icons">edit</span></button><button class="delete-btn" data-id="${el.ID}"><span class="material-icons">delete</span></button>`;
 
         const svgEl = document.getElementById(el.ID);
         if (svgEl) {
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         IDCell.innerHTML = el.ID;
         classCell.innerHTML = el.classes.join(', ');
         if (el.type !== 'point' && !isGiven) {
-            deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}">✏️</button><button class="delete-btn" data-id="${el.ID}">🗑️</button>`;
+            deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}"><span class="material-icons">edit</span></button><button class="delete-btn" data-id="${el.ID}"><span class="material-icons">delete</span></button>`;
         }
 
         const svgEl = document.getElementById(el.ID);
@@ -789,7 +789,7 @@ document.addEventListener('DOMContentLoaded', () => {
             section.classList.toggle('collapsed');
             
             const isCollapsed = section.classList.contains('collapsed');
-            btn.textContent = isCollapsed ? '+' : '-';
+            btn.querySelector('.material-icons').textContent = isCollapsed ? 'expand_more' : 'expand_less';
             
             const tableContainer = section.querySelector('.table-container');
             tableContainer.style.display = isCollapsed ? 'none' : '';
@@ -802,6 +802,8 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             const section = btn.closest('.collapsible-section');
             section.classList.toggle('hide-elements');
+            const isHidden = section.classList.contains('hide-elements');
+            btn.querySelector('.material-icons').textContent = isHidden ? 'visibility_off' : 'visibility';
 
             let category = section.querySelector('h3').textContent.toLowerCase().split(' ')[2];
             if (category === 'structures') {

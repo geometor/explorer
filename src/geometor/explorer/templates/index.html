@@ -9,14 +9,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/svg.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body class="web">
     <header>
         <div id="file-manager">
-            <button id="new-btn">New</button>
-            <button id="open-btn">Open</button>
-            <button id="save-btn">Save</button>
-            <button id="save-as-btn">Save As</button>
+            <button id="new-btn"><span class="material-icons">add_box</span></button>
+            <button id="open-btn"><span class="material-icons">folder_open</span></button>
+            <button id="save-btn"><span class="material-icons">save</span></button>
+            <button id="save-as-btn"><span class="material-icons">save_as</span></button>
         </div>
         <div id="elements-group">
             <button id="point-btn">Point</button>
@@ -29,7 +30,7 @@
             <button id="polygon-btn" disabled>Polygon</button>
         </div>
         <input type="file" id="file-input" style="display: none;" />
-        <button id="theme-toggle">Toggle Theme</button>
+        <button id="theme-toggle"><span class="material-icons">settings</span></button>
     </header>
     <div id="hover-card"></div>
     <main>
@@ -54,7 +55,7 @@
 
         <div id="category-view">
             <div class="collapsible-section">
-                <h3><button class="collapse-btn">-</button> <button class="toggle-vis-btn">V</button> Points <span id="points-count">(0)</span></h3>
+                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> <button class="toggle-vis-btn"><span class="material-icons">visibility</span></button> Points <span id="points-count">(0)</span></h3>
                 <div class="table-container">
                     <table id="points-table">
                         <thead>
@@ -72,7 +73,7 @@
                 </div>
             </div>
             <div class="collapsible-section">
-                <h3><button class="collapse-btn">-</button> <button class="toggle-vis-btn">V</button> Structures <span id="structures-count">(0)</span></h3>
+                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> <button class="toggle-vis-btn"><span class="material-icons">visibility</span></button> Structures <span id="structures-count">(0)</span></h3>
                 <div class="table-container">
                     <table id="structures-table">
                         <thead>
@@ -88,7 +89,7 @@
                 </div>
             </div>
             <div class="collapsible-section">
-                <h3><button class="collapse-btn">-</button> <button class="toggle-vis-btn">V</button> Graphics <span id="graphics-count">(0)</span></h3>
+                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> <button class="toggle-vis-btn"><span class="material-icons">visibility</span></button> Graphics <span id="graphics-count">(0)</span></h3>
                 <div class="table-container">
                     <table id="graphics-table">
                         <thead>
