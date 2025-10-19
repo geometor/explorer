@@ -203,19 +203,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const addLineBtn = document.getElementById('add-line-btn');
-    const addCircleBtn = document.getElementById('add-circle-btn');
-    const addSegmentBtn = document.getElementById('add-segment-btn');
-    const addSectionBtn = document.getElementById('add-section-btn');
-    const addPolygonButton = document.getElementById('add-polygon-btn');
+    const lineBtn = document.getElementById('line-btn');
+    const circleBtn = document.getElementById('circle-btn');
+    const segmentBtn = document.getElementById('segment-btn');
+    const sectionBtn = document.getElementById('section-btn');
+    const polygonBtn = document.getElementById('polygon-btn');
 
     function updateConstructionButtons() {
         const numPoints = GEOMETOR.selectedPoints.length;
-        addLineBtn.disabled = numPoints !== 2;
-        addCircleBtn.disabled = numPoints !== 2;
-        addSegmentBtn.disabled = numPoints !== 2;
-        addSectionBtn.disabled = numPoints !== 3;
-        addPolygonButton.disabled = numPoints < 2;
+        lineBtn.disabled = numPoints !== 2;
+        circleBtn.disabled = numPoints !== 2;
+        segmentBtn.disabled = numPoints !== 2;
+        sectionBtn.disabled = numPoints !== 3;
+        polygonBtn.disabled = numPoints < 2;
     }
 
     function toggleSelection(ID) {
@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    addLineBtn.addEventListener('click', () => {
+    lineBtn.addEventListener('click', () => {
         if (GEOMETOR.selectedPoints.length === 2) {
             const [pt1, pt2] = GEOMETOR.selectedPoints;
             fetch('/api/construct/line', {
@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    addCircleBtn.addEventListener('click', () => {
+    circleBtn.addEventListener('click', () => {
         if (GEOMETOR.selectedPoints.length === 2) {
             const [pt1, pt2] = GEOMETOR.selectedPoints;
             fetch('/api/construct/circle', {
@@ -302,26 +302,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    addSegmentBtn.addEventListener('click', () => {
+    segmentBtn.addEventListener('click', () => {
         if (GEOMETOR.selectedPoints.length === 2) {
             constructPoly('/api/set/segment', GEOMETOR.selectedPoints);
         }
     });
 
-    addSectionBtn.addEventListener('click', () => {
+    sectionBtn.addEventListener('click', () => {
         if (GEOMETOR.selectedPoints.length === 3) {
             constructPoly('/api/set/section', GEOMETOR.selectedPoints);
         }
     });
 
-    addPolygonButton.addEventListener('click', () => {
+    polygonBtn.addEventListener('click', () => {
         if (GEOMETOR.selectedPoints.length >= 2) {
             constructPoly('/api/set/polygon', GEOMETOR.selectedPoints);
         }
     });
 
-    const addPointBtn = document.getElementById('add-point-btn');
-    addPointBtn.addEventListener('click', () => {
+    const pointBtn = document.getElementById('point-btn');
+    pointBtn.addEventListener('click', () => {
         const x = prompt('Enter x coordinate:');
         const y = prompt('Enter y coordinate:');
 

@@ -27,7 +27,13 @@ header {
     padding: 0.5em 1em;
     border-bottom: 1px solid var(--border-color);
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#file-manager, #elements-group, #graphics-group {
+    display: flex;
+    gap: 0.5em;
 }
 
 footer {
