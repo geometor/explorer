@@ -230,7 +230,8 @@ tbody tr.row-hover {
     font-size: 1em;
     line-height: 1;
 }
-.delete-btn {
+.delete-btn,
+.edit-btn {
     background: none;
     border: none;
     cursor: pointer;

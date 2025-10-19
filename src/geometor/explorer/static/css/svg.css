@@ -49,6 +49,14 @@
   stroke-opacity: 1;
 }
 
+#elements line.golden {
+  stroke: gold;
+}
+
+#elements circle.golden {
+  stroke: gold;
+}
+
 #graphics polyline {
   stroke: #36c9;
   fill: none;

@@ -119,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const IDCell = row.insertCell();
         const xCell = row.insertCell();
         const yCell = row.insertCell();
+        const classCell = row.insertCell();
         const actionCell = row.insertCell();
 
         IDCell.innerHTML = el.ID;
@@ -126,8 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
         xCell.title = el.x.toFixed(4);
         katex.render(el.latex_y, yCell);
         yCell.title = el.y.toFixed(4);
+        classCell.innerHTML = el.classes.join(', ');
 
-        actionCell.innerHTML = `<button class="delete-btn" data-id="${el.ID}">🗑️</button>`;
+        actionCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}">✏️</button><button class="delete-btn" data-id="${el.ID}">🗑️</button>`;
 
         const svgEl = document.getElementById(el.ID);
         if (svgEl) {
@@ -140,12 +142,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const row = GEOMETOR.tables.structures.insertRow();
         row.dataset.id = el.ID;
         const IDCell = row.insertCell();
-        const parentsCell = row.insertCell();
+        const classCell = row.insertCell();
         const deleteCell = row.insertCell();
 
         IDCell.innerHTML = el.ID;
-        parentsCell.innerHTML = el.parents.join(', ');
-        deleteCell.innerHTML = `<button class="delete-btn" data-id="${el.ID}">🗑️</button>`;
+        classCell.innerHTML = el.classes.join(', ');
+        deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}">✏️</button><button class="delete-btn" data-id="${el.ID}">🗑️</button>`;
 
         const svgEl = document.getElementById(el.ID);
         if (svgEl) {
@@ -158,12 +160,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const row = GEOMETOR.tables.graphics.insertRow();
         row.dataset.id = el.ID;
         const IDCell = row.insertCell();
-        const parentsCell = row.insertCell();
+        const classCell = row.insertCell();
         const deleteCell = row.insertCell();
 
         IDCell.innerHTML = el.ID;
-        parentsCell.innerHTML = el.parents.join(', ');
-        deleteCell.innerHTML = `<button class="delete-btn" data-id="${el.ID}">🗑️</button>`;
+        classCell.innerHTML = el.classes.join(', ');
+        deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}">✏️</button><button class="delete-btn" data-id="${el.ID}">🗑️</button>`;
 
         const svgEl = document.getElementById(el.ID);
         if (svgEl) {
@@ -178,23 +180,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function addChronologicalRow(el) {
         const row = GEOMETOR.tables.chrono.insertRow();
         row.dataset.id = el.ID;
-        let parents = el.parents || [];
-        if (el.type === 'line') {
-            parents = [el.pt1, el.pt2];
-        } else if (el.type === 'circle') {
-            parents = [el.center, el.pt_on_rad];
-        }
-        // Defensively check for el.classes
         const isGiven = el.classes && el.classes.includes('given');
         
         const IDCell = row.insertCell();
-        const parentsCell = row.insertCell();
+        const classCell = row.insertCell();
         const deleteCell = row.insertCell();
 
         IDCell.innerHTML = el.ID;
-        parentsCell.innerHTML = parents.join(', ');
+        classCell.innerHTML = el.classes.join(', ');
         if (el.type !== 'point' && !isGiven) {
-            deleteCell.innerHTML = `<button class="delete-btn" data-id="${el.ID}">🗑️</button>`;
+            deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}">✏️</button><button class="delete-btn" data-id="${el.ID}">🗑️</button>`;
         }
 
         const svgEl = document.getElementById(el.ID);
@@ -390,7 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
             katex.render(`${element.latex_y}`, y_div);
             table += `<tr><td>y</td><td><span>${y_div.innerHTML}</span> <span class="decimal">(${element.y.toFixed(4)})</span></td></tr>`;
             if (element.parents && element.parents.length > 0) {
-                table += `<tr><td>Points</td><td>${element.parents.join(', ')}</td></tr>`;
+                table += `<tr><td>structs</td><td>${element.parents.join('<br>')}</td></tr>`;
             }
             table += '</tbody></table>';
             content += table;
@@ -398,16 +393,16 @@ document.addEventListener('DOMContentLoaded', () => {
             content += '<hr>';
             let table = '<table><tbody>';
             if (element.type === 'circle') {
-                table += `<tr><td>Center</td><td>${element.center}</td></tr>`;
+                table += `<tr><td>ctr</td><td>${element.center}</td></tr>`;
                 const radius = document.createElement('div');
-                katex.render(`r = ${element.latex_radius}`, radius);
-                table += `<tr><td>Radius</td><td><span>${radius.innerHTML}</span> <span class="decimal">(${element.decimal_radius})</span></td></tr>`;
+                katex.render(`${element.latex_radius}`, radius);
+                table += `<tr><td>rad</td><td><span>${radius.innerHTML}</span> <span class="decimal">(${element.decimal_radius})</span></td></tr>`;
             }
             const equation = document.createElement('div');
             katex.render(element.latex_equation, equation);
-            table += `<tr><td>Equation</td><td>${equation.innerHTML}</td></tr>`;
+            table += `<tr><td>eq</td><td>${equation.innerHTML}</td></tr>`;
             if (element.parents && element.parents.length > 0) {
-                table += `<tr><td>Points</td><td>${element.parents.join(', ')}</td></tr>`;
+                table += `<tr><td>pts</td><td>${element.parents.join(', ')}</td></tr>`;
             }
             table += '</tbody></table>';
             content += table;
@@ -418,14 +413,14 @@ document.addEventListener('DOMContentLoaded', () => {
             content += `<span>${length.innerHTML}</span> <span class="decimal">(${element.decimal_length})</span>`;
         } else if (element.type === 'section') {
             content += '<hr>';
-            let table = '<table><thead><tr><th>Segment</th><th>Symbolic</th><th>Decimal</th></tr></thead><tbody>';
+            let table = '<table><tbody>';
             for (let i = 0; i < element.parents.length - 1; i++) {
                 const p1 = element.parents[i];
                 const p2 = element.parents[i+1];
                 const decimal = element.decimal_lengths[i];
                 table += `<tr><td>${p1} ${p2}</td><td class="latex"></td><td class="decimal">${decimal}</td></tr>`;
             }
-            table += `<tr><td>Ratio</td><td class="latex-ratio"></td><td class="decimal">${element.decimal_ratio}</td></tr>`;
+            table += `<tr><td>ratio</td><td class="latex-ratio"></td><td class="decimal">${element.decimal_ratio}</td></tr>`;
             table += '</tbody></table>';
             content += table;
 
@@ -658,6 +653,32 @@ document.addEventListener('DOMContentLoaded', () => {
                     .catch(() => {
                         hideHourglassCursor();
                     });
+            }
+        });
+
+        // Handle edit button clicks
+        tableBody.addEventListener('click', (event) => {
+            if (event.target.classList.contains('edit-btn')) {
+                const ID = event.target.dataset.id;
+                if (!ID) return;
+
+                const newClass = prompt(`Enter new class for element ${ID}:`);
+                if (newClass) {
+                    showHourglassCursor();
+                    fetch('/api/model/edit', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ ID: ID, class: newClass }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        renderModel(data);
+                        isDirty = true;
+                    })
+                    .finally(() => {
+                        hideHourglassCursor();
+                    });
+                }
             }
         });
     });

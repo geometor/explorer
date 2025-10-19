@@ -166,6 +166,24 @@ def get_dependents_endpoint():
     return jsonify(dependent_IDs)
 
 
+@app.route('/api/model/edit', methods=['POST'])
+def edit_element():
+    """Updates the class of an element in the model."""
+    data = request.get_json()
+    ID = data.get('ID')
+    new_class = data.get('class')
+    
+    if not ID or not new_class:
+        return jsonify({"error": "Element ID and class are required."}), 400
+
+    element = model.get_element_by_ID(ID)
+    
+    if element:
+        model[element].classes = {new_class: ""}
+    
+    return jsonify(to_browser_dict(model))
+
+
 @app.route('/api/set/segment', methods=['POST'])
 def set_segment():
     data = request.get_json()
