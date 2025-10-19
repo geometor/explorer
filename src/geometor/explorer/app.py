@@ -172,7 +172,6 @@ def set_segment():
     points = [model.get_element_by_ID(ID) for ID in data.get('points', [])]
     if len(points) == 2:
         segment = model.set_segment(*points)
-        print(to_browser_dict(model))
     return jsonify(to_browser_dict(model))
 
 @app.route('/api/set/section', methods=['POST'])
@@ -181,7 +180,6 @@ def set_section():
     points = [model.get_element_by_ID(ID) for ID in data.get('points', [])]
     if len(points) == 3:
         section = model.set_section(points)
-        print(to_browser_dict(model))
     return jsonify(to_browser_dict(model))
 
 
@@ -191,12 +189,11 @@ def set_polygon():
     points = [model.get_element_by_ID(ID) for ID in data.get('points', [])]
     if len(points) >= 3:
         polygon = model.set_polygon(points)
-        print(to_browser_dict(model))
     return jsonify(to_browser_dict(model))
 
 
 def run():
-    app.run(debug=True, port=4445)
+    app.run(debug=True, port=4444)
 
 if __name__ == '__main__':
     run()
