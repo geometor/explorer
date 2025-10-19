@@ -238,3 +238,14 @@ tbody tr.row-hover {
     padding: 0;
     font-size: 1.2em;
 }
+
+/* Visibility Toggle */
+#drawing.hide-points #points > *,
+#drawing.hide-structures #elements > *,
+#drawing.hide-graphics #graphics > * {
+    visibility: hidden;
+}
+
+#drawing .hover-target {
+    visibility: visible !important;
+}

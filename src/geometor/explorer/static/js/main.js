@@ -523,7 +523,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const highlightElement = document.getElementById(`highlight-${ID}`);
 
         const action = hoverState ? 'add' : 'remove';
-        if (svgElement) svgElement.classList[action]('hover');
+        if (svgElement) {
+            svgElement.classList[action]('hover');
+            svgElement.classList[action]('hover-target');
+        }
         if (pointsRow) pointsRow.classList[action]('row-hover');
         if (structuresRow) structuresRow.classList[action]('row-hover');
         if (graphicsRow) graphicsRow.classList[action]('row-hover');
@@ -792,6 +795,23 @@ document.addEventListener('DOMContentLoaded', () => {
             tableContainer.style.display = isCollapsed ? 'none' : '';
         });
     });
+
+    // Visibility toggle
+    const toggleVisBtns = document.querySelectorAll('.toggle-vis-btn');
+    toggleVisBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const section = btn.closest('.collapsible-section');
+            section.classList.toggle('hide-elements');
+
+            let category = section.querySelector('h3').textContent.toLowerCase().split(' ')[2];
+            if (category === 'structures') {
+                category = 'elements';
+            }
+            GEOMETOR.svg.classList.toggle(`hide-${category}`);
+        });
+    });
+
+
 
     // File management
     const newBtn = document.getElementById('new-btn');
