@@ -378,40 +378,39 @@ document.addEventListener('DOMContentLoaded', () => {
         if (element.classes && element.classes.length > 0) {
             content += ` <span class="classes">(${element.classes.join(', ')})</span>`;
         }
-        if (element.parents && element.parents.length > 0) {
-            content += ` <span class="parents">[${element.parents.join(', ')}]</span>`;
-        }
         content += `</p>`;
 
         if (element.type === 'point') {
             content += '<hr>';
-            content += '<div class="coords-grid">';
-            // X value
+            let table = '<table><tbody>';
             let x_div = document.createElement('div');
-            katex.render(`x = ${element.latex_x}`, x_div);
-            content += `<span>${x_div.innerHTML}</span>`;
-            content += `<span class="decimal">(${element.x.toFixed(4)})</span>`;
-            // Y value
+            katex.render(`${element.latex_x}`, x_div);
+            table += `<tr><td>x</td><td><span>${x_div.innerHTML}</span> <span class="decimal">(${element.x.toFixed(4)})</span></td></tr>`;
             let y_div = document.createElement('div');
-            katex.render(`y = ${element.latex_y}`, y_div);
-            content += `<span>${y_div.innerHTML}</span>`;
-            content += `<span class="decimal">(${element.y.toFixed(4)})</span>`;
-            content += '</div>';
+            katex.render(`${element.latex_y}`, y_div);
+            table += `<tr><td>y</td><td><span>${y_div.innerHTML}</span> <span class="decimal">(${element.y.toFixed(4)})</span></td></tr>`;
+            if (element.parents && element.parents.length > 0) {
+                table += `<tr><td>Points</td><td>${element.parents.join(', ')}</td></tr>`;
+            }
+            table += '</tbody></table>';
+            content += table;
         } else if (element.type === 'line' || element.type === 'circle') {
             content += '<hr>';
+            let table = '<table><tbody>';
             if (element.type === 'circle') {
-                const center = document.createElement('div');
-                center.innerHTML = `center: ${element.center}`;
-                content += center.innerHTML;
-                content += '<br>';
+                table += `<tr><td>Center</td><td>${element.center}</td></tr>`;
                 const radius = document.createElement('div');
                 katex.render(`r = ${element.latex_radius}`, radius);
-                content += `<span>${radius.innerHTML}</span> <span class="decimal">(${element.decimal_radius})</span>`;
-                content += '<br>';
+                table += `<tr><td>Radius</td><td><span>${radius.innerHTML}</span> <span class="decimal">(${element.decimal_radius})</span></td></tr>`;
             }
             const equation = document.createElement('div');
             katex.render(element.latex_equation, equation);
-            content += equation.innerHTML;
+            table += `<tr><td>Equation</td><td>${equation.innerHTML}</td></tr>`;
+            if (element.parents && element.parents.length > 0) {
+                table += `<tr><td>Points</td><td>${element.parents.join(', ')}</td></tr>`;
+            }
+            table += '</tbody></table>';
+            content += table;
         } else if (element.type === 'segment') {
             content += '<hr>';
             const length = document.createElement('div');
