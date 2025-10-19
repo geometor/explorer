@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    function showHourglassCursor() {
+        document.body.style.cursor = 'wait';
+    }
+
+    function hideHourglassCursor() {
+        document.body.style.cursor = 'default';
+    }
+
     window.GEOMETOR = {
         tables: {}
     };
@@ -31,10 +39,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadConstructions() {
+        showHourglassCursor();
         fetch('/api/constructions')
             .then(response => response.json())
             .then(files => {
                 // TODO: hook in the new file dialog
+            })
+            .finally(() => {
+                hideHourglassCursor();
             });
     }
 
@@ -255,6 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
     lineBtn.addEventListener('click', () => {
         if (GEOMETOR.selectedPoints.length === 2) {
             const [pt1, pt2] = GEOMETOR.selectedPoints;
+            showHourglassCursor();
             fetch('/api/construct/line', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -265,6 +278,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderModel(data);
                 clearSelection();
                 isDirty = true;
+            })
+            .finally(() => {
+                hideHourglassCursor();
             });
         }
     });
@@ -272,6 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
     circleBtn.addEventListener('click', () => {
         if (GEOMETOR.selectedPoints.length === 2) {
             const [pt1, pt2] = GEOMETOR.selectedPoints;
+            showHourglassCursor();
             fetch('/api/construct/circle', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -282,12 +299,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderModel(data);
                 clearSelection();
                 isDirty = true;
+            })
+            .finally(() => {
+                hideHourglassCursor();
             });
         }
     });
 
     function constructPoly(endpoint, points) {
         // console.log("constructPoly");
+        showHourglassCursor();
         fetch(endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -299,6 +320,9 @@ document.addEventListener('DOMContentLoaded', () => {
             renderModel(data);
             clearSelection();
             isDirty = true;
+        })
+        .finally(() => {
+            hideHourglassCursor();
         });
     }
 
@@ -326,6 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const y = prompt('Enter y coordinate:');
 
         if (x !== null && y !== null) {
+            showHourglassCursor();
             fetch('/api/construct/point', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -335,6 +360,9 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 renderModel(data);
                 isDirty = true;
+            })
+            .finally(() => {
+                hideHourglassCursor();
             });
         }
     });
@@ -524,7 +552,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const ID = event.target.dataset.id;
                 if (!ID) return;
 
-                // First, fetch dependents
+                showHourglassCursor();
                 fetch(`/api/model/dependents?ID=${ID}`)
                     .then(response => response.json())
                     .then(dependents => {
@@ -543,8 +571,16 @@ document.addEventListener('DOMContentLoaded', () => {
                             .then(data => {
                                 renderModel(data);
                                 isDirty = true;
+                            })
+                            .finally(() => {
+                                hideHourglassCursor();
                             });
+                        } else {
+                            hideHourglassCursor();
                         }
+                    })
+                    .catch(() => {
+                        hideHourglassCursor();
                     });
             }
         });
@@ -579,11 +615,15 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeObserver.observe(GEOMETOR.svg);
 
     // Initial fetch
+    showHourglassCursor();
     fetch('/api/model')
         .then(response => response.json())
         .then(data => {
             console.log(JSON.stringify(data, null, 2));
             renderModel(data);
+        })
+        .finally(() => {
+            hideHourglassCursor();
         });
 
     const themeToggle = document.getElementById('theme-toggle');
@@ -647,6 +687,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     newBtn.addEventListener('click', () => {
         if (confirm('Are you sure you want to start a new construction? Any unsaved changes will be lost.')) {
+            showHourglassCursor();
             fetch('/api/model/new', { method: 'POST' })
                 .then(response => response.json())
                 .then(data => {
@@ -655,6 +696,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     currentFilename = 'untitled.json';
                     updateFilenameDisplay();
                     isDirty = false;
+                })
+                .finally(() => {
+                    hideHourglassCursor();
                 });
         }
     });
@@ -669,6 +713,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
             reader.onload = (e) => {
                 const content = e.target.result;
+                showHourglassCursor();
                 fetch('/api/model/load', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -685,6 +730,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         updateFilenameDisplay();
                         isDirty = false;
                     }
+                })
+                .finally(() => {
+                    hideHourglassCursor();
                 });
             };
             reader.readAsText(file);
@@ -694,6 +742,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function save(filename) {
+        showHourglassCursor();
         fetch('/api/model/save', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -705,12 +754,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateStatus('File saved successfully.');
                 currentFilename = filename;
                 updateFilenameDisplay();
-                updateCurrentFilenameDisplay();
+                updateFilenameDisplay();
                 loadConstructions();
                 isDirty = false;
             } else {
                 updateStatus(`Error saving file: ${data.message}`, true);
             }
+        })
+        .finally(() => {
+            hideHourglassCursor();
         });
     }
 
