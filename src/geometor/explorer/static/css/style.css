@@ -117,6 +117,16 @@ tbody tr.highlight {
     min-width: 200px;
 }
 
+#hover-card table td:first-child,
+#hover-card table td.latex,
+#hover-card table td.latex-ratio {
+    text-align: center;
+}
+
+#hover-card table td.decimal {
+    text-align: right;
+}
+
 button {
     background-color: var(--button-bg);
     color: var(--button-text);

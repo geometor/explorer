@@ -419,13 +419,17 @@ document.addEventListener('DOMContentLoaded', () => {
             content += `<span>${length.innerHTML}</span> <span class="decimal">(${element.decimal_length})</span>`;
         } else if (element.type === 'section') {
             content += '<hr>';
-            const lengths = document.createElement('div');
-            katex.render(`[${element.latex_lengths.join(', ')}]`, lengths);
-            content += `<span>${lengths.innerHTML}</span> <span class="decimal">([${element.decimal_lengths.join(', ')}])</span>`;
-            content += '<br>';
-            const ratio = document.createElement('div');
-            katex.render(`ratio = ${element.latex_ratio}`, ratio);
-            content += `<span>${ratio.innerHTML}</span> <span class="decimal">(${element.decimal_ratio})</span>`;
+            let table = '<table><thead><tr><th>Segment</th><th>Symbolic</th><th>Decimal</th></tr></thead><tbody>';
+            for (let i = 0; i < element.parents.length - 1; i++) {
+                const p1 = element.parents[i];
+                const p2 = element.parents[i+1];
+                const decimal = element.decimal_lengths[i];
+                table += `<tr><td>${p1} ${p2}</td><td class="latex"></td><td class="decimal">${decimal}</td></tr>`;
+            }
+            table += `<tr><td>Ratio</td><td class="latex-ratio"></td><td class="decimal">${element.decimal_ratio}</td></tr>`;
+            table += '</tbody></table>';
+            content += table;
+
         } else if (element.type === 'wedge') {
             content += '<hr>';
             const radius = document.createElement('div');
@@ -436,15 +440,15 @@ document.addEventListener('DOMContentLoaded', () => {
             content += `<span>${radians.innerHTML}</span> <span class="decimal">(${element.degrees})</span>`;
         } else if (element.type === 'polygon') {
             content += '<hr>';
-            const lengths = document.createElement('div');
-            lengths.innerHTML = 'Lengths:';
-            element.latex_lengths.forEach((l, i) => {
-                const length = document.createElement('div');
-                katex.render(l, length);
-                length.innerHTML = `<span>${length.innerHTML}</span> <span class="decimal">(${element.decimal_lengths[i]})</span>`;
-                lengths.appendChild(length);
-            });
-            content += lengths.innerHTML;
+            let table = '<table><thead><tr><th>Segment</th><th>Symbolic</th><th>Decimal</th></tr></thead><tbody>';
+            for (let i = 0; i < element.parents.length; i++) {
+                const p1 = element.parents[i];
+                const p2 = element.parents[(i + 1) % element.parents.length];
+                const decimal = element.decimal_lengths[i];
+                table += `<tr><td>${p1} ${p2}</td><td class="latex"></td><td class="decimal">${decimal}</td></tr>`;
+            }
+            table += '</tbody></table>';
+            content += table;
 
             const angles = document.createElement('div');
             angles.innerHTML = 'Angles:';
@@ -462,6 +466,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         GEOMETOR.hoverCard.innerHTML = content;
+
+        // Render LaTeX in the newly created table cells
+        if (element.type === 'section') {
+            const latexCells = GEOMETOR.hoverCard.querySelectorAll('.latex');
+            latexCells.forEach((cell, i) => {
+                katex.render(element.latex_lengths[i], cell);
+            });
+            const ratioCell = GEOMETOR.hoverCard.querySelector('.latex-ratio');
+            if (ratioCell) {
+                katex.render(element.latex_ratio, ratioCell);
+            }
+        } else if (element.type === 'polygon') {
+            const latexCells = GEOMETOR.hoverCard.querySelectorAll('.latex');
+            latexCells.forEach((cell, i) => {
+                katex.render(element.latex_lengths[i], cell);
+            });
+        }
 
         const svgEl = document.getElementById(element.ID);
         if (svgEl) {
@@ -553,6 +574,22 @@ document.addEventListener('DOMContentLoaded', () => {
                             const midX = (pt1.x + pt2.x) / 2;
                             const midY = (pt1.y + pt2.y) / 2;
                             screenPoint = transformPoint(GEOMETOR.svg, midX, midY);
+                        }
+                    } else if (elementData.type === 'circle') {
+                        const center = GEOMETOR.modelData.elements.find(p => p.ID === elementData.center);
+                        if (center) {
+                            const bbx = center.x + elementData.radius * 0.8;
+                            const bby = center.y + elementData.radius * 0.8;
+                            screenPoint = transformPoint(GEOMETOR.svg, bbx, bby);
+                        }
+                    } else if (elementData.type === 'polygon') {
+                        const parentPoints = elementData.parents.map(pID => GEOMETOR.modelData.elements.find(p => p.ID === pID)).filter(p => p && p.type === 'point');
+                        if (parentPoints.length > 0) {
+                            const xs = parentPoints.map(p => p.x);
+                            const ys = parentPoints.map(p => p.y);
+                            const bbx = Math.max(...xs);
+                            const bby = Math.max(...ys);
+                            screenPoint = transformPoint(GEOMETOR.svg, bbx, bby);
                         }
                     } else if (elementData.parents && elementData.parents.length > 0) {
                         const parentPoints = elementData.parents.map(pID => GEOMETOR.modelData.elements.find(p => p.ID === pID)).filter(p => p && p.type === 'point');
