@@ -63,6 +63,7 @@ def load_model_endpoint():
         
         try:
             model = load_model(tmp_path)
+            analyze_model(model)
         finally:
             os.remove(tmp_path)
         
@@ -76,6 +77,7 @@ def load_model_endpoint():
         file_path = os.path.join(CONSTRUCTIONS_DIR, filename)
         if os.path.exists(file_path):
             model = load_model(file_path)
+            analyze_model(model)
             return jsonify(to_browser_dict(model))
         else:
             return jsonify({"success": False, "message": "File not found."}), 404
