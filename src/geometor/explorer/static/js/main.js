@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     function showHourglassCursor() {
         document.body.style.cursor = 'wait';
+        GEOMETOR.svg.style.cursor = 'wait';
     }
 
     function hideHourglassCursor() {
         document.body.style.cursor = 'default';
+        GEOMETOR.svg.style.cursor = 'default';
     }
 
     window.GEOMETOR = {
@@ -29,10 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateStatus(message, isError = false) {
         statusMessage.textContent = message;
         statusMessage.classList.toggle('error', isError);
-        setTimeout(() => {
-            statusMessage.textContent = 'Ready';
-            statusMessage.classList.remove('error');
-        }, 3000);
     }
 
     function updateFilenameDisplay() {
@@ -41,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadConstructions() {
         showHourglassCursor();
+        updateStatus('Loading constructions...');
         fetch('/api/constructions')
             .then(response => response.json())
             .then(files => {
@@ -48,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .finally(() => {
                 hideHourglassCursor();
+                updateStatus('Ready');
             });
     }
 
@@ -265,6 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (GEOMETOR.selectedPoints.length === 2) {
             const [pt1, pt2] = GEOMETOR.selectedPoints;
             showHourglassCursor();
+            updateStatus('Constructing line...');
             fetch('/api/construct/line', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -278,6 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .finally(() => {
                 hideHourglassCursor();
+                updateStatus('Ready');
             });
         }
     });
@@ -286,6 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (GEOMETOR.selectedPoints.length === 2) {
             const [pt1, pt2] = GEOMETOR.selectedPoints;
             showHourglassCursor();
+            updateStatus('Constructing circle...');
             fetch('/api/construct/circle', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -299,6 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .finally(() => {
                 hideHourglassCursor();
+                updateStatus('Ready');
             });
         }
     });
@@ -306,6 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function constructPoly(endpoint, points) {
         // console.log("constructPoly");
         showHourglassCursor();
+        updateStatus('Constructing polygon...');
         fetch(endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -320,6 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .finally(() => {
             hideHourglassCursor();
+            updateStatus('Ready');
         });
     }
 
@@ -348,6 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (x !== null && y !== null) {
             showHourglassCursor();
+            updateStatus('Constructing point...');
             fetch('/api/construct/point', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -360,6 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .finally(() => {
                 hideHourglassCursor();
+                updateStatus('Ready');
             });
         }
     });
@@ -638,6 +646,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
 
                         if (confirm(message)) {
+                            updateStatus('Deleting element...');
                             fetch('/api/model/delete', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
@@ -650,6 +659,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             })
                             .finally(() => {
                                 hideHourglassCursor();
+                                updateStatus('Ready');
                             });
                         } else {
                             hideHourglassCursor();
@@ -670,6 +680,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const newClass = prompt(`Enter new class for element ${ID}:`);
                 if (newClass) {
                     showHourglassCursor();
+                    updateStatus('Editing element...');
                     fetch('/api/model/edit', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -682,6 +693,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                     .finally(() => {
                         hideHourglassCursor();
+                        updateStatus('Ready');
                     });
                 }
             }
@@ -718,6 +730,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial fetch
     showHourglassCursor();
+    updateStatus('Loading model...');
     fetch('/api/model')
         .then(response => response.json())
         .then(data => {
@@ -725,6 +738,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .finally(() => {
             hideHourglassCursor();
+            updateStatus('Ready');
         });
 
     const themeToggle = document.getElementById('theme-toggle');
@@ -789,6 +803,7 @@ document.addEventListener('DOMContentLoaded', () => {
     newBtn.addEventListener('click', () => {
         if (confirm('Are you sure you want to start a new construction? Any unsaved changes will be lost.')) {
             showHourglassCursor();
+            updateStatus('Creating new model...');
             fetch('/api/model/new', { method: 'POST' })
                 .then(response => response.json())
                 .then(data => {
@@ -800,6 +815,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
                 .finally(() => {
                     hideHourglassCursor();
+                    updateStatus('Ready');
                 });
         }
     });
@@ -815,6 +831,7 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.onload = (e) => {
                 const content = e.target.result;
                 showHourglassCursor();
+                updateStatus('Loading file...');
                 fetch('/api/model/load', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -830,6 +847,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         currentFilename = file.name;
                         updateFilenameDisplay();
                         isDirty = false;
+                        updateStatus('Ready');
                     }
                 })
                 .finally(() => {
@@ -844,6 +862,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function save(filename) {
         showHourglassCursor();
+        updateStatus('Saving file...');
         fetch('/api/model/save', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
