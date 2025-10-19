@@ -582,7 +582,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             const bby = center.y + elementData.radius * 0.8;
                             screenPoint = transformPoint(GEOMETOR.svg, bbx, bby);
                         }
-                    } else if (elementData.type === 'polygon') {
+                    } else if (elementData.type === 'polygon' || elementData.type === 'segment' || elementData.type === 'section') {
                         const parentPoints = elementData.parents.map(pID => GEOMETOR.modelData.elements.find(p => p.ID === pID)).filter(p => p && p.type === 'point');
                         if (parentPoints.length > 0) {
                             const xs = parentPoints.map(p => p.x);
