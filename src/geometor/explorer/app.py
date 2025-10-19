@@ -10,8 +10,7 @@ import tempfile
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-model = Model()
-analyze_model(model)
+model = None
 
 # CONSTRUCTIONS_DIR = os.path.join(os.path.dirname(__file__), 'constructions')
 CONSTRUCTIONS_DIR = './constructions'
