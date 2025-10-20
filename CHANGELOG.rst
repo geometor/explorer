@@ -1,22 +1,11 @@
 changelog
 =========
 
-0.1.0 
+0.1.0
 -----
-*2023-11-15*
-
-**fixed**
-
-.. + Fixed bug in data processing (`#42 <https://github.com/example/repo/issues/42>`_)
-.. + Improved error handling in API calls
-
-**added**
-
-.. + Fixed bug in data processing (`#42 <https://github.com/example/repo/issues/42>`_)
-.. + Improved error handling in API calls
+*2025-10-19*
 
 **changed**
 
-.. + Fixed bug in data processing (`#42 <https://github.com/example/repo/issues/42>`_)
-.. + Improved error handling in API calls
-
+.. + Updated point hover card to use a multi-column layout for algebraic and decimal values.
+.. + Updated line hover card to display segment length.

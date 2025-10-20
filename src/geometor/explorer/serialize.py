@@ -45,12 +45,17 @@ def to_browser_dict(model):
             })
 
         elif isinstance(el, spg.Line):
+            segment = spg.Segment(el.p1, el.p2)
+            length_val = segment.length.evalf()
             element_dict.update({
                 'type': 'line',
                 'pt1': model[el.p1].ID,
                 'pt2': model[el.p2].ID,
                 'equation': str(el.equation()),
                 'latex_equation': sp.latex(el.equation()),
+                'length': float(length_val),
+                'decimal_length': f'{length_val:.4f}',
+                'latex_length': sp.latex(segment.length),
             })
 
         elif isinstance(el, spg.Circle):

@@ -390,12 +390,12 @@ document.addEventListener('DOMContentLoaded', () => {
             let table = '<table><tbody>';
             let x_div = document.createElement('div');
             katex.render(`${element.latex_x}`, x_div);
-            table += `<tr><td>x</td><td><span>${x_div.innerHTML}</span> <span class="decimal">(${element.x.toFixed(4)})</span></td></tr>`;
+            table += `<tr><td>x</td><td class="latex">${x_div.innerHTML}</td><td class="decimal">${element.x.toFixed(4)}</td></tr>`;
             let y_div = document.createElement('div');
             katex.render(`${element.latex_y}`, y_div);
-            table += `<tr><td>y</td><td><span>${y_div.innerHTML}</span> <span class="decimal">(${element.y.toFixed(4)})</span></td></tr>`;
+            table += `<tr><td>y</td><td class="latex">${y_div.innerHTML}</td><td class="decimal">${element.y.toFixed(4)}</td></tr>`;
             if (element.parents && element.parents.length > 0) {
-                table += `<tr><td>structs</td><td>${element.parents.join('<br>')}</td></tr>`;
+                table += `<tr><td>str</td><td colspan="2">${element.parents.join('<br>')}</td></tr>`;
             }
             table += '</tbody></table>';
             content += table;
@@ -403,16 +403,21 @@ document.addEventListener('DOMContentLoaded', () => {
             content += '<hr>';
             let table = '<table><tbody>';
             if (element.type === 'circle') {
-                table += `<tr><td>ctr</td><td>${element.center}</td></tr>`;
+                table += `<tr><td>ctr</td><td colspan="2">${element.center}</td></tr>`;
                 const radius = document.createElement('div');
                 katex.render(`${element.latex_radius}`, radius);
-                table += `<tr><td>rad</td><td><span>${radius.innerHTML}</span> <span class="decimal">(${element.decimal_radius})</span></td></tr>`;
+                table += `<tr><td>rad</td><td class="latex">${radius.innerHTML}</td><td class="decimal">${element.decimal_radius}</td></tr>`;
+            }
+            if (element.type === 'line') {
+                const length = document.createElement('div');
+                katex.render(`${element.latex_length}`, length);
+                table += `<tr><td>len</td><td class="latex">${length.innerHTML}</td><td class="decimal">${element.decimal_length}</td></tr>`;
             }
             const equation = document.createElement('div');
             katex.render(element.latex_equation, equation);
-            table += `<tr><td>eq</td><td>${equation.innerHTML}</td></tr>`;
+            table += `<tr><td>eq</td><td colspan="2">${equation.innerHTML}</td></tr>`;
             if (element.parents && element.parents.length > 0) {
-                table += `<tr><td>pts</td><td>${element.parents.join(', ')}</td></tr>`;
+                table += `<tr><td>pts</td><td colspan="2">${element.parents.join(', ')}</td></tr>`;
             }
             table += '</tbody></table>';
             content += table;
