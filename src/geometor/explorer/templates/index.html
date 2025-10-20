@@ -51,6 +51,7 @@
         <div class="view-switcher">
             <button id="category-view-btn" class="active">By Category</button>
             <button id="chrono-view-btn">Chronological</button>
+            <button id="groups-view-btn">Groups</button>
         </div>
 
         <div id="category-view">
@@ -121,6 +122,55 @@
                 </table>
             </div>
         </div>
+
+        <div id="groups-view" style="display: none;">
+            <div class="collapsible-section">
+                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Sizes <span id="sizes-count">(0)</span></h3>
+                <div class="table-container">
+                    <table id="sizes-table">
+                        <thead>
+                            <tr>
+                                <th>Size</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="collapsible-section">
+                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Chains <span id="chains-count">(0)</span></h3>
+                <div class="table-container">
+                    <table id="chains-table">
+                        <thead>
+                            <tr>
+                                <th>Chain</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="collapsible-section">
+                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Points <span id="points-group-count">(0)</span></h3>
+                <div class="table-container">
+                    <table id="points-group-table">
+                        <thead>
+                            <tr>
+                                <th>Point</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </aside>
 
     <footer>
@@ -132,6 +182,7 @@
 
     <script src="{{ url_for('static', filename='js/svg.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/groups.js') }}"></script>
     <script src="{{ url_for('static', filename='js/resizer.js') }}"></script>
 </body>
 </html>

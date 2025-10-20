@@ -210,6 +210,13 @@ tbody tr.row-hover {
 #chronological-view .table-container {
     height: 100%;
 }
+#groups-view {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    flex-grow: 1;
+    min-height: 0;
+}
 .collapsible-section {
     display: flex;
     flex-direction: column;
@@ -271,4 +278,9 @@ button .material-icons {
 
 #file-manager button {
     padding: 0.2em 0.5em;
+}
+
+.group-hover {
+    stroke: #ff00ff !important;
+    stroke-width: 0.01 !important;
 }

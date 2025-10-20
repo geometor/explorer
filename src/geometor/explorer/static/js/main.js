@@ -59,6 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
     GEOMETOR.isPositionedByTable = false;
 
     function renderModel(data) {
+        const oldGoldenSectionIds = (GEOMETOR.modelData.elements || [])
+            .filter(el => el.type === 'section' && el.classes.includes('golden'))
+            .map(el => el.ID)
+            .sort();
+
         GEOMETOR.modelData = data;
         // Clear all containers
         GEOMETOR.graphicsContainer.innerHTML = '';
@@ -73,29 +78,33 @@ document.addEventListener('DOMContentLoaded', () => {
         const points = {};
 
         // First pass: Process all points to populate the lookup object
-        data.elements.forEach(el => {
-            if (el.type === 'point') {
-                points[el.ID] = el;
-            }
-        });
+        if (data.elements) {
+            data.elements.forEach(el => {
+                if (el.type === 'point') {
+                    points[el.ID] = el;
+                }
+            });
+        }
 
         // Second pass: Render everything in order
-        data.elements.forEach(el => {
-            // Render SVG and populate category tables
-            if (el.type === 'point') {
-                renderPoint(el);
-                addPointToTable(el);
-            } else {
-                renderElement(el, points); // Now `points` is guaranteed to be complete
-                if (['line', 'circle'].includes(el.type)) {
-                    addStructureToTable(el);
+        if (data.elements) {
+            data.elements.forEach(el => {
+                // Render SVG and populate category tables
+                if (el.type === 'point') {
+                    renderPoint(el);
+                    addPointToTable(el);
                 } else {
-                    addGraphicToTable(el);
+                    renderElement(el, points); // Now `points` is guaranteed to be complete
+                    if (['line', 'circle'].includes(el.type)) {
+                        addStructureToTable(el);
+                    } else {
+                        addGraphicToTable(el);
+                    }
                 }
-            }
-            // Populate chronological table AFTER the element is rendered
-            addChronologicalRow(el);
-        });
+                // Populate chronological table AFTER the element is rendered
+                addChronologicalRow(el);
+            });
+        }
         
         // Update counts
         document.getElementById('points-count').textContent = `(${GEOMETOR.tables.points.rows.length})`;
@@ -113,6 +122,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         scaleCircles();
+
+        const newGoldenSectionIds = (data.elements || [])
+            .filter(el => el.type === 'section' && el.classes.includes('golden'))
+            .map(el => el.ID)
+            .sort();
+
+        if (JSON.stringify(oldGoldenSectionIds) !== JSON.stringify(newGoldenSectionIds)) {
+            initGroupsView();
+        }
     }
 
     function addPointToTable(el) {
@@ -553,6 +571,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function highlightElements(elementIds) {
+        elementIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.add('group-hover');
+            }
+        });
+    }
+
+    function clearHighlights() {
+        document.querySelectorAll('.group-hover').forEach(el => {
+            el.classList.remove('group-hover');
+        });
+    }
+
     function transformPoint(svg, x, y) {
         const pt = svg.createSVGPoint();
         pt.x = x;
@@ -769,21 +802,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // View Switcher
     const categoryViewBtn = document.getElementById('category-view-btn');
     const chronoViewBtn = document.getElementById('chrono-view-btn');
+    const groupsViewBtn = document.getElementById('groups-view-btn');
     const categoryView = document.getElementById('category-view');
     const chronologicalView = document.getElementById('chronological-view');
+    const groupsView = document.getElementById('groups-view');
 
     categoryViewBtn.addEventListener('click', () => {
         categoryView.style.display = 'flex';
         chronologicalView.style.display = 'none';
+        groupsView.style.display = 'none';
         categoryViewBtn.classList.add('active');
         chronoViewBtn.classList.remove('active');
+        groupsViewBtn.classList.remove('active');
     });
 
     chronoViewBtn.addEventListener('click', () => {
         categoryView.style.display = 'none';
         chronologicalView.style.display = 'flex';
+        groupsView.style.display = 'none';
         chronoViewBtn.classList.add('active');
         categoryViewBtn.classList.remove('active');
+        groupsViewBtn.classList.remove('active');
+    });
+
+    groupsViewBtn.addEventListener('click', () => {
+        categoryView.style.display = 'none';
+        chronologicalView.style.display = 'none';
+        groupsView.style.display = 'flex';
+        groupsViewBtn.classList.add('active');
+        categoryViewBtn.classList.remove('active');
+        chronoViewBtn.classList.remove('active');
     });
 
     // Collapsible sections

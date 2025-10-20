@@ -2,6 +2,10 @@ from geometor.explorer.serialize import to_browser_dict
 from flask import Flask, render_template, jsonify, request
 from geometor.model import Model, save_model, load_model
 from geometor.divine import analyze_model
+from geometor.divine.golden.groups import group_sections_by_size, group_sections_by_points
+from geometor.divine.golden.chains import find_chains_in_sections, unpack_chains
+from geometor.model.sections import Section
+from geometor.model.chains import Chain
 import sympy as sp
 import sympy.geometry as spg
 from sympy.polys.specialpolys import w_polys
@@ -211,6 +215,64 @@ def set_polygon():
 
 def run():
     app.run(debug=True, port=4444)
+
+def get_golden_sections():
+    """Helper function to retrieve golden sections from the model."""
+    golden_sections = []
+    for key, val in model.items():
+        if isinstance(key, sp.FiniteSet) and len(key.args) == 3 and 'golden' in val.classes:
+            # Reconstruct the Section object to pass to divine functions
+            points = list(key.args)
+            section = Section(points)
+            # Attach the ID from the element sidecar to the temporary section object
+            section.ID = val.ID
+            golden_sections.append(section)
+    return golden_sections
+
+@app.route('/api/groups/by_size', methods=['GET'])
+def get_groups_by_size():
+    sections = get_golden_sections()
+    groups = group_sections_by_size(sections)
+    print(f"Found {len(groups)} groups by size")
+    
+    result = {}
+    for size, section_list in groups.items():
+        # Convert sympy expression to string for JSON compatibility
+        size_str = str(size.evalf(6))
+        result[size_str] = [section.ID for section in section_list]
+        
+    return jsonify(result)
+
+@app.route('/api/groups/by_point', methods=['GET'])
+def get_groups_by_point():
+    sections = get_golden_sections()
+    groups = group_sections_by_points(sections)
+    print(f"Found {len(groups)} groups by point")
+    
+    result = {}
+    for point, section_list in groups.items():
+        # Use point ID as the key
+        point_id = model[point].ID
+        result[point_id] = [section.ID for section in section_list]
+        
+    return jsonify(result)
+
+@app.route('/api/groups/by_chain', methods=['GET'])
+def get_groups_by_chain():
+    sections = get_golden_sections()
+    chain_tree = find_chains_in_sections(sections)
+    chains = unpack_chains(chain_tree)
+    print(f"Found {len(chains)} chains")
+    
+    result = []
+    for i, chain in enumerate(chains):
+        result.append({
+            "name": f"Chain {i+1}",
+            "sections": [section.ID for section in chain.sections]
+        })
+        
+    return jsonify(result)
+
 
 if __name__ == '__main__':
     run()
