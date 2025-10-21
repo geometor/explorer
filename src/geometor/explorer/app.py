@@ -1,7 +1,7 @@
 from geometor.explorer.serialize import to_browser_dict
 from flask import Flask, render_template, jsonify, request
 from geometor.model import Model, save_model, load_model
-from geometor.divine import analyze_model
+from geometor.divine import register_divine_hook
 from geometor.divine.golden.groups import group_sections_by_size, group_sections_by_points
 from geometor.divine.golden.chains import find_chains_in_sections, unpack_chains
 from geometor.model.sections import Section
@@ -11,19 +11,44 @@ import sympy.geometry as spg
 from sympy.polys.specialpolys import w_polys
 import os
 import tempfile
+import logging
+from logging.config import dictConfig
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
+# --- Logging Setup ---
+# Disable Werkzeug's default request logger
+werkzeug_logger = logging.getLogger('werkzeug')
+werkzeug_logger.setLevel(logging.ERROR)
+
+# Clear existing handlers to prevent duplicate logs
+app.logger.handlers.clear()
+app.logger.propagate = False
+
+# Configure console handler
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(logging.Formatter('%(message)s'))
+app.logger.addHandler(console_handler)
+
+# Configure file handler
+file_handler = logging.FileHandler('explorer.log')
+file_handler.setFormatter(logging.Formatter(
+    '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
+))
+app.logger.addHandler(file_handler)
+
+app.logger.setLevel(logging.INFO)
+
 model = None
 
-# CONSTRUCTIONS_DIR = os.path.join(os.path.dirname(__file__), 'constructions')
 CONSTRUCTIONS_DIR = './constructions'
 os.makedirs(CONSTRUCTIONS_DIR, exist_ok=True)
 
 def new_model():
     global model
     model = Model("new")
-    analyze_model(model)
+    register_divine_hook(model, app.logger)
     A = model.set_point(0, 0, classes=["given"])
     B = model.set_point(1, 0, classes=["given"])
 
@@ -66,7 +91,7 @@ def load_model_endpoint():
         
         try:
             model = load_model(tmp_path)
-            analyze_model(model)
+            register_divine_hook(model, app.logger)
         finally:
             os.remove(tmp_path)
         
@@ -80,7 +105,7 @@ def load_model_endpoint():
         file_path = os.path.join(CONSTRUCTIONS_DIR, filename)
         if os.path.exists(file_path):
             model = load_model(file_path)
-            analyze_model(model)
+            register_divine_hook(model, app.logger)
             return jsonify(to_browser_dict(model))
         else:
             return jsonify({"success": False, "message": "File not found."}), 404
@@ -109,7 +134,7 @@ def construct_line():
     pt2 = model.get_element_by_ID(pt2_ID)
 
     if pt1 and pt2:
-        model.construct_line(pt1, pt2)
+        model.construct_line(pt1, pt2, logger=app.logger)
 
     return jsonify(to_browser_dict(model))
 
@@ -123,7 +148,7 @@ def construct_circle():
     pt2 = model.get_element_by_ID(pt2_ID)
 
     if pt1 and pt2:
-        model.construct_circle(pt1, pt2)
+        model.construct_circle(pt1, pt2, logger=app.logger)
 
     return jsonify(to_browser_dict(model))
 
@@ -149,10 +174,8 @@ def delete_element():
     if not ID:
         return jsonify({"error": "Element ID is required."}), 400
 
-    # Call the delete_element method on the model
     model.delete_element(ID)
     
-    # Return the updated model to the browser
     return jsonify(to_browser_dict(model))
 
 
@@ -221,10 +244,8 @@ def get_golden_sections():
     golden_sections = []
     for key, val in model.items():
         if isinstance(key, sp.FiniteSet) and len(key.args) == 3 and 'golden' in val.classes:
-            # Reconstruct the Section object to pass to divine functions
             points = list(key.args)
             section = Section(points)
-            # Attach the ID from the element sidecar to the temporary section object
             section.ID = val.ID
             golden_sections.append(section)
     return golden_sections
@@ -233,11 +254,10 @@ def get_golden_sections():
 def get_groups_by_size():
     sections = get_golden_sections()
     groups = group_sections_by_size(sections)
-    print(f"Found {len(groups)} groups by size")
+    app.logger.info(f"Found {len(groups)} groups by size")
     
     result = {}
     for size, section_list in groups.items():
-        # Convert sympy expression to string for JSON compatibility
         size_str = str(size.evalf(6))
         result[size_str] = [section.ID for section in section_list]
         
@@ -247,11 +267,10 @@ def get_groups_by_size():
 def get_groups_by_point():
     sections = get_golden_sections()
     groups = group_sections_by_points(sections)
-    print(f"Found {len(groups)} groups by point")
+    app.logger.info(f"Found {len(groups)} groups by point")
     
     result = {}
     for point, section_list in groups.items():
-        # Use point ID as the key
         point_id = model[point].ID
         result[point_id] = [section.ID for section in section_list]
         
@@ -262,7 +281,7 @@ def get_groups_by_chain():
     sections = get_golden_sections()
     chain_tree = find_chains_in_sections(sections)
     chains = unpack_chains(chain_tree)
-    print(f"Found {len(chains)} chains")
+    app.logger.info(f"Found {len(chains)} chains")
     
     result = []
     for i, chain in enumerate(chains):
