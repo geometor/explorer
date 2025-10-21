@@ -1,22 +1,21 @@
 changelog
 =========
 
-0.1.0 
+0.2.1
 -----
-*2023-11-15*
-
-**fixed**
-
-.. + Fixed bug in data processing (`#42 <https://github.com/example/repo/issues/42>`_)
-.. + Improved error handling in API calls
-
-**added**
-
-.. + Fixed bug in data processing (`#42 <https://github.com/example/repo/issues/42>`_)
-.. + Improved error handling in API calls
+*2025-10-20*
 
 **changed**
 
-.. + Fixed bug in data processing (`#42 <https://github.com/example/repo/issues/42>`_)
-.. + Improved error handling in API calls
+.. + Implemented a centralized logging system to provide clear, sequential feedback on construction and analysis operations.
+.. + Refactored the application to use the new synchronous analysis hook from the `geometor-model` library.
+.. + Added a file logger (`explorer.log`) for detailed debugging.
 
+0.1.0
+-----
+*2025-10-19*
+
+**changed**
+
+.. + Updated point hover card to use a multi-column layout for algebraic and decimal values.
+.. + Updated line hover card to display segment length.

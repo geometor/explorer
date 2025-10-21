@@ -1,25 +1,14 @@
 # GEOMETOR Explorer
 
-A web-based UI for the GEOMETOR model, allowing for interactive creation, visualization, and analysis of geometric constructions.
+A web-based UI for the GEOMETOR model.
 
-## Components
+## Overview
 
-### Backend (Flask)
+The `explorer` provides an interactive environment for creating, visualizing, and analyzing geometric constructions. It uses Flask for the backend and SVG for rendering. It integrates with `geometor.model` for core geometry and `geometor.divine` for analysis.
 
--   **`src/geometor/explorer/app.py`**: The main Flask application, serving the frontend and providing an API to the `geometor.model` library. It also integrates with `geometor.divine` for analysis.
--   **`templates/`**: HTML templates.
--   **`static/`**: Frontend assets (JS, CSS, images).
+## Index
 
-### Frontend (JavaScript/SVG)
-
--   **`static/js/`**: JavaScript files for rendering and user interaction.
--   **`static/css/`**: CSS stylesheets.
--   **`static/svg/`**: SVG assets.
-
-### Constructions
-
--   **`constructions/`**: JSON files of saved constructions.
-
-## Development Plan
-
-See `ROADMAP.md`.
+-   `app.py`: The main Flask application, handling routing and backend logic.
+-   `static/`: Frontend assets, including JavaScript, CSS, and images.
+-   `templates/`: HTML templates for the web interface.
+-   `serialize.py`: Handles the serialization of construction data.

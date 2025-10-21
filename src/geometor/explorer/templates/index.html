@@ -9,28 +9,28 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/svg.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body class="web">
     <header>
         <div id="file-manager">
-            <button id="new-btn">New</button>
-            <button id="open-btn">Open</button>
-            <button id="save-btn">Save</button>
-            <button id="save-as-btn">Save As</button>
-            <select id="file-dropdown"></select>
+            <button id="new-btn"><span class="material-icons">add_box</span></button>
+            <button id="open-btn"><span class="material-icons">folder_open</span></button>
+            <button id="save-btn"><span class="material-icons">save</span></button>
+            <button id="save-as-btn"><span class="material-icons">save_as</span></button>
+        </div>
+        <div id="elements-group">
+            <button id="point-btn">Point</button>
+            <button id="line-btn" disabled>Line</button>
+            <button id="circle-btn" disabled>Circle</button>
+        </div>
+        <div id="graphics-group">
+            <button id="segment-btn" disabled>Segment</button>
+            <button id="section-btn" disabled>Section</button>
+            <button id="polygon-btn" disabled>Polygon</button>
         </div>
         <input type="file" id="file-input" style="display: none;" />
-        <button id="add-line-btn" disabled>Add Line</button>
-        <button id="add-circle-btn" disabled>Add Circle</button>
-        <button id="add-segment-btn" disabled>Add Segment</button>
-        <button id="add-section-btn" disabled>Add Section</button>
-        <button id="add-polygon-btn" disabled>Add Polygon</button>
-        <button id="add-point-btn">Add Point</button>
-        <button id="theme-toggle">Toggle Theme</button>
-        <div id="status-bar">
-            <span id="status-filename">Unsaved Model</span>
-            <span id="status-message">Ready</span>
-        </div>
+        <button id="theme-toggle"><span class="material-icons">settings</span></button>
     </header>
     <div id="hover-card"></div>
     <main>
@@ -41,26 +41,31 @@
                 </marker>
             </defs>
             <g id="graphics"></g>
+            <g id="highlights"></g>
             <g id="elements"></g>
             <g id="points"></g>
         </svg>
     </main>
+    <div id="resizer"></div>
     <aside>
         <div class="view-switcher">
             <button id="category-view-btn" class="active">By Category</button>
             <button id="chrono-view-btn">Chronological</button>
+            <button id="groups-view-btn">Groups</button>
         </div>
 
         <div id="category-view">
             <div class="collapsible-section">
-                <h2><button class="collapse-btn">-</button> Points</h2>
+                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> <button class="toggle-vis-btn"><span class="material-icons">visibility</span></button> Points <span id="points-count">(0)</span></h3>
                 <div class="table-container">
                     <table id="points-table">
                         <thead>
                             <tr>
-                                <th>Label</th>
+                                <th>ID</th>
                                 <th>X</th>
                                 <th>Y</th>
+                                <th>Class</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -69,15 +74,14 @@
                 </div>
             </div>
             <div class="collapsible-section">
-                <h2><button class="collapse-btn">-</button> Structures</h2>
+                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> <button class="toggle-vis-btn"><span class="material-icons">visibility</span></button> Structures <span id="structures-count">(0)</span></h3>
                 <div class="table-container">
                     <table id="structures-table">
                         <thead>
                             <tr>
-                                <th>Label</th>
-                                <th>Type</th>
-                                <th>Parents</th>
-                                <th>Delete</th>
+                                <th>ID</th>
+                                <th>Class</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -86,15 +90,14 @@
                 </div>
             </div>
             <div class="collapsible-section">
-                <h2><button class="collapse-btn">-</button> Graphics</h2>
+                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> <button class="toggle-vis-btn"><span class="material-icons">visibility</span></button> Graphics <span id="graphics-count">(0)</span></h3>
                 <div class="table-container">
                     <table id="graphics-table">
                         <thead>
                             <tr>
-                                <th>Label</th>
-                                <th>Type</th>
-                                <th>Parents</th>
-                                <th>Delete</th>
+                                <th>ID</th>
+                                <th>Class</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -109,10 +112,9 @@
                 <table id="chrono-table">
                     <thead>
                         <tr>
-                            <th>Label</th>
-                            <th>Type</th>
-                            <th>Parents</th>
-                            <th>Delete</th>
+                            <th>ID</th>
+                            <th>Class</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -120,9 +122,67 @@
                 </table>
             </div>
         </div>
+
+        <div id="groups-view" style="display: none;">
+            <div class="collapsible-section">
+                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Sizes <span id="sizes-count">(0)</span></h3>
+                <div class="table-container">
+                    <table id="sizes-table">
+                        <thead>
+                            <tr>
+                                <th>Size</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="collapsible-section">
+                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Chains <span id="chains-count">(0)</span></h3>
+                <div class="table-container">
+                    <table id="chains-table">
+                        <thead>
+                            <tr>
+                                <th>Chain</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="collapsible-section">
+                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Points <span id="points-group-count">(0)</span></h3>
+                <div class="table-container">
+                    <table id="points-group-table">
+                        <thead>
+                            <tr>
+                                <th>Point</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </aside>
+
+    <footer>
+        <div id="status-bar">
+            <span id="status-filename">Unsaved Model</span>
+            <span id="status-message">Ready</span>
+        </div>
+    </footer>
 
     <script src="{{ url_for('static', filename='js/svg.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/groups.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/resizer.js') }}"></script>
 </body>
 </html>

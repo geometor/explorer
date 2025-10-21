@@ -1,10 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
+    function showHourglassCursor() {
+        document.body.style.cursor = 'wait';
+        GEOMETOR.svg.style.cursor = 'wait';
+    }
+
+    function hideHourglassCursor() {
+        document.body.style.cursor = 'default';
+        GEOMETOR.svg.style.cursor = 'default';
+    }
+
     window.GEOMETOR = {
         tables: {}
     };
 
     GEOMETOR.svg = document.getElementById('drawing');
     GEOMETOR.graphicsContainer = document.getElementById('graphics');
+    GEOMETOR.highlightsContainer = document.getElementById('highlights');
     GEOMETOR.elementsContainer = document.getElementById('elements');
     GEOMETOR.pointsContainer = document.getElementById('points');
     GEOMETOR.hoverCard = document.getElementById('hover-card');
@@ -12,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     GEOMETOR.tables.structures = document.querySelector('#structures-table tbody');
     GEOMETOR.tables.graphics = document.querySelector('#graphics-table tbody');
     GEOMETOR.tables.chrono = document.querySelector('#chrono-table tbody');
-    const fileDropdown = document.getElementById('file-dropdown');
     const statusFilename = document.getElementById('status-filename');
     const statusMessage = document.getElementById('status-message');
     let currentFilename = '';
@@ -21,10 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateStatus(message, isError = false) {
         statusMessage.textContent = message;
         statusMessage.classList.toggle('error', isError);
-        setTimeout(() => {
-            statusMessage.textContent = 'Ready';
-            statusMessage.classList.remove('error');
-        }, 3000);
     }
 
     function updateFilenameDisplay() {
@@ -32,41 +38,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadConstructions() {
+        showHourglassCursor();
+        updateStatus('Loading constructions...');
         fetch('/api/constructions')
             .then(response => response.json())
             .then(files => {
-                fileDropdown.innerHTML = '<option value="">Select a file</option>';
-                files.forEach(file => {
-                    const option = document.createElement('option');
-                    option.value = file;
-                    option.textContent = file;
-                    fileDropdown.appendChild(option);
-                });
+                // TODO: hook in the new file dialog
+            })
+            .finally(() => {
+                hideHourglassCursor();
+                updateStatus('Ready');
             });
     }
 
-    fileDropdown.addEventListener('change', (event) => {
-        const filename = event.target.value;
-        if (filename) {
-            fetch('/api/model/load', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ filename: filename }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success === false) {
-                    updateStatus(`Error loading file: ${data.message}`, true);
-                } else {
-                    renderModel(data);
-                    currentFilename = filename;
-                    updateFilenameDisplay();
-                    updateCurrentFilenameDisplay();
-                    clearSelection();
-                }
-            });
-        }
-    });
+
 
 
     GEOMETOR.selectedPoints = [];
@@ -74,9 +59,15 @@ document.addEventListener('DOMContentLoaded', () => {
     GEOMETOR.isPositionedByTable = false;
 
     function renderModel(data) {
+        const oldGoldenSectionIds = (GEOMETOR.modelData.elements || [])
+            .filter(el => el.type === 'section' && el.classes.includes('golden'))
+            .map(el => el.ID)
+            .sort();
+
         GEOMETOR.modelData = data;
         // Clear all containers
         GEOMETOR.graphicsContainer.innerHTML = '';
+        GEOMETOR.highlightsContainer.innerHTML = '';
         GEOMETOR.elementsContainer.innerHTML = '';
         GEOMETOR.pointsContainer.innerHTML = '';
         GEOMETOR.tables.points.innerHTML = '';
@@ -87,111 +78,181 @@ document.addEventListener('DOMContentLoaded', () => {
         const points = {};
 
         // First pass: Process all points to populate the lookup object
-        data.elements.forEach(el => {
-            if (el.type === 'point') {
-                points[el.label] = el;
-            }
-        });
+        if (data.elements) {
+            data.elements.forEach(el => {
+                if (el.type === 'point') {
+                    points[el.ID] = el;
+                }
+            });
+        }
 
         // Second pass: Render everything in order
-        data.elements.forEach(el => {
-            // Populate chronological table
-            addChronologicalRow(el);
-
-            // Render SVG and populate category tables
-            if (el.type === 'point') {
-                renderPoint(el);
-                addPointToTable(el);
-            } else {
-                renderElement(el, points); // Now `points` is guaranteed to be complete
-                if (['line', 'circle'].includes(el.type)) {
-                    addStructureToTable(el);
+        if (data.elements) {
+            data.elements.forEach(el => {
+                // Render SVG and populate category tables
+                if (el.type === 'point') {
+                    renderPoint(el);
+                    addPointToTable(el);
                 } else {
-                    addGraphicToTable(el);
+                    renderElement(el, points); // Now `points` is guaranteed to be complete
+                    if (['line', 'circle'].includes(el.type)) {
+                        addStructureToTable(el);
+                    } else {
+                        addGraphicToTable(el);
+                    }
                 }
-            }
-        });
+                // Populate chronological table AFTER the element is rendered
+                addChronologicalRow(el);
+            });
+        }
         
+        // Update counts
+        document.getElementById('points-count').textContent = `(${GEOMETOR.tables.points.rows.length})`;
+        document.getElementById('structures-count').textContent = `(${GEOMETOR.tables.structures.rows.length})`;
+        document.getElementById('graphics-count').textContent = `(${GEOMETOR.tables.graphics.rows.length})`;
+
         // Re-apply selection visuals
-        GEOMETOR.selectedPoints.forEach(label => {
-            const svgPoint = document.getElementById(label);
-            const tableRow = GEOMETOR.tables.points.querySelector(`tr[data-label="${label}"]`);
-            const chronoRow = GEOMETOR.tables.chrono.querySelector(`tr[data-label="${label}"]`);
+        GEOMETOR.selectedPoints.forEach(ID => {
+            const svgPoint = document.getElementById(ID);
+            const tableRow = GEOMETOR.tables.points.querySelector(`tr[data-id="${ID}"]`);
+            const chronoRow = GEOMETOR.tables.chrono.querySelector(`tr[data-id="${ID}"]`);
             if (svgPoint) svgPoint.classList.add('selected');
             if (tableRow) tableRow.classList.add('highlight');
             if (chronoRow) chronoRow.classList.add('highlight');
         });
 
         scaleCircles();
+
+        const newGoldenSectionIds = (data.elements || [])
+            .filter(el => el.type === 'section' && el.classes.includes('golden'))
+            .map(el => el.ID)
+            .sort();
+
+        if (JSON.stringify(oldGoldenSectionIds) !== JSON.stringify(newGoldenSectionIds)) {
+            initGroupsView();
+        }
     }
 
     function addPointToTable(el) {
         const row = GEOMETOR.tables.points.insertRow();
-        row.dataset.label = el.label;
-        const labelCell = row.insertCell();
+        row.dataset.id = el.ID;
+        const IDCell = row.insertCell();
         const xCell = row.insertCell();
         const yCell = row.insertCell();
+        const classCell = row.insertCell();
         const actionCell = row.insertCell();
 
-        labelCell.innerHTML = el.label;
+        IDCell.innerHTML = el.ID;
         katex.render(el.latex_x, xCell);
         xCell.title = el.x.toFixed(4);
         katex.render(el.latex_y, yCell);
         yCell.title = el.y.toFixed(4);
+        classCell.innerHTML = el.classes.join(', ');
 
-        actionCell.innerHTML = `<button class="delete-btn" data-label="${el.label}">🗑️</button>`;
+        actionCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}"><span class="material-icons">edit</span></button><button class="delete-btn" data-id="${el.ID}"><span class="material-icons">delete</span></button>`;
+
+        const svgEl = document.getElementById(el.ID);
+        if (svgEl) {
+            const color = window.getComputedStyle(svgEl).getPropertyValue('fill');
+            IDCell.style.color = color;
+        }
     }
 
     function addStructureToTable(el) {
         const row = GEOMETOR.tables.structures.insertRow();
-        row.dataset.label = el.label;
-        row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td><td><button class="delete-btn" data-label="${el.label}">🗑️</button></td>`;
+        row.dataset.id = el.ID;
+        const IDCell = row.insertCell();
+        const classCell = row.insertCell();
+        const deleteCell = row.insertCell();
+
+        IDCell.innerHTML = el.ID;
+        classCell.innerHTML = el.classes.join(', ');
+        deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}"><span class="material-icons">edit</span></button><button class="delete-btn" data-id="${el.ID}"><span class="material-icons">delete</span></button>`;
+
+        const svgEl = document.getElementById(el.ID);
+        if (svgEl) {
+            const color = window.getComputedStyle(svgEl).getPropertyValue('stroke');
+            IDCell.style.color = color;
+        }
     }
 
     function addGraphicToTable(el) {
         const row = GEOMETOR.tables.graphics.insertRow();
-        row.dataset.label = el.label;
-        row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${el.parents.join(', ')}</td><td><button class="delete-btn" data-label="${el.label}">🗑️</button></td>`;
+        row.dataset.id = el.ID;
+        const IDCell = row.insertCell();
+        const classCell = row.insertCell();
+        const deleteCell = row.insertCell();
+
+        IDCell.innerHTML = el.ID;
+        classCell.innerHTML = el.classes.join(', ');
+        deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}"><span class="material-icons">edit</span></button><button class="delete-btn" data-id="${el.ID}"><span class="material-icons">delete</span></button>`;
+
+        const svgEl = document.getElementById(el.ID);
+        if (svgEl) {
+            let color = window.getComputedStyle(svgEl).getPropertyValue('stroke');
+            if (svgEl.classList.contains('golden')) {
+                color = 'gold';
+            }
+            IDCell.style.color = color;
+        }
     }
 
     function addChronologicalRow(el) {
         const row = GEOMETOR.tables.chrono.insertRow();
-        row.dataset.label = el.label;
-        let parents = el.parents || [];
-        if (el.type === 'line') {
-            parents = [el.pt1, el.pt2];
-        } else if (el.type === 'circle') {
-            parents = [el.center, el.pt_on_rad];
-        }
-        // Defensively check for el.classes
+        row.dataset.id = el.ID;
         const isGiven = el.classes && el.classes.includes('given');
-        let deleteBtnHtml = (el.type !== 'point' && !isGiven) ? `<td><button class="delete-btn" data-label="${el.label}">🗑️</button></td>` : '<td></td>';
-        row.innerHTML = `<td>${el.label}</td><td>${el.type}</td><td>${parents.join(', ')}</td>${deleteBtnHtml}`;
+        
+        const IDCell = row.insertCell();
+        const classCell = row.insertCell();
+        const deleteCell = row.insertCell();
+
+        IDCell.innerHTML = el.ID;
+        classCell.innerHTML = el.classes.join(', ');
+        if (el.type !== 'point' && !isGiven) {
+            deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}"><span class="material-icons">edit</span></button><button class="delete-btn" data-id="${el.ID}"><span class="material-icons">delete</span></button>`;
+        }
+
+        const svgEl = document.getElementById(el.ID);
+        if (svgEl) {
+            let color;
+            if (el.type === 'point') {
+                color = window.getComputedStyle(svgEl).getPropertyValue('fill');
+            } else {
+                color = window.getComputedStyle(svgEl).getPropertyValue('stroke');
+                if (color === 'none' || color === '') {
+                    color = window.getComputedStyle(svgEl).getPropertyValue('fill');
+                }
+                if (svgEl.classList.contains('golden')) {
+                    color = 'gold';
+                }
+            }
+            IDCell.style.color = color;
+        }
     }
 
-    const addLineBtn = document.getElementById('add-line-btn');
-    const addCircleBtn = document.getElementById('add-circle-btn');
-    const addSegmentBtn = document.getElementById('add-segment-btn');
-    const addSectionBtn = document.getElementById('add-section-btn');
-    const addPolygonButton = document.getElementById('add-polygon-btn');
+    const lineBtn = document.getElementById('line-btn');
+    const circleBtn = document.getElementById('circle-btn');
+    const segmentBtn = document.getElementById('segment-btn');
+    const sectionBtn = document.getElementById('section-btn');
+    const polygonBtn = document.getElementById('polygon-btn');
 
     function updateConstructionButtons() {
         const numPoints = GEOMETOR.selectedPoints.length;
-        addLineBtn.disabled = numPoints !== 2;
-        addCircleBtn.disabled = numPoints !== 2;
-        addSegmentBtn.disabled = numPoints !== 2;
-        addSectionBtn.disabled = numPoints !== 3;
-        addPolygonButton.disabled = numPoints < 2;
+        lineBtn.disabled = numPoints !== 2;
+        circleBtn.disabled = numPoints !== 2;
+        segmentBtn.disabled = numPoints !== 2;
+        sectionBtn.disabled = numPoints !== 3;
+        polygonBtn.disabled = numPoints < 2;
     }
 
-    function toggleSelection(label) {
-        const index = GEOMETOR.selectedPoints.indexOf(label);
+    function toggleSelection(ID) {
+        const index = GEOMETOR.selectedPoints.indexOf(ID);
         if (index > -1) {
             // Deselect
             GEOMETOR.selectedPoints.splice(index, 1);
         } else {
             // Select
-            GEOMETOR.selectedPoints.push(label);
+            GEOMETOR.selectedPoints.push(ID);
         }
         // Re-render to apply/remove selection styles consistently
         renderModel(GEOMETOR.modelData);
@@ -213,14 +274,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     GEOMETOR.tables.points.addEventListener('click', (event) => {
         const row = event.target.closest('tr');
-        if (row && row.dataset.label) {
-            toggleSelection(row.dataset.label);
+        if (row && row.dataset.id) {
+            toggleSelection(row.dataset.id);
         }
     });
 
-    addLineBtn.addEventListener('click', () => {
+    lineBtn.addEventListener('click', () => {
         if (GEOMETOR.selectedPoints.length === 2) {
             const [pt1, pt2] = GEOMETOR.selectedPoints;
+            showHourglassCursor();
+            updateStatus('Constructing line...');
             fetch('/api/construct/line', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -231,13 +294,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderModel(data);
                 clearSelection();
                 isDirty = true;
+            })
+            .finally(() => {
+                hideHourglassCursor();
+                updateStatus('Ready');
             });
         }
     });
 
-    addCircleBtn.addEventListener('click', () => {
+    circleBtn.addEventListener('click', () => {
         if (GEOMETOR.selectedPoints.length === 2) {
             const [pt1, pt2] = GEOMETOR.selectedPoints;
+            showHourglassCursor();
+            updateStatus('Constructing circle...');
             fetch('/api/construct/circle', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -248,12 +317,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderModel(data);
                 clearSelection();
                 isDirty = true;
+            })
+            .finally(() => {
+                hideHourglassCursor();
+                updateStatus('Ready');
             });
         }
     });
 
     function constructPoly(endpoint, points) {
         // console.log("constructPoly");
+        showHourglassCursor();
+        updateStatus('Constructing polygon...');
         fetch(endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -265,33 +340,39 @@ document.addEventListener('DOMContentLoaded', () => {
             renderModel(data);
             clearSelection();
             isDirty = true;
+        })
+        .finally(() => {
+            hideHourglassCursor();
+            updateStatus('Ready');
         });
     }
 
-    addSegmentBtn.addEventListener('click', () => {
+    segmentBtn.addEventListener('click', () => {
         if (GEOMETOR.selectedPoints.length === 2) {
             constructPoly('/api/set/segment', GEOMETOR.selectedPoints);
         }
     });
 
-    addSectionBtn.addEventListener('click', () => {
+    sectionBtn.addEventListener('click', () => {
         if (GEOMETOR.selectedPoints.length === 3) {
             constructPoly('/api/set/section', GEOMETOR.selectedPoints);
         }
     });
 
-    addPolygonButton.addEventListener('click', () => {
+    polygonBtn.addEventListener('click', () => {
         if (GEOMETOR.selectedPoints.length >= 2) {
             constructPoly('/api/set/polygon', GEOMETOR.selectedPoints);
         }
     });
 
-    const addPointBtn = document.getElementById('add-point-btn');
-    addPointBtn.addEventListener('click', () => {
+    const pointBtn = document.getElementById('point-btn');
+    pointBtn.addEventListener('click', () => {
         const x = prompt('Enter x coordinate:');
         const y = prompt('Enter y coordinate:');
 
         if (x !== null && y !== null) {
+            showHourglassCursor();
+            updateStatus('Constructing point...');
             fetch('/api/construct/point', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -301,6 +382,10 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 renderModel(data);
                 isDirty = true;
+            })
+            .finally(() => {
+                hideHourglassCursor();
+                updateStatus('Ready');
             });
         }
     });
@@ -312,44 +397,48 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        let content = `<p><span class="label">${element.label}</span> ${element.type}`;
+        let content = `<p><span class="ID">${element.ID}</span> ${element.type}`;
         if (element.classes && element.classes.length > 0) {
             content += ` <span class="classes">(${element.classes.join(', ')})</span>`;
-        }
-        if (element.parents && element.parents.length > 0) {
-            content += ` <span class="parents">[${element.parents.join(', ')}]</span>`;
         }
         content += `</p>`;
 
         if (element.type === 'point') {
             content += '<hr>';
-            content += '<div class="coords-grid">';
-            // X value
+            let table = '<table><tbody>';
             let x_div = document.createElement('div');
-            katex.render(`x = ${element.latex_x}`, x_div);
-            content += `<span>${x_div.innerHTML}</span>`;
-            content += `<span class="decimal">(${element.x.toFixed(4)})</span>`;
-            // Y value
+            katex.render(`${element.latex_x}`, x_div);
+            table += `<tr><td>x</td><td class="latex">${x_div.innerHTML}</td><td class="decimal">${element.x.toFixed(4)}</td></tr>`;
             let y_div = document.createElement('div');
-            katex.render(`y = ${element.latex_y}`, y_div);
-            content += `<span>${y_div.innerHTML}</span>`;
-            content += `<span class="decimal">(${element.y.toFixed(4)})</span>`;
-            content += '</div>';
+            katex.render(`${element.latex_y}`, y_div);
+            table += `<tr><td>y</td><td class="latex">${y_div.innerHTML}</td><td class="decimal">${element.y.toFixed(4)}</td></tr>`;
+            if (element.parents && element.parents.length > 0) {
+                table += `<tr><td>str</td><td colspan="2">${element.parents.join('<br>')}</td></tr>`;
+            }
+            table += '</tbody></table>';
+            content += table;
         } else if (element.type === 'line' || element.type === 'circle') {
             content += '<hr>';
+            let table = '<table><tbody>';
             if (element.type === 'circle') {
-                const center = document.createElement('div');
-                center.innerHTML = `center: ${element.center}`;
-                content += center.innerHTML;
-                content += '<br>';
+                table += `<tr><td>ctr</td><td colspan="2">${element.center}</td></tr>`;
                 const radius = document.createElement('div');
-                katex.render(`r = ${element.latex_radius}`, radius);
-                content += `<span>${radius.innerHTML}</span> <span class="decimal">(${element.decimal_radius})</span>`;
-                content += '<br>';
+                katex.render(`${element.latex_radius}`, radius);
+                table += `<tr><td>rad</td><td class="latex">${radius.innerHTML}</td><td class="decimal">${element.decimal_radius}</td></tr>`;
+            }
+            if (element.type === 'line') {
+                const length = document.createElement('div');
+                katex.render(`${element.latex_length}`, length);
+                table += `<tr><td>len</td><td class="latex">${length.innerHTML}</td><td class="decimal">${element.decimal_length}</td></tr>`;
             }
             const equation = document.createElement('div');
             katex.render(element.latex_equation, equation);
-            content += equation.innerHTML;
+            table += `<tr><td>eq</td><td colspan="2">${equation.innerHTML}</td></tr>`;
+            if (element.parents && element.parents.length > 0) {
+                table += `<tr><td>pts</td><td colspan="2">${element.parents.join(', ')}</td></tr>`;
+            }
+            table += '</tbody></table>';
+            content += table;
         } else if (element.type === 'segment') {
             content += '<hr>';
             const length = document.createElement('div');
@@ -357,13 +446,17 @@ document.addEventListener('DOMContentLoaded', () => {
             content += `<span>${length.innerHTML}</span> <span class="decimal">(${element.decimal_length})</span>`;
         } else if (element.type === 'section') {
             content += '<hr>';
-            const lengths = document.createElement('div');
-            katex.render(`[${element.latex_lengths.join(', ')}]`, lengths);
-            content += `<span>${lengths.innerHTML}</span> <span class="decimal">([${element.decimal_lengths.join(', ')}])</span>`;
-            content += '<br>';
-            const ratio = document.createElement('div');
-            katex.render(`ratio = ${element.latex_ratio}`, ratio);
-            content += `<span>${ratio.innerHTML}</span> <span class="decimal">(${element.decimal_ratio})</span>`;
+            let table = '<table><tbody>';
+            for (let i = 0; i < element.parents.length - 1; i++) {
+                const p1 = element.parents[i];
+                const p2 = element.parents[i+1];
+                const decimal = element.decimal_lengths[i];
+                table += `<tr><td>${p1} ${p2}</td><td class="latex"></td><td class="decimal">${decimal}</td></tr>`;
+            }
+            table += `<tr><td>ratio</td><td class="latex-ratio"></td><td class="decimal">${element.decimal_ratio}</td></tr>`;
+            table += '</tbody></table>';
+            content += table;
+
         } else if (element.type === 'wedge') {
             content += '<hr>';
             const radius = document.createElement('div');
@@ -374,15 +467,15 @@ document.addEventListener('DOMContentLoaded', () => {
             content += `<span>${radians.innerHTML}</span> <span class="decimal">(${element.degrees})</span>`;
         } else if (element.type === 'polygon') {
             content += '<hr>';
-            const lengths = document.createElement('div');
-            lengths.innerHTML = 'Lengths:';
-            element.latex_lengths.forEach((l, i) => {
-                const length = document.createElement('div');
-                katex.render(l, length);
-                length.innerHTML = `<span>${length.innerHTML}</span> <span class="decimal">(${element.decimal_lengths[i]})</span>`;
-                lengths.appendChild(length);
-            });
-            content += lengths.innerHTML;
+            let table = '<table><thead><tr><th>Segment</th><th>Symbolic</th><th>Decimal</th></tr></thead><tbody>';
+            for (let i = 0; i < element.parents.length; i++) {
+                const p1 = element.parents[i];
+                const p2 = element.parents[(i + 1) % element.parents.length];
+                const decimal = element.decimal_lengths[i];
+                table += `<tr><td>${p1} ${p2}</td><td class="latex"></td><td class="decimal">${decimal}</td></tr>`;
+            }
+            table += '</tbody></table>';
+            content += table;
 
             const angles = document.createElement('div');
             angles.innerHTML = 'Angles:';
@@ -400,66 +493,180 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         GEOMETOR.hoverCard.innerHTML = content;
+
+        // Render LaTeX in the newly created table cells
+        if (element.type === 'section') {
+            const latexCells = GEOMETOR.hoverCard.querySelectorAll('.latex');
+            latexCells.forEach((cell, i) => {
+                katex.render(element.latex_lengths[i], cell);
+            });
+            const ratioCell = GEOMETOR.hoverCard.querySelector('.latex-ratio');
+            if (ratioCell) {
+                katex.render(element.latex_ratio, ratioCell);
+            }
+        } else if (element.type === 'polygon') {
+            const latexCells = GEOMETOR.hoverCard.querySelectorAll('.latex');
+            latexCells.forEach((cell, i) => {
+                katex.render(element.latex_lengths[i], cell);
+            });
+        }
+
+        const svgEl = document.getElementById(element.ID);
+        if (svgEl) {
+            let color;
+            if (element.type === 'point') {
+                color = window.getComputedStyle(svgEl).getPropertyValue('fill');
+            } else {
+                color = window.getComputedStyle(svgEl).getPropertyValue('stroke');
+                if (color === 'none' || color === '') {
+                    color = window.getComputedStyle(svgEl).getPropertyValue('fill');
+                }
+                if (svgEl.classList.contains('golden')) {
+                    color = 'gold';
+                }
+            }
+            const idSpan = GEOMETOR.hoverCard.querySelector('.ID');
+            idSpan.style.color = color;
+            idSpan.style.fontWeight = 'bold';
+        }
+
         GEOMETOR.hoverCard.style.display = 'block';
     }
 
-    GEOMETOR.setElementHover = function(label, hoverState) {
-        const elementData = GEOMETOR.modelData.elements.find(el => el.label === label);
+    GEOMETOR.setElementHover = function(ID, hoverState) {
+        const elementData = GEOMETOR.modelData.elements.find(el => el.ID === ID);
         if (!elementData) return;
 
-        const svgElement = document.getElementById(label);
-        const pointsRow = GEOMETOR.tables.points.querySelector(`tr[data-label="${label}"]`);
-        const structuresRow = GEOMETOR.tables.structures.querySelector(`tr[data-label="${label}"]`);
-        const graphicsRow = GEOMETOR.tables.graphics.querySelector(`tr[data-label="${label}"]`);
-        const chronoRow = GEOMETOR.tables.chrono.querySelector(`tr[data-label="${label}"]`);
+        const svgElement = document.getElementById(ID);
+        const pointsRow = GEOMETOR.tables.points.querySelector(`tr[data-id="${ID}"]`);
+        const structuresRow = GEOMETOR.tables.structures.querySelector(`tr[data-id="${ID}"]`);
+        const graphicsRow = GEOMETOR.tables.graphics.querySelector(`tr[data-id="${ID}"]`);
+        const chronoRow = GEOMETOR.tables.chrono.querySelector(`tr[data-id="${ID}"]`);
+
+        const highlightElement = document.getElementById(`highlight-${ID}`);
 
         const action = hoverState ? 'add' : 'remove';
-        if (svgElement) svgElement.classList[action]('hover');
+        if (svgElement) {
+            svgElement.classList[action]('hover');
+            svgElement.classList[action]('hover-target');
+        }
         if (pointsRow) pointsRow.classList[action]('row-hover');
         if (structuresRow) structuresRow.classList[action]('row-hover');
         if (graphicsRow) graphicsRow.classList[action]('row-hover');
         if (chronoRow) chronoRow.classList[action]('row-hover');
+        if (highlightElement) highlightElement.style.display = hoverState ? 'inline' : 'none';
 
         // Handle parents
-        let parentLabels = [];
+        let parentIDs = [];
         if (elementData.type === 'line') {
-            parentLabels = [elementData.pt1, elementData.pt2];
+            parentIDs = [elementData.pt1, elementData.pt2];
         } else if (elementData.type === 'circle') {
-            parentLabels = [elementData.center, elementData.pt_on_rad];
+            parentIDs = [elementData.center, elementData.radius_pt];
         }
 
-        parentLabels.forEach(parentLabel => {
-            if (parentLabel) {
-                GEOMETOR.setElementHover(parentLabel, hoverState);
+        parentIDs.forEach(parentID => {
+            if (parentID) {
+                GEOMETOR.setElementHover(parentID, hoverState);
             }
         });
+    }
+
+    function highlightElements(elementIds) {
+        elementIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.add('group-hover');
+            }
+        });
+    }
+
+    function clearHighlights() {
+        document.querySelectorAll('.group-hover').forEach(el => {
+            el.classList.remove('group-hover');
+        });
+    }
+
+    function transformPoint(svg, x, y) {
+        const pt = svg.createSVGPoint();
+        pt.x = x;
+        pt.y = y;
+        const screenCTM = svg.getScreenCTM();
+        if (screenCTM) {
+            return pt.matrixTransform(screenCTM);
+        }
+        return null;
     }
 
     // Table hovers
     Object.values(GEOMETOR.tables).forEach(tableBody => {
         tableBody.addEventListener('mouseover', (event) => {
             const row = event.target.closest('tr');
-            if (row && row.dataset.label) {
-                const label = row.dataset.label;
-                GEOMETOR.setElementHover(label, true);
+            if (row && row.dataset.id) {
+                const ID = row.dataset.id;
+                GEOMETOR.setElementHover(ID, true);
 
-                const elementData = GEOMETOR.modelData.elements.find(el => el.label === label);
-                const svgElement = document.getElementById(label);
+                const elementData = GEOMETOR.modelData.elements.find(el => el.ID === ID);
+                const svgElement = document.getElementById(ID);
                 if (elementData && svgElement) {
                     GEOMETOR.updateHoverCard(elementData);
-                    // Position card next to element in SVG
                     GEOMETOR.isPositionedByTable = true;
-                    const elemRect = svgElement.getBoundingClientRect();
-                    GEOMETOR.hoverCard.style.left = `${elemRect.right + 10}px`;
-                    GEOMETOR.hoverCard.style.top = `${elemRect.top}px`;
+
+                    let screenPoint;
+
+                    if (elementData.type === 'point') {
+                        screenPoint = transformPoint(GEOMETOR.svg, elementData.x, elementData.y);
+                    } else if (elementData.type === 'line') {
+                        const pt1 = GEOMETOR.modelData.elements.find(p => p.ID === elementData.pt1);
+                        const pt2 = GEOMETOR.modelData.elements.find(p => p.ID === elementData.pt2);
+                        if (pt1 && pt2) {
+                            const midX = (pt1.x + pt2.x) / 2;
+                            const midY = (pt1.y + pt2.y) / 2;
+                            screenPoint = transformPoint(GEOMETOR.svg, midX, midY);
+                        }
+                    } else if (elementData.type === 'circle') {
+                        const center = GEOMETOR.modelData.elements.find(p => p.ID === elementData.center);
+                        if (center) {
+                            const bbx = center.x + elementData.radius * 0.8;
+                            const bby = center.y + elementData.radius * 0.8;
+                            screenPoint = transformPoint(GEOMETOR.svg, bbx, bby);
+                        }
+                    } else if (elementData.type === 'polygon' || elementData.type === 'segment' || elementData.type === 'section') {
+                        const parentPoints = elementData.parents.map(pID => GEOMETOR.modelData.elements.find(p => p.ID === pID)).filter(p => p && p.type === 'point');
+                        if (parentPoints.length > 0) {
+                            const xs = parentPoints.map(p => p.x);
+                            const ys = parentPoints.map(p => p.y);
+                            const bbx = Math.max(...xs);
+                            const bby = Math.max(...ys);
+                            screenPoint = transformPoint(GEOMETOR.svg, bbx, bby);
+                        }
+                    } else if (elementData.parents && elementData.parents.length > 0) {
+                        const parentPoints = elementData.parents.map(pID => GEOMETOR.modelData.elements.find(p => p.ID === pID)).filter(p => p && p.type === 'point');
+                        if (parentPoints.length > 0) {
+                            const totalX = parentPoints.reduce((sum, p) => sum + p.x, 0);
+                            const totalY = parentPoints.reduce((sum, p) => sum + p.y, 0);
+                            const midX = totalX / parentPoints.length;
+                            const midY = totalY / parentPoints.length;
+                            screenPoint = transformPoint(GEOMETOR.svg, midX, midY);
+                        }
+                    }
+
+                    if (screenPoint) {
+                        GEOMETOR.hoverCard.style.left = `${screenPoint.x + 15}px`;
+                        GEOMETOR.hoverCard.style.top = `${screenPoint.y + 15}px`;
+                    } else {
+                        // Fallback for elements without points or if transform fails
+                        const elemRect = svgElement.getBoundingClientRect();
+                        GEOMETOR.hoverCard.style.left = `${elemRect.right + 10}px`;
+                        GEOMETOR.hoverCard.style.top = `${elemRect.top}px`;
+                    }
                 }
             }
         });
 
         tableBody.addEventListener('mouseout', (event) => {
             const row = event.target.closest('tr');
-            if (row && row.dataset.label) {
-                GEOMETOR.setElementHover(row.dataset.label, false);
+            if (row && row.dataset.id) {
+                GEOMETOR.setElementHover(row.dataset.id, false);
             }
             GEOMETOR.hoverCard.style.display = 'none';
         });
@@ -467,31 +674,69 @@ document.addEventListener('DOMContentLoaded', () => {
         // Handle delete button clicks
         tableBody.addEventListener('click', (event) => {
             if (event.target.classList.contains('delete-btn')) {
-                const label = event.target.dataset.label;
-                if (!label) return;
+                const ID = event.target.dataset.id;
+                if (!ID) return;
 
-                // First, fetch dependents
-                fetch(`/api/model/dependents?label=${label}`)
+                showHourglassCursor();
+                fetch(`/api/model/dependents?ID=${ID}`)
                     .then(response => response.json())
                     .then(dependents => {
-                        let message = `Are you sure you want to delete ${label}?`;
+                        let message = `Are you sure you want to delete ${ID}?`;
                         if (dependents.length > 0) {
                             message += `\n\nThe following elements will also be deleted: ${dependents.join(', ')}`;
                         }
 
                         if (confirm(message)) {
+                            updateStatus('Deleting element...');
                             fetch('/api/model/delete', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ label: label }),
+                                body: JSON.stringify({ ID: ID }),
                             })
                             .then(response => response.json())
                             .then(data => {
                                 renderModel(data);
                                 isDirty = true;
+                            })
+                            .finally(() => {
+                                hideHourglassCursor();
+                                updateStatus('Ready');
                             });
+                        } else {
+                            hideHourglassCursor();
                         }
+                    })
+                    .catch(() => {
+                        hideHourglassCursor();
                     });
+            }
+        });
+
+        // Handle edit button clicks
+        tableBody.addEventListener('click', (event) => {
+            if (event.target.classList.contains('edit-btn')) {
+                const ID = event.target.dataset.id;
+                if (!ID) return;
+
+                const newClass = prompt(`Enter new class for element ${ID}:`);
+                if (newClass) {
+                    showHourglassCursor();
+                    updateStatus('Editing element...');
+                    fetch('/api/model/edit', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ ID: ID, class: newClass }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        renderModel(data);
+                        isDirty = true;
+                    })
+                    .finally(() => {
+                        hideHourglassCursor();
+                        updateStatus('Ready');
+                    });
+                }
             }
         });
     });
@@ -499,10 +744,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Chronological Table selection
     GEOMETOR.tables.chrono.addEventListener('click', (event) => {
         const row = event.target.closest('tr');
-        if (row && row.dataset.label) {
-            const elementData = GEOMETOR.modelData.elements.find(el => el.label === row.dataset.label);
+        if (row && row.dataset.id) {
+            const elementData = GEOMETOR.modelData.elements.find(el => el.ID === row.dataset.id);
             if (elementData && elementData.type === 'point') {
-                toggleSelection(row.dataset.label);
+                toggleSelection(row.dataset.id);
             }
         }
     });
@@ -525,11 +770,16 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeObserver.observe(GEOMETOR.svg);
 
     // Initial fetch
+    showHourglassCursor();
+    updateStatus('Loading model...');
     fetch('/api/model')
         .then(response => response.json())
         .then(data => {
-            console.log(JSON.stringify(data, null, 2));
             renderModel(data);
+        })
+        .finally(() => {
+            hideHourglassCursor();
+            updateStatus('Ready');
         });
 
     const themeToggle = document.getElementById('theme-toggle');
@@ -552,21 +802,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // View Switcher
     const categoryViewBtn = document.getElementById('category-view-btn');
     const chronoViewBtn = document.getElementById('chrono-view-btn');
+    const groupsViewBtn = document.getElementById('groups-view-btn');
     const categoryView = document.getElementById('category-view');
     const chronologicalView = document.getElementById('chronological-view');
+    const groupsView = document.getElementById('groups-view');
 
     categoryViewBtn.addEventListener('click', () => {
         categoryView.style.display = 'flex';
         chronologicalView.style.display = 'none';
+        groupsView.style.display = 'none';
         categoryViewBtn.classList.add('active');
         chronoViewBtn.classList.remove('active');
+        groupsViewBtn.classList.remove('active');
     });
 
     chronoViewBtn.addEventListener('click', () => {
         categoryView.style.display = 'none';
         chronologicalView.style.display = 'flex';
+        groupsView.style.display = 'none';
         chronoViewBtn.classList.add('active');
         categoryViewBtn.classList.remove('active');
+        groupsViewBtn.classList.remove('active');
+    });
+
+    groupsViewBtn.addEventListener('click', () => {
+        categoryView.style.display = 'none';
+        chronologicalView.style.display = 'none';
+        groupsView.style.display = 'flex';
+        groupsViewBtn.classList.add('active');
+        categoryViewBtn.classList.remove('active');
+        chronoViewBtn.classList.remove('active');
     });
 
     // Collapsible sections
@@ -577,12 +842,31 @@ document.addEventListener('DOMContentLoaded', () => {
             section.classList.toggle('collapsed');
             
             const isCollapsed = section.classList.contains('collapsed');
-            btn.textContent = isCollapsed ? '+' : '-';
+            btn.querySelector('.material-icons').textContent = isCollapsed ? 'expand_more' : 'expand_less';
             
             const tableContainer = section.querySelector('.table-container');
             tableContainer.style.display = isCollapsed ? 'none' : '';
         });
     });
+
+    // Visibility toggle
+    const toggleVisBtns = document.querySelectorAll('.toggle-vis-btn');
+    toggleVisBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const section = btn.closest('.collapsible-section');
+            section.classList.toggle('hide-elements');
+            const isHidden = section.classList.contains('hide-elements');
+            btn.querySelector('.material-icons').textContent = isHidden ? 'visibility_off' : 'visibility';
+
+            let category = section.querySelector('h3').textContent.toLowerCase().split(' ')[2];
+            if (category === 'structures') {
+                category = 'elements';
+            }
+            GEOMETOR.svg.classList.toggle(`hide-${category}`);
+        });
+    });
+
+
 
     // File management
     const newBtn = document.getElementById('new-btn');
@@ -593,6 +877,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     newBtn.addEventListener('click', () => {
         if (confirm('Are you sure you want to start a new construction? Any unsaved changes will be lost.')) {
+            showHourglassCursor();
+            updateStatus('Creating new model...');
             fetch('/api/model/new', { method: 'POST' })
                 .then(response => response.json())
                 .then(data => {
@@ -601,6 +887,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     currentFilename = 'untitled.json';
                     updateFilenameDisplay();
                     isDirty = false;
+                })
+                .finally(() => {
+                    hideHourglassCursor();
+                    updateStatus('Ready');
                 });
         }
     });
@@ -615,6 +905,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const reader = new FileReader();
             reader.onload = (e) => {
                 const content = e.target.result;
+                showHourglassCursor();
+                updateStatus('Loading file...');
                 fetch('/api/model/load', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -630,7 +922,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         currentFilename = file.name;
                         updateFilenameDisplay();
                         isDirty = false;
+                        updateStatus('Ready');
                     }
+                })
+                .finally(() => {
+                    hideHourglassCursor();
                 });
             };
             reader.readAsText(file);
@@ -640,6 +936,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function save(filename) {
+        showHourglassCursor();
+        updateStatus('Saving file...');
         fetch('/api/model/save', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -651,12 +949,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateStatus('File saved successfully.');
                 currentFilename = filename;
                 updateFilenameDisplay();
-                updateCurrentFilenameDisplay();
+                updateFilenameDisplay();
                 loadConstructions();
                 isDirty = false;
             } else {
                 updateStatus(`Error saving file: ${data.message}`, true);
             }
+        })
+        .finally(() => {
+            hideHourglassCursor();
         });
     }
 

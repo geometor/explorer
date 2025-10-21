@@ -1,26 +1,54 @@
 from geometor.explorer.serialize import to_browser_dict
 from flask import Flask, render_template, jsonify, request
 from geometor.model import Model, save_model, load_model
-from geometor.divine import analyze_model
+from geometor.divine import register_divine_hook
+from geometor.divine.golden.groups import group_sections_by_size, group_sections_by_points
+from geometor.divine.golden.chains import find_chains_in_sections, unpack_chains
+from geometor.model.sections import Section
+from geometor.model.chains import Chain
 import sympy as sp
 import sympy.geometry as spg
 from sympy.polys.specialpolys import w_polys
 import os
 import tempfile
+import logging
+from logging.config import dictConfig
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-model = Model()
-analyze_model(model)
 
-# CONSTRUCTIONS_DIR = os.path.join(os.path.dirname(__file__), 'constructions')
+# --- Logging Setup ---
+# Disable Werkzeug's default request logger
+werkzeug_logger = logging.getLogger('werkzeug')
+werkzeug_logger.setLevel(logging.ERROR)
+
+# Clear existing handlers to prevent duplicate logs
+app.logger.handlers.clear()
+app.logger.propagate = False
+
+# Configure console handler
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(logging.Formatter('%(message)s'))
+app.logger.addHandler(console_handler)
+
+# Configure file handler
+file_handler = logging.FileHandler('explorer.log')
+file_handler.setFormatter(logging.Formatter(
+    '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
+))
+app.logger.addHandler(file_handler)
+
+app.logger.setLevel(logging.INFO)
+
+model = None
+
 CONSTRUCTIONS_DIR = './constructions'
 os.makedirs(CONSTRUCTIONS_DIR, exist_ok=True)
 
 def new_model():
     global model
     model = Model("new")
-    analyze_model(model)
+    register_divine_hook(model, app.logger)
     A = model.set_point(0, 0, classes=["given"])
     B = model.set_point(1, 0, classes=["given"])
 
@@ -63,6 +91,7 @@ def load_model_endpoint():
         
         try:
             model = load_model(tmp_path)
+            register_divine_hook(model, app.logger)
         finally:
             os.remove(tmp_path)
         
@@ -76,6 +105,7 @@ def load_model_endpoint():
         file_path = os.path.join(CONSTRUCTIONS_DIR, filename)
         if os.path.exists(file_path):
             model = load_model(file_path)
+            register_divine_hook(model, app.logger)
             return jsonify(to_browser_dict(model))
         else:
             return jsonify({"success": False, "message": "File not found."}), 404
@@ -97,28 +127,28 @@ def new_model_endpoint():
 @app.route('/api/construct/line', methods=['POST'])
 def construct_line():
     data = request.get_json()
-    pt1_label = data.get('pt1')
-    pt2_label = data.get('pt2')
+    pt1_ID = data.get('pt1')
+    pt2_ID = data.get('pt2')
 
-    pt1 = model.get_element_by_label(pt1_label)
-    pt2 = model.get_element_by_label(pt2_label)
+    pt1 = model.get_element_by_ID(pt1_ID)
+    pt2 = model.get_element_by_ID(pt2_ID)
 
     if pt1 and pt2:
-        model.construct_line(pt1, pt2)
+        model.construct_line(pt1, pt2, logger=app.logger)
 
     return jsonify(to_browser_dict(model))
 
 @app.route('/api/construct/circle', methods=['POST'])
 def construct_circle():
     data = request.get_json()
-    pt1_label = data.get('pt1')
-    pt2_label = data.get('pt2')
+    pt1_ID = data.get('pt1')
+    pt2_ID = data.get('pt2')
 
-    pt1 = model.get_element_by_label(pt1_label)
-    pt2 = model.get_element_by_label(pt2_label)
+    pt1 = model.get_element_by_ID(pt1_ID)
+    pt2 = model.get_element_by_ID(pt2_ID)
 
     if pt1 and pt2:
-        model.construct_circle(pt1, pt2)
+        model.construct_circle(pt1, pt2, logger=app.logger)
 
     return jsonify(to_browser_dict(model))
 
@@ -139,62 +169,129 @@ def construct_point():
 def delete_element():
     """Deletes an element and its dependents from the model."""
     data = request.get_json()
-    label = data.get('label')
+    ID = data.get('ID')
     
-    if not label:
-        return jsonify({"error": "Element label is required."}), 400
+    if not ID:
+        return jsonify({"error": "Element ID is required."}), 400
 
-    # Call the delete_element method on the model
-    model.delete_element(label)
+    model.delete_element(ID)
     
-    # Return the updated model to the browser
     return jsonify(to_browser_dict(model))
 
 
 @app.route('/api/model/dependents', methods=['GET'])
 def get_dependents_endpoint():
-    """Returns a list of dependent elements for a given element label."""
-    label = request.args.get('label')
-    if not label:
-        return jsonify({"error": "Element label is required."}), 400
+    """Returns a list of dependent elements for a given element ID."""
+    ID = request.args.get('ID')
+    if not ID:
+        return jsonify({"error": "Element ID is required."}), 400
 
-    dependents = model.get_dependents(label)
-    dependent_labels = [model[el].label for el in dependents]
+    dependents = model.get_dependents(ID)
+    dependent_IDs = [model[el].ID for el in dependents]
     
-    return jsonify(dependent_labels)
+    return jsonify(dependent_IDs)
+
+
+@app.route('/api/model/edit', methods=['POST'])
+def edit_element():
+    """Updates the class of an element in the model."""
+    data = request.get_json()
+    ID = data.get('ID')
+    new_class = data.get('class')
+    
+    if not ID or not new_class:
+        return jsonify({"error": "Element ID and class are required."}), 400
+
+    element = model.get_element_by_ID(ID)
+    
+    if element:
+        model[element].classes = {new_class: ""}
+    
+    return jsonify(to_browser_dict(model))
 
 
 @app.route('/api/set/segment', methods=['POST'])
 def set_segment():
     data = request.get_json()
-    points = [model.get_element_by_label(label) for label in data.get('points', [])]
+    points = [model.get_element_by_ID(ID) for ID in data.get('points', [])]
     if len(points) == 2:
         segment = model.set_segment(*points)
-        print(to_browser_dict(model))
     return jsonify(to_browser_dict(model))
 
 @app.route('/api/set/section', methods=['POST'])
 def set_section():
     data = request.get_json()
-    points = [model.get_element_by_label(label) for label in data.get('points', [])]
+    points = [model.get_element_by_ID(ID) for ID in data.get('points', [])]
     if len(points) == 3:
         section = model.set_section(points)
-        print(to_browser_dict(model))
     return jsonify(to_browser_dict(model))
 
 
 @app.route('/api/set/polygon', methods=['POST'])
 def set_polygon():
     data = request.get_json()
-    points = [model.get_element_by_label(label) for label in data.get('points', [])]
+    points = [model.get_element_by_ID(ID) for ID in data.get('points', [])]
     if len(points) >= 3:
         polygon = model.set_polygon(points)
-        print(to_browser_dict(model))
     return jsonify(to_browser_dict(model))
 
 
 def run():
-    app.run(debug=True, port=4445)
+    app.run(debug=True, port=4444)
+
+def get_golden_sections():
+    """Helper function to retrieve golden sections from the model."""
+    golden_sections = []
+    for key, val in model.items():
+        if isinstance(key, sp.FiniteSet) and len(key.args) == 3 and 'golden' in val.classes:
+            points = list(key.args)
+            section = Section(points)
+            section.ID = val.ID
+            golden_sections.append(section)
+    return golden_sections
+
+@app.route('/api/groups/by_size', methods=['GET'])
+def get_groups_by_size():
+    sections = get_golden_sections()
+    groups = group_sections_by_size(sections)
+    app.logger.info(f"Found {len(groups)} groups by size")
+    
+    result = {}
+    for size, section_list in groups.items():
+        size_str = str(size.evalf(6))
+        result[size_str] = [section.ID for section in section_list]
+        
+    return jsonify(result)
+
+@app.route('/api/groups/by_point', methods=['GET'])
+def get_groups_by_point():
+    sections = get_golden_sections()
+    groups = group_sections_by_points(sections)
+    app.logger.info(f"Found {len(groups)} groups by point")
+    
+    result = {}
+    for point, section_list in groups.items():
+        point_id = model[point].ID
+        result[point_id] = [section.ID for section in section_list]
+        
+    return jsonify(result)
+
+@app.route('/api/groups/by_chain', methods=['GET'])
+def get_groups_by_chain():
+    sections = get_golden_sections()
+    chain_tree = find_chains_in_sections(sections)
+    chains = unpack_chains(chain_tree)
+    app.logger.info(f"Found {len(chains)} chains")
+    
+    result = []
+    for i, chain in enumerate(chains):
+        result.append({
+            "name": f"Chain {i+1}",
+            "sections": [section.ID for section in chain.sections]
+        })
+        
+    return jsonify(result)
+
 
 if __name__ == '__main__':
     run()

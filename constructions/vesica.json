@@ -1,20 +1,32 @@
 {
     "name": "new",
-    "next_label": "G",
+    "next_ID": "H",
     "sympy_objects": [
         "Point2D(Integer(0), Integer(0))",
         "Point2D(Integer(1), Integer(0))",
         "Line2D(Point2D(Integer(0), Integer(0)), Point2D(Integer(1), Integer(0)))",
-        "Circle(Point2D(Integer(0), Integer(0)), Integer(1))",
-        "Point2D(Integer(-1), Integer(0))",
         "Circle(Point2D(Integer(1), Integer(0)), Integer(1))",
         "Point2D(Integer(2), Integer(0))",
+        "Circle(Point2D(Integer(0), Integer(0)), Integer(1))",
+        "Point2D(Integer(-1), Integer(0))",
         "Point2D(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
-        "Point2D(Rational(1, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))"
+        "Point2D(Rational(1, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+        "Line2D(Point2D(Rational(1, 2), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Rational(1, 2), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))))",
+        "Point2D(Rational(1, 2), Integer(0))"
     ],
     "elements": [
         {
-            "label": "A",
+            "ID": "A",
+            "classes": [
+                "given"
+            ],
+            "parents": [
+                2,
+                3
+            ]
+        },
+        {
+            "ID": "B",
             "classes": [
                 "given"
             ],
@@ -24,59 +36,50 @@
             ]
         },
         {
-            "label": "B",
-            "classes": [
-                "given"
-            ],
-            "parents": [
-                2,
-                3
-            ]
-        },
-        {
-            "label": "[ A B ]",
+            "ID": "- A B -",
             "classes": [],
             "parents": [
                 0,
                 1,
                 4,
-                6
-            ]
-        },
-        {
-            "label": "( A B )",
-            "classes": [],
-            "parents": [
-                0,
-                1,
-                4,
-                7,
-                8
-            ],
-            "pt_radius": 1
-        },
-        {
-            "label": "C",
-            "classes": [],
-            "parents": [
-                2,
-                3
-            ]
-        },
-        {
-            "label": "( B A )",
-            "classes": [],
-            "parents": [
-                1,
-                0,
                 6,
+                10
+            ]
+        },
+        {
+            "ID": "( B A )",
+            "classes": [],
+            "parents": [
+                1,
+                0,
+                4,
                 7,
                 8
             ],
             "pt_radius": 0
         },
         {
-            "label": "D",
+            "ID": "C",
+            "classes": [],
+            "parents": [
+                2,
+                3
+            ]
+        },
+        {
+            "ID": "( A B )",
+            "classes": [],
+            "parents": [
+                0,
+                1,
+                6,
+                7,
+                8
+            ],
+            "pt_radius": 1
+        },
+        {
+            "ID": "D",
             "classes": [],
             "parents": [
                 2,
@@ -84,19 +87,38 @@
             ]
         },
         {
-            "label": "E",
+            "ID": "E",
             "classes": [],
             "parents": [
                 3,
-                5
+                5,
+                9
             ]
         },
         {
-            "label": "F",
+            "ID": "F",
             "classes": [],
             "parents": [
                 3,
-                5
+                5,
+                9
+            ]
+        },
+        {
+            "ID": "- E F -",
+            "classes": [],
+            "parents": [
+                7,
+                8,
+                10
+            ]
+        },
+        {
+            "ID": "G",
+            "classes": [],
+            "parents": [
+                2,
+                9
             ]
         }
     ]
