@@ -12,33 +12,12 @@ from sympy.polys.specialpolys import w_polys
 import os
 import tempfile
 import logging
-from logging.config import dictConfig
+from .logging import configure_logging
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
-# --- Logging Setup ---
-# Disable Werkzeug's default request logger
-werkzeug_logger = logging.getLogger('werkzeug')
-werkzeug_logger.setLevel(logging.ERROR)
-
-# Clear existing handlers to prevent duplicate logs
-app.logger.handlers.clear()
-app.logger.propagate = False
-
-# Configure console handler
-console_handler = logging.StreamHandler()
-console_handler.setFormatter(logging.Formatter('%(message)s'))
-app.logger.addHandler(console_handler)
-
-# Configure file handler
-file_handler = logging.FileHandler('explorer.log')
-file_handler.setFormatter(logging.Formatter(
-    '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
-))
-app.logger.addHandler(file_handler)
-
-app.logger.setLevel(logging.INFO)
+configure_logging(app)
 
 model = None
 
@@ -47,12 +26,16 @@ os.makedirs(CONSTRUCTIONS_DIR, exist_ok=True)
 
 def new_model():
     global model
-    model = Model("new")
-    register_divine_hook(model, app.logger)
+    model = Model("new", logger=app.logger)
+    register_divine_hook(model)
     A = model.set_point(0, 0, classes=["given"])
     B = model.set_point(1, 0, classes=["given"])
 
-new_model()
+if os.environ.get("WERKZEUG_RUN_MAIN") == "true" or not app.debug:
+    new_model()
+
+def run():
+    app.run(debug=True, port=4444)
 
 @app.route('/')
 def index():
@@ -90,8 +73,8 @@ def load_model_endpoint():
             tmp_path = tmp.name
         
         try:
-            model = load_model(tmp_path)
-            register_divine_hook(model, app.logger)
+            model = load_model(tmp_path, logger=app.logger)
+            register_divine_hook(model)
         finally:
             os.remove(tmp_path)
         
@@ -104,8 +87,8 @@ def load_model_endpoint():
         
         file_path = os.path.join(CONSTRUCTIONS_DIR, filename)
         if os.path.exists(file_path):
-            model = load_model(file_path)
-            register_divine_hook(model, app.logger)
+            model = load_model(file_path, logger=app.logger)
+            register_divine_hook(model)
             return jsonify(to_browser_dict(model))
         else:
             return jsonify({"success": False, "message": "File not found."}), 404
@@ -134,7 +117,7 @@ def construct_line():
     pt2 = model.get_element_by_ID(pt2_ID)
 
     if pt1 and pt2:
-        model.construct_line(pt1, pt2, logger=app.logger)
+        model.construct_line(pt1, pt2)
 
     return jsonify(to_browser_dict(model))
 
@@ -148,7 +131,7 @@ def construct_circle():
     pt2 = model.get_element_by_ID(pt2_ID)
 
     if pt1 and pt2:
-        model.construct_circle(pt1, pt2, logger=app.logger)
+        model.construct_circle(pt1, pt2)
 
     return jsonify(to_browser_dict(model))
 
@@ -235,9 +218,6 @@ def set_polygon():
         polygon = model.set_polygon(points)
     return jsonify(to_browser_dict(model))
 
-
-def run():
-    app.run(debug=True, port=4444)
 
 def get_golden_sections():
     """Helper function to retrieve golden sections from the model."""
