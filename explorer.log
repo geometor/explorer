@@ -276,3 +276,491 @@
 2025-10-20 18:06:48,406 INFO:     B : { 1, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
 2025-10-20 18:06:48,406 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
 2025-10-20 18:06:48,406 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:12:39,253 INFO:     A : { 0, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:12:39,253 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:12:39,253 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:12:39,253 INFO:     B : { 1, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:12:39,254 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:12:39,254 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:12:40,351 INFO:     A : { 0, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:12:40,351 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:12:40,351 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:12:40,351 INFO:     B : { 1, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:12:40,351 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:12:40,352 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:12:57,122 INFO: - A B - = y [in /home/phi/PROJECTS/geometor/model/src/geometor/model/_lines.py:60]
+2025-10-20 18:13:00,881 INFO: ( A B ) = x**2 + y**2 - 1 [in /home/phi/PROJECTS/geometor/model/src/geometor/model/_circles.py:77]
+2025-10-20 18:13:01,104 INFO:     C : { -1, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:13:01,104 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:01,104 INFO:         found 1 parent line(s): ['- A B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:01,104 INFO:         line 1 of 1 : - A B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:01,106 INFO:           1 sections with C [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:05,262 INFO: ( B A ) = y**2 + (x - 1)**2 - 1 [in /home/phi/PROJECTS/geometor/model/src/geometor/model/_circles.py:77]
+2025-10-20 18:13:05,329 INFO:     D : { 2, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:13:05,329 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:05,329 INFO:         found 1 parent line(s): ['- A B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:05,329 INFO:         line 1 of 1 : - A B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:05,331 INFO:           3 sections with D [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:05,340 INFO:     E : { 1/2, -sqrt(3)/2 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:13:05,340 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:05,340 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:05,348 INFO:     F : { 1/2, sqrt(3)/2 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:13:05,348 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:05,348 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:09,378 INFO: - E F - = x - 1/2 [in /home/phi/PROJECTS/geometor/model/src/geometor/model/_lines.py:60]
+2025-10-20 18:13:09,481 INFO:     G : { 1/2, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:13:09,481 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:09,481 INFO:         found 2 parent line(s): ['- A B -', '- E F -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:09,481 INFO:         line 1 of 2 : - A B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:09,499 INFO:           6 sections with G [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:09,501 INFO:         line 2 of 2 : - E F - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:09,546 INFO:           1 sections with G [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:14,279 INFO: ( A D ) = x**2 + y**2 - 4 [in /home/phi/PROJECTS/geometor/model/src/geometor/model/_circles.py:77]
+2025-10-20 18:13:14,358 INFO:     H : { -2, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:13:14,358 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:14,358 INFO:         found 1 parent line(s): ['- A B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:14,359 INFO:         line 1 of 1 : - A B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:14,380 INFO:           10 sections with H [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:14,450 INFO:     I : { 1/2, -sqrt(15)/2 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:13:14,450 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:14,450 INFO:         found 1 parent line(s): ['- E F -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:14,451 INFO:         line 1 of 1 : - E F - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:14,575 INFO:           3 sections with I [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:14,666 INFO:             / I E F / [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:14,719 INFO:     J : { 1/2, sqrt(15)/2 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:13:14,719 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:14,720 INFO:         found 1 parent line(s): ['- E F -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:14,720 INFO:         line 1 of 1 : - E F - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:14,805 INFO:           6 sections with J [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:14,914 INFO:             / E F J / [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:15,237 INFO: Found 4 groups by point [in /home/phi/PROJECTS/geometor/explorer/src/geometor/explorer/app.py:270]
+2025-10-20 18:13:15,244 INFO: Found 0 chains [in /home/phi/PROJECTS/geometor/explorer/src/geometor/explorer/app.py:284]
+2025-10-20 18:13:15,266 INFO: Found 2 groups by size [in /home/phi/PROJECTS/geometor/explorer/src/geometor/explorer/app.py:257]
+2025-10-20 18:13:58,817 INFO: - E A - = -sqrt(3)*x/2 - y/2 [in /home/phi/PROJECTS/geometor/model/src/geometor/model/_lines.py:60]
+2025-10-20 18:13:58,935 INFO:     K : { -1/2, sqrt(3)/2 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:13:58,935 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:58,935 INFO:         found 1 parent line(s): ['- E A -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:58,935 INFO:         line 1 of 1 : - E A - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:59,008 INFO:           1 sections with K [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:59,022 INFO:     L : { -1, sqrt(3) } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:13:59,022 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:59,022 INFO:         found 1 parent line(s): ['- E A -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:59,022 INFO:         line 1 of 1 : - E A - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:59,099 INFO:           3 sections with L [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:59,106 INFO:     M : { 1, -sqrt(3) } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:13:59,106 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:59,106 INFO:         found 1 parent line(s): ['- E A -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:59,106 INFO:         line 1 of 1 : - E A - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:13:59,195 INFO:           6 sections with M [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:06,715 INFO: - L B - = sqrt(3)*x + 2*y - sqrt(3) [in /home/phi/PROJECTS/geometor/model/src/geometor/model/_lines.py:60]
+2025-10-20 18:14:06,895 INFO:     N : { -1/7, 4*sqrt(3)/7 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:14:06,895 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:06,895 INFO:         found 1 parent line(s): ['- L B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:06,895 INFO:         line 1 of 1 : - L B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:07,004 INFO:           1 sections with N [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:07,172 INFO:     O : { 1 - 2*sqrt(7)/7, sqrt(21)/7 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:14:07,172 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:07,172 INFO:         found 1 parent line(s): ['- L B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:07,172 INFO:         line 1 of 1 : - L B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:07,303 INFO:           3 sections with O [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:07,535 INFO:     P : { 2*sqrt(7)/7 + 1, -sqrt(21)/7 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:14:07,535 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:07,535 INFO:         found 1 parent line(s): ['- L B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:07,535 INFO:         line 1 of 1 : - L B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:07,667 INFO:           6 sections with P [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:07,815 INFO:     Q : { 1/2, sqrt(3)/4 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:14:07,815 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:07,815 INFO:         found 2 parent line(s): ['- E F -', '- L B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:07,815 INFO:         line 1 of 2 : - E F - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:08,038 INFO:           10 sections with Q [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:08,153 INFO:         line 2 of 2 : - L B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:08,316 INFO:           10 sections with Q [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:08,549 INFO:     R : { 13/7, -3*sqrt(3)/7 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:14:08,549 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:08,549 INFO:         found 1 parent line(s): ['- L B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:08,549 INFO:         line 1 of 1 : - L B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:08,708 INFO:           15 sections with R [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:14,325 INFO: ( Q E ) = (x - 1/2)**2 + (y - sqrt(3)/4)**2 - 27/16 [in /home/phi/PROJECTS/geometor/model/src/geometor/model/_circles.py:77]
+2025-10-20 18:14:14,707 INFO:     S : { 1/2 - sqrt(6)/2, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:14:14,707 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:14,707 INFO:         found 1 parent line(s): ['- A B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:14,707 INFO:         line 1 of 1 : - A B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:14,847 INFO:           15 sections with S [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:15,129 INFO:     T : { 1/2 + sqrt(6)/2, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:14:15,129 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:15,129 INFO:         found 1 parent line(s): ['- A B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:15,129 INFO:         line 1 of 1 : - A B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:15,265 INFO:           21 sections with T [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:15,495 INFO:     U : { -11/14, 5*sqrt(3)/14 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:14:15,495 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:15,495 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:15,545 INFO:     V : { 25/14, 5*sqrt(3)/14 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:14:15,545 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:15,545 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:15,630 INFO:     W : { 1/2, sqrt(3) } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:14:15,631 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:15,631 INFO:         found 1 parent line(s): ['- E F -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:15,631 INFO:         line 1 of 1 : - E F - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:15,915 INFO:           15 sections with W [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:16,120 INFO:     X : { -5/8, 5*sqrt(3)/8 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:14:16,120 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:16,120 INFO:         found 1 parent line(s): ['- E A -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:16,120 INFO:         line 1 of 1 : - E A - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:16,365 INFO:           10 sections with X [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:16,662 INFO:     Y : { 1/2 - 3*sqrt(21)/14, sqrt(3)/4 + 9*sqrt(7)/28 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:14:16,663 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:16,663 INFO:         found 1 parent line(s): ['- L B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:16,663 INFO:         line 1 of 1 : - L B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:16,945 INFO:           21 sections with Y [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:17,990 INFO:     Z : { 1/2 + 3*sqrt(21)/14, -9*sqrt(7)/28 + sqrt(3)/4 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:14:17,990 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:17,990 INFO:         found 1 parent line(s): ['- L B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:17,990 INFO:         line 1 of 1 : - L B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:14:18,307 INFO:           28 sections with Z [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:17:55,983 INFO: Found 4 groups by point [in /home/phi/PROJECTS/geometor/explorer/src/geometor/explorer/app.py:270]
+2025-10-20 18:17:56,004 INFO: Found 0 chains [in /home/phi/PROJECTS/geometor/explorer/src/geometor/explorer/app.py:284]
+2025-10-20 18:17:56,007 INFO: Found 2 groups by size [in /home/phi/PROJECTS/geometor/explorer/src/geometor/explorer/app.py:257]
+2025-10-20 18:17:59,021 INFO:     A : { 0, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:17:59,021 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:17:59,022 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:17:59,022 INFO:     B : { 1, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:17:59,022 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:17:59,023 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:17:59,050 INFO: Found 0 groups by size [in /home/phi/PROJECTS/geometor/explorer/src/geometor/explorer/app.py:257]
+2025-10-20 18:17:59,053 INFO: Found 0 groups by point [in /home/phi/PROJECTS/geometor/explorer/src/geometor/explorer/app.py:270]
+2025-10-20 18:17:59,060 INFO: Found 0 chains [in /home/phi/PROJECTS/geometor/explorer/src/geometor/explorer/app.py:284]
+2025-10-20 18:18:02,423 INFO: - A B - = y [in /home/phi/PROJECTS/geometor/model/src/geometor/model/_lines.py:60]
+2025-10-20 18:18:05,530 INFO: ( A B ) = x**2 + y**2 - 1 [in /home/phi/PROJECTS/geometor/model/src/geometor/model/_circles.py:77]
+2025-10-20 18:18:05,620 INFO:     C : { -1, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:05,620 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:05,620 INFO:         found 1 parent line(s): ['- A B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:05,620 INFO:         line 1 of 1 : - A B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:05,622 INFO:           1 sections with C [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:08,100 INFO: ( B A ) = y**2 + (x - 1)**2 - 1 [in /home/phi/PROJECTS/geometor/model/src/geometor/model/_circles.py:77]
+2025-10-20 18:18:08,169 INFO:     D : { 2, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:08,169 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:08,169 INFO:         found 1 parent line(s): ['- A B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:08,169 INFO:         line 1 of 1 : - A B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:08,171 INFO:           3 sections with D [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:08,177 INFO:     E : { 1/2, -sqrt(3)/2 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:08,178 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:08,178 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:08,184 INFO:     F : { 1/2, sqrt(3)/2 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:08,184 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:08,184 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:10,649 INFO: - E F - = x - 1/2 [in /home/phi/PROJECTS/geometor/model/src/geometor/model/_lines.py:60]
+2025-10-20 18:18:10,800 INFO:     G : { 1/2, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:10,800 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:10,800 INFO:         found 2 parent line(s): ['- A B -', '- E F -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:10,800 INFO:         line 1 of 2 : - A B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:10,828 INFO:           6 sections with G [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:10,831 INFO:         line 2 of 2 : - E F - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:10,895 INFO:           1 sections with G [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:17,227 INFO: - E A - = -sqrt(3)*x/2 - y/2 [in /home/phi/PROJECTS/geometor/model/src/geometor/model/_lines.py:60]
+2025-10-20 18:18:17,353 INFO:     H : { -1/2, sqrt(3)/2 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:17,353 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:17,353 INFO:         found 1 parent line(s): ['- E A -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:17,353 INFO:         line 1 of 1 : - E A - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:17,401 INFO:           1 sections with H [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:24,820 INFO: - H B - = sqrt(3)*x/2 + 3*y/2 - sqrt(3)/2 [in /home/phi/PROJECTS/geometor/model/src/geometor/model/_lines.py:60]
+2025-10-20 18:18:25,073 INFO:     I : { 1 - sqrt(3)/2, 1/2 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:25,073 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:25,073 INFO:         found 1 parent line(s): ['- H B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:25,073 INFO:         line 1 of 1 : - H B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:25,141 INFO:           1 sections with I [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:25,255 INFO:     J : { sqrt(3)/2 + 1, -1/2 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:25,255 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:25,255 INFO:         found 1 parent line(s): ['- H B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:25,255 INFO:         line 1 of 1 : - H B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:25,333 INFO:           3 sections with J [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:25,383 INFO:     K : { 1/2, sqrt(3)/6 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:25,383 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:25,383 INFO:         found 2 parent line(s): ['- E F -', '- H B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:25,383 INFO:         line 1 of 2 : - E F - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:25,508 INFO:           3 sections with K [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:25,529 INFO:         line 2 of 2 : - H B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:25,610 INFO:           6 sections with K [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:29,812 INFO: ( K E ) = (x - 1/2)**2 + (y - sqrt(3)/6)**2 - 4/3 [in /home/phi/PROJECTS/geometor/model/src/geometor/model/_circles.py:77]
+2025-10-20 18:18:30,037 INFO:     L : { 1/2 - sqrt(5)/2, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:30,037 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,037 INFO:         found 1 parent line(s): ['- A B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,037 INFO:         line 1 of 1 : - A B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,112 INFO:           10 sections with L [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,213 INFO:             / C L A / [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,313 INFO:             / L A B / [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,365 INFO:             / L B D / [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,452 INFO:     M : { 1/2 + sqrt(5)/2, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:30,452 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,452 INFO:         found 1 parent line(s): ['- A B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,452 INFO:         line 1 of 1 : - A B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,534 INFO:           15 sections with M [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,581 INFO:             / C A M / [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,699 INFO:             / A B M / [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,812 INFO:             / B M D / [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,920 INFO:     N : { 3/2, sqrt(3)/2 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:30,920 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,920 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,964 INFO:     O : { 1/2, 5*sqrt(3)/6 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:30,964 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,964 INFO:         found 1 parent line(s): ['- E F -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:30,964 INFO:         line 1 of 1 : - E F - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:31,115 INFO:           6 sections with O [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:31,199 INFO:     P : { 3/2, -sqrt(3)/6 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:31,199 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:31,199 INFO:         found 1 parent line(s): ['- H B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:31,199 INFO:         line 1 of 1 : - H B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:31,338 INFO:           10 sections with P [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:32,069 INFO: Found 6 groups by point [in /home/phi/PROJECTS/geometor/explorer/src/geometor/explorer/app.py:270]
+2025-10-20 18:18:32,092 INFO: Found 0 chains [in /home/phi/PROJECTS/geometor/explorer/src/geometor/explorer/app.py:284]
+2025-10-20 18:18:32,128 INFO: Found 3 groups by size [in /home/phi/PROJECTS/geometor/explorer/src/geometor/explorer/app.py:257]
+2025-10-20 18:18:39,098 INFO: ( A D ) = x**2 + y**2 - 4 [in /home/phi/PROJECTS/geometor/model/src/geometor/model/_circles.py:77]
+2025-10-20 18:18:39,351 INFO:     Q : { -2, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:39,352 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:39,352 INFO:         found 1 parent line(s): ['- A B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:39,352 INFO:         line 1 of 1 : - A B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:39,512 INFO:           21 sections with Q [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:39,666 INFO:             / Q L M / [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:39,849 INFO:     R : { 1/2, -sqrt(15)/2 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:39,849 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:39,849 INFO:         found 1 parent line(s): ['- E F -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:39,849 INFO:         line 1 of 1 : - E F - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:40,041 INFO:           10 sections with R [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:40,135 INFO:             / R E F / [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:40,328 INFO:     S : { 1/2, sqrt(15)/2 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:40,329 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:40,329 INFO:         found 1 parent line(s): ['- E F -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:40,329 INFO:         line 1 of 1 : - E F - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:40,530 INFO:           15 sections with S [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:40,706 INFO:             / E F S / [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:40,841 INFO:     T : { -1, sqrt(3) } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:40,842 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:40,842 INFO:         found 1 parent line(s): ['- E A -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:40,842 INFO:         line 1 of 1 : - E A - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:41,033 INFO:           3 sections with T [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:41,065 INFO:     U : { 1, -sqrt(3) } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:41,065 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:41,066 INFO:         found 1 parent line(s): ['- E A -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:41,066 INFO:         line 1 of 1 : - E A - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:41,253 INFO:           6 sections with U [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:41,488 INFO:     V : { 1/4 + 3*sqrt(5)/4, -sqrt(15)/4 + sqrt(3)/4 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:41,488 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:41,488 INFO:         found 1 parent line(s): ['- H B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:41,488 INFO:         line 1 of 1 : - H B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:41,717 INFO:           15 sections with V [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:41,969 INFO:             / H B V / [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:42,630 INFO:     W : { 1/4 - 3*sqrt(5)/4, sqrt(3)/4 + sqrt(15)/4 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-20 18:18:42,630 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:42,630 INFO:         found 1 parent line(s): ['- H B -'] [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:42,630 INFO:         line 1 of 1 : - H B - [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:42,902 INFO:           21 sections with W [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:43,040 INFO:             / W H B / [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-20 18:18:45,017 INFO: Found 14 groups by point [in /home/phi/PROJECTS/geometor/explorer/src/geometor/explorer/app.py:270]
+2025-10-20 18:18:45,031 INFO: Found 0 chains [in /home/phi/PROJECTS/geometor/explorer/src/geometor/explorer/app.py:284]
+2025-10-20 18:18:45,154 INFO: Found 6 groups by size [in /home/phi/PROJECTS/geometor/explorer/src/geometor/explorer/app.py:257]
+2025-10-22 02:33:16,853 INFO:     A : { 0, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-22 02:33:16,853 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-22 02:33:16,853 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-22 02:33:16,853 INFO:     B : { 1, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-22 02:33:16,853 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-22 02:33:16,853 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-22 02:33:37,414 INFO:     A : { 0, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-22 02:33:37,414 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-22 02:33:37,414 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-22 02:33:37,415 INFO:     B : { 1, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-22 02:33:37,415 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-22 02:33:37,415 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-22 02:34:02,012 INFO:     A : { 0, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-22 02:34:02,012 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-22 02:34:02,012 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-22 02:34:02,013 INFO:     B : { 1, 0 } [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:20]
+2025-10-22 02:34:02,013 INFO:         divine analysis [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-22 02:34:02,013 INFO:         no parent lines found [in /home/phi/PROJECTS/geometor/divine/src/geometor/divine/events.py:24]
+2025-10-22 02:38:38,411 - geometor.explorer.app - INFO -     A : { 0, 0 }
+2025-10-22 02:38:38,416 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:38:38,417 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:38:38,419 - geometor.explorer.app - INFO -     B : { 1, 0 }
+2025-10-22 02:38:38,421 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:38:38,422 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:38:39,526 - geometor.explorer.app - INFO -     A : { 0, 0 }
+2025-10-22 02:38:39,531 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:38:39,532 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:38:39,534 - geometor.explorer.app - INFO -     B : { 1, 0 }
+2025-10-22 02:38:39,536 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:38:39,537 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:42:46,579 - geometor.explorer.app - INFO -     A : { 0, 0 }
+2025-10-22 02:42:46,584 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:42:46,586 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:42:46,588 - geometor.explorer.app - INFO -     B : { 1, 0 }
+2025-10-22 02:42:46,590 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:42:46,591 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:42:47,737 - geometor.explorer.app - INFO -     A : { 0, 0 }
+2025-10-22 02:42:47,741 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:42:47,743 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:42:47,745 - geometor.explorer.app - INFO -     B : { 1, 0 }
+2025-10-22 02:42:47,747 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:42:47,748 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:42:55,235 - geometor.explorer.app - INFO -     A : { 0, 0 }
+2025-10-22 02:42:55,239 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:42:55,241 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:42:55,242 - geometor.explorer.app - INFO -     B : { 1, 0 }
+2025-10-22 02:42:55,243 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:42:55,245 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:43:03,686 - geometor.explorer.app - INFO -     A : { 0, 0 }
+2025-10-22 02:43:03,690 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:43:03,692 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:43:03,693 - geometor.explorer.app - INFO -     B : { 1, 0 }
+2025-10-22 02:43:03,694 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:43:03,696 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:43:12,140 - geometor.explorer.app - INFO -     A : { 0, 0 }
+2025-10-22 02:43:12,145 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:43:12,146 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:43:12,148 - geometor.explorer.app - INFO -     B : { 1, 0 }
+2025-10-22 02:43:12,149 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:43:12,150 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:43:28,666 - geometor.explorer.app - INFO -     [bold]A[/bold] : { 0, 0 }
+2025-10-22 02:43:28,671 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:43:28,672 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:43:28,674 - geometor.explorer.app - INFO -     [bold]B[/bold] : { 1, 0 }
+2025-10-22 02:43:28,675 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:43:28,676 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:44:06,579 - geometor.explorer.app - INFO -     [bold]A[/bold] : { 0, 0 }
+2025-10-22 02:44:06,584 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:44:06,585 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:44:06,587 - geometor.explorer.app - INFO -     [bold]B[/bold] : { 1, 0 }
+2025-10-22 02:44:06,588 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:44:06,589 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:44:07,699 - geometor.explorer.app - INFO -     [bold]A[/bold] : { 0, 0 }
+2025-10-22 02:44:07,703 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:44:07,705 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:44:07,706 - geometor.explorer.app - INFO -     [bold]B[/bold] : { 1, 0 }
+2025-10-22 02:44:07,708 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:44:07,709 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:44:54,312 - geometor.explorer.app - INFO - [bold]- A B -[/bold] = y
+2025-10-22 02:45:37,465 - geometor.explorer.app - INFO -     [bold]A[/bold] : { 0, 0 }
+2025-10-22 02:45:37,470 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:45:37,471 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:45:37,473 - geometor.explorer.app - INFO -     [bold]B[/bold] : { 1, 0 }
+2025-10-22 02:45:37,474 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:45:37,475 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:45:38,576 - geometor.explorer.app - INFO -     [bold]A[/bold] : { 0, 0 }
+2025-10-22 02:45:38,581 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:45:38,582 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:45:38,584 - geometor.explorer.app - INFO -     [bold]B[/bold] : { 1, 0 }
+2025-10-22 02:45:38,585 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:45:38,586 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:46:00,103 - geometor.explorer.app - INFO -     [bold]A[/bold] : { 0, 0 }
+2025-10-22 02:46:00,108 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:46:00,109 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:46:00,111 - geometor.explorer.app - INFO -     [bold]B[/bold] : { 1, 0 }
+2025-10-22 02:46:00,112 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:46:00,113 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:46:01,224 - geometor.explorer.app - INFO -     [bold]A[/bold] : { 0, 0 }
+2025-10-22 02:46:01,228 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:46:01,230 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:46:01,231 - geometor.explorer.app - INFO -     [bold]B[/bold] : { 1, 0 }
+2025-10-22 02:46:01,233 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:46:01,234 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:50:10,282 - geometor.explorer.app - INFO -     [bold]A[/bold] : { 0, 0 }
+2025-10-22 02:50:10,286 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:50:10,287 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:50:10,288 - geometor.explorer.app - INFO -     [bold]B[/bold] : { 1, 0 }
+2025-10-22 02:50:10,289 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:50:10,289 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:50:56,239 - geometor.explorer.app - INFO -     [bold]A[/bold] : { 0, 0 }
+2025-10-22 02:50:56,243 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:50:56,244 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:50:56,244 - geometor.explorer.app - INFO -     [bold]B[/bold] : { 1, 0 }
+2025-10-22 02:50:56,245 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:50:56,246 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:50:57,344 - geometor.explorer.app - INFO -     [bold]A[/bold] : { 0, 0 }
+2025-10-22 02:50:57,347 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:50:57,348 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:50:57,349 - geometor.explorer.app - INFO -     [bold]B[/bold] : { 1, 0 }
+2025-10-22 02:50:57,350 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:50:57,351 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:51:15,929 - geometor.explorer.app - INFO - [bold]- A B -[/bold] = y
+2025-10-22 02:54:34,507 - geometor.explorer.app - INFO -     [bold]A[/bold] : { 0, 0 }
+2025-10-22 02:54:34,511 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:54:34,512 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:54:34,513 - geometor.explorer.app - INFO -     [bold]B[/bold] : { 1, 0 }
+2025-10-22 02:54:34,514 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:54:34,515 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:56:34,211 - geometor.explorer.app - INFO -     [bold]A[/bold] : { 0, 0 }
+2025-10-22 02:56:34,215 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:56:34,216 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:56:34,216 - geometor.explorer.app - INFO -     [bold]B[/bold] : { 1, 0 }
+2025-10-22 02:56:34,217 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:56:34,218 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:56:52,698 - geometor.explorer.app - INFO -     [bold]A[/bold] : { 0, 0 }
+2025-10-22 02:56:52,702 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:56:52,702 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:56:52,703 - geometor.explorer.app - INFO -     [bold]B[/bold] : { 1, 0 }
+2025-10-22 02:56:52,704 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:56:52,704 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:56:53,850 - geometor.explorer.app - INFO -     [bold]A[/bold] : { 0, 0 }
+2025-10-22 02:56:53,854 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:56:53,855 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:56:53,856 - geometor.explorer.app - INFO -     [bold]B[/bold] : { 1, 0 }
+2025-10-22 02:56:53,857 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:56:53,857 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 02:56:59,278 - geometor.explorer.app - INFO - [bold]- A B -[/bold] = y
+2025-10-22 02:57:02,805 - geometor.explorer.app - INFO - [bold]( A B )[/bold] = x**2 + y**2 - 1
+2025-10-22 02:57:03,032 - geometor.explorer.app - INFO -     [bold]C[/bold] : { -1, 0 }
+2025-10-22 02:57:03,034 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 02:57:03,034 - geometor.explorer.app - INFO -         found 1 parent line(s): [bold]- A B -[/bold]
+2025-10-22 02:57:03,035 - geometor.explorer.app - INFO -         line 1 of 1 : [bold]- A B -[/bold]
+2025-10-22 02:57:03,037 - geometor.explorer.app - INFO -           1 sections with [bold]C[/bold]
+2025-10-22 03:00:28,499 - geometor.explorer.app - INFO -     [bold]A[/bold] : { 0, 0 }
+2025-10-22 03:00:28,502 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 03:00:28,503 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 03:00:28,504 - geometor.explorer.app - INFO -     [bold]B[/bold] : { 1, 0 }
+2025-10-22 03:00:28,505 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 03:00:28,505 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 03:00:52,631 - geometor.explorer.app - INFO - [bold]( B A )[/bold] = y**2 + (x - 1)**2 - 1
+2025-10-22 03:01:09,281 - geometor.explorer.app - INFO - [bold]( A B )[/bold] = x**2 + y**2 - 1
+2025-10-22 03:01:09,365 - geometor.explorer.app - INFO -     [bold]C[/bold] : { 1/2, -sqrt(3)/2 }
+2025-10-22 03:01:09,367 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 03:01:09,367 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 03:01:09,374 - geometor.explorer.app - INFO -     [bold]D[/bold] : { 1/2, sqrt(3)/2 }
+2025-10-22 03:01:09,375 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 03:01:09,376 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 03:01:11,173 - geometor.explorer.app - INFO - [bold]- A B -[/bold] = y
+2025-10-22 03:01:11,258 - geometor.explorer.app - INFO -     [bold]E[/bold] : { 2, 0 }
+2025-10-22 03:01:11,259 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 03:01:11,260 - geometor.explorer.app - INFO -         line 1 of 1 : [bold]- A B -[/bold]
+2025-10-22 03:01:11,283 - geometor.explorer.app - INFO -           1 sections with [bold]E[/bold]
+2025-10-22 03:01:11,285 - geometor.explorer.app - INFO -     [bold]F[/bold] : { -1, 0 }
+2025-10-22 03:01:11,286 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 03:01:11,286 - geometor.explorer.app - INFO -         line 1 of 1 : [bold]- A B -[/bold]
+2025-10-22 03:01:11,306 - geometor.explorer.app - INFO -           3 sections with [bold]F[/bold]
+2025-10-22 03:01:37,760 - geometor.explorer.app - INFO - [bold]- C D -[/bold] = x - 1/2
+2025-10-22 03:01:37,880 - geometor.explorer.app - INFO -     [bold]G[/bold] : { 1/2, 0 }
+2025-10-22 03:01:37,881 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 03:01:37,882 - geometor.explorer.app - INFO -         line 1 of 2 : [bold]- A B -[/bold]
+2025-10-22 03:01:37,901 - geometor.explorer.app - INFO -           6 sections with [bold]G[/bold]
+2025-10-22 03:01:37,904 - geometor.explorer.app - INFO -         line 2 of 2 : [bold]- C D -[/bold]
+2025-10-22 03:01:37,952 - geometor.explorer.app - INFO -           1 sections with [bold]G[/bold]
+2025-10-22 03:02:25,749 - geometor.explorer.app - INFO - [bold]( A E )[/bold] = x**2 + y**2 - 4
+2025-10-22 03:02:25,838 - geometor.explorer.app - INFO -     [bold]H[/bold] : { -2, 0 }
+2025-10-22 03:02:25,840 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 03:02:25,840 - geometor.explorer.app - INFO -         line 1 of 1 : [bold]- A B -[/bold]
+2025-10-22 03:02:25,860 - geometor.explorer.app - INFO -           10 sections with [bold]H[/bold]
+2025-10-22 03:02:25,928 - geometor.explorer.app - INFO -     [bold]I[/bold] : { 1/2, -sqrt(15)/2 }
+2025-10-22 03:02:25,929 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 03:02:25,930 - geometor.explorer.app - INFO -         line 1 of 1 : [bold]- C D -[/bold]
+2025-10-22 03:02:26,006 - geometor.explorer.app - INFO -           3 sections with [bold]I[/bold]
+2025-10-22 03:02:26,108 - geometor.explorer.app - INFO -             / [bold]I[/bold] [bold]C[/bold] [bold]D[/bold] /
+2025-10-22 03:02:26,164 - geometor.explorer.app - INFO -     [bold]J[/bold] : { 1/2, sqrt(15)/2 }
+2025-10-22 03:02:26,165 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 03:02:26,166 - geometor.explorer.app - INFO -         line 1 of 1 : [bold]- C D -[/bold]
+2025-10-22 03:02:26,256 - geometor.explorer.app - INFO -           6 sections with [bold]J[/bold]
+2025-10-22 03:02:26,373 - geometor.explorer.app - INFO -             / [bold]C[/bold] [bold]D[/bold] [bold]J[/bold] /
+2025-10-22 03:02:26,718 - geometor.explorer.app - INFO - Found 4 groups by point
+2025-10-22 03:02:26,727 - geometor.explorer.app - INFO - Found 0 chains
+2025-10-22 03:02:26,750 - geometor.explorer.app - INFO - Found 2 groups by size
+2025-10-22 03:11:53,194 - geometor.explorer.app - INFO -     [bold]A[/bold] : { 0, 0 }
+2025-10-22 03:11:53,197 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 03:11:53,198 - geometor.explorer.app - INFO -         no parent lines found
+2025-10-22 03:11:53,199 - geometor.explorer.app - INFO -     [bold]B[/bold] : { 1, 0 }
+2025-10-22 03:11:53,200 - geometor.explorer.app - INFO -         divine analysis
+2025-10-22 03:11:53,200 - geometor.explorer.app - INFO -         no parent lines found
