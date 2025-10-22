@@ -671,12 +671,14 @@ document.addEventListener('DOMContentLoaded', () => {
             GEOMETOR.hoverCard.style.display = 'none';
         });
 
-        // Handle delete button clicks
         tableBody.addEventListener('click', (event) => {
-            if (event.target.classList.contains('delete-btn')) {
-                const ID = event.target.dataset.id;
-                if (!ID) return;
+            const button = event.target.closest('button');
+            if (!button) return;
 
+            const ID = button.dataset.id;
+            if (!ID) return;
+
+            if (button.classList.contains('delete-btn')) {
                 showHourglassCursor();
                 fetch(`/api/model/dependents?ID=${ID}`)
                     .then(response => response.json())
@@ -709,15 +711,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     .catch(() => {
                         hideHourglassCursor();
                     });
-            }
-        });
-
-        // Handle edit button clicks
-        tableBody.addEventListener('click', (event) => {
-            if (event.target.classList.contains('edit-btn')) {
-                const ID = event.target.dataset.id;
-                if (!ID) return;
-
+            } else if (button.classList.contains('edit-btn')) {
                 const newClass = prompt(`Enter new class for element ${ID}:`);
                 if (newClass) {
                     showHourglassCursor();
