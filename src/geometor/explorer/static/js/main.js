@@ -140,6 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const xCell = row.insertCell();
         const yCell = row.insertCell();
         const classCell = row.insertCell();
+        const guideCell = row.insertCell();
         const actionCell = row.insertCell();
 
         IDCell.innerHTML = el.ID;
@@ -148,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         katex.render(el.latex_y, yCell);
         yCell.title = el.y.toFixed(4);
         classCell.innerHTML = el.classes.join(', ');
+        guideCell.innerHTML = `<button class="guide-btn" data-id="${el.ID}">${el.guide ? 'Yes' : 'No'}</button>`;
 
         actionCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}"><span class="material-icons">edit</span></button><button class="delete-btn" data-id="${el.ID}"><span class="material-icons">delete</span></button>`;
 
@@ -163,10 +165,12 @@ document.addEventListener('DOMContentLoaded', () => {
         row.dataset.id = el.ID;
         const IDCell = row.insertCell();
         const classCell = row.insertCell();
+        const guideCell = row.insertCell();
         const deleteCell = row.insertCell();
 
         IDCell.innerHTML = el.ID;
         classCell.innerHTML = el.classes.join(', ');
+        guideCell.innerHTML = `<button class="guide-btn" data-id="${el.ID}">${el.guide ? 'Yes' : 'No'}</button>`;
         deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}"><span class="material-icons">edit</span></button><button class="delete-btn" data-id="${el.ID}"><span class="material-icons">delete</span></button>`;
 
         const svgEl = document.getElementById(el.ID);
@@ -204,10 +208,12 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const IDCell = row.insertCell();
         const classCell = row.insertCell();
+        const guideCell = row.insertCell();
         const deleteCell = row.insertCell();
 
         IDCell.innerHTML = el.ID;
         classCell.innerHTML = el.classes.join(', ');
+        guideCell.innerHTML = `<button class="guide-btn" data-id="${el.ID}">${el.guide ? 'Yes' : 'No'}</button>`;
         if (el.type !== 'point' && !isGiven) {
             deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}"><span class="material-icons">edit</span></button><button class="delete-btn" data-id="${el.ID}"><span class="material-icons">delete</span></button>`;
         }
@@ -731,6 +737,23 @@ document.addEventListener('DOMContentLoaded', () => {
                         updateStatus('Ready');
                     });
                 }
+            } else if (button.classList.contains('guide-btn')) {
+                showHourglassCursor();
+                updateStatus('Toggling guide status...');
+                fetch('/api/model/toggle-guide', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ID: ID }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    renderModel(data);
+                    isDirty = true;
+                })
+                .finally(() => {
+                    hideHourglassCursor();
+                    updateStatus('Ready');
+                });
             }
         });
     });

@@ -89,6 +89,9 @@ function renderElement(el, points) {
         svgEl.id = el.ID;
         svgEl.classList.add(el.type);
         el.classes.forEach(c => svgEl.classList.add(c));
+        if (el.guide) {
+            svgEl.classList.add('guide');
+        }
         if (['polygon', 'segment', 'section', 'chain'].includes(el.type)) {
             GEOMETOR.graphicsContainer.appendChild(svgEl);
         } else {
@@ -108,6 +111,9 @@ function renderPoint(el) {
     circle.setAttribute('cy', el.y);
     circle.setAttribute('r', 0.02); // Initial radius, will be scaled
     el.classes.forEach(c => circle.classList.add(c));
+    if (el.guide) {
+        circle.classList.add('guide');
+    }
     GEOMETOR.pointsContainer.appendChild(circle);
     renderHighlight(el);
 }

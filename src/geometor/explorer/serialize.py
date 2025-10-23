@@ -33,6 +33,7 @@ def to_browser_dict(model):
             'ID': data.ID,
             'classes': list(data.classes.keys()),
             'parents': [model[p].ID for p in data.parents.keys() if p in model and model[p].ID],
+            'guide': data.guide,
         }
 
         if isinstance(el, spg.Point):

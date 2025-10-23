@@ -193,6 +193,23 @@ def edit_element():
     return jsonify(to_browser_dict(model))
 
 
+@app.route('/api/model/toggle-guide', methods=['POST'])
+def toggle_guide():
+    """Toggles the guide status of an element in the model."""
+    data = request.get_json()
+    ID = data.get('ID')
+    
+    if not ID:
+        return jsonify({"error": "Element ID is required."}), 400
+
+    element = model.get_element_by_ID(ID)
+    
+    if element:
+        model[element].guide = not model[element].guide
+    
+    return jsonify(to_browser_dict(model))
+
+
 @app.route('/api/set/segment', methods=['POST'])
 def set_segment():
     data = request.get_json()
