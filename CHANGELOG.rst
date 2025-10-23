@@ -1,6 +1,14 @@
 changelog
 =========
 
+0.2.7
+-----
+*2025-10-23*
+
+**removed**
+
+.. + Removed old construction files to support the updated serialization format from the model library.
+
 0.2.5
 -----
 *2025-10-22*
