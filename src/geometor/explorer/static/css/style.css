@@ -246,6 +246,11 @@ tbody tr.row-hover {
     display: flex;
     align-items: center;
 }
+.collapsible-section h3 span[id$="-count"] {
+    margin-left: auto;
+    font-size: 0.8em;
+    font-weight: normal;
+}
 .table-container {
     overflow-y: auto;
     border: 1px solid var(--border-color);

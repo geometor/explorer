@@ -48,7 +48,7 @@ function populateSizesTable(data) {
         cell1.textContent = parseFloat(size).toFixed(4);
         cell2.textContent = sections.length;
     }
-    document.getElementById('sizes-count').textContent = `(${sizes.length})`;
+    document.getElementById('sizes-count').textContent = sizes.length;
 }
 
 function populatePointsGroupTable(data) {
@@ -65,7 +65,7 @@ function populatePointsGroupTable(data) {
         cell1.textContent = pointId;
         cell2.textContent = sections.length;
     }
-    document.getElementById('points-group-count').textContent = `(${points.length})`;
+    document.getElementById('points-group-count').textContent = points.length;
 }
 
 function populateChainsTable(data) {
@@ -81,7 +81,7 @@ function populateChainsTable(data) {
         cell1.textContent = chain.name;
         cell2.textContent = chain.sections.length;
     });
-    document.getElementById('chains-count').textContent = `(${chains.length})`;
+    document.getElementById('chains-count').textContent = chains.length;
 }
 
 export function initGroupsEventListeners() {

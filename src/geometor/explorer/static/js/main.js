@@ -107,10 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        document.getElementById('points-count').textContent = `(${GEOMETOR.tables.points.rows.length})`;
-        document.getElementById('structures-count').textContent = `(${GEOMETOR.tables.structures.rows.length})`;
-        document.getElementById('graphics-count').textContent = `(${GEOMETOR.tables.graphics.rows.length})`;
-
+            document.getElementById('points-count').textContent = GEOMETOR.tables.points.rows.length;
+            document.getElementById('structures-count').textContent = GEOMETOR.tables.structures.rows.length;
+            document.getElementById('graphics-count').textContent = GEOMETOR.tables.graphics.rows.length;
         GEOMETOR.selectedPoints.forEach(ID => {
             const svgPoint = document.getElementById(ID);
             const tableRow = GEOMETOR.tables.points.querySelector(`tr[data-id="${ID}"]`);
