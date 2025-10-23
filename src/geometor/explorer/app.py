@@ -212,9 +212,12 @@ def edit_element():
 @app.route('/api/set/segment', methods=['POST'])
 def set_segment():
     data = request.get_json()
-    points = [model.get_element_by_ID(ID) for ID in data.get('points', [])]
-    if len(points) == 2:
+    points_IDs = data.get('points', [])
+    points = [model.get_element_by_ID(ID) for ID in points_IDs]
+    if len(points) == 2 and all(points):
         segment = model.set_segment(*points)
+    elif len(points_IDs) == 2:
+        app.logger.error(f"Could not find one or more points for segment: {points_IDs}")
     return jsonify(to_browser_dict(model))
 
 @app.route('/api/set/section', methods=['POST'])
