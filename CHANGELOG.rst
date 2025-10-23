@@ -1,6 +1,15 @@
 changelog
 =========
 
+0.2.3
+-----
+*2025-10-22*
+
+**added**
+
+.. + Added a `guide` property toggle in the UI for points, lines, and circles.
+.. + Added styling for guide elements to distinguish them visually.
+
 0.2.1
 -----
 *2025-10-20*
