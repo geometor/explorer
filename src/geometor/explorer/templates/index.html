@@ -55,16 +55,68 @@
             <button id="groups-view-btn">Groups</button>
         </div>
 
-        <div id="category-view">
-            <div class="collapsible-section">
-                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> <button class="toggle-vis-btn"><span class="material-icons">visibility</span></button> Points <span id="points-count">(0)</span></h3>
+        <div id="view-container">
+            <div id="category-view">
+                <div class="collapsible-section">
+                    <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> <button class="toggle-vis-btn"><span class="material-icons">visibility</span></button> Points <span id="points-count">(0)</span></h3>
+                    <div class="table-container">
+                        <table id="points-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>X</th>
+                                    <th>Y</th>
+                                    <th>Class</th>
+                                    <th>Guide</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="collapsible-section">
+                    <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> <button class="toggle-vis-btn"><span class="material-icons">visibility</span></button> Structures <span id="structures-count">(0)</span></h3>
+                    <div class="table-container">
+                        <table id="structures-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Class</th>
+                                    <th>Guide</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="collapsible-section">
+                    <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> <button class="toggle-vis-btn"><span class="material-icons">visibility</span></button> Graphics <span id="graphics-count">(0)</span></h3>
+                    <div class="table-container">
+                        <table id="graphics-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Class</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="chronological-view" style="display: none;">
                 <div class="table-container">
-                    <table id="points-table">
+                    <table id="chrono-table">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>X</th>
-                                <th>Y</th>
                                 <th>Class</th>
                                 <th>Guide</th>
                                 <th>Actions</th>
@@ -75,102 +127,52 @@
                     </table>
                 </div>
             </div>
-            <div class="collapsible-section">
-                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> <button class="toggle-vis-btn"><span class="material-icons">visibility</span></button> Structures <span id="structures-count">(0)</span></h3>
-                <div class="table-container">
-                    <table id="structures-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Class</th>
-                                <th>Guide</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="collapsible-section">
-                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> <button class="toggle-vis-btn"><span class="material-icons">visibility</span></button> Graphics <span id="graphics-count">(0)</span></h3>
-                <div class="table-container">
-                    <table id="graphics-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Class</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
 
-        <div id="chronological-view" style="display: none;">
-            <div class="table-container">
-                <table id="chrono-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Class</th>
-                            <th>Guide</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div id="groups-view" style="display: none;">
-            <div class="collapsible-section">
-                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Sizes <span id="sizes-count">(0)</span></h3>
-                <div class="table-container">
-                    <table id="sizes-table">
-                        <thead>
-                            <tr>
-                                <th>Size</th>
-                                <th>Count</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+            <div id="groups-view" style="display: none;">
+                <div class="collapsible-section">
+                    <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Sizes <span id="sizes-count">(0)</span></h3>
+                    <div class="table-container">
+                        <table id="sizes-table">
+                            <thead>
+                                <tr>
+                                    <th>Size</th>
+                                    <th>Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <div class="collapsible-section">
-                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Chains <span id="chains-count">(0)</span></h3>
-                <div class="table-container">
-                    <table id="chains-table">
-                        <thead>
-                            <tr>
-                                <th>Chain</th>
-                                <th>Count</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                <div class="collapsible-section">
+                    <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Chains <span id="chains-count">(0)</span></h3>
+                    <div class="table-container">
+                        <table id="chains-table">
+                            <thead>
+                                <tr>
+                                    <th>Chain</th>
+                                    <th>Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <div class="collapsible-section">
-                <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Points <span id="points-group-count">(0)</span></h3>
-                <div class="table-container">
-                    <table id="points-group-table">
-                        <thead>
-                            <tr>
-                                <th>Point</th>
-                                <th>Count</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                <div class="collapsible-section">
+                    <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Points <span id="points-group-count">(0)</span></h3>
+                    <div class="table-container">
+                        <table id="points-group-table">
+                            <thead>
+                                <tr>
+                                    <th>Point</th>
+                                    <th>Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

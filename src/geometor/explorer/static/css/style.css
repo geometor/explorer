@@ -67,9 +67,6 @@ aside {
     grid-column: 3;
     display: flex;
     flex-direction: column;
-    gap: 1em;
-    padding: 1em;
-    overflow-y: auto;
     border-left: 1px solid var(--border-color);
 }
 
@@ -180,11 +177,26 @@ tbody tr.row-hover {
     font-weight: bold;
 }
 
+
 .view-switcher {
     display: flex;
     gap: 0.5em;
     margin-bottom: 0.5em;
+    position: sticky;
+    top: 0;
+    background-color: var(--background-color);
+    padding: 1em 1em 0.5em 1em;
+    z-index: 1;
 }
+
+#view-container {
+    overflow-y: auto;
+    padding: 0 1em 1em 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
 .view-switcher button {
     flex-grow: 1;
     background-color: transparent;
