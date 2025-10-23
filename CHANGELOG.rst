@@ -1,6 +1,14 @@
 changelog
 =========
 
+0.2.8
+-----
+*2025-10-23*
+
+**fixed**
+
+.. + Fixed an issue where segment constructions were not being properly loaded and displayed.
+
 0.2.7
 -----
 *2025-10-23*
