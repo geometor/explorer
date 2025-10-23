@@ -68,6 +68,7 @@ aside {
     display: flex;
     flex-direction: column;
     border-left: 1px solid var(--border-color);
+    overflow: hidden;
 }
 
 table {
