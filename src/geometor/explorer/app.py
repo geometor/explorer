@@ -239,11 +239,9 @@ def get_golden_sections():
     """Helper function to retrieve golden sections from the model."""
     golden_sections = []
     for key, val in model.items():
-        if isinstance(key, sp.FiniteSet) and len(key.args) == 3 and 'golden' in val.classes:
-            points = list(key.args)
-            section = Section(points)
-            section.ID = val.ID
-            golden_sections.append(section)
+        if isinstance(key, Section) and 'golden' in val.classes:
+            key.ID = val.ID
+            golden_sections.append(key)
     return golden_sections
 
 @app.route('/api/groups/by_size', methods=['GET'])
