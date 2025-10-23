@@ -1,6 +1,15 @@
 changelog
 =========
 
+0.2.4
+-----
+*2025-10-22*
+
+**changed**
+
+.. + Made dark theme the default style.
+.. + Theme toggle now only changes the theme for the svg.
+
 0.2.3
 -----
 *2025-10-22*

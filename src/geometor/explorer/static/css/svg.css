@@ -2,6 +2,8 @@
     width: 100%;
     height: 100%;
     cursor: default;
+    background-color: var(--accent-color);
+    transition: background-color 0.3s ease;
 }
 
 #points circle {
@@ -13,12 +15,12 @@
 
 #points circle.given.selected {
   stroke: var(--select-color);
-  fill: black;
+  fill: var(--background-color);
 }
 
 #points circle.selected {
   stroke: var(--select-color);
-  fill: black;
+  fill: var(--background-color);
 }
 
 #points circle.given {
@@ -113,5 +115,98 @@
 }
 
 #points circle.guide {
+    fill: #f0f;
+}
+
+.light-theme {
+    --background-color: #fff;
+    --text-color: #000;
+    --accent-color: #f0f0f0;
+    --select-color: #0ff;
+    background-color: var(--background-color);
+}
+
+.light-theme #points circle {
+  fill: var(--text-color);
+  stroke: var(--accent-color);
+}
+
+.light-theme #points circle.given.selected {
+  stroke: var(--select-color);
+  fill: var(--background-color);
+}
+
+.light-theme #points circle.selected {
+  stroke: var(--select-color);
+  fill: var(--background-color);
+}
+
+.light-theme #points circle.given {
+    fill: #090;
+}
+.light-theme #points circle:hover,
+.light-theme #points circle.hover {
+    fill: var(--select-color);
+}
+
+.light-theme #elements line {
+  stroke: #666;
+}
+
+.light-theme #elements circle {
+  stroke: #f0c;
+}
+
+.light-theme #elements line:hover, .light-theme #elements line.hover,
+.light-theme #elements circle:hover, .light-theme #elements circle.hover {
+  stroke: var(--select-color);
+}
+
+.light-theme #elements line.golden {
+  stroke: #cc6;
+}
+
+.light-theme #elements circle.golden {
+  stroke: #cc6;
+}
+
+.light-theme #graphics polyline {
+  stroke: #36c;
+  fill: none;
+}
+
+.light-theme #graphics polygon {
+  stroke: #36c;
+  fill: #36c3;
+}
+
+.light-theme #graphics polyline.section {
+  stroke: rgba(51, 102, 204, 0.1);
+}
+
+.light-theme #graphics polyline.section.golden {
+    stroke: rgba(204, 153, 0, 0.1);
+}
+
+.light-theme #graphics polygon:hover,
+.light-theme #graphics polyline:hover,
+.light-theme #graphics polyline.section:hover {
+  stroke: #36c;
+}
+
+.light-theme #graphics polyline.section.golden.hover,
+.light-theme #graphics polyline.section.golden:hover {
+  stroke: #cc6;
+}
+
+.light-theme #highlights .highlight-segment {
+  stroke: var(--select-color);
+}
+
+.light-theme .guide {
+    stroke: #f0f;
+}
+
+.light-theme #points circle.guide {
     fill: #f0f;
 }

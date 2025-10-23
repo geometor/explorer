@@ -800,20 +800,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
     const themeToggle = document.getElementById('theme-toggle');
-    const darkModeStylesheet = document.getElementById('dark-mode-stylesheet');
 
     themeToggle.addEventListener('click', () => {
-        darkModeStylesheet.disabled = !darkModeStylesheet.disabled;
-        localStorage.setItem('theme', darkModeStylesheet.disabled ? 'light' : 'dark');
+        GEOMETOR.svg.classList.toggle('light-theme');
+        localStorage.setItem('svg-theme', GEOMETOR.svg.classList.contains('light-theme') ? 'light' : 'dark');
     });
 
     // Apply saved theme on load
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        darkModeStylesheet.disabled = (savedTheme === 'light');
-    } else {
-        // Default to light mode if no theme is saved
-        darkModeStylesheet.disabled = true;
+    const savedSvgTheme = localStorage.getItem('svg-theme');
+    if (savedSvgTheme === 'light') {
+        GEOMETOR.svg.classList.add('light-theme');
     }
 
     // View Switcher
