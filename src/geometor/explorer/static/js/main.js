@@ -1,4 +1,17 @@
+import { modal } from './modal.js';
+import { renderElement, renderPoint, scaleCircles, initSvgEventListeners } from './svg.js';
+import { initGroupsView, initGroupsEventListeners } from './groups.js';
+import { initResizer } from './resizer.js';
+
+window.GEOMETOR = window.GEOMETOR || {};
+
 document.addEventListener('DOMContentLoaded', () => {
+    modal.init();
+    initResizer();
+    initGroupsEventListeners();
+
+    GEOMETOR.tables = {};
+
     function showHourglassCursor() {
         document.body.style.cursor = 'wait';
         GEOMETOR.svg.style.cursor = 'wait';
@@ -8,10 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.cursor = 'default';
         GEOMETOR.svg.style.cursor = 'default';
     }
-
-    window.GEOMETOR = {
-        tables: {}
-    };
 
     GEOMETOR.svg = document.getElementById('drawing');
     GEOMETOR.graphicsContainer = document.getElementById('graphics');
@@ -51,9 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-
-
-
     GEOMETOR.selectedPoints = [];
     GEOMETOR.modelData = {};
     GEOMETOR.isPositionedByTable = false;
@@ -65,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .sort();
 
         GEOMETOR.modelData = data;
-        // Clear all containers
         GEOMETOR.graphicsContainer.innerHTML = '';
         GEOMETOR.highlightsContainer.innerHTML = '';
         GEOMETOR.elementsContainer.innerHTML = '';
@@ -77,7 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const points = {};
 
-        // First pass: Process all points to populate the lookup object
         if (data.elements) {
             data.elements.forEach(el => {
                 if (el.type === 'point') {
@@ -86,32 +90,27 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Second pass: Render everything in order
         if (data.elements) {
             data.elements.forEach(el => {
-                // Render SVG and populate category tables
                 if (el.type === 'point') {
                     renderPoint(el);
                     addPointToTable(el);
                 } else {
-                    renderElement(el, points); // Now `points` is guaranteed to be complete
+                    renderElement(el, points);
                     if (['line', 'circle'].includes(el.type)) {
                         addStructureToTable(el);
                     } else {
                         addGraphicToTable(el);
                     }
                 }
-                // Populate chronological table AFTER the element is rendered
                 addChronologicalRow(el);
             });
         }
         
-        // Update counts
         document.getElementById('points-count').textContent = `(${GEOMETOR.tables.points.rows.length})`;
         document.getElementById('structures-count').textContent = `(${GEOMETOR.tables.structures.rows.length})`;
         document.getElementById('graphics-count').textContent = `(${GEOMETOR.tables.graphics.rows.length})`;
 
-        // Re-apply selection visuals
         GEOMETOR.selectedPoints.forEach(ID => {
             const svgPoint = document.getElementById(ID);
             const tableRow = GEOMETOR.tables.points.querySelector(`tr[data-id="${ID}"]`);
@@ -149,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
         katex.render(el.latex_y, yCell);
         yCell.title = el.y.toFixed(4);
         classCell.innerHTML = el.classes.join(', ');
-        guideCell.innerHTML = `<button class="guide-btn" data-id="${el.ID}">${el.guide ? 'Yes' : 'No'}</button>`;
+        guideCell.innerHTML = el.guide ? '✓' : '';
 
         actionCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}"><span class="material-icons">edit</span></button><button class="delete-btn" data-id="${el.ID}"><span class="material-icons">delete</span></button>`;
 
@@ -170,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         IDCell.innerHTML = el.ID;
         classCell.innerHTML = el.classes.join(', ');
-        guideCell.innerHTML = `<button class="guide-btn" data-id="${el.ID}">${el.guide ? 'Yes' : 'No'}</button>`;
+        guideCell.innerHTML = el.guide ? '✓' : '';
         deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}"><span class="material-icons">edit</span></button><button class="delete-btn" data-id="${el.ID}"><span class="material-icons">delete</span></button>`;
 
         const svgEl = document.getElementById(el.ID);
@@ -213,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         IDCell.innerHTML = el.ID;
         classCell.innerHTML = el.classes.join(', ');
-        guideCell.innerHTML = `<button class="guide-btn" data-id="${el.ID}">${el.guide ? 'Yes' : 'No'}</button>`;
+        guideCell.innerHTML = el.guide ? '✓' : '';
         if (el.type !== 'point' && !isGiven) {
             deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}"><span class="material-icons">edit</span></button><button class="delete-btn" data-id="${el.ID}"><span class="material-icons">delete</span></button>`;
         }
@@ -254,13 +253,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function toggleSelection(ID) {
         const index = GEOMETOR.selectedPoints.indexOf(ID);
         if (index > -1) {
-            // Deselect
             GEOMETOR.selectedPoints.splice(index, 1);
         } else {
-            // Select
             GEOMETOR.selectedPoints.push(ID);
         }
-        // Re-render to apply/remove selection styles consistently
         renderModel(GEOMETOR.modelData);
         updateConstructionButtons();
     }
@@ -332,7 +328,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function constructPoly(endpoint, points) {
-        // console.log("constructPoly");
         showHourglassCursor();
         updateStatus('Constructing polygon...');
         fetch(endpoint, {
@@ -342,7 +337,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(response => response.json())
         .then(data => {
-            // console.log(data);
             renderModel(data);
             clearSelection();
             isDirty = true;
@@ -373,29 +367,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const pointBtn = document.getElementById('point-btn');
     pointBtn.addEventListener('click', () => {
-        const x = prompt('Enter x coordinate:');
-        const y = prompt('Enter y coordinate:');
+        const content = `
+            <form>
+                <label for="x">X Coordinate:</label>
+                <input type="text" id="x" name="x" value="0" required>
+                <label for="y">Y Coordinate:</label>
+                <input type="text" id="y" name="y" value="0" required>
+                <button type="submit">Add Point</button>
+            </form>
+        `;
 
-        if (x !== null && y !== null) {
+        modal.show('Add Point', content, (data) => {
             showHourglassCursor();
             updateStatus('Constructing point...');
             fetch('/api/construct/point', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ x: parseFloat(x), y: parseFloat(y) }),
+                body: JSON.stringify({ x: data.x, y: data.y }),
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw new Error(err.message) });
+                }
+                return response.json();
+            })
             .then(data => {
                 renderModel(data);
                 isDirty = true;
+                updateStatus('Ready');
+            })
+            .catch(error => {
+                updateStatus(error.message, true);
             })
             .finally(() => {
                 hideHourglassCursor();
-                updateStatus('Ready');
             });
-        }
+        });
     });
-
 
     GEOMETOR.updateHoverCard = function(element) {
         if (!element) {
@@ -500,7 +508,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         GEOMETOR.hoverCard.innerHTML = content;
 
-        // Render LaTeX in the newly created table cells
         if (element.type === 'section') {
             const latexCells = GEOMETOR.hoverCard.querySelectorAll('.latex');
             latexCells.forEach((cell, i) => {
@@ -562,7 +569,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (chronoRow) chronoRow.classList[action]('row-hover');
         if (highlightElement) highlightElement.style.display = hoverState ? 'inline' : 'none';
 
-        // Handle parents
         let parentIDs = [];
         if (elementData.type === 'line') {
             parentIDs = [elementData.pt1, elementData.pt2];
@@ -577,21 +583,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function highlightElements(elementIds) {
-        elementIds.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) {
-                el.classList.add('group-hover');
-            }
-        });
-    }
-
-    function clearHighlights() {
-        document.querySelectorAll('.group-hover').forEach(el => {
-            el.classList.remove('group-hover');
-        });
-    }
-
     function transformPoint(svg, x, y) {
         const pt = svg.createSVGPoint();
         pt.x = x;
@@ -603,7 +594,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return null;
     }
 
-    // Table hovers
     Object.values(GEOMETOR.tables).forEach(tableBody => {
         tableBody.addEventListener('mouseover', (event) => {
             const row = event.target.closest('tr');
@@ -660,7 +650,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         GEOMETOR.hoverCard.style.left = `${screenPoint.x + 15}px`;
                         GEOMETOR.hoverCard.style.top = `${screenPoint.y + 15}px`;
                     } else {
-                        // Fallback for elements without points or if transform fails
                         const elemRect = svgElement.getBoundingClientRect();
                         GEOMETOR.hoverCard.style.left = `${elemRect.right + 10}px`;
                         GEOMETOR.hoverCard.style.top = `${elemRect.top}px`;
@@ -718,47 +707,44 @@ document.addEventListener('DOMContentLoaded', () => {
                         hideHourglassCursor();
                     });
             } else if (button.classList.contains('edit-btn')) {
-                const newClass = prompt(`Enter new class for element ${ID}:`);
-                if (newClass) {
-                    showHourglassCursor();
-                    updateStatus('Editing element...');
-                    fetch('/api/model/edit', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ ID: ID, class: newClass }),
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        renderModel(data);
-                        isDirty = true;
-                    })
-                    .finally(() => {
-                        hideHourglassCursor();
-                        updateStatus('Ready');
+                const element = GEOMETOR.modelData.elements.find(el => el.ID === ID);
+                if (element) {
+                    const content = `
+                        <form>
+                            <label for="classes">Classes:</label>
+                            <input type="text" id="classes" name="classes" value="${element.classes.join(', ')}">
+                            <label for="guide">Guide:</label>
+                            <input type="checkbox" id="guide" name="guide" ${element.guide ? 'checked' : ''}>
+                            <button type="submit">Save</button>
+                        </form>
+                    `;
+                    modal.show(`Edit Element ${ID}`, content, (data) => {
+                        showHourglassCursor();
+                        updateStatus('Editing element...');
+                        fetch('/api/model/edit', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ 
+                                ID: ID, 
+                                classes: data.classes,
+                                guide: data.guide === 'on'
+                            }),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            renderModel(data);
+                            isDirty = true;
+                        })
+                        .finally(() => {
+                            hideHourglassCursor();
+                            updateStatus('Ready');
+                        });
                     });
                 }
-            } else if (button.classList.contains('guide-btn')) {
-                showHourglassCursor();
-                updateStatus('Toggling guide status...');
-                fetch('/api/model/toggle-guide', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ ID: ID }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    renderModel(data);
-                    isDirty = true;
-                })
-                .finally(() => {
-                    hideHourglassCursor();
-                    updateStatus('Ready');
-                });
             }
         });
     });
 
-    // Chronological Table selection
     GEOMETOR.tables.chrono.addEventListener('click', (event) => {
         const row = event.target.closest('tr');
         if (row && row.dataset.id) {
@@ -778,7 +764,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     document.addEventListener('mouseout', (event) => {
         const target = event.target;
-        if (target.namespaceURI === SVG_NS && target.id) {
+        if (target.namespaceURI === "http://www.w3.org/2000/svg" && target.id) {
             GEOMETOR.hoverCard.style.display = 'none';
         }
     });
@@ -786,7 +772,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const resizeObserver = new ResizeObserver(scaleCircles);
     resizeObserver.observe(GEOMETOR.svg);
 
-    // Initial fetch
     showHourglassCursor();
     updateStatus('Loading model...');
     fetch('/api/model')
@@ -806,13 +791,11 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('svg-theme', GEOMETOR.svg.classList.contains('light-theme') ? 'light' : 'dark');
     });
 
-    // Apply saved theme on load
     const savedSvgTheme = localStorage.getItem('svg-theme');
     if (savedSvgTheme === 'light') {
         GEOMETOR.svg.classList.add('light-theme');
     }
 
-    // View Switcher
     const categoryViewBtn = document.getElementById('category-view-btn');
     const chronoViewBtn = document.getElementById('chrono-view-btn');
     const groupsViewBtn = document.getElementById('groups-view-btn');
@@ -847,7 +830,6 @@ document.addEventListener('DOMContentLoaded', () => {
         chronoViewBtn.classList.remove('active');
     });
 
-    // Collapsible sections
     const collapseBtns = document.querySelectorAll('.collapse-btn');
     collapseBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -862,7 +844,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Visibility toggle
     const toggleVisBtns = document.querySelectorAll('.toggle-vis-btn');
     toggleVisBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -879,9 +860,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-
-
-    // File management
     const newBtn = document.getElementById('new-btn');
     const openBtn = document.getElementById('open-btn');
     const saveBtn = document.getElementById('save-btn');
@@ -944,7 +922,6 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             reader.readAsText(file);
         }
-        // Reset file input so the same file can be loaded again
         event.target.value = null;
     });
 

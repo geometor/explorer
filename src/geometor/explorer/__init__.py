@@ -10,5 +10,5 @@ GEOMETOR
 __author__ = "GEOMETOR"
 __maintainer__ = "GEOMETOR"
 __email__ = "github@geometor.com"
-__version__ = "0.2.4"
+__version__ = "0.2.5"
 __licence__ = "MIT"

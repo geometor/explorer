@@ -31,7 +31,7 @@ def to_browser_dict(model):
 
         element_dict = {
             'ID': data.ID,
-            'classes': list(data.classes.keys()),
+            'classes': list(data.classes),
             'parents': [model[p].ID for p in data.parents.keys() if p in model and model[p].ID],
             'guide': data.guide,
         }

@@ -109,17 +109,21 @@ def new_model_endpoint():
 
 @app.route('/api/construct/line', methods=['POST'])
 def construct_line():
-    data = request.get_json()
-    pt1_ID = data.get('pt1')
-    pt2_ID = data.get('pt2')
+    try:
+        data = request.get_json()
+        pt1_ID = data.get('pt1')
+        pt2_ID = data.get('pt2')
 
-    pt1 = model.get_element_by_ID(pt1_ID)
-    pt2 = model.get_element_by_ID(pt2_ID)
+        pt1 = model.get_element_by_ID(pt1_ID)
+        pt2 = model.get_element_by_ID(pt2_ID)
 
-    if pt1 and pt2:
-        model.construct_line(pt1, pt2)
+        if pt1 and pt2:
+            model.construct_line(pt1, pt2)
 
-    return jsonify(to_browser_dict(model))
+        return jsonify(to_browser_dict(model))
+    except Exception as e:
+        app.logger.exception(f"Error in construct_line: {e}")
+        return jsonify({"success": False, "message": "An unexpected error occurred."}), 500
 
 @app.route('/api/construct/circle', methods=['POST'])
 def construct_circle():
@@ -139,11 +143,16 @@ def construct_circle():
 @app.route('/api/construct/point', methods=['POST'])
 def construct_point():
     data = request.get_json()
-    x = data.get('x')
-    y = data.get('y')
+    x_str = data.get('x')
+    y_str = data.get('y')
 
-    if x is not None and y is not None:
-        model.set_point(x, y, classes=["given"])
+    if x_str is not None and y_str is not None:
+        try:
+            # Let the model handle the conversion from string
+            model.set_point(x_str, y_str, classes=["given"])
+        except Exception as e:
+            app.logger.error(f"Error creating point with x='{x_str}', y='{y_str}': {e}")
+            return jsonify({"success": False, "message": f"Invalid expression: {e}"}), 400
 
     return jsonify(to_browser_dict(model))
 
@@ -177,37 +186,27 @@ def get_dependents_endpoint():
 
 @app.route('/api/model/edit', methods=['POST'])
 def edit_element():
-    """Updates the class of an element in the model."""
-    data = request.get_json()
-    ID = data.get('ID')
-    new_class = data.get('class')
-    
-    if not ID or not new_class:
-        return jsonify({"error": "Element ID and class are required."}), 400
+    """Updates the class and guide status of an element in the model."""
+    try:
+        data = request.get_json()
+        ID = data.get('ID')
+        classes = data.get('classes', '')
+        guide = data.get('guide', False)
+        
+        if not ID:
+            return jsonify({"success": False, "message": "Element ID is required."}), 400
 
-    element = model.get_element_by_ID(ID)
-    
-    if element:
-        model[element].classes = {new_class: ""}
-    
-    return jsonify(to_browser_dict(model))
-
-
-@app.route('/api/model/toggle-guide', methods=['POST'])
-def toggle_guide():
-    """Toggles the guide status of an element in the model."""
-    data = request.get_json()
-    ID = data.get('ID')
-    
-    if not ID:
-        return jsonify({"error": "Element ID is required."}), 400
-
-    element = model.get_element_by_ID(ID)
-    
-    if element:
-        model[element].guide = not model[element].guide
-    
-    return jsonify(to_browser_dict(model))
+        element = model.get_element_by_ID(ID)
+        
+        if element:
+            # Process classes string into a set for the model
+            model[element].classes = {c.strip() for c in classes.split(',') if c.strip()}
+            model[element].guide = guide
+        
+        return jsonify(to_browser_dict(model))
+    except Exception as e:
+        app.logger.exception(f"Error in edit_element: {e}")
+        return jsonify({"success": False, "message": "An unexpected error occurred."}), 500
 
 
 @app.route('/api/set/segment', methods=['POST'])

@@ -1,6 +1,16 @@
 changelog
 =========
 
+0.2.5
+-----
+*2025-10-22*
+
+**changed**
+
+.. + Refactored JavaScript codebase to a modular architecture to resolve dependency issues.
+.. + Implemented a dark theme for all modal dialogs.
+.. + Added robust error handling for algebraic expressions in point creation.
+
 0.2.4
 -----
 *2025-10-22*

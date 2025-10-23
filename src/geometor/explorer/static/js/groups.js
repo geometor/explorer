@@ -1,4 +1,4 @@
-function initGroupsView() {
+export function initGroupsView() {
     fetchGroupsBySize();
     fetchGroupsByPoint();
     fetchGroupsByChain();
@@ -8,7 +8,6 @@ async function fetchGroupsBySize() {
     try {
         const response = await fetch('/api/groups/by_size');
         const data = await response.json();
-        console.log('Groups by size:', data);
         populateSizesTable(data);
     } catch (error) {
         console.error('Error fetching groups by size:', error);
@@ -19,7 +18,6 @@ async function fetchGroupsByPoint() {
     try {
         const response = await fetch('/api/groups/by_point');
         const data = await response.json();
-        console.log('Groups by point:', data);
         populatePointsGroupTable(data);
     } catch (error) {
         console.error('Error fetching groups by point:', error);
@@ -30,7 +28,6 @@ async function fetchGroupsByChain() {
     try {
         const response = await fetch('/api/groups/by_chain');
         const data = await response.json();
-        console.log('Groups by chain:', data);
         populateChainsTable(data);
     } catch (error) {
         console.error('Error fetching groups by chain:', error);
@@ -87,7 +84,7 @@ function populateChainsTable(data) {
     document.getElementById('chains-count').textContent = `(${chains.length})`;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+export function initGroupsEventListeners() {
     const groupTables = ['sizes-table', 'points-group-table', 'chains-table'];
 
     groupTables.forEach(tableId => {
@@ -110,4 +107,5 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
-});
+}
+

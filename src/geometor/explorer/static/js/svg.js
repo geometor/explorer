@@ -1,11 +1,5 @@
 const SVG_NS = "http://www.w3.org/2000/svg";
 
-
-/**
- * Renders a highlight segment for a line or circle.
- * @param {object} el The element to highlight.
- * @param {object} points The points object from the model.
- */
 function renderHighlight(el, points) {
     let highlightEl = document.createElementNS(SVG_NS, 'polyline');
     let pt1, pt2;
@@ -36,12 +30,7 @@ function renderHighlight(el, points) {
     }
 }
 
-/**
- * Renders a geometric element to the SVG canvas.
- * @param {object} el The element to render.
- * @param {object} points The points object from the model.
- */
-function renderElement(el, points) {
+export function renderElement(el, points) {
     let svgEl;
     let pointsStr;
     switch (el.type) {
@@ -49,7 +38,6 @@ function renderElement(el, points) {
             svgEl = document.createElementNS(SVG_NS, 'line');
             const pt1 = points[el.pt1];
             const pt2 = points[el.pt2];
-            // Approximate line drawing for now, needs proper calculation
             svgEl.setAttribute('x1', pt1.x - 1000 * (pt2.x - pt1.x));
             svgEl.setAttribute('y1', pt1.y - 1000 * (pt2.y - pt1.y));
             svgEl.setAttribute('x2', pt1.x + 1000 * (pt2.x - pt1.x));
@@ -100,16 +88,12 @@ function renderElement(el, points) {
     }
 }
 
-/**
- * Renders a point to the SVG canvas.
- * @param {object} el The point to render.
- */
-function renderPoint(el) {
+export function renderPoint(el) {
     const circle = document.createElementNS(SVG_NS, 'circle');
     circle.id = el.ID;
     circle.setAttribute('cx', el.x);
     circle.setAttribute('cy', el.y);
-    circle.setAttribute('r', 0.02); // Initial radius, will be scaled
+    circle.setAttribute('r', 0.02);
     el.classes.forEach(c => circle.classList.add(c));
     if (el.guide) {
         circle.classList.add('guide');
@@ -118,10 +102,7 @@ function renderPoint(el) {
     renderHighlight(el);
 }
 
-/**
- * Scales the radius of the points so they are always the same size on the screen.
- */
-function scaleCircles() {
+export function scaleCircles() {
     const svgRect = GEOMETOR.svg.getBoundingClientRect();
     if (svgRect.width === 0) return;
 
@@ -137,10 +118,7 @@ function scaleCircles() {
     });
 }
 
-/**
- * Initializes the event listeners for the SVG canvas.
- */
-function initSvgEventListeners() {
+export function initSvgEventListeners() {
     GEOMETOR.svg.addEventListener('wheel', (event) => {
         event.preventDefault();
         const currentViewBox = GEOMETOR.svg.getAttribute('viewBox').split(' ').map(Number);
