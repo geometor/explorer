@@ -1,6 +1,19 @@
 changelog
 =========
 
+0.2.9
+-----
+*2025-10-23*
+
+**added**
+
+.. + Added a modal dialog for creating new models with options for different templates (blank, default, equidistant).
+.. + Added logging for file save and load operations.
+
+**fixed**
+
+.. + Fixed an issue where the initial model was loaded twice on startup.
+
 0.2.8
 -----
 *2025-10-23*

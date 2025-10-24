@@ -864,26 +864,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const saveBtn = document.getElementById('save-btn');
     const saveAsBtn = document.getElementById('save-as-btn');
     const fileInput = document.getElementById('file-input');
+    const newModelModal = document.getElementById('new-model-modal');
+    const newBlankBtn = document.getElementById('new-blank-btn');
+    const newDefaultBtn = document.getElementById('new-default-btn');
+    const newEquidistantBtn = document.getElementById('new-equidistant-btn');
+
+    function showNewModelModal() {
+        newModelModal.style.display = 'block';
+    }
+
+    function hideNewModelModal() {
+        newModelModal.style.display = 'none';
+    }
 
     newBtn.addEventListener('click', () => {
-        if (confirm('Are you sure you want to start a new construction? Any unsaved changes will be lost.')) {
-            showHourglassCursor();
-            updateStatus('Creating new model...');
-            fetch('/api/model/new', { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    renderModel(data);
-                    clearSelection();
-                    currentFilename = 'untitled.json';
-                    updateFilenameDisplay();
-                    isDirty = false;
-                })
-                .finally(() => {
-                    hideHourglassCursor();
-                    updateStatus('Ready');
-                });
+        if (isDirty) {
+            if (confirm('Are you sure you want to start a new construction? Any unsaved changes will be lost.')) {
+                showNewModelModal();
+            }
+        } else {
+            showNewModelModal();
         }
     });
+
+    function createNewModel(template) {
+        hideNewModelModal();
+        showHourglassCursor();
+        updateStatus('Creating new model...');
+        fetch('/api/model/new', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ template: template }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                renderModel(data);
+                clearSelection();
+                currentFilename = 'untitled.json';
+                updateFilenameDisplay();
+                isDirty = false;
+            })
+            .finally(() => {
+                hideHourglassCursor();
+                updateStatus('Ready');
+            });
+    }
+
+    newBlankBtn.addEventListener('click', () => createNewModel('blank'));
+    newDefaultBtn.addEventListener('click', () => createNewModel('default'));
+    newEquidistantBtn.addEventListener('click', () => createNewModel('equidistant'));
+
+    newModelModal.querySelector('.close-btn').addEventListener('click', hideNewModelModal);
 
     openBtn.addEventListener('click', () => {
         fileInput.click();

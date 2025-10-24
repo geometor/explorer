@@ -24,17 +24,23 @@ model = None
 CONSTRUCTIONS_DIR = './constructions'
 os.makedirs(CONSTRUCTIONS_DIR, exist_ok=True)
 
-def new_model():
+def new_model(template='default'):
+    """Creates a new model based on a template."""
     global model
     model = Model("new", logger=app.logger)
     register_divine_hook(model)
-    A = model.set_point(0, 0, classes=["given"])
-    B = model.set_point(1, 0, classes=["given"])
 
-if os.environ.get("WERKZEUG_RUN_MAIN") == "true" or not app.debug:
-    new_model()
+    if template == 'blank':
+        pass
+    elif template == 'equidistant':
+        model.set_point(-sp.S(1)/2, 0, classes=["given"])
+        model.set_point(sp.S(1)/2, 0, classes=["given"])
+    else:  # default
+        model.set_point(0, 0, classes=["given"])
+        model.set_point(1, 0, classes=["given"])
 
 def run():
+    new_model()
     app.run(debug=True, port=4444)
 
 @app.route('/')
@@ -57,6 +63,7 @@ def save_model_endpoint():
         
         file_path = os.path.join(CONSTRUCTIONS_DIR, filename)
         save_model(model, file_path)
+        app.logger.info(f"Model saved to {file_path}")
         return jsonify({"success": True, "message": f"Model saved to {file_path}"})
     return jsonify({"success": False, "message": "No filename provided."}), 400
 
@@ -74,6 +81,7 @@ def load_model_endpoint():
         
         try:
             model = load_model(tmp_path, logger=app.logger)
+            app.logger.info(f"Model loaded from temp file: {tmp_path}")
             register_divine_hook(model)
         finally:
             os.remove(tmp_path)
@@ -88,6 +96,7 @@ def load_model_endpoint():
         file_path = os.path.join(CONSTRUCTIONS_DIR, filename)
         if os.path.exists(file_path):
             model = load_model(file_path, logger=app.logger)
+            app.logger.info(f"Model loaded from {file_path}")
             register_divine_hook(model)
             return jsonify(to_browser_dict(model))
         else:
@@ -103,7 +112,10 @@ def list_constructions():
 
 @app.route('/api/model/new', methods=['POST'])
 def new_model_endpoint():
-    new_model()
+    """Creates a new model, optionally based on a template."""
+    data = request.get_json()
+    template = data.get('template', 'default')
+    new_model(template)
     return jsonify(to_browser_dict(model))
 
 
