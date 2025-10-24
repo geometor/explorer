@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     GEOMETOR.tables.graphics = document.querySelector('#graphics-table tbody');
     GEOMETOR.tables.chrono = document.querySelector('#chrono-table tbody');
     const statusFilename = document.getElementById('status-filename');
+    const statusSelected = document.getElementById('status-selected');
     const statusMessage = document.getElementById('status-message');
     let currentFilename = '';
     let isDirty = false;
@@ -249,6 +250,10 @@ document.addEventListener('DOMContentLoaded', () => {
         polygonBtn.disabled = numPoints < 2;
     }
 
+    function updateSelectedPointsDisplay() {
+        statusSelected.textContent = `Selected: ${GEOMETOR.selectedPoints.join(', ')}`;
+    }
+
     function toggleSelection(ID) {
         const index = GEOMETOR.selectedPoints.indexOf(ID);
         if (index > -1) {
@@ -258,12 +263,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         renderModel(GEOMETOR.modelData);
         updateConstructionButtons();
+        updateSelectedPointsDisplay();
     }
 
     function clearSelection() {
         GEOMETOR.selectedPoints = [];
         renderModel(GEOMETOR.modelData);
         updateConstructionButtons();
+        updateSelectedPointsDisplay();
     }
 
     GEOMETOR.pointsContainer.addEventListener('click', (event) => {
@@ -1003,4 +1010,39 @@ document.addEventListener('DOMContentLoaded', () => {
     initSvgEventListeners();
     loadConstructions();
     updateFilenameDisplay();
+    updateSelectedPointsDisplay();
+
+    document.addEventListener('keydown', (event) => {
+        if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
+            return;
+        }
+
+        const key = event.key;
+        let btn;
+
+        switch (key) {
+            case 'l':
+                btn = lineBtn;
+                break;
+            case 'c':
+                btn = circleBtn;
+                break;
+            case 'p':
+                btn = pointBtn;
+                break;
+            case 's':
+                btn = segmentBtn;
+                break;
+            case 'S':
+                btn = sectionBtn;
+                break;
+            case 'y':
+                btn = polygonBtn;
+                break;
+        }
+
+        if (btn && !btn.disabled) {
+            btn.click();
+        }
+    });
 });

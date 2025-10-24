@@ -21,14 +21,14 @@
             <button id="save-as-btn"><span class="material-icons">save_as</span></button>
         </div>
         <div id="elements-group">
-            <button id="point-btn">Point</button>
-            <button id="line-btn" disabled>Line</button>
-            <button id="circle-btn" disabled>Circle</button>
+            <button id="point-btn" accesskey="p" title="Construct Point (p)">Point</button>
+            <button id="line-btn" disabled accesskey="l" title="Construct Line (l)">Line</button>
+            <button id="circle-btn" disabled accesskey="c" title="Construct Circle (c)">Circle</button>
         </div>
         <div id="graphics-group">
-            <button id="segment-btn" disabled>Segment</button>
-            <button id="section-btn" disabled>Section</button>
-            <button id="polygon-btn" disabled>Polygon</button>
+            <button id="segment-btn" disabled accesskey="s" title="Set Segment (s)">Segment</button>
+            <button id="section-btn" disabled accesskey="S" title="Set Section (S)">Section</button>
+            <button id="polygon-btn" disabled accesskey="y" title="Set Polygon (y)">Polygon</button>
         </div>
         <input type="file" id="file-input" style="display: none;" />
         <button id="theme-toggle"><span class="material-icons">settings</span></button>
@@ -202,6 +202,7 @@
     <footer>
         <div id="status-bar">
             <span id="status-filename">Unsaved Model</span>
+            <span id="status-selected"></span>
             <span id="status-message">Ready</span>
         </div>
     </footer>
