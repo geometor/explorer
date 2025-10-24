@@ -1,11 +1,22 @@
 """
 Browser-specific serialization for the Model class.
 """
+import sympy as sp
+import sympy.geometry as spg
 from geometor.model.common import *
 from geometor.model.sections import Section
 from geometor.model.chains import Chain
 from geometor.model.wedges import Wedge
-from geometor.model.utils import clean_expr
+from geometor.model.utils import clean_expr, spread
+
+def _spread(l1: spg.Line, l2: spg.Line):
+    """calculate the spread of two lines"""
+    a1, a2, a3 = l1.coefficients
+    b1, b2, b3 = l2.coefficients
+    # only the first two coefficients are used
+    spread_val = ((a1 * b2 - a2 * b1) ** 2) / ((a1**2 + a2**2) * (b1**2 + b2**2))
+    return spread_val
+
 
 def _create_section_from_points(points, model):
     """Helper function to create a Section object from points."""
@@ -71,6 +82,7 @@ def to_browser_dict(model):
                 'pt2': model[el.p2].ID,
                 'equation': str(el.equation()),
                 'latex_equation': sp.latex(el.equation()),
+                'latex_coefficients': [sp.latex(clean_expr(c)) for c in el.coefficients],
                 'length': float(length_val),
                 'decimal_length': f'{length_val:.4f}',
                 'latex_length': sp.latex(segment.length),
@@ -78,6 +90,8 @@ def to_browser_dict(model):
 
         elif isinstance(el, spg.Circle):
             radius_val = el.radius.evalf()
+            h_val = el.center.x.evalf()
+            k_val = el.center.y.evalf()
             element_dict.update({
                 'type': 'circle',
                 'center': model[el.center].ID,
@@ -85,6 +99,12 @@ def to_browser_dict(model):
                 'radius': float(radius_val),
                 'decimal_radius': f'{radius_val:.4f}',
                 'latex_radius': sp.latex(el.radius),
+                'h': float(h_val),
+                'decimal_h': f'{h_val:.4f}',
+                'latex_h': sp.latex(clean_expr(el.center.x)),
+                'k': float(k_val),
+                'decimal_k': f'{k_val:.4f}',
+                'latex_k': sp.latex(clean_expr(el.center.y)),
                 'equation': str(el.equation()),
                 'latex_equation': sp.latex(el.equation()),
             })
@@ -93,6 +113,16 @@ def to_browser_dict(model):
             lengths_val = [s.length.evalf() for s in el.sides]
             angles_val = {p: a.evalf() for p, a in el.angles.items()}
             area_val = el.area.evalf()
+            
+            spreads = {}
+            vertices = el.vertices
+            for i, v in enumerate(vertices):
+                prev_v = vertices[i - 1]
+                next_v = vertices[(i + 1) % len(vertices)]
+                l1 = spg.Line(v, prev_v)
+                l2 = spg.Line(v, next_v)
+                spreads[model[v].ID] = sp.latex(clean_expr(_spread(l1, l2)))
+
             element_dict.update({
                 'type': 'polygon',
                 'points': [model[p].ID for p in el.vertices],
@@ -102,6 +132,7 @@ def to_browser_dict(model):
                 'angles': {model[p].ID: float(a) for p, a in angles_val.items()},
                 'degree_angles': {model[p].ID: f'{a * 180 / sp.pi:.3f}°' for p, a in angles_val.items()},
                 'latex_angles': {model[p].ID: sp.latex(clean_expr(a)) for p, a in el.angles.items()},
+                'spreads': spreads,
                 'area': float(area_val),
                 'decimal_area': f'{area_val:.4f}',
                 'latex_area': sp.latex(clean_expr(el.area)),

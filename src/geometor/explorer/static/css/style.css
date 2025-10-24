@@ -125,7 +125,9 @@ tbody tr.highlight {
 
 #hover-card table td:first-child,
 #hover-card table td.latex,
-#hover-card table td.latex-ratio {
+#hover-card table td.latex-ratio,
+#hover-card table td.latex-angle,
+#hover-card table td.latex-spread {
     text-align: center;
 }
 

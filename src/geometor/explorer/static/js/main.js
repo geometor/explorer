@@ -442,9 +442,15 @@ document.addEventListener('DOMContentLoaded', () => {
             let table = '<table><tbody>';
             if (element.type === 'circle') {
                 table += `<tr><td>ctr</td><td colspan="2">${element.center}</td></tr>`;
+                const h = document.createElement('div');
+                katex.render(`${element.latex_h}`, h);
+                table += `<tr><td>h</td><td class="latex">${h.innerHTML}</td><td class="decimal">${element.decimal_h}</td></tr>`;
+                const k = document.createElement('div');
+                katex.render(`${element.latex_k}`, k);
+                table += `<tr><td>k</td><td class="latex">${k.innerHTML}</td><td class="decimal">${element.decimal_k}</td></tr>`;
                 const radius = document.createElement('div');
                 katex.render(`${element.latex_radius}`, radius);
-                table += `<tr><td>rad</td><td class="latex">${radius.innerHTML}</td><td class="decimal">${element.decimal_radius}</td></tr>`;
+                table += `<tr><td>r</td><td class="latex">${radius.innerHTML}</td><td class="decimal">${element.decimal_radius}</td></tr>`;
             }
             if (element.type === 'line') {
                 const length = document.createElement('div');
@@ -454,6 +460,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const equation = document.createElement('div');
             katex.render(element.latex_equation, equation);
             table += `<tr><td>eq</td><td colspan="2">${equation.innerHTML}</td></tr>`;
+            if (element.latex_coefficients) {
+                const coefficients = document.createElement('div');
+                katex.render(element.latex_coefficients.join(', '), coefficients);
+                table += `<tr><td>coef</td><td colspan="2">${coefficients.innerHTML}</td></tr>`;
+            }
             if (element.parents && element.parents.length > 0) {
                 table += `<tr><td>pts</td><td colspan="2">${element.parents.join(', ')}</td></tr>`;
             }
@@ -487,7 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
             content += `<span>${radians.innerHTML}</span> <span class="decimal">(${element.degrees})</span>`;
         } else if (element.type === 'polygon') {
             content += '<hr>';
-            let table = '<table><thead><tr><th>Segment</th><th>Symbolic</th><th>Decimal</th></tr></thead><tbody>';
+            let table = '<table><thead><tr><th>Seg</th><th>Sym</th><th>Dec</th></tr></thead><tbody>';
             for (let i = 0; i < element.parents.length; i++) {
                 const p1 = element.parents[i];
                 const p2 = element.parents[(i + 1) % element.parents.length];
@@ -497,15 +508,16 @@ document.addEventListener('DOMContentLoaded', () => {
             table += '</tbody></table>';
             content += table;
 
-            const angles = document.createElement('div');
-            angles.innerHTML = 'Angles:';
-            for (const [p, a] of Object.entries(element.latex_angles)) {
-                const angle = document.createElement('div');
-                katex.render(`${p}: ${a}`, angle);
-                angle.innerHTML = `<span>${angle.innerHTML}</span> <span class="decimal">(${element.degree_angles[p]})</span>`;
-                angles.appendChild(angle);
+            let angleTable = '<table><thead><tr><th>Vert</th><th>Alg</th><th>Deg</th><th>Spread</th></tr></thead><tbody>';
+            for (const p of element.parents) {
+                const algValue = element.latex_angles[p] || '';
+                const degValue = element.degree_angles[p] || '';
+                const spreadValue = element.spreads[p] || '';
+                
+                angleTable += `<tr><td>${p}</td><td class="latex-angle">${algValue}</td><td class="decimal">${degValue}</td><td class="latex-spread">${spreadValue}</td></tr>`;
             }
-            content += angles.innerHTML;
+            angleTable += '</tbody></table>';
+            content += angleTable;
 
             const area = document.createElement('div');
             katex.render(`Area = ${element.latex_area}`, area);
@@ -527,6 +539,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const latexCells = GEOMETOR.hoverCard.querySelectorAll('.latex');
             latexCells.forEach((cell, i) => {
                 katex.render(element.latex_lengths[i], cell);
+            });
+            const latexAngleCells = GEOMETOR.hoverCard.querySelectorAll('.latex-angle');
+            latexAngleCells.forEach(cell => {
+                katex.render(cell.textContent, cell);
+            });
+            const latexSpreadCells = GEOMETOR.hoverCard.querySelectorAll('.latex-spread');
+            latexSpreadCells.forEach(cell => {
+                katex.render(cell.textContent, cell);
             });
         }
 

@@ -1,6 +1,20 @@
 changelog
 =========
 
+0.2.12
+------
+*2025-10-24*
+
+**added**
+
+.. + Added spread information to the polygon hover card.
+.. + Added coefficients to the line hover card.
+.. + Added center coordinates (h, k) and radius (r) to the circle hover card.
+
+**changed**
+
+.. + Improved the layout and styling of the hover card subtables for a more compact and readable display.
+
 0.2.11
 ------
 *2025-10-24*
