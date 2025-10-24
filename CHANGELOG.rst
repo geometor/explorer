@@ -1,6 +1,14 @@
 changelog
 =========
 
+0.2.15
+------
+*2025-10-24*
+
+**added**
+
+.. + Added GSAP and `Animate.js` to prepare for construction animation.
+
 0.2.14
 ------
 *2025-10-24*

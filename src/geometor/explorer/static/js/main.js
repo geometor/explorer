@@ -2,6 +2,7 @@ import { modal } from './modal.js';
 import { fitConstruction, renderElement, renderPoint, scaleCircles, initSvgEventListeners } from './svg.js';
 import { initGroupsView, initGroupsEventListeners } from './groups.js';
 import { initResizer } from './resizer.js';
+import * as Animate from './Animate.js';
 
 window.GEOMETOR = window.GEOMETOR || {};
 
