@@ -1102,6 +1102,20 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'f':
                 fitConstruction();
                 break;
+            case 'ArrowUp':
+                TL_DRAW.progress(0).pause();
+                playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+                break;
+            case 'ArrowDown':
+                TL_DRAW.progress(1).pause();
+                playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+                break;
+            case 'ArrowLeft':
+                stepBackward();
+                break;
+            case 'ArrowRight':
+                stepForward();
+                break;
         }
 
         if (btn && !btn.disabled) {
@@ -1112,6 +1126,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const playPauseBtn = document.getElementById('play-pause-btn');
     const timelineSlider = document.getElementById('timeline-slider');
     const animationToggle = document.getElementById('animation-toggle');
+    const startBtn = document.getElementById('start-btn');
+    const stepBackBtn = document.getElementById('step-back-btn');
+    const stepFwdBtn = document.getElementById('step-fwd-btn');
+    const endBtn = document.getElementById('end-btn');
     let animationEnabled = animationToggle.checked;
 
     function animateConstruction() {
@@ -1172,14 +1190,145 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    timelineSlider.addEventListener('input', () => {
-        TL_DRAW.progress(timelineSlider.value / 100).pause();
-    });
+        timelineSlider.addEventListener('input', () => {
 
-    animationToggle.addEventListener('change', () => {
-        animationEnabled = animationToggle.checked;
-        renderModel(GEOMETOR.modelData);
-    });
+            TL_DRAW.progress(timelineSlider.value / 100).pause();
+
+        });
+
+    
+
+        function stepForward() {
+
+            const elements = GEOMETOR.modelData.elements;
+
+            if (!elements || elements.length === 0) return;
+
+            const numElements = elements.length;
+
+            const currentProgress = TL_DRAW.progress();
+
+            const epsilon = 1e-9;
+
+    
+
+            if (currentProgress === 1) return;
+
+    
+
+            const val = currentProgress * numElements;
+
+            let targetStep = Math.ceil(val);
+
+    
+
+            if (Math.abs(val - Math.round(val)) < epsilon) {
+
+                targetStep = Math.round(val) + 1;
+
+            }
+
+    
+
+            if (targetStep > numElements) {
+
+                targetStep = numElements;
+
+            }
+
+    
+
+            TL_DRAW.progress(targetStep / numElements).pause();
+
+            playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+
+        }
+
+    
+
+        function stepBackward() {
+
+            const elements = GEOMETOR.modelData.elements;
+
+            if (!elements || elements.length === 0) return;
+
+            const numElements = elements.length;
+
+            const currentProgress = TL_DRAW.progress();
+
+            const epsilon = 1e-9;
+
+    
+
+            if (currentProgress === 0) return;
+
+    
+
+            const val = currentProgress * numElements;
+
+            let targetStep = Math.floor(val);
+
+    
+
+            if (Math.abs(val - Math.round(val)) < epsilon) {
+
+                targetStep = Math.round(val) - 1;
+
+            }
+
+    
+
+            if (targetStep < 0) {
+
+                targetStep = 0;
+
+            }
+
+    
+
+            TL_DRAW.progress(targetStep / numElements).pause();
+
+            playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+
+        }
+
+    
+
+        startBtn.addEventListener('click', () => {
+
+            TL_DRAW.progress(0).pause();
+
+            playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+
+        });
+
+    
+
+        stepBackBtn.addEventListener('click', stepBackward);
+
+    
+
+        stepFwdBtn.addEventListener('click', stepForward);
+
+    
+
+        endBtn.addEventListener('click', () => {
+
+            TL_DRAW.progress(1).pause();
+
+            playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+
+        });
+
+    
+
+        animationToggle.addEventListener('change', () => {
+
+            animationEnabled = animationToggle.checked;
+
+            renderModel(GEOMETOR.modelData);
+
+        });
 
 
 });

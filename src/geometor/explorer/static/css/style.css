@@ -357,3 +357,17 @@ button .material-icons {
     align-items: center;
     gap: 0.5em;
 }
+
+.animation-controls button {
+    background: none;
+    border: none;
+    padding: 0.2em;
+}
+
+.animation-controls button:hover {
+    background-color: transparent;
+}
+
+.animation-controls .material-icons {
+    font-size: 1.8em;
+}
