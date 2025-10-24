@@ -305,3 +305,25 @@ button .material-icons {
     stroke: #ff00ff !important;
     stroke-width: 0.01 !important;
 }
+
+.sortable {
+    cursor: pointer;
+    position: relative;
+}
+
+.sortable::after {
+    content: '';
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 4px solid transparent;
+}
+
+.sortable.asc::after {
+    border-bottom-color: var(--text-color);
+}
+
+.sortable.desc::after {
+    border-top-color: var(--text-color);
+}
