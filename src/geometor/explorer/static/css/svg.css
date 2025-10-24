@@ -83,12 +83,20 @@
   marker-end: url(#marker);
 }
 
+#graphics polyline.segment {
+  stroke: #90ee90; /* lightgreen */
+  marker-start: url(#marker);
+  marker-mid: url(#marker);
+  marker-end: url(#marker);
+}
+
 #graphics polyline.section.golden {
     stroke: rgba(255, 215, 0, 0.1);
 }
 
 #graphics polygon:hover,
 #graphics polyline:hover,
+#graphics polyline.segment:hover,
 #graphics polyline.section:hover {
   stroke: #36c9;
   stroke-opacity: 1;

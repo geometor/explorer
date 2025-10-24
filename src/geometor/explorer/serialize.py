@@ -7,6 +7,23 @@ from geometor.model.chains import Chain
 from geometor.model.wedges import Wedge
 from geometor.model.utils import clean_expr
 
+def _create_section_from_points(points, model):
+    """Helper function to create a Section object from points."""
+    section = Section(points)
+    lengths_val = [l.evalf() for l in section.lengths]
+    ratio_val = section.ratio.evalf()
+    return {
+        'type': 'section',
+        'points': [model[p].ID for p in section.points],
+        'lengths': [float(l) for l in lengths_val],
+        'decimal_lengths': [f'{l:.4f}' for l in lengths_val],
+        'latex_lengths': [sp.latex(l) for l in section.lengths],
+        'ratio': float(ratio_val),
+        'decimal_ratio': f'{ratio_val:.4f}',
+        'latex_ratio': sp.latex(section.ratio),
+        'is_golden': section.is_golden,
+    }
+
 def to_browser_dict(model):
     """
     Serializes the model to a dictionary format suitable for a browser-based
@@ -101,7 +118,7 @@ def to_browser_dict(model):
                 'decimal_length': f'{length_val:.4f}',
                 'latex_length': sp.latex(el.length),
             })
-            
+
         elif isinstance(el, Wedge):
             radius_val = el.circle.radius.evalf()
             radians_val = el.radians.evalf()
@@ -119,38 +136,10 @@ def to_browser_dict(model):
                 'latex_radians': sp.latex(el.radians),
             })
 
-        elif isinstance(el, Section):
-            lengths_val = [l.evalf() for l in el.lengths]
-            ratio_val = el.ratio.evalf()
-            element_dict.update({
-                'type': 'section',
-                'points': [model[p].ID for p in el.points],
-                'lengths': [float(l) for l in lengths_val],
-                'decimal_lengths': [f'{l:.4f}' for l in lengths_val],
-                'latex_lengths': [sp.latex(l) for l in el.lengths],
-                'ratio': float(ratio_val),
-                'decimal_ratio': f'{ratio_val:.4f}',
-                'latex_ratio': sp.latex(el.ratio),
-                'is_golden': el.is_golden,
-            })
-
-        elif isinstance(el, sp.FiniteSet):
-            # Reconstruct a Section object to get its properties
-            points = list(el.args)
-            section = Section(points)
-            lengths_val = [l.evalf() for l in section.lengths]
-            ratio_val = section.ratio.evalf()
-            element_dict.update({
-                'type': 'section',
-                'points': [model[p].ID for p in section.points],
-                'lengths': [float(l) for l in lengths_val],
-                'decimal_lengths': [f'{l:.4f}' for l in lengths_val],
-                'latex_lengths': [sp.latex(l) for l in section.lengths],
-                'ratio': float(ratio_val),
-                'decimal_ratio': f'{ratio_val:.4f}',
-                'latex_ratio': sp.latex(section.ratio),
-                'is_golden': section.is_golden,
-            })
+        elif isinstance(el, (Section, sp.FiniteSet)):
+            points = list(el.args) if isinstance(el, sp.FiniteSet) else el.points
+            section_dict = _create_section_from_points(points, model)
+            element_dict.update(section_dict)
 
         elif isinstance(el, Chain):
             element_dict.update({

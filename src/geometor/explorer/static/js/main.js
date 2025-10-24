@@ -553,6 +553,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     GEOMETOR.setElementHover = function(ID, hoverState) {
+        if (!GEOMETOR.modelData.elements) {
+            return;
+        }
         const elementData = GEOMETOR.modelData.elements.find(el => el.ID === ID);
         if (!elementData) return;
 

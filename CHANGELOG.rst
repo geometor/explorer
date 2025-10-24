@@ -1,6 +1,20 @@
 changelog
 =========
 
+0.2.11
+------
+*2025-10-24*
+
+**fixed**
+
+.. + Fixed a race condition in the UI that could cause an error when hovering over elements before the model data was fully loaded.
+.. + Fixed a bug in the serialization of segments that caused an error when creating new segments.
+
+**changed**
+
+.. + Refactored the serialization logic to be more efficient and maintainable.
+.. + Segments are now rendered with markers and a light green stroke to distinguish them from other elements.
+
 0.2.10
 ------
 *2025-10-23*

@@ -180,8 +180,10 @@ export function initSvgEventListeners() {
             }
             GEOMETOR.isPositionedByTable = false;
             GEOMETOR.setElementHover(target.id, true);
-            const elementData = GEOMETOR.modelData.elements.find(el => el.ID === target.id);
-            GEOMETOR.updateHoverCard(elementData);
+            if (GEOMETOR.modelData.elements) {
+                const elementData = GEOMETOR.modelData.elements.find(el => el.ID === target.id);
+                GEOMETOR.updateHoverCard(elementData);
+            }
         }
     });
 
