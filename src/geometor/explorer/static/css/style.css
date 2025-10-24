@@ -23,6 +23,20 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+#main-container {
+    grid-column: 1;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    overflow: hidden;
+}
+
+#timeline-container {
+    display: flex;
+    align-items: center;
+    padding: 0.5em 1em;
+    border-top: 1px solid var(--border-color);
+}
+
 #resizer {
     grid-column: 2;
     cursor: col-resize;
@@ -326,4 +340,20 @@ button .material-icons {
 
 .sortable.desc::after {
     border-top-color: var(--text-color);
+}
+
+
+
+#play-pause-btn {
+    margin-right: 1em;
+}
+
+#timeline-slider {
+    width: 100%;
+}
+
+.animation-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
 }

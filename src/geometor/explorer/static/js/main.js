@@ -2,7 +2,7 @@ import { modal } from './modal.js';
 import { fitConstruction, renderElement, renderPoint, scaleCircles, initSvgEventListeners } from './svg.js';
 import { initGroupsView, initGroupsEventListeners } from './groups.js';
 import { initResizer } from './resizer.js';
-import * as Animate from './Animate.js';
+import { TL_DRAW, setPoint, setLine, setCircle } from './Animate.js';
 
 window.GEOMETOR = window.GEOMETOR || {};
 
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     GEOMETOR.modelData = {};
     GEOMETOR.isPositionedByTable = false;
 
-    function renderModel(data) {
+    function renderModel(data, skipAnimation = false) {
         const oldGoldenSectionIds = (GEOMETOR.modelData.elements || [])
             .filter(el => el.type === 'section' && el.classes.includes('golden'))
             .map(el => el.ID)
@@ -106,6 +106,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
                 addChronologicalRow(el);
+                if (animationEnabled) {
+                    const svgEl = document.getElementById(el.ID);
+                    if (svgEl) {
+                        gsap.set(svgEl, { autoAlpha: 0 });
+                    }
+                }
             });
         }
         
@@ -130,6 +136,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (JSON.stringify(oldGoldenSectionIds) !== JSON.stringify(newGoldenSectionIds)) {
             initGroupsView();
+        }
+        if (animationEnabled && !skipAnimation) {
+            animateConstruction();
+        } else {
+            gsap.set('#drawing g > *', { autoAlpha: 1 });
         }
     }
 
@@ -262,14 +273,14 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             GEOMETOR.selectedPoints.push(ID);
         }
-        renderModel(GEOMETOR.modelData);
+        renderModel(GEOMETOR.modelData, true);
         updateConstructionButtons();
         updateSelectedPointsDisplay();
     }
 
     function clearSelection() {
         GEOMETOR.selectedPoints = [];
-        renderModel(GEOMETOR.modelData);
+        renderModel(GEOMETOR.modelData, true);
         updateConstructionButtons();
         updateSelectedPointsDisplay();
     }
@@ -1072,4 +1083,78 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.click();
         }
     });
+
+    const playPauseBtn = document.getElementById('play-pause-btn');
+    const timelineSlider = document.getElementById('timeline-slider');
+    const animationToggle = document.getElementById('animation-toggle');
+    let animationEnabled = animationToggle.checked;
+
+    function animateConstruction() {
+        const elements = GEOMETOR.modelData.elements;
+        if (!elements || elements.length === 0) return;
+
+        TL_DRAW.clear();
+
+        let scrub = { step: 0 };
+
+        TL_DRAW.to(scrub, {
+            step: elements.length,
+            duration: elements.length * 0.5,
+            ease: `steps(${elements.length})`,
+            onUpdate: () => {
+                const currentStep = Math.floor(scrub.step);
+
+                elements.forEach((el, index) => {
+                    const domElement = document.getElementById(el.ID);
+                    if (domElement) {
+                        const isVisible = index < currentStep;
+                        gsap.set(domElement, { autoAlpha: isVisible ? 1 : 0 });
+
+                        const isHighlighted = index === currentStep - 1;
+                        GEOMETOR.setElementHover(el.ID, isHighlighted);
+                    }
+                });
+            },
+            onComplete: () => {
+                elements.forEach(el => {
+                    const domElement = document.getElementById(el.ID);
+                    if (domElement) gsap.set(domElement, { autoAlpha: 1 });
+                    GEOMETOR.setElementHover(el.ID, false);
+                });
+            },
+            onReverseComplete: () => {
+                elements.forEach(el => {
+                    const domElement = document.getElementById(el.ID);
+                    if (domElement) gsap.set(domElement, { autoAlpha: 0 });
+                    GEOMETOR.setElementHover(el.ID, false);
+                });
+            }
+        });
+
+        timelineSlider.max = 100;
+        TL_DRAW.eventCallback("onUpdate", () => {
+            timelineSlider.value = TL_DRAW.progress() * 100;
+        });
+    }
+
+    playPauseBtn.addEventListener('click', () => {
+        if (TL_DRAW.paused()) {
+            TL_DRAW.play();
+            playPauseBtn.innerHTML = '<span class="material-icons">pause</span>';
+        } else {
+            TL_DRAW.pause();
+            playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+        }
+    });
+
+    timelineSlider.addEventListener('input', () => {
+        TL_DRAW.progress(timelineSlider.value / 100).pause();
+    });
+
+    animationToggle.addEventListener('change', () => {
+        animationEnabled = animationToggle.checked;
+        renderModel(GEOMETOR.modelData);
+    });
+
+
 });

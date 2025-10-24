@@ -1,6 +1,16 @@
 changelog
 =========
 
+0.3.0
+------
+*2025-10-24*
+
+**added**
+
+.. + Added an animation timeline to visualize the construction process step-by-step.
+.. + Added a play/pause button and a scrubbable slider to control the animation.
+.. + Added a checkbox to enable or disable the animation feature.
+
 0.2.15
 ------
 *2025-10-24*

@@ -2,12 +2,12 @@
  * animation timeline for the primary Drawing of the Model
  * @global
  */
-var TL_DRAW = new TimelineLite({paused: true});
+export let TL_DRAW = gsap.timeline({paused: true});
 /**
  * animation timeline for the sequential display of golden sections in the Model
  * @global
  */
-var TL_GOLDEN = new TimelineLite({paused: true});
+export let TL_GOLDEN = gsap.timeline({paused: true});
 /**
  * value for opacity when muting elements in drawing
  * @global
@@ -126,9 +126,9 @@ export function animateGoldenSegments(){
 }
 
 
-export function setPoint(id, position) {
+export function setPoint(el, position) {
   TL_DRAW.fromTo(
-    id,
+    el,
     .5, {
       autoAlpha: 0,
       scale: 10,
@@ -141,9 +141,9 @@ export function setPoint(id, position) {
   );
 }
 
-export function setLine(id) {
+export function setLine(el) {
   TL_DRAW.fromTo(
-    id,
+    el,
     .5,
     {
       autoAlpha: 1,
@@ -290,9 +290,9 @@ export function setLines(id) {
   );
 }
 
-export function setCircle(id) {
+export function setCircle(el) {
   TL_DRAW.fromTo(
-    id,
+    el,
     .5, {
       autoAlpha: 1,
       scale: 0,
@@ -510,25 +510,25 @@ export function animateLogo() {
 // old function
 export function hideAllElements() {
   // hide all elements
-  TweenLite.set('.Point', {
+  gsap.set('.Point', {
     autoAlpha: 0,
   });
-  TweenLite.set('.Line', {
+  gsap.set('.Line', {
     autoAlpha: 0,
   });
-  TweenLite.set('.Circle', {
+  gsap.set('.Circle', {
     autoAlpha: 0,
   });
-  TweenLite.set('.Sector', {
+  gsap.set('.Sector', {
     autoAlpha: 0,
   });
-  TweenLite.set('.Segment', {
+  gsap.set('.Segment', {
     autoAlpha: 0,
   });
-  TweenLite.set('.y', {
+  gsap.set('.y', {
     autoAlpha: 0,
   });
-  TweenLite.set('.logo', {
+  gsap.set('.logo', {
     autoAlpha: 0,
   });
 }

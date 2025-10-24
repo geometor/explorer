@@ -34,19 +34,28 @@
         <button id="theme-toggle"><span class="material-icons">settings</span></button>
     </header>
     <div id="hover-card"></div>
-    <main>
-        <svg id="drawing" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 4 4" preserveAspectRatio="xMidYMid slice">
-            <defs>
-                <marker id="marker" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="3" markerHeight="3" orient="auto-start-reverse">
-                    <circle cx="3" cy="3" r="3" fill="context-stroke" vector-effect="non-scaling-stroke"></circle>
-                </marker>
-            </defs>
-            <g id="graphics"></g>
-            <g id="highlights"></g>
-            <g id="elements"></g>
-            <g id="points"></g>
-        </svg>
-    </main>
+    <div id="main-container">
+        <main>
+            <svg id="drawing" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 4 4" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <marker id="marker" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="3" markerHeight="3" orient="auto-start-reverse">
+                        <circle cx="3" cy="3" r="3" fill="context-stroke" vector-effect="non-scaling-stroke"></circle>
+                    </marker>
+                </defs>
+                <g id="graphics"></g>
+                <g id="highlights"></g>
+                <g id="elements"></g>
+                <g id="points"></g>
+            </svg>
+        </main>
+            <div id="timeline-container">
+                <button id="play-pause-btn"><span class="material-icons">play_arrow</span></button>
+                <input type="range" id="timeline-slider" min="0" max="100" value="0">
+                <div class="animation-controls">
+                    <input type="checkbox" id="animation-toggle" checked>
+                    <label for="animation-toggle">Animate</label>
+                </div>
+            </div>    </div>
     <div id="resizer"></div>
     <aside>
         <div class="view-switcher">
