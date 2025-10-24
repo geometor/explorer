@@ -1,6 +1,14 @@
 changelog
 =========
 
+0.2.14
+------
+*2025-10-24*
+
+**added**
+
+.. + Adds a keymap `f` to fit the construction in the available view.
+
 0.2.13
 ------
 *2025-10-24*

@@ -118,6 +118,65 @@ export function scaleCircles() {
     });
 }
 
+
+export function fitConstruction() {
+    const points = GEOMETOR.modelData.elements.filter(el => el.type === 'point');
+    if (points.length === 0) return;
+
+    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+
+    points.forEach(p => {
+        minX = Math.min(minX, p.x);
+        maxX = Math.max(maxX, p.x);
+        minY = Math.min(minY, p.y);
+        maxY = Math.max(maxY, p.y);
+    });
+
+    const circles = GEOMETOR.modelData.elements.filter(el => el.type === 'circle');
+    circles.forEach(c => {
+        const center = GEOMETOR.modelData.elements.find(p => p.ID === c.center);
+        if (center) {
+            minX = Math.min(minX, center.x - c.radius);
+            maxX = Math.max(maxX, center.x + c.radius);
+            minY = Math.min(minY, center.y - c.radius);
+            maxY = Math.max(maxY, center.y + c.radius);
+        }
+    });
+
+    if (minX === Infinity) {
+        minX = -1;
+        maxX = 1;
+        minY = -1;
+        maxY = 1;
+    }
+
+    const padding = 0.1;
+    const width = maxX - minX;
+    const height = maxY - minY;
+    const paddedWidth = width * (1 + padding);
+    const paddedHeight = height * (1 + padding);
+    const centerX = minX + width / 2;
+    const centerY = minY + height / 2;
+
+    const svgAspectRatio = GEOMETOR.svg.clientWidth / GEOMETOR.svg.clientHeight;
+    const constructionAspectRatio = paddedWidth / paddedHeight;
+
+    let viewBoxWidth, viewBoxHeight;
+    if (svgAspectRatio > constructionAspectRatio) {
+        viewBoxHeight = paddedHeight;
+        viewBoxWidth = paddedHeight * svgAspectRatio;
+    } else {
+        viewBoxWidth = paddedWidth;
+        viewBoxHeight = paddedWidth / svgAspectRatio;
+    }
+
+    const viewBoxX = centerX - viewBoxWidth / 2;
+    const viewBoxY = centerY - viewBoxHeight / 2;
+
+    GEOMETOR.svg.setAttribute('viewBox', `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`);
+    scaleCircles();
+}
+
 export function initSvgEventListeners() {
     GEOMETOR.svg.addEventListener('wheel', (event) => {
         event.preventDefault();
@@ -139,6 +198,7 @@ export function initSvgEventListeners() {
         GEOMETOR.svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
         scaleCircles();
     });
+
 
     let isPanning = false;
     let startPoint = { x: 0, y: 0 };

@@ -1,5 +1,5 @@
 import { modal } from './modal.js';
-import { renderElement, renderPoint, scaleCircles, initSvgEventListeners } from './svg.js';
+import { fitConstruction, renderElement, renderPoint, scaleCircles, initSvgEventListeners } from './svg.js';
 import { initGroupsView, initGroupsEventListeners } from './groups.js';
 import { initResizer } from './resizer.js';
 
@@ -1061,6 +1061,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             case 'y':
                 btn = polygonBtn;
+                break;
+            case 'f':
+                fitConstruction();
                 break;
         }
 
