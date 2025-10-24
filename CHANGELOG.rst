@@ -1,6 +1,15 @@
 changelog
 =========
 
+0.3.3
+-----
+*2025-10-24*
+
+**added**
+
+.. + Adds animation timeline controls: start, end, and step buttons.
+.. + Adds keyboard shortcuts (arrow keys) for timeline controls.
+
 0.3.2
 ------
 *2025-10-24*
