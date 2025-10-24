@@ -1,6 +1,20 @@
 changelog
 =========
 
+0.3.4
+-----
+*2025-10-24*
+
+**added**
+
+.. + Adds an angle bisector construction from three selected points.
+.. + Adds a "bisector" class to perpendicular and angle bisector lines.
+.. + Adds a dash-dot style for the "bisector" class.
+
+**changed**
+
+.. + Changes the guide element color to orange.
+
 0.3.3
 -----
 *2025-10-24*

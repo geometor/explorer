@@ -172,7 +172,56 @@ def construct_perpendicular_bisector():
             intersection_points.append(new_pt)
 
         if len(intersection_points) == 2:
-            model.construct_line(intersection_points[0], intersection_points[1])
+            model.construct_line(intersection_points[0], intersection_points[1], classes=["bisector"], guide=False)
+
+    return jsonify(to_browser_dict(model))
+
+
+@app.route('/api/construct/angle_bisector', methods=['POST'])
+def construct_angle_bisector():
+    data = request.get_json()
+    pt1_ID = data.get('pt1')
+    vertex_ID = data.get('vertex')
+    pt3_ID = data.get('pt3')
+
+    pt1 = model.get_element_by_ID(pt1_ID)
+    vertex = model.get_element_by_ID(vertex_ID)
+    pt3 = model.get_element_by_ID(pt3_ID)
+
+    if pt1 and vertex and pt3:
+        # 1. guide circle
+        guide_circle = model.construct_circle(vertex, pt1, guide=True)
+
+        # 2. guide line
+        guide_line = model.construct_line(vertex, pt3, guide=True)
+
+        # 3. intersection
+        intersections = guide_circle.intersection(guide_line)
+
+        # 4. find the correct intersection point on the ray from vertex to pt3
+        vec_v_pt3 = pt3 - vertex
+        correct_intersection = None
+        for i_pt in intersections:
+            vec_v_i = i_pt - vertex
+            if vec_v_i.dot(vec_v_pt3) > 0:
+                correct_intersection = i_pt
+                break
+        
+        if correct_intersection:
+            new_pt = model.set_point(correct_intersection.x, correct_intersection.y, guide=True)
+
+            # 5. perpendicular bisector
+            c1 = model.construct_circle(pt1, new_pt, guide=True)
+            c2 = model.construct_circle(new_pt, pt1, guide=True)
+
+            intersections_perp = c1.intersection(c2)
+            intersection_points_perp = []
+            for pt in intersections_perp:
+                new_pt_perp = model.set_point(pt.x, pt.y, guide=True)
+                intersection_points_perp.append(new_pt_perp)
+
+            if len(intersection_points_perp) == 2:
+                model.construct_line(intersection_points_perp[0], intersection_points_perp[1], classes=["bisector"], guide=False)
 
     return jsonify(to_browser_dict(model))
 

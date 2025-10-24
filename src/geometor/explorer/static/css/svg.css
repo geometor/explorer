@@ -8,7 +8,7 @@
 
 #points circle {
   fill: var(--text-color);
-  stroke: var(--accent-color);
+  stroke: var(--background-color);
   stroke-width: 3;
   vector-effect: non-scaling-stroke;
 }
@@ -117,13 +117,36 @@
   marker-end: url(#marker);
 }
 
-.guide {
-    stroke: #f0f;
-    stroke-dasharray: 2, 4;
+.bisector {
+
+    stroke-dasharray: 8, 4, 2, 4;
+
 }
 
+
+
+#elements .guide {
+
+
+
+    stroke: orange;
+
+
+
+    stroke-dasharray: 2, 4;
+
+
+
+}
+
+
+
 #points circle.guide {
-    fill: #f0f;
+
+    fill: orange;
+
+    stroke-dasharray: none;
+
 }
 
 .light-theme {
@@ -136,7 +159,7 @@
 
 .light-theme #points circle {
   fill: var(--text-color);
-  stroke: var(--accent-color);
+  stroke: var(--background-color);
 }
 
 .light-theme #points circle.given.selected {
@@ -211,10 +234,12 @@
   stroke: var(--select-color);
 }
 
-.light-theme .guide {
-    stroke: #f0f;
+.light-theme #elements .guide {
+    stroke: orange;
+    stroke-dasharray: 2, 4;
 }
 
 .light-theme #points circle.guide {
-    fill: #f0f;
+    fill: orange;
+    stroke-dasharray: none;
 }

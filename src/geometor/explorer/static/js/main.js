@@ -250,6 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const lineBtn = document.getElementById('line-btn');
     const circleBtn = document.getElementById('circle-btn');
     const pbBtn = document.getElementById('pb-btn');
+    const abBtn = document.getElementById('ab-btn');
     const segmentBtn = document.getElementById('segment-btn');
     const sectionBtn = document.getElementById('section-btn');
     const polygonBtn = document.getElementById('polygon-btn');
@@ -259,6 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lineBtn.disabled = numPoints !== 2;
         circleBtn.disabled = numPoints !== 2;
         pbBtn.disabled = numPoints !== 2;
+        abBtn.disabled = numPoints !== 3;
         segmentBtn.disabled = numPoints !== 2;
         sectionBtn.disabled = numPoints !== 3;
         polygonBtn.disabled = numPoints < 2;
@@ -356,6 +358,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ pt1, pt2 }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                renderModel(data);
+                clearSelection();
+                isDirty = true;
+            })
+            .finally(() => {
+                hideHourglassCursor();
+                updateStatus('Ready');
+            });
+        }
+    });
+
+    abBtn.addEventListener('click', () => {
+        if (GEOMETOR.selectedPoints.length === 3) {
+            const [pt1, vertex, pt3] = GEOMETOR.selectedPoints;
+            showHourglassCursor();
+            updateStatus('Constructing angle bisector...');
+            fetch('/api/construct/angle_bisector', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ pt1, vertex, pt3 }),
             })
             .then(response => response.json())
             .then(data => {
