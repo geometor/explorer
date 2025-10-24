@@ -249,6 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const lineBtn = document.getElementById('line-btn');
     const circleBtn = document.getElementById('circle-btn');
+    const pbBtn = document.getElementById('pb-btn');
     const segmentBtn = document.getElementById('segment-btn');
     const sectionBtn = document.getElementById('section-btn');
     const polygonBtn = document.getElementById('polygon-btn');
@@ -257,6 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const numPoints = GEOMETOR.selectedPoints.length;
         lineBtn.disabled = numPoints !== 2;
         circleBtn.disabled = numPoints !== 2;
+        pbBtn.disabled = numPoints !== 2;
         segmentBtn.disabled = numPoints !== 2;
         sectionBtn.disabled = numPoints !== 3;
         polygonBtn.disabled = numPoints < 2;
@@ -328,6 +330,29 @@ document.addEventListener('DOMContentLoaded', () => {
             showHourglassCursor();
             updateStatus('Constructing circle...');
             fetch('/api/construct/circle', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ pt1, pt2 }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                renderModel(data);
+                clearSelection();
+                isDirty = true;
+            })
+            .finally(() => {
+                hideHourglassCursor();
+                updateStatus('Ready');
+            });
+        }
+    });
+
+    pbBtn.addEventListener('click', () => {
+        if (GEOMETOR.selectedPoints.length === 2) {
+            const [pt1, pt2] = GEOMETOR.selectedPoints;
+            showHourglassCursor();
+            updateStatus('Constructing perpendicular bisector...');
+            fetch('/api/construct/perpendicular_bisector', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ pt1, pt2 }),

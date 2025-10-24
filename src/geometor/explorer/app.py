@@ -152,6 +152,31 @@ def construct_circle():
     return jsonify(to_browser_dict(model))
 
 
+@app.route('/api/construct/perpendicular_bisector', methods=['POST'])
+def construct_perpendicular_bisector():
+    data = request.get_json()
+    pt1_ID = data.get('pt1')
+    pt2_ID = data.get('pt2')
+
+    pt1 = model.get_element_by_ID(pt1_ID)
+    pt2 = model.get_element_by_ID(pt2_ID)
+
+    if pt1 and pt2:
+        c1 = model.construct_circle(pt1, pt2, guide=True)
+        c2 = model.construct_circle(pt2, pt1, guide=True)
+
+        intersections = c1.intersection(c2)
+        intersection_points = []
+        for pt in intersections:
+            new_pt = model.set_point(pt.x, pt.y, guide=True)
+            intersection_points.append(new_pt)
+
+        if len(intersection_points) == 2:
+            model.construct_line(intersection_points[0], intersection_points[1])
+
+    return jsonify(to_browser_dict(model))
+
+
 @app.route('/api/construct/point', methods=['POST'])
 def construct_point():
     data = request.get_json()

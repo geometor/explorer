@@ -1,6 +1,18 @@
 changelog
 =========
 
+0.3.2
+------
+*2025-10-24*
+
+**added**
+
+.. + Adds a perpendicular bisector construction from two selected points.
+
+**changed**
+
+.. + Updates the guide style to a smaller dot stroke.
+
 0.3.0
 ------
 *2025-10-24*

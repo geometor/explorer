@@ -119,7 +119,7 @@
 
 .guide {
     stroke: #f0f;
-    stroke-dasharray: 5,5;
+    stroke-dasharray: 2, 4;
 }
 
 #points circle.guide {
