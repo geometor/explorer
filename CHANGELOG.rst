@@ -1,6 +1,14 @@
 changelog
 =========
 
+0.2.13
+------
+*2025-10-24*
+
+**added**
+
+.. + Adds sorting functionality to the 'Sizes', 'Chains', and 'Points' tables in the 'Groups' view.
+
 0.2.12
 ------
 *2025-10-24*
