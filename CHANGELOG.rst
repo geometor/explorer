@@ -1,6 +1,21 @@
 changelog
 =========
 
+0.2.10
+------
+*2025-10-23*
+
+**added**
+
+.. + Adds keymaps for the following actions:
+.. + `l`: construct line
+.. + `c`: construct circle
+.. + `p`: set point (opens dialog)
+.. + `s`: set segment
+.. + `S`: set section
+.. + `y`: set polygon
+.. + Adds a center panel in the status bar to show the ID of the currently selected points.
+
 0.2.9
 -----
 *2025-10-23*
