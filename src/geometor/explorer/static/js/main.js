@@ -911,12 +911,28 @@ document.addEventListener('DOMContentLoaded', () => {
             updateStatus('Ready');
         });
 
+    const settingsBtn = document.getElementById('settings-btn');
+    const settingsModal = document.getElementById('settings-modal');
     const themeToggle = document.getElementById('theme-toggle');
     const analysisToggle = document.getElementById('analysis-toggle');
 
-    themeToggle.addEventListener('click', () => {
-        GEOMETOR.svg.classList.toggle('light-theme');
-        localStorage.setItem('svg-theme', GEOMETOR.svg.classList.contains('light-theme') ? 'light' : 'dark');
+    settingsBtn.addEventListener('click', () => {
+        settingsModal.style.display = 'block';
+    });
+
+    settingsModal.querySelector('.close-btn').addEventListener('click', () => {
+        settingsModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target == settingsModal) {
+            settingsModal.style.display = 'none';
+        }
+    });
+
+    themeToggle.addEventListener('change', () => {
+        GEOMETOR.svg.classList.toggle('light-theme', themeToggle.checked);
+        localStorage.setItem('svg-theme', themeToggle.checked ? 'light' : 'dark');
     });
 
     analysisToggle.addEventListener('click', () => {
@@ -936,6 +952,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedSvgTheme = localStorage.getItem('svg-theme');
     if (savedSvgTheme === 'light') {
         GEOMETOR.svg.classList.add('light-theme');
+        themeToggle.checked = true;
     }
 
     const categoryViewBtn = document.getElementById('category-view-btn');
