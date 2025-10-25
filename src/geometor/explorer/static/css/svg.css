@@ -94,9 +94,13 @@
     stroke: rgba(255, 215, 0, 0.1);
 }
 
-#graphics polygon:hover,
-#graphics polyline:hover,
-#graphics polyline.segment:hover,
+#graphics polygon:hover, #graphics polygon.hover,
+#graphics polyline:hover, #graphics polyline.hover,
+#graphics polyline.segment:hover, #graphics polyline.segment.hover {
+  stroke: var(--select-color);
+  stroke-opacity: 1;
+}
+
 #graphics polyline.section:hover {
   stroke: #36c9;
   stroke-opacity: 1;
@@ -219,8 +223,12 @@
     stroke: rgba(204, 153, 0, 0.1);
 }
 
-.light-theme #graphics polygon:hover,
-.light-theme #graphics polyline:hover,
+.light-theme #graphics polygon:hover, .light-theme #graphics polygon.hover,
+.light-theme #graphics polyline:hover, .light-theme #graphics polyline.hover,
+.light-theme #graphics polyline.segment:hover, .light-theme #graphics polyline.segment.hover {
+  stroke: var(--select-color);
+}
+
 .light-theme #graphics polyline.section:hover {
   stroke: #36c;
 }

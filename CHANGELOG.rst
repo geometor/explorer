@@ -1,6 +1,14 @@
 changelog
 =========
 
+0.3.10
+------
+*2025-10-25*
+
+**fixed**
+
+.. + Fixes polygon hover highlight color.
+
 0.3.9
 -----
 *2025-10-25*
