@@ -1,6 +1,14 @@
 changelog
 =========
 
+0.3.9
+-----
+*2025-10-25*
+
+**added**
+
+.. + Adds a settings modal with a theme toggle.
+
 0.3.8
 -----
 *2025-10-25*
