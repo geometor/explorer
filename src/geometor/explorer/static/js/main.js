@@ -775,9 +775,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         const pt1 = GEOMETOR.modelData.elements.find(p => p.ID === elementData.pt1);
                         const pt2 = GEOMETOR.modelData.elements.find(p => p.ID === elementData.pt2);
                         if (pt1 && pt2) {
-                            const midX = (pt1.x + pt2.x) / 2;
-                            const midY = (pt1.y + pt2.y) / 2;
-                            screenPoint = transformPoint(GEOMETOR.svg, midX, midY);
+                            const bbx = Math.max(pt1.x, pt2.x);
+                            const bby = Math.max(pt1.y, pt2.y);
+                            screenPoint = transformPoint(GEOMETOR.svg, bbx, bby);
                         }
                     } else if (elementData.type === 'circle') {
                         const center = GEOMETOR.modelData.elements.find(p => p.ID === elementData.center);
