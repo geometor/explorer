@@ -642,12 +642,43 @@ document.addEventListener('DOMContentLoaded', () => {
         GEOMETOR.hoverCard.style.display = 'block';
     }
 
+    function getAncestorIds(ancestors) {
+        let ids = Object.keys(ancestors);
+        ids.forEach(id => {
+            ids = ids.concat(getAncestorIds(ancestors[id]));
+        });
+        return ids;
+    }
+
     GEOMETOR.setElementHover = function(ID, hoverState) {
         if (!GEOMETOR.modelData.elements) {
             return;
         }
         const elementData = GEOMETOR.modelData.elements.find(el => el.ID === ID);
         if (!elementData) return;
+
+        if (ancestorsOnHover) {
+            if (hoverState) {
+                const ancestorIds = getAncestorIds(elementData.ancestors);
+                GEOMETOR.modelData.elements.forEach(el => {
+                    const svgEl = document.getElementById(el.ID);
+                    if (svgEl) {
+                        if (ancestorIds.includes(el.ID)) {
+                            gsap.set(svgEl, { autoAlpha: 1 });
+                        } else {
+                            gsap.set(svgEl, { autoAlpha: 0 });
+                        }
+                    }
+                });
+            } else {
+                GEOMETOR.modelData.elements.forEach(el => {
+                    const svgEl = document.getElementById(el.ID);
+                    if (svgEl) {
+                        gsap.set(svgEl, { autoAlpha: 1 });
+                    }
+                });
+            }
+        }
 
         const svgElement = document.getElementById(ID);
         const pointsRow = GEOMETOR.tables.points.querySelector(`tr[data-id="${ID}"]`);
@@ -664,7 +695,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (hoverState) {
                 gsap.set(svgElement, { autoAlpha: 1 });
             } else {
-                if (!animationEnabled) {
+                if (!animationEnabled && !ancestorsOnHover) {
                     const category = svgElement.dataset.category;
                     let table;
                     if (category === 'points') table = GEOMETOR.tables.points;
@@ -679,7 +710,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             gsap.set(svgElement, { autoAlpha: 1 });
                         }
                     }
-                } else {
+                } else if (animationEnabled) {
                     const elementIndex = GEOMETOR.modelData.elements.findIndex(el => el.ID === ID);
                     const currentStep = Math.floor(TL_DRAW.progress() * GEOMETOR.modelData.elements.length);
                     if (elementIndex >= currentStep) {
@@ -703,11 +734,13 @@ document.addEventListener('DOMContentLoaded', () => {
             parentIDs = [elementData.center, elementData.radius_pt];
         }
 
-        parentIDs.forEach(parentID => {
-            if (parentID) {
-                GEOMETOR.setElementHover(parentID, hoverState);
-            }
-        });
+        if (!ancestorsOnHover) {
+            parentIDs.forEach(parentID => {
+                if (parentID) {
+                    GEOMETOR.setElementHover(parentID, hoverState);
+                }
+            });
+        }
     }
 
     function transformPoint(svg, x, y) {
@@ -914,7 +947,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const settingsBtn = document.getElementById('settings-btn');
     const settingsModal = document.getElementById('settings-modal');
     const themeToggle = document.getElementById('theme-toggle');
+    const ancestorsToggle = document.getElementById('ancestors-toggle');
     const analysisToggle = document.getElementById('analysis-toggle');
+
+    let ancestorsOnHover = false;
 
     settingsBtn.addEventListener('click', () => {
         settingsModal.style.display = 'block';
@@ -934,6 +970,11 @@ document.addEventListener('DOMContentLoaded', () => {
         GEOMETOR.svg.classList.toggle('light-theme', themeToggle.checked);
         localStorage.setItem('svg-theme', themeToggle.checked ? 'light' : 'dark');
     });
+
+    ancestorsToggle.addEventListener('change', () => {
+        ancestorsOnHover = ancestorsToggle.checked;
+    });
+
 
     analysisToggle.addEventListener('click', () => {
         fetch('/api/analysis/toggle', {
