@@ -1,6 +1,14 @@
 changelog
 =========
 
+0.3.7
+-----
+*2025-10-25*
+
+**added**
+
+.. + Adds a button to the UI to toggle divine analysis.
+
 0.3.6
 -----
 *2025-10-25*
