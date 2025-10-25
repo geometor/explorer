@@ -49,7 +49,7 @@ def run():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', analysis_enabled=ANALYSIS_ENABLED)
 
 @app.route('/api/model', methods=['GET'])
 def get_model():

@@ -1,6 +1,14 @@
 changelog
 =========
 
+0.3.8
+-----
+*2025-10-25*
+
+**fixed**
+
+.. + Fixes analysis toggle button initial state.
+
 0.3.7
 -----
 *2025-10-25*
