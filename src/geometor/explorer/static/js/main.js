@@ -912,10 +912,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
     const themeToggle = document.getElementById('theme-toggle');
+    const analysisToggle = document.getElementById('analysis-toggle');
 
     themeToggle.addEventListener('click', () => {
         GEOMETOR.svg.classList.toggle('light-theme');
         localStorage.setItem('svg-theme', GEOMETOR.svg.classList.contains('light-theme') ? 'light' : 'dark');
+    });
+
+    analysisToggle.addEventListener('click', () => {
+        fetch('/api/analysis/toggle', {
+            method: 'POST',
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.analysis_enabled) {
+                analysisToggle.classList.add('active');
+            } else {
+                analysisToggle.classList.remove('active');
+            }
+        });
     });
 
     const savedSvgTheme = localStorage.getItem('svg-theme');

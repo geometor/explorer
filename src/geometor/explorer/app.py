@@ -20,6 +20,7 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 configure_logging(app)
 
 model = None
+ANALYSIS_ENABLED = True
 
 CONSTRUCTIONS_DIR = './constructions'
 os.makedirs(CONSTRUCTIONS_DIR, exist_ok=True)
@@ -28,7 +29,10 @@ def new_model(template='default'):
     """Creates a new model based on a template."""
     global model
     model = Model("new", logger=app.logger)
-    register_divine_hook(model)
+    if ANALYSIS_ENABLED:
+        register_divine_hook(model)
+    else:
+        model.set_analysis_hook(None)
 
     if template == 'blank':
         pass
@@ -51,6 +55,18 @@ def index():
 def get_model():
     """Returns the complete model data using the new to_browser_dict method."""
     return jsonify(to_browser_dict(model))
+
+
+@app.route('/api/analysis/toggle', methods=['POST'])
+def toggle_analysis():
+    global ANALYSIS_ENABLED
+    ANALYSIS_ENABLED = not ANALYSIS_ENABLED
+    if ANALYSIS_ENABLED:
+        register_divine_hook(model)
+    else:
+        model.set_analysis_hook(None)
+    return jsonify({"analysis_enabled": ANALYSIS_ENABLED})
+
 
 @app.route('/api/model/save', methods=['POST'])
 def save_model_endpoint():
@@ -82,7 +98,10 @@ def load_model_endpoint():
         try:
             model = load_model(tmp_path, logger=app.logger)
             app.logger.info(f"Model loaded from temp file: {tmp_path}")
-            register_divine_hook(model)
+            if ANALYSIS_ENABLED:
+                register_divine_hook(model)
+            else:
+                model.set_analysis_hook(None)
         finally:
             os.remove(tmp_path)
         
@@ -97,7 +116,10 @@ def load_model_endpoint():
         if os.path.exists(file_path):
             model = load_model(file_path, logger=app.logger)
             app.logger.info(f"Model loaded from {file_path}")
-            register_divine_hook(model)
+            if ANALYSIS_ENABLED:
+                register_divine_hook(model)
+            else:
+                model.set_analysis_hook(None)
             return jsonify(to_browser_dict(model))
         else:
             return jsonify({"success": False, "message": "File not found."}), 404

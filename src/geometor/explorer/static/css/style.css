@@ -386,3 +386,11 @@ button .material-icons {
 .animation-controls .material-icons {
     font-size: 1.8em;
 }
+
+#analysis-toggle {
+    color: grey;
+}
+
+#analysis-toggle.active {
+    color: gold;
+}
