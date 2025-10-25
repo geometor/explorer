@@ -264,6 +264,14 @@ document.addEventListener('DOMContentLoaded', () => {
         segmentBtn.disabled = numPoints !== 2;
         sectionBtn.disabled = numPoints !== 3;
         polygonBtn.disabled = numPoints < 2;
+
+        [lineBtn, circleBtn, pbBtn, abBtn, segmentBtn, sectionBtn, polygonBtn].forEach(btn => {
+            if (btn.disabled) {
+                btn.classList.remove('btn-enabled');
+            } else {
+                btn.classList.add('btn-enabled');
+            }
+        });
     }
 
     function updateSelectedPointsDisplay() {

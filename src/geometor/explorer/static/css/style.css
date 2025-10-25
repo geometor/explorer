@@ -159,7 +159,22 @@ button {
 }
 
 button:hover {
-    background-color: var(--button-hover-bg);
+    background-color: var(--select-color);
+    color: var(--background-color);
+}
+
+button.btn-enabled {
+    border: 1px solid var(--select-color);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button:disabled:hover {
+    background-color: var(--button-bg);
+    color: var(--button-text);
 }
 
 /* FROM INLINE */

@@ -1,6 +1,16 @@
 changelog
 =========
 
+0.3.6
+-----
+*2025-10-25*
+
+**changed**
+
+.. + Improves visual feedback for enabled and disabled buttons.
+.. + Enabled buttons now have a cyan border.
+.. + All buttons have a cyan background on hover, except when disabled.
+
 0.3.4
 -----
 *2025-10-24*
