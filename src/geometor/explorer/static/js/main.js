@@ -653,6 +653,34 @@ document.addEventListener('DOMContentLoaded', () => {
         if (svgElement) {
             svgElement.classList[action]('hover');
             svgElement.classList[action]('hover-target');
+            if (hoverState) {
+                gsap.set(svgElement, { autoAlpha: 1 });
+            } else {
+                if (!animationEnabled) {
+                    const category = svgElement.dataset.category;
+                    let table;
+                    if (category === 'points') table = GEOMETOR.tables.points;
+                    if (category === 'elements') table = GEOMETOR.tables.structures;
+                    if (category === 'graphics') table = GEOMETOR.tables.graphics;
+
+                    if (table) {
+                        const section = table.closest('.collapsible-section');
+                        if (section && section.classList.contains('hide-elements')) {
+                            gsap.set(svgElement, { autoAlpha: 0 });
+                        } else {
+                            gsap.set(svgElement, { autoAlpha: 1 });
+                        }
+                    }
+                } else {
+                    const elementIndex = GEOMETOR.modelData.elements.findIndex(el => el.ID === ID);
+                    const currentStep = Math.floor(TL_DRAW.progress() * GEOMETOR.modelData.elements.length);
+                    if (elementIndex >= currentStep) {
+                        gsap.set(svgElement, { autoAlpha: 0 });
+                    } else {
+                        gsap.set(svgElement, { autoAlpha: 1 });
+                    }
+                }
+            }
         }
         if (pointsRow) pointsRow.classList[action]('row-hover');
         if (structuresRow) structuresRow.classList[action]('row-hover');
@@ -938,6 +966,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleVisBtns = document.querySelectorAll('.toggle-vis-btn');
     toggleVisBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+            if (animationEnabled) return;
+            
             const section = btn.closest('.collapsible-section');
             section.classList.toggle('hide-elements');
             const isHidden = section.classList.contains('hide-elements');
@@ -947,7 +977,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (category === 'structures') {
                 category = 'elements';
             }
-            GEOMETOR.svg.classList.toggle(`hide-${category}`);
+
+            const elementsToToggle = document.querySelectorAll(`#drawing [data-category="${category}"]`);
+            gsap.to(elementsToToggle, { autoAlpha: isHidden ? 0 : 1, duration: 0.5 });
         });
     });
 

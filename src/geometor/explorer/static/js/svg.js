@@ -81,8 +81,10 @@ export function renderElement(el, points) {
             svgEl.classList.add('guide');
         }
         if (['polygon', 'segment', 'section', 'chain'].includes(el.type)) {
+            svgEl.dataset.category = 'graphics';
             GEOMETOR.graphicsContainer.appendChild(svgEl);
         } else {
+            svgEl.dataset.category = 'elements';
             GEOMETOR.elementsContainer.appendChild(svgEl);
         }
     }
@@ -94,6 +96,7 @@ export function renderPoint(el) {
     circle.setAttribute('cx', el.x);
     circle.setAttribute('cy', el.y);
     circle.setAttribute('r', 0.02);
+    circle.dataset.category = 'points';
     el.classes.forEach(c => circle.classList.add(c));
     if (el.guide) {
         circle.classList.add('guide');
