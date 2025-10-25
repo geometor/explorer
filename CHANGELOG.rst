@@ -1,6 +1,14 @@
 changelog
 =========
 
+0.3.11
+------
+*2025-10-25*
+
+**changed**
+
+.. + Rethinks the placement of the line hover cards when hovering on the table - it should be outside the bounding box of the defining points fo the line, as we are doing with sections and polygons.
+
 0.3.10
 ------
 *2025-10-25*
