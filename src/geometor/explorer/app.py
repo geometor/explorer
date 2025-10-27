@@ -287,7 +287,7 @@ def get_dependents_endpoint():
         return jsonify({"error": "Element ID is required."}), 400
 
     dependents = model.get_dependents(ID)
-    dependent_IDs = [model[el].ID for el in dependents]
+    dependent_IDs = [el.ID for el in dependents]
     
     return jsonify(dependent_IDs)
 
