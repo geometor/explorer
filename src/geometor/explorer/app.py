@@ -161,91 +161,103 @@ def construct_line():
 
 @app.route('/api/construct/circle', methods=['POST'])
 def construct_circle():
-    data = request.get_json()
-    pt1_ID = data.get('pt1')
-    pt2_ID = data.get('pt2')
+    try:
+        data = request.get_json()
+        pt1_ID = data.get('pt1')
+        pt2_ID = data.get('pt2')
 
-    pt1 = model.get_element_by_ID(pt1_ID)
-    pt2 = model.get_element_by_ID(pt2_ID)
+        pt1 = model.get_element_by_ID(pt1_ID)
+        pt2 = model.get_element_by_ID(pt2_ID)
 
-    if pt1 and pt2:
-        model.construct_circle(pt1, pt2)
+        if pt1 and pt2:
+            model.construct_circle(pt1, pt2)
 
-    return jsonify(to_browser_dict(model))
+        return jsonify(to_browser_dict(model))
+    except Exception as e:
+        app.logger.exception(f"Error in construct_circle: {e}")
+        return jsonify({"success": False, "message": "An unexpected error occurred."}), 500
 
 
 @app.route('/api/construct/perpendicular_bisector', methods=['POST'])
 def construct_perpendicular_bisector():
-    data = request.get_json()
-    pt1_ID = data.get('pt1')
-    pt2_ID = data.get('pt2')
+    try:
+        data = request.get_json()
+        pt1_ID = data.get('pt1')
+        pt2_ID = data.get('pt2')
 
-    pt1 = model.get_element_by_ID(pt1_ID)
-    pt2 = model.get_element_by_ID(pt2_ID)
+        pt1 = model.get_element_by_ID(pt1_ID)
+        pt2 = model.get_element_by_ID(pt2_ID)
 
-    if pt1 and pt2:
-        c1 = model.construct_circle(pt1, pt2, guide=True)
-        c2 = model.construct_circle(pt2, pt1, guide=True)
+        if pt1 and pt2:
+            c1 = model.construct_circle(pt1, pt2, guide=True)
+            c2 = model.construct_circle(pt2, pt1, guide=True)
 
-        intersections = c1.intersection(c2)
-        intersection_points = []
-        for pt in intersections:
-            new_pt = model.set_point(pt.x, pt.y, guide=True)
-            intersection_points.append(new_pt)
+            intersections = c1.intersection(c2)
+            intersection_points = []
+            for pt in intersections:
+                new_pt = model.set_point(pt.x, pt.y, guide=True)
+                intersection_points.append(new_pt)
 
-        if len(intersection_points) == 2:
-            model.construct_line(intersection_points[0], intersection_points[1], classes=["bisector"], guide=False)
+            if len(intersection_points) == 2:
+                model.construct_line(intersection_points[0], intersection_points[1], classes=["bisector"], guide=False)
 
-    return jsonify(to_browser_dict(model))
+        return jsonify(to_browser_dict(model))
+    except Exception as e:
+        app.logger.exception(f"Error in construct_perpendicular_bisector: {e}")
+        return jsonify({"success": False, "message": "An unexpected error occurred."}), 500
 
 
 @app.route('/api/construct/angle_bisector', methods=['POST'])
 def construct_angle_bisector():
-    data = request.get_json()
-    pt1_ID = data.get('pt1')
-    vertex_ID = data.get('vertex')
-    pt3_ID = data.get('pt3')
+    try:
+        data = request.get_json()
+        pt1_ID = data.get('pt1')
+        vertex_ID = data.get('vertex')
+        pt3_ID = data.get('pt3')
 
-    pt1 = model.get_element_by_ID(pt1_ID)
-    vertex = model.get_element_by_ID(vertex_ID)
-    pt3 = model.get_element_by_ID(pt3_ID)
+        pt1 = model.get_element_by_ID(pt1_ID)
+        vertex = model.get_element_by_ID(vertex_ID)
+        pt3 = model.get_element_by_ID(pt3_ID)
 
-    if pt1 and vertex and pt3:
-        # 1. guide circle
-        guide_circle = model.construct_circle(vertex, pt1, guide=True)
+        if pt1 and vertex and pt3:
+            # 1. guide circle
+            guide_circle = model.construct_circle(vertex, pt1, guide=True)
 
-        # 2. guide line
-        guide_line = model.construct_line(vertex, pt3, guide=True)
+            # 2. guide line
+            guide_line = model.construct_line(vertex, pt3, guide=True)
 
-        # 3. intersection
-        intersections = guide_circle.intersection(guide_line)
+            # 3. intersection
+            intersections = guide_circle.intersection(guide_line)
 
-        # 4. find the correct intersection point on the ray from vertex to pt3
-        vec_v_pt3 = pt3 - vertex
-        correct_intersection = None
-        for i_pt in intersections:
-            vec_v_i = i_pt - vertex
-            if vec_v_i.dot(vec_v_pt3) > 0:
-                correct_intersection = i_pt
-                break
-        
-        if correct_intersection:
-            new_pt = model.set_point(correct_intersection.x, correct_intersection.y, guide=True)
+            # 4. find the correct intersection point on the ray from vertex to pt3
+            vec_v_pt3 = pt3 - vertex
+            correct_intersection = None
+            for i_pt in intersections:
+                vec_v_i = i_pt - vertex
+                if vec_v_i.dot(vec_v_pt3) > 0:
+                    correct_intersection = i_pt
+                    break
+            
+            if correct_intersection:
+                new_pt = model.set_point(correct_intersection.x, correct_intersection.y, guide=True)
 
-            # 5. perpendicular bisector
-            c1 = model.construct_circle(pt1, new_pt, guide=True)
-            c2 = model.construct_circle(new_pt, pt1, guide=True)
+                # 5. perpendicular bisector
+                c1 = model.construct_circle(pt1, new_pt, guide=True)
+                c2 = model.construct_circle(new_pt, pt1, guide=True)
 
-            intersections_perp = c1.intersection(c2)
-            intersection_points_perp = []
-            for pt in intersections_perp:
-                new_pt_perp = model.set_point(pt.x, pt.y, guide=True)
-                intersection_points_perp.append(new_pt_perp)
+                intersections_perp = c1.intersection(c2)
+                intersection_points_perp = []
+                for pt in intersections_perp:
+                    new_pt_perp = model.set_point(pt.x, pt.y, guide=True)
+                    intersection_points_perp.append(new_pt_perp)
 
-            if len(intersection_points_perp) == 2:
-                model.construct_line(intersection_points_perp[0], intersection_points_perp[1], classes=["bisector"], guide=False)
+                if len(intersection_points_perp) == 2:
+                    model.construct_line(intersection_points_perp[0], intersection_points_perp[1], classes=["bisector"], guide=False)
 
-    return jsonify(to_browser_dict(model))
+        return jsonify(to_browser_dict(model))
+    except Exception as e:
+        app.logger.exception(f"Error in construct_angle_bisector: {e}")
+        return jsonify({"success": False, "message": "An unexpected error occurred."}), 500
 
 
 @app.route('/api/construct/point', methods=['POST'])
@@ -319,31 +331,43 @@ def edit_element():
 
 @app.route('/api/set/segment', methods=['POST'])
 def set_segment():
-    data = request.get_json()
-    points_IDs = data.get('points', [])
-    points = [model.get_element_by_ID(ID) for ID in points_IDs]
-    if len(points) == 2 and all(points):
-        segment = model.set_segment(*points)
-    elif len(points_IDs) == 2:
-        app.logger.error(f"Could not find one or more points for segment: {points_IDs}")
-    return jsonify(to_browser_dict(model))
+    try:
+        data = request.get_json()
+        points_IDs = data.get('points', [])
+        points = [model.get_element_by_ID(ID) for ID in points_IDs]
+        if len(points) == 2 and all(points):
+            segment = model.set_segment(*points)
+        elif len(points_IDs) == 2:
+            app.logger.error(f"Could not find one or more points for segment: {points_IDs}")
+        return jsonify(to_browser_dict(model))
+    except Exception as e:
+        app.logger.exception(f"Error in set_segment: {e}")
+        return jsonify({"success": False, "message": "An unexpected error occurred."}), 500
 
 @app.route('/api/set/section', methods=['POST'])
 def set_section():
-    data = request.get_json()
-    points = [model.get_element_by_ID(ID) for ID in data.get('points', [])]
-    if len(points) == 3:
-        section = model.set_section(points)
-    return jsonify(to_browser_dict(model))
+    try:
+        data = request.get_json()
+        points = [model.get_element_by_ID(ID) for ID in data.get('points', [])]
+        if len(points) == 3:
+            section = model.set_section(points)
+        return jsonify(to_browser_dict(model))
+    except Exception as e:
+        app.logger.exception(f"Error in set_section: {e}")
+        return jsonify({"success": False, "message": "An unexpected error occurred."}), 500
 
 
 @app.route('/api/set/polygon', methods=['POST'])
 def set_polygon():
-    data = request.get_json()
-    points = [model.get_element_by_ID(ID) for ID in data.get('points', [])]
-    if len(points) >= 3:
-        polygon = model.set_polygon(points)
-    return jsonify(to_browser_dict(model))
+    try:
+        data = request.get_json()
+        points = [model.get_element_by_ID(ID) for ID in data.get('points', [])]
+        if len(points) >= 3:
+            polygon = model.set_polygon(points)
+        return jsonify(to_browser_dict(model))
+    except Exception as e:
+        app.logger.exception(f"Error in set_polygon: {e}")
+        return jsonify({"success": False, "message": "An unexpected error occurred."}), 500
 
 
 def get_golden_sections():
