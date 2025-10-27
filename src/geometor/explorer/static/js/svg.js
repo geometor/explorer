@@ -1,3 +1,14 @@
+// NOTE: INVERTED Y-AXIS
+// The SVG coordinate system has its origin (0,0) at the top-left corner,
+// with the y-axis extending downwards. To align with standard mathematical
+// conventions where the y-axis extends upwards, all y-values for SVG
+// attributes (e.g., y1, y2, cy) are negated.
+
+// The viewBox attribute is also adjusted to handle this inversion.
+// The third parameter of the viewBox, `y`, is set to a negative value
+// to effectively flip the coordinate system vertically, ensuring that
+// positive y-values are plotted above the x-axis.
+
 const SVG_NS = "http://www.w3.org/2000/svg";
 
 function renderHighlight(el, points) {
