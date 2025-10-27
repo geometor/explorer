@@ -1,6 +1,18 @@
 changelog
 =========
 
+0.3.13
+------
+*2025-10-27*
+
+**feat**
+
+.. + Flips the svg y-axis to conform to standard geometry coordinate systems.
+
+**fixed**
+
+.. + Adds error handling to construction endpoints.
+
 0.3.11
 ------
 *2025-10-25*
