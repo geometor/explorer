@@ -22,7 +22,7 @@ function renderHighlight(el, points) {
     }
 
     if (pt1 && pt2) {
-        highlightEl.setAttribute('points', `${pt1.x},${pt1.y} ${pt2.x},${pt2.y}`);
+        highlightEl.setAttribute('points', `${pt1.x},${-pt1.y} ${pt2.x},${-pt2.y}`);
         highlightEl.id = `highlight-${el.ID}`;
         highlightEl.classList.add('highlight-segment');
         highlightEl.style.display = 'none';
@@ -39,16 +39,16 @@ export function renderElement(el, points) {
             const pt1 = points[el.pt1];
             const pt2 = points[el.pt2];
             svgEl.setAttribute('x1', pt1.x - 1000 * (pt2.x - pt1.x));
-            svgEl.setAttribute('y1', pt1.y - 1000 * (pt2.y - pt1.y));
+            svgEl.setAttribute('y1', -(pt1.y - 1000 * (pt2.y - pt1.y)));
             svgEl.setAttribute('x2', pt1.x + 1000 * (pt2.x - pt1.x));
-            svgEl.setAttribute('y2', pt1.y + 1000 * (pt2.y - pt1.y));
+            svgEl.setAttribute('y2', -(pt1.y + 1000 * (pt2.y - pt1.y)));
             renderHighlight(el, points);
             break;
         case 'circle':
             svgEl = document.createElementNS(SVG_NS, 'circle');
             const center = points[el.center];
             svgEl.setAttribute('cx', center.x);
-            svgEl.setAttribute('cy', center.y);
+            svgEl.setAttribute('cy', -center.y);
             svgEl.setAttribute('r', el.radius);
             svgEl.setAttribute('fill', 'none');
             renderHighlight(el, points);
@@ -57,7 +57,7 @@ export function renderElement(el, points) {
             svgEl = document.createElementNS(SVG_NS, 'polygon');
             pointsStr = el.points.map(p_ID => {
                 const p = points[p_ID];
-                return `${p.x},${p.y}`;
+                return `${p.x},${-p.y}`;
             }).join(' ');
             svgEl.setAttribute('points', pointsStr);
             break;
@@ -67,7 +67,7 @@ export function renderElement(el, points) {
             svgEl = document.createElementNS(SVG_NS, 'polyline');
             pointsStr = el.points.map(p_ID => {
                 const p = points[p_ID];
-                return `${p.x},${p.y}`;
+                return `${p.x},${-p.y}`;
             }).join(' ');
             svgEl.setAttribute('points', pointsStr);
             break;
@@ -94,7 +94,7 @@ export function renderPoint(el) {
     const circle = document.createElementNS(SVG_NS, 'circle');
     circle.id = el.ID;
     circle.setAttribute('cx', el.x);
-    circle.setAttribute('cy', el.y);
+    circle.setAttribute('cy', -el.y);
     circle.setAttribute('r', 0.02);
     circle.dataset.category = 'points';
     el.classes.forEach(c => circle.classList.add(c));
@@ -174,7 +174,7 @@ export function fitConstruction() {
     }
 
     const viewBoxX = centerX - viewBoxWidth / 2;
-    const viewBoxY = centerY - viewBoxHeight / 2;
+    const viewBoxY = -centerY - viewBoxHeight / 2;
 
     GEOMETOR.svg.setAttribute('viewBox', `${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`);
     scaleCircles();
