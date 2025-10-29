@@ -643,11 +643,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getAncestorIds(ancestors) {
-        let ids = Object.keys(ancestors);
-        ids.forEach(id => {
-            ids = ids.concat(getAncestorIds(ancestors[id]));
-        });
-        return ids;
+        if (!ancestors) {
+            return [];
+        }
+        let allIds = [];
+        function recurse(ancestorObj) {
+            let ids = Object.keys(ancestorObj);
+            allIds = allIds.concat(ids);
+            ids.forEach(id => {
+                if (ancestorObj[id]) {
+                    recurse(ancestorObj[id]);
+                }
+            });
+        }
+        recurse(ancestors);
+        return allIds;
     }
 
     GEOMETOR.setElementHover = function(ID, hoverState) {
@@ -660,6 +670,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (ancestorsOnHover) {
             if (hoverState) {
                 const ancestorIds = getAncestorIds(elementData.ancestors);
+                ancestorIds.push(ID);
                 GEOMETOR.modelData.elements.forEach(el => {
                     const svgEl = document.getElementById(el.ID);
                     if (svgEl) {
