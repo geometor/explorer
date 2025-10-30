@@ -1,6 +1,14 @@
 changelog
 =========
 
+0.3.17
+------
+*2025-10-30*
+
+**fixed**
+
+.. + Fixed an issue where constructing an angle bisector could cause a recursion error.
+
 0.3.16
 ------
 *2025-10-29*
