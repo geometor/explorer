@@ -1,6 +1,19 @@
 changelog
 =========
 
+0.3.16
+------
+*2025-10-29*
+
+**feat**
+
+.. + Adds a button to the main toolbar to toggle the 'ancestors on hover' feature.
+
+**fixed**
+
+.. + Fixes an issue where lines and circles would not be visible during ancestor hover highlighting.
+.. + Adds ancestor data to the model serialization to enable client-side ancestor highlighting.
+
 0.3.13
 ------
 *2025-10-27*
