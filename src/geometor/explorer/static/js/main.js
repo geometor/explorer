@@ -960,6 +960,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const ancestorsToggle = document.getElementById('ancestors-toggle');
     const analysisToggle = document.getElementById('analysis-toggle');
+    const ancestorsBtn = document.getElementById('ancestors-btn');
 
     let ancestorsOnHover = false;
 
@@ -984,8 +985,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     ancestorsToggle.addEventListener('change', () => {
         ancestorsOnHover = ancestorsToggle.checked;
+        ancestorsBtn.classList.toggle('active', ancestorsOnHover);
     });
 
+    ancestorsBtn.addEventListener('click', () => {
+        ancestorsOnHover = !ancestorsOnHover;
+        ancestorsToggle.checked = ancestorsOnHover;
+        ancestorsBtn.classList.toggle('active', ancestorsOnHover);
+    });
 
     analysisToggle.addEventListener('click', () => {
         fetch('/api/analysis/toggle', {

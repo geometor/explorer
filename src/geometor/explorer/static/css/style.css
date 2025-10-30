@@ -394,3 +394,7 @@ button .material-icons {
 #analysis-toggle.active {
     color: gold;
 }
+
+#ancestors-btn.active {
+    color: cyan;
+}
