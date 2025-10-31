@@ -22,6 +22,22 @@ changelog
 .. + Fixes an issue where lines and circles would not be visible during ancestor hover highlighting.
 .. + Adds ancestor data to the model serialization to enable client-side ancestor highlighting.
 
+0.3.15
+------
+*2025-10-29*
+
+**feat**
+
+.. + Adds ancestor highlighting on hover.
+
+0.3.14
+------
+*2025-10-27*
+
+**changed**
+
+.. + Updates documentation.
+
 0.3.13
 ------
 *2025-10-27*
@@ -33,6 +49,14 @@ changelog
 **fixed**
 
 .. + Adds error handling to construction endpoints.
+
+0.3.12
+------
+*2025-10-27*
+
+**refactor**
+
+.. + Improves dependents retrieval and serialization.
 
 0.3.11
 ------
