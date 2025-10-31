@@ -8,6 +8,7 @@ from geometor.model.sections import Section
 from geometor.model.chains import Chain
 from geometor.model.wedges import Wedge
 from geometor.model.utils import clean_expr, spread
+from geometor.model import Polynomial
 
 def _spread(l1: spg.Line, l2: spg.Line):
     """calculate the spread of two lines"""
@@ -180,6 +181,14 @@ def to_browser_dict(model):
                 'segments': [[model[s.p1].ID, model[s.p2].ID] for s in el.segments],
                 'flow': el.flow,
             })
+        
+        elif isinstance(el, sp.Expr) and data.object == el:  # Check if it's a polynomial expression from a Polynomial element
+            if isinstance(data, Polynomial):
+                element_dict.update({
+                    'type': 'polynomial',
+                    'coeffs': [str(c) for c in data.coeffs],
+                    'latex_equation': sp.latex(el),
+                })
         
         else:
             # Skip unknown types

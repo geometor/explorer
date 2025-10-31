@@ -82,6 +82,9 @@ export function renderElement(el, points) {
             }).join(' ');
             svgEl.setAttribute('points', pointsStr);
             break;
+        case 'polynomial':
+            svgEl = renderPolynomial(el);
+            break;
     }
 
     if (svgEl) {
@@ -115,6 +118,61 @@ export function renderPoint(el) {
     GEOMETOR.pointsContainer.appendChild(circle);
     renderHighlight(el);
 }
+
+function evaluatePolynomial(coeffs, x) {
+    let result = 0;
+    // Ensure coeffs are parsed as floats for calculation
+    const numericCoeffs = coeffs.map(c => {
+        if (typeof c === 'string' && c.includes('sqrt')) {
+            // Basic parsing for sqrt(5) or similar patterns.
+            // A more robust solution might be needed for complex expressions.
+            const num = parseFloat(c.match(/(\d+)/)[0]);
+            return Math.sqrt(num);
+        }
+        return parseFloat(c);
+    });
+
+    for (let i = 0; i < numericCoeffs.length; i++) {
+        result += numericCoeffs[i] * Math.pow(x, numericCoeffs.length - 1 - i);
+    }
+    return result;
+}
+
+function generatePolynomialPointsString(el) {
+    const coeffs = el.coeffs;
+    const viewBox = GEOMETOR.svg.getAttribute('viewBox').split(' ').map(Number);
+    const [minX, , viewWidth] = viewBox;
+    const maxX = minX + viewWidth;
+
+    const svgWidth = GEOMETOR.svg.clientWidth;
+    // Calculate step size to have roughly one point per pixel
+    const step = viewWidth / svgWidth;
+
+    let points = [];
+    for (let x = minX; x <= maxX; x += step) {
+        const y = evaluatePolynomial(coeffs, x);
+        points.push(`${x},${-y}`);
+    }
+    return points.join(' ');
+}
+
+function renderPolynomial(el) {
+    const svgEl = document.createElementNS(SVG_NS, 'polyline');
+    svgEl.setAttribute('points', generatePolynomialPointsString(el));
+    svgEl.setAttribute('fill', 'none');
+    return svgEl;
+}
+
+export function updatePolynomials() {
+    const polys = GEOMETOR.graphicsContainer.querySelectorAll('.polynomial');
+    polys.forEach(polyEl => {
+        const elData = GEOMETOR.modelData.elements.find(e => e.ID === polyEl.id);
+        if (elData) {
+            polyEl.setAttribute('points', generatePolynomialPointsString(elData));
+        }
+    });
+}
+
 
 export function scaleCircles() {
     const svgRect = GEOMETOR.svg.getBoundingClientRect();
@@ -211,6 +269,7 @@ export function initSvgEventListeners() {
         y = mousePoint.y - (svgY / svgRect.height) * height;
         GEOMETOR.svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
         scaleCircles();
+        updatePolynomials();
     });
 
 
@@ -234,6 +293,7 @@ export function initSvgEventListeners() {
         y -= dy;
         GEOMETOR.svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
         startPoint = { x: event.clientX, y: event.clientY };
+        updatePolynomials();
     });
 
     GEOMETOR.svg.addEventListener('mouseup', () => {

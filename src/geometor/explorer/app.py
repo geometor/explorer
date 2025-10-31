@@ -277,6 +277,23 @@ def construct_point():
     return jsonify(to_browser_dict(model))
 
 
+@app.route('/api/construct/polynomial', methods=['POST'])
+def construct_polynomial():
+    data = request.get_json()
+    coeffs_str = data.get('coeffs')
+
+    if coeffs_str:
+        try:
+            # Convert comma-separated string to a list of strings
+            coeffs = [c.strip() for c in coeffs_str.split(',')]
+            model.add_poly(coeffs)
+        except Exception as e:
+            app.logger.error(f"Error creating polynomial with coeffs='{coeffs_str}': {e}")
+            return jsonify({"success": False, "message": f"Invalid expression for coefficients: {e}"}), 400
+
+    return jsonify(to_browser_dict(model))
+
+
 @app.route('/api/model/delete', methods=['POST'])
 def delete_element():
     """Deletes an element and its dependents from the model."""

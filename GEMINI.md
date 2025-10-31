@@ -28,6 +28,7 @@ The `app.py` file exposes the following API endpoints:
 -   `POST /api/construct/circle`: Construct a circle.
 -   `POST /api/construct/perpendicular_bisector`: Construct a perpendicular bisector.
 -   `POST /api/construct/angle_bisector`: Construct an angle bisector.
+-   `POST /api/construct/polynomial`: Construct a polynomial.
 -   `POST /api/construct/point`: Construct a point.
 -   `POST /api/model/delete`: Delete an element.
 -   `GET /api/model/dependents`: Get dependents of an element.

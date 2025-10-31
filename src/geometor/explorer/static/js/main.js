@@ -1,5 +1,5 @@
 import { modal } from './modal.js';
-import { fitConstruction, renderElement, renderPoint, scaleCircles, initSvgEventListeners } from './svg.js';
+import { fitConstruction, renderElement, renderPoint, scaleCircles, initSvgEventListeners, updatePolynomials } from './svg.js';
 import { initGroupsView, initGroupsEventListeners } from './groups.js';
 import { initResizer } from './resizer.js';
 import { TL_DRAW, setPoint, setLine, setCircle } from './Animate.js';
@@ -460,6 +460,44 @@ document.addEventListener('DOMContentLoaded', () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ x: data.x, y: data.y }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw new Error(err.message) });
+                }
+                return response.json();
+            })
+            .then(data => {
+                renderModel(data);
+                isDirty = true;
+                updateStatus('Ready');
+            })
+            .catch(error => {
+                updateStatus(error.message, true);
+            })
+            .finally(() => {
+                hideHourglassCursor();
+            });
+        });
+    });
+
+    const polynomialBtn = document.getElementById('polynomial-btn');
+    polynomialBtn.addEventListener('click', () => {
+        const content = `
+            <form>
+                <label for="coeffs">Coefficients (comma-separated):</label>
+                <input type="text" id="coeffs" name="coeffs" value="1, -1, -1" required>
+                <button type="submit">Add Polynomial</button>
+            </form>
+        `;
+
+        modal.show('Add Polynomial', content, (data) => {
+            showHourglassCursor();
+            updateStatus('Constructing polynomial...');
+            fetch('/api/construct/polynomial', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ coeffs: data.coeffs }),
             })
             .then(response => {
                 if (!response.ok) {

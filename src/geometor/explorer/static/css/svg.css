@@ -45,8 +45,16 @@
   vector-effect: non-scaling-stroke;
 }
 
+#elements polyline.polynomial {
+  stroke: #90ee90; /* lightgreen */
+  fill: none;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
 #elements line:hover, #elements line.hover,
-#elements circle:hover, #elements circle.hover {
+#elements circle:hover, #elements circle.hover,
+#elements polyline.polynomial:hover, #elements polyline.polynomial.hover {
   stroke: var(--select-color);
   stroke-opacity: 1;
 }
@@ -88,6 +96,13 @@
   marker-start: url(#marker);
   marker-mid: url(#marker);
   marker-end: url(#marker);
+}
+
+#graphics polyline.polynomial {
+  stroke: #90ee90; /* lightgreen */
+  fill: none;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
 }
 
 #graphics polyline.section.golden {

@@ -1,6 +1,17 @@
 changelog
 =========
 
+0.4.0
+-----
+*2025-10-31*
+
+**added**
+
+.. + Added `Polynomial` element to the model.
+.. + Added a "Polynomial" button to the UI to construct polynomials.
+.. + Implemented SVG rendering for polynomials using dynamic polylines.
+.. + Added `polynumbers.md` with background information.
+
 0.3.17
 ------
 *2025-10-30*
