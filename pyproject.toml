@@ -13,9 +13,10 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "textual",
+    "geometor-model",
+    "geometor-divine",
     "rich",
-    "jinja2",
+    "flask",
 ]
 
 [project.scripts]
