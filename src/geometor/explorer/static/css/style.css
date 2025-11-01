@@ -1,14 +1,14 @@
 :root {
-    --background-color: #fff;
-    --text-color: #000;
-    --accent-color: #f0f0f0;
-    --border-color: #ccc;
-    --button-bg: #f0f0f0;
-    --button-text: #000;
-    --highlight-bg: #f0f8ff;
+    --background-color: #121212;
+    --text-color: #e0e0e0;
+    --accent-color: #1e1e1e;
+    --border-color: #333;
+    --button-bg: #333;
+    --button-text: #e0e0e0;
+    --highlight-bg: #333;
+    --button-hover-bg: #444;
+    --row-hover-bg: #2a2a2a;
     --select-color: #0ff;
-    --button-hover-bg: #e0e0e0;
-    --row-hover-bg: #e6f2ff;
 }
 
 body {
@@ -20,6 +20,21 @@ body {
     margin: 0;
     background-color: var(--background-color);
     color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#main-container {
+    grid-column: 1;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    overflow: hidden;
+}
+
+#timeline-container {
+    display: flex;
+    align-items: center;
+    padding: 0.5em 1em;
+    border-top: 1px solid var(--border-color);
 }
 
 #resizer {
@@ -59,17 +74,15 @@ main {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    background-color: var(--accent-color);
+    background-color: var(--background-color);
 }
 
 aside {
     grid-column: 3;
     display: flex;
     flex-direction: column;
-    gap: 1em;
-    padding: 1em;
-    overflow-y: auto;
     border-left: 1px solid var(--border-color);
+    overflow: hidden;
 }
 
 table {
@@ -126,7 +139,9 @@ tbody tr.highlight {
 
 #hover-card table td:first-child,
 #hover-card table td.latex,
-#hover-card table td.latex-ratio {
+#hover-card table td.latex-ratio,
+#hover-card table td.latex-angle,
+#hover-card table td.latex-spread {
     text-align: center;
 }
 
@@ -144,7 +159,22 @@ button {
 }
 
 button:hover {
-    background-color: var(--button-hover-bg);
+    background-color: var(--select-color);
+    color: var(--background-color);
+}
+
+button.btn-enabled {
+    border: 1px solid var(--select-color);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button:disabled:hover {
+    background-color: var(--button-bg);
+    color: var(--button-text);
 }
 
 /* FROM INLINE */
@@ -179,11 +209,26 @@ tbody tr.row-hover {
     font-weight: bold;
 }
 
+
 .view-switcher {
     display: flex;
     gap: 0.5em;
     margin-bottom: 0.5em;
+    position: sticky;
+    top: 0;
+    background-color: var(--background-color);
+    padding: 1em 1em 0.5em 1em;
+    z-index: 1;
 }
+
+#view-container {
+    overflow-y: auto;
+    padding: 0 1em 1em 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
 .view-switcher button {
     flex-grow: 1;
     background-color: transparent;
@@ -231,6 +276,11 @@ tbody tr.row-hover {
     margin: 0 0 0.5em 0;
     display: flex;
     align-items: center;
+}
+.collapsible-section h3 span[id$="-count"] {
+    margin-left: auto;
+    font-size: 0.8em;
+    font-weight: normal;
 }
 .table-container {
     overflow-y: auto;
@@ -283,4 +333,68 @@ button .material-icons {
 .group-hover {
     stroke: #ff00ff !important;
     stroke-width: 0.01 !important;
+}
+
+.sortable {
+    cursor: pointer;
+    position: relative;
+}
+
+.sortable::after {
+    content: '';
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 4px solid transparent;
+}
+
+.sortable.asc::after {
+    border-bottom-color: var(--text-color);
+}
+
+.sortable.desc::after {
+    border-top-color: var(--text-color);
+}
+
+
+
+#play-pause-btn {
+    margin-right: 1em;
+}
+
+#timeline-slider {
+    width: 100%;
+}
+
+.animation-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.animation-controls button {
+    background: none;
+    border: none;
+    padding: 0.2em;
+}
+
+.animation-controls button:hover {
+    background-color: transparent;
+}
+
+.animation-controls .material-icons {
+    font-size: 1.8em;
+}
+
+#analysis-toggle {
+    color: grey;
+}
+
+#analysis-toggle.active {
+    color: gold;
+}
+
+#ancestors-btn.active {
+    color: cyan;
 }

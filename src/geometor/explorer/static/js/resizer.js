@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+export function initResizer() {
     const resizer = document.getElementById('resizer');
     const aside = document.querySelector('aside');
     const body = document.querySelector('body');
@@ -19,4 +19,5 @@ document.addEventListener('DOMContentLoaded', () => {
         const newWidth = window.innerWidth - e.clientX;
         body.style.gridTemplateColumns = `1fr 5px ${newWidth}px`;
     }
-});
+}
+

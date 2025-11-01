@@ -1,11 +1,40 @@
 """
 Browser-specific serialization for the Model class.
 """
+import sympy as sp
+import sympy.geometry as spg
 from geometor.model.common import *
 from geometor.model.sections import Section
 from geometor.model.chains import Chain
 from geometor.model.wedges import Wedge
-from geometor.model.utils import clean_expr
+from geometor.model.utils import clean_expr, spread
+from geometor.model import Polynomial
+
+def _spread(l1: spg.Line, l2: spg.Line):
+    """calculate the spread of two lines"""
+    a1, a2, a3 = l1.coefficients
+    b1, b2, b3 = l2.coefficients
+    # only the first two coefficients are used
+    spread_val = ((a1 * b2 - a2 * b1) ** 2) / ((a1**2 + a2**2) * (b1**2 + b2**2))
+    return spread_val
+
+
+def _create_section_from_points(points, model):
+    """Helper function to create a Section object from points."""
+    section = Section(points)
+    lengths_val = [l.evalf() for l in section.lengths]
+    ratio_val = section.ratio.evalf()
+    return {
+        'type': 'section',
+        'points': [model[p].ID for p in section.points],
+        'lengths': [float(l) for l in lengths_val],
+        'decimal_lengths': [f'{l:.4f}' for l in lengths_val],
+        'latex_lengths': [sp.latex(l) for l in section.lengths],
+        'ratio': float(ratio_val),
+        'decimal_ratio': f'{ratio_val:.4f}',
+        'latex_ratio': sp.latex(section.ratio),
+        'is_golden': section.is_golden,
+    }
 
 def to_browser_dict(model):
     """
@@ -31,8 +60,10 @@ def to_browser_dict(model):
 
         element_dict = {
             'ID': data.ID,
-            'classes': list(data.classes.keys()),
+            'classes': list(data.classes),
             'parents': [model[p].ID for p in data.parents.keys() if p in model and model[p].ID],
+            'ancestors': model.get_ancestors_IDs(el).get(data.ID, {}),
+            'guide': data.guide,
         }
 
         if isinstance(el, spg.Point):
@@ -53,6 +84,7 @@ def to_browser_dict(model):
                 'pt2': model[el.p2].ID,
                 'equation': str(el.equation()),
                 'latex_equation': sp.latex(el.equation()),
+                'latex_coefficients': [sp.latex(clean_expr(c)) for c in el.coefficients],
                 'length': float(length_val),
                 'decimal_length': f'{length_val:.4f}',
                 'latex_length': sp.latex(segment.length),
@@ -60,6 +92,8 @@ def to_browser_dict(model):
 
         elif isinstance(el, spg.Circle):
             radius_val = el.radius.evalf()
+            h_val = el.center.x.evalf()
+            k_val = el.center.y.evalf()
             element_dict.update({
                 'type': 'circle',
                 'center': model[el.center].ID,
@@ -67,6 +101,12 @@ def to_browser_dict(model):
                 'radius': float(radius_val),
                 'decimal_radius': f'{radius_val:.4f}',
                 'latex_radius': sp.latex(el.radius),
+                'h': float(h_val),
+                'decimal_h': f'{h_val:.4f}',
+                'latex_h': sp.latex(clean_expr(el.center.x)),
+                'k': float(k_val),
+                'decimal_k': f'{k_val:.4f}',
+                'latex_k': sp.latex(clean_expr(el.center.y)),
                 'equation': str(el.equation()),
                 'latex_equation': sp.latex(el.equation()),
             })
@@ -75,6 +115,16 @@ def to_browser_dict(model):
             lengths_val = [s.length.evalf() for s in el.sides]
             angles_val = {p: a.evalf() for p, a in el.angles.items()}
             area_val = el.area.evalf()
+            
+            spreads = {}
+            vertices = el.vertices
+            for i, v in enumerate(vertices):
+                prev_v = vertices[i - 1]
+                next_v = vertices[(i + 1) % len(vertices)]
+                l1 = spg.Line(v, prev_v)
+                l2 = spg.Line(v, next_v)
+                spreads[model[v].ID] = sp.latex(clean_expr(_spread(l1, l2)))
+
             element_dict.update({
                 'type': 'polygon',
                 'points': [model[p].ID for p in el.vertices],
@@ -84,6 +134,7 @@ def to_browser_dict(model):
                 'angles': {model[p].ID: float(a) for p, a in angles_val.items()},
                 'degree_angles': {model[p].ID: f'{a * 180 / sp.pi:.3f}°' for p, a in angles_val.items()},
                 'latex_angles': {model[p].ID: sp.latex(clean_expr(a)) for p, a in el.angles.items()},
+                'spreads': spreads,
                 'area': float(area_val),
                 'decimal_area': f'{area_val:.4f}',
                 'latex_area': sp.latex(clean_expr(el.area)),
@@ -100,7 +151,7 @@ def to_browser_dict(model):
                 'decimal_length': f'{length_val:.4f}',
                 'latex_length': sp.latex(el.length),
             })
-            
+
         elif isinstance(el, Wedge):
             radius_val = el.circle.radius.evalf()
             radians_val = el.radians.evalf()
@@ -118,38 +169,10 @@ def to_browser_dict(model):
                 'latex_radians': sp.latex(el.radians),
             })
 
-        elif isinstance(el, Section):
-            lengths_val = [l.evalf() for l in el.lengths]
-            ratio_val = el.ratio.evalf()
-            element_dict.update({
-                'type': 'section',
-                'points': [model[p].ID for p in el.points],
-                'lengths': [float(l) for l in lengths_val],
-                'decimal_lengths': [f'{l:.4f}' for l in lengths_val],
-                'latex_lengths': [sp.latex(l) for l in el.lengths],
-                'ratio': float(ratio_val),
-                'decimal_ratio': f'{ratio_val:.4f}',
-                'latex_ratio': sp.latex(el.ratio),
-                'is_golden': el.is_golden,
-            })
-
-        elif isinstance(el, sp.FiniteSet):
-            # Reconstruct a Section object to get its properties
-            points = list(el.args)
-            section = Section(points)
-            lengths_val = [l.evalf() for l in section.lengths]
-            ratio_val = section.ratio.evalf()
-            element_dict.update({
-                'type': 'section',
-                'points': [model[p].ID for p in section.points],
-                'lengths': [float(l) for l in lengths_val],
-                'decimal_lengths': [f'{l:.4f}' for l in lengths_val],
-                'latex_lengths': [sp.latex(l) for l in section.lengths],
-                'ratio': float(ratio_val),
-                'decimal_ratio': f'{ratio_val:.4f}',
-                'latex_ratio': sp.latex(section.ratio),
-                'is_golden': section.is_golden,
-            })
+        elif isinstance(el, (Section, sp.FiniteSet)):
+            points = list(el.args) if isinstance(el, sp.FiniteSet) else el.points
+            section_dict = _create_section_from_points(points, model)
+            element_dict.update(section_dict)
 
         elif isinstance(el, Chain):
             element_dict.update({
@@ -158,6 +181,14 @@ def to_browser_dict(model):
                 'segments': [[model[s.p1].ID, model[s.p2].ID] for s in el.segments],
                 'flow': el.flow,
             })
+        
+        elif isinstance(el, sp.Expr) and data.object == el:  # Check if it's a polynomial expression from a Polynomial element
+            if isinstance(data, Polynomial):
+                element_dict.update({
+                    'type': 'polynomial',
+                    'coeffs': [str(c) for c in data.coeffs],
+                    'latex_equation': sp.latex(el),
+                })
         
         else:
             # Skip unknown types

@@ -1,4 +1,4 @@
-function initGroupsView() {
+export function initGroupsView() {
     fetchGroupsBySize();
     fetchGroupsByPoint();
     fetchGroupsByChain();
@@ -8,7 +8,6 @@ async function fetchGroupsBySize() {
     try {
         const response = await fetch('/api/groups/by_size');
         const data = await response.json();
-        console.log('Groups by size:', data);
         populateSizesTable(data);
     } catch (error) {
         console.error('Error fetching groups by size:', error);
@@ -19,7 +18,6 @@ async function fetchGroupsByPoint() {
     try {
         const response = await fetch('/api/groups/by_point');
         const data = await response.json();
-        console.log('Groups by point:', data);
         populatePointsGroupTable(data);
     } catch (error) {
         console.error('Error fetching groups by point:', error);
@@ -30,7 +28,6 @@ async function fetchGroupsByChain() {
     try {
         const response = await fetch('/api/groups/by_chain');
         const data = await response.json();
-        console.log('Groups by chain:', data);
         populateChainsTable(data);
     } catch (error) {
         console.error('Error fetching groups by chain:', error);
@@ -38,56 +35,106 @@ async function fetchGroupsByChain() {
 }
 
 function populateSizesTable(data) {
-    const tableBody = document.getElementById('sizes-table').getElementsByTagName('tbody')[0];
-    tableBody.innerHTML = '';
-    const sizes = Object.keys(data).sort((a, b) => data[b].length - data[a].length);
-
-    for (const size of sizes) {
-        const sections = data[size];
-        const row = tableBody.insertRow();
-        row.dataset.sections = JSON.stringify(sections);
-        const cell1 = row.insertCell(0);
-        const cell2 = row.insertCell(1);
-        cell1.textContent = parseFloat(size).toFixed(4);
-        cell2.textContent = sections.length;
-    }
-    document.getElementById('sizes-count').textContent = `(${sizes.length})`;
+    const columns = [
+        { key: 'size', transform: (val) => parseFloat(val).toFixed(4) },
+        { key: 'count' }
+    ];
+    const entries = Object.entries(data).map(([size, sections]) => ({ size, sections, count: sections.length }));
+    populateTable('sizes-table', entries, columns, 'count', 'desc');
+    document.getElementById('sizes-count').textContent = entries.length;
 }
 
 function populatePointsGroupTable(data) {
-    const tableBody = document.getElementById('points-group-table').getElementsByTagName('tbody')[0];
-    tableBody.innerHTML = '';
-    const points = Object.keys(data).sort((a, b) => data[b].length - data[a].length);
-
-    for (const pointId of points) {
-        const sections = data[pointId];
-        const row = tableBody.insertRow();
-        row.dataset.sections = JSON.stringify(sections);
-        const cell1 = row.insertCell(0);
-        const cell2 = row.insertCell(1);
-        cell1.textContent = pointId;
-        cell2.textContent = sections.length;
-    }
-    document.getElementById('points-group-count').textContent = `(${points.length})`;
+    const columns = [
+        { key: 'pointId' },
+        { key: 'count' }
+    ];
+    const entries = Object.entries(data).map(([pointId, sections]) => ({ pointId, sections, count: sections.length }));
+    populateTable('points-group-table', entries, columns, 'count', 'desc');
+    document.getElementById('points-group-count').textContent = entries.length;
 }
 
 function populateChainsTable(data) {
-    const tableBody = document.getElementById('chains-table').getElementsByTagName('tbody')[0];
-    tableBody.innerHTML = '';
-    const chains = data.sort((a, b) => b.sections.length - a.sections.length);
-
-    chains.forEach((chain, index) => {
-        const row = tableBody.insertRow();
-        row.dataset.sections = JSON.stringify(chain.sections);
-        const cell1 = row.insertCell(0);
-        const cell2 = row.insertCell(1);
-        cell1.textContent = chain.name;
-        cell2.textContent = chain.sections.length;
-    });
-    document.getElementById('chains-count').textContent = `(${chains.length})`;
+    const columns = [
+        { key: 'name' },
+        { key: 'count' }
+    ];
+    const entries = data.map(chain => ({ ...chain, count: chain.sections.length }));
+    populateTable('chains-table', entries, columns, 'count', 'desc');
+    document.getElementById('chains-count').textContent = entries.length;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function populateTable(tableId, data, columns, initialSortKey, initialSortOrder) {
+    const table = document.getElementById(tableId);
+    const tableBody = table.getElementsByTagName('tbody')[0];
+    const tableHead = table.getElementsByTagName('thead')[0];
+    tableBody.innerHTML = '';
+
+    let sortKey = initialSortKey;
+    let sortOrder = initialSortOrder;
+
+    function sortData(key) {
+        if (sortKey === key) {
+            sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+        } else {
+            sortKey = key;
+            sortOrder = 'asc';
+        }
+
+        data.sort((a, b) => {
+            const valA = a[sortKey];
+            const valB = b[sortKey];
+
+            if (valA < valB) {
+                return sortOrder === 'asc' ? -1 : 1;
+            }
+            if (valA > valB) {
+                return sortOrder === 'asc' ? 1 : -1;
+            }
+            return 0;
+        });
+
+        updateSortIndicators();
+        renderTable();
+    }
+
+    function updateSortIndicators() {
+        tableHead.querySelectorAll('th').forEach((th, index) => {
+            const column = columns[index];
+            if (column) {
+                th.classList.remove('asc', 'desc');
+                if (column.key === sortKey) {
+                    th.classList.add(sortOrder);
+                }
+            }
+        });
+    }
+
+    function renderTable() {
+        tableBody.innerHTML = '';
+        data.forEach(item => {
+            const row = tableBody.insertRow();
+            row.dataset.sections = JSON.stringify(item.sections);
+            columns.forEach(column => {
+                const cell = row.insertCell();
+                const value = item[column.key];
+                cell.textContent = column.transform ? column.transform(value) : value;
+            });
+        });
+    }
+
+    tableHead.querySelectorAll('th').forEach((th, index) => {
+        const column = columns[index];
+        if (column) {
+            th.classList.add('sortable');
+            th.addEventListener('click', () => sortData(column.key));
+        }
+    });
+    
+    sortData(sortKey);
+}
+
+export function initGroupsEventListeners() {
     const groupTables = ['sizes-table', 'points-group-table', 'chains-table'];
 
     groupTables.forEach(tableId => {
@@ -110,4 +157,5 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
-});
+}
+

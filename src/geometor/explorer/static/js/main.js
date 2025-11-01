@@ -1,4 +1,18 @@
+import { modal } from './modal.js';
+import { fitConstruction, renderElement, renderPoint, scaleCircles, initSvgEventListeners, updatePolynomials } from './svg.js';
+import { initGroupsView, initGroupsEventListeners } from './groups.js';
+import { initResizer } from './resizer.js';
+import { TL_DRAW, setPoint, setLine, setCircle } from './Animate.js';
+
+window.GEOMETOR = window.GEOMETOR || {};
+
 document.addEventListener('DOMContentLoaded', () => {
+    modal.init();
+    initResizer();
+    initGroupsEventListeners();
+
+    GEOMETOR.tables = {};
+
     function showHourglassCursor() {
         document.body.style.cursor = 'wait';
         GEOMETOR.svg.style.cursor = 'wait';
@@ -8,10 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.cursor = 'default';
         GEOMETOR.svg.style.cursor = 'default';
     }
-
-    window.GEOMETOR = {
-        tables: {}
-    };
 
     GEOMETOR.svg = document.getElementById('drawing');
     GEOMETOR.graphicsContainer = document.getElementById('graphics');
@@ -24,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     GEOMETOR.tables.graphics = document.querySelector('#graphics-table tbody');
     GEOMETOR.tables.chrono = document.querySelector('#chrono-table tbody');
     const statusFilename = document.getElementById('status-filename');
+    const statusSelected = document.getElementById('status-selected');
     const statusMessage = document.getElementById('status-message');
     let currentFilename = '';
     let isDirty = false;
@@ -51,21 +62,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-
-
-
     GEOMETOR.selectedPoints = [];
     GEOMETOR.modelData = {};
     GEOMETOR.isPositionedByTable = false;
 
-    function renderModel(data) {
+    function renderModel(data, skipAnimation = false) {
         const oldGoldenSectionIds = (GEOMETOR.modelData.elements || [])
             .filter(el => el.type === 'section' && el.classes.includes('golden'))
             .map(el => el.ID)
             .sort();
 
         GEOMETOR.modelData = data;
-        // Clear all containers
         GEOMETOR.graphicsContainer.innerHTML = '';
         GEOMETOR.highlightsContainer.innerHTML = '';
         GEOMETOR.elementsContainer.innerHTML = '';
@@ -77,7 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const points = {};
 
-        // First pass: Process all points to populate the lookup object
         if (data.elements) {
             data.elements.forEach(el => {
                 if (el.type === 'point') {
@@ -86,32 +92,32 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Second pass: Render everything in order
         if (data.elements) {
             data.elements.forEach(el => {
-                // Render SVG and populate category tables
                 if (el.type === 'point') {
                     renderPoint(el);
                     addPointToTable(el);
                 } else {
-                    renderElement(el, points); // Now `points` is guaranteed to be complete
+                    renderElement(el, points);
                     if (['line', 'circle'].includes(el.type)) {
                         addStructureToTable(el);
                     } else {
                         addGraphicToTable(el);
                     }
                 }
-                // Populate chronological table AFTER the element is rendered
                 addChronologicalRow(el);
+                if (animationEnabled) {
+                    const svgEl = document.getElementById(el.ID);
+                    if (svgEl) {
+                        gsap.set(svgEl, { autoAlpha: 0 });
+                    }
+                }
             });
         }
         
-        // Update counts
-        document.getElementById('points-count').textContent = `(${GEOMETOR.tables.points.rows.length})`;
-        document.getElementById('structures-count').textContent = `(${GEOMETOR.tables.structures.rows.length})`;
-        document.getElementById('graphics-count').textContent = `(${GEOMETOR.tables.graphics.rows.length})`;
-
-        // Re-apply selection visuals
+            document.getElementById('points-count').textContent = GEOMETOR.tables.points.rows.length;
+            document.getElementById('structures-count').textContent = GEOMETOR.tables.structures.rows.length;
+            document.getElementById('graphics-count').textContent = GEOMETOR.tables.graphics.rows.length;
         GEOMETOR.selectedPoints.forEach(ID => {
             const svgPoint = document.getElementById(ID);
             const tableRow = GEOMETOR.tables.points.querySelector(`tr[data-id="${ID}"]`);
@@ -131,6 +137,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (JSON.stringify(oldGoldenSectionIds) !== JSON.stringify(newGoldenSectionIds)) {
             initGroupsView();
         }
+        if (animationEnabled && !skipAnimation) {
+            animateConstruction();
+        } else {
+            gsap.set('#drawing g > *', { autoAlpha: 1 });
+        }
     }
 
     function addPointToTable(el) {
@@ -140,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const xCell = row.insertCell();
         const yCell = row.insertCell();
         const classCell = row.insertCell();
+        const guideCell = row.insertCell();
         const actionCell = row.insertCell();
 
         IDCell.innerHTML = el.ID;
@@ -148,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
         katex.render(el.latex_y, yCell);
         yCell.title = el.y.toFixed(4);
         classCell.innerHTML = el.classes.join(', ');
+        guideCell.innerHTML = el.guide ? '✓' : '';
 
         actionCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}"><span class="material-icons">edit</span></button><button class="delete-btn" data-id="${el.ID}"><span class="material-icons">delete</span></button>`;
 
@@ -163,10 +176,12 @@ document.addEventListener('DOMContentLoaded', () => {
         row.dataset.id = el.ID;
         const IDCell = row.insertCell();
         const classCell = row.insertCell();
+        const guideCell = row.insertCell();
         const deleteCell = row.insertCell();
 
         IDCell.innerHTML = el.ID;
         classCell.innerHTML = el.classes.join(', ');
+        guideCell.innerHTML = el.guide ? '✓' : '';
         deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}"><span class="material-icons">edit</span></button><button class="delete-btn" data-id="${el.ID}"><span class="material-icons">delete</span></button>`;
 
         const svgEl = document.getElementById(el.ID);
@@ -204,10 +219,12 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const IDCell = row.insertCell();
         const classCell = row.insertCell();
+        const guideCell = row.insertCell();
         const deleteCell = row.insertCell();
 
         IDCell.innerHTML = el.ID;
         classCell.innerHTML = el.classes.join(', ');
+        guideCell.innerHTML = el.guide ? '✓' : '';
         if (el.type !== 'point' && !isGiven) {
             deleteCell.innerHTML = `<button class="edit-btn" data-id="${el.ID}"><span class="material-icons">edit</span></button><button class="delete-btn" data-id="${el.ID}"><span class="material-icons">delete</span></button>`;
         }
@@ -232,6 +249,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const lineBtn = document.getElementById('line-btn');
     const circleBtn = document.getElementById('circle-btn');
+    const pbBtn = document.getElementById('pb-btn');
+    const abBtn = document.getElementById('ab-btn');
     const segmentBtn = document.getElementById('segment-btn');
     const sectionBtn = document.getElementById('section-btn');
     const polygonBtn = document.getElementById('polygon-btn');
@@ -240,29 +259,42 @@ document.addEventListener('DOMContentLoaded', () => {
         const numPoints = GEOMETOR.selectedPoints.length;
         lineBtn.disabled = numPoints !== 2;
         circleBtn.disabled = numPoints !== 2;
+        pbBtn.disabled = numPoints !== 2;
+        abBtn.disabled = numPoints !== 3;
         segmentBtn.disabled = numPoints !== 2;
         sectionBtn.disabled = numPoints !== 3;
         polygonBtn.disabled = numPoints < 2;
+
+        [lineBtn, circleBtn, pbBtn, abBtn, segmentBtn, sectionBtn, polygonBtn].forEach(btn => {
+            if (btn.disabled) {
+                btn.classList.remove('btn-enabled');
+            } else {
+                btn.classList.add('btn-enabled');
+            }
+        });
+    }
+
+    function updateSelectedPointsDisplay() {
+        statusSelected.textContent = `Selected: ${GEOMETOR.selectedPoints.join(', ')}`;
     }
 
     function toggleSelection(ID) {
         const index = GEOMETOR.selectedPoints.indexOf(ID);
         if (index > -1) {
-            // Deselect
             GEOMETOR.selectedPoints.splice(index, 1);
         } else {
-            // Select
             GEOMETOR.selectedPoints.push(ID);
         }
-        // Re-render to apply/remove selection styles consistently
-        renderModel(GEOMETOR.modelData);
+        renderModel(GEOMETOR.modelData, true);
         updateConstructionButtons();
+        updateSelectedPointsDisplay();
     }
 
     function clearSelection() {
         GEOMETOR.selectedPoints = [];
-        renderModel(GEOMETOR.modelData);
+        renderModel(GEOMETOR.modelData, true);
         updateConstructionButtons();
+        updateSelectedPointsDisplay();
     }
 
     GEOMETOR.pointsContainer.addEventListener('click', (event) => {
@@ -325,8 +357,53 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    pbBtn.addEventListener('click', () => {
+        if (GEOMETOR.selectedPoints.length === 2) {
+            const [pt1, pt2] = GEOMETOR.selectedPoints;
+            showHourglassCursor();
+            updateStatus('Constructing perpendicular bisector...');
+            fetch('/api/construct/perpendicular_bisector', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ pt1, pt2 }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                renderModel(data);
+                clearSelection();
+                isDirty = true;
+            })
+            .finally(() => {
+                hideHourglassCursor();
+                updateStatus('Ready');
+            });
+        }
+    });
+
+    abBtn.addEventListener('click', () => {
+        if (GEOMETOR.selectedPoints.length === 3) {
+            const [pt1, vertex, pt3] = GEOMETOR.selectedPoints;
+            showHourglassCursor();
+            updateStatus('Constructing angle bisector...');
+            fetch('/api/construct/angle_bisector', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ pt1, vertex, pt3 }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                renderModel(data);
+                clearSelection();
+                isDirty = true;
+            })
+            .finally(() => {
+                hideHourglassCursor();
+                updateStatus('Ready');
+            });
+        }
+    });
+
     function constructPoly(endpoint, points) {
-        // console.log("constructPoly");
         showHourglassCursor();
         updateStatus('Constructing polygon...');
         fetch(endpoint, {
@@ -336,7 +413,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(response => response.json())
         .then(data => {
-            // console.log(data);
             renderModel(data);
             clearSelection();
             isDirty = true;
@@ -367,29 +443,81 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const pointBtn = document.getElementById('point-btn');
     pointBtn.addEventListener('click', () => {
-        const x = prompt('Enter x coordinate:');
-        const y = prompt('Enter y coordinate:');
+        const content = `
+            <form>
+                <label for="x">X Coordinate:</label>
+                <input type="text" id="x" name="x" value="0" required>
+                <label for="y">Y Coordinate:</label>
+                <input type="text" id="y" name="y" value="0" required>
+                <button type="submit">Add Point</button>
+            </form>
+        `;
 
-        if (x !== null && y !== null) {
+        modal.show('Add Point', content, (data) => {
             showHourglassCursor();
             updateStatus('Constructing point...');
             fetch('/api/construct/point', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ x: parseFloat(x), y: parseFloat(y) }),
+                body: JSON.stringify({ x: data.x, y: data.y }),
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw new Error(err.message) });
+                }
+                return response.json();
+            })
             .then(data => {
                 renderModel(data);
                 isDirty = true;
+                updateStatus('Ready');
+            })
+            .catch(error => {
+                updateStatus(error.message, true);
             })
             .finally(() => {
                 hideHourglassCursor();
-                updateStatus('Ready');
             });
-        }
+        });
     });
 
+    const polynomialBtn = document.getElementById('polynomial-btn');
+    polynomialBtn.addEventListener('click', () => {
+        const content = `
+            <form>
+                <label for="coeffs">Coefficients (comma-separated):</label>
+                <input type="text" id="coeffs" name="coeffs" value="1, -1, -1" required>
+                <button type="submit">Add Polynomial</button>
+            </form>
+        `;
+
+        modal.show('Add Polynomial', content, (data) => {
+            showHourglassCursor();
+            updateStatus('Constructing polynomial...');
+            fetch('/api/construct/polynomial', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ coeffs: data.coeffs }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw new Error(err.message) });
+                }
+                return response.json();
+            })
+            .then(data => {
+                renderModel(data);
+                isDirty = true;
+                updateStatus('Ready');
+            })
+            .catch(error => {
+                updateStatus(error.message, true);
+            })
+            .finally(() => {
+                hideHourglassCursor();
+            });
+        });
+    });
 
     GEOMETOR.updateHoverCard = function(element) {
         if (!element) {
@@ -422,9 +550,15 @@ document.addEventListener('DOMContentLoaded', () => {
             let table = '<table><tbody>';
             if (element.type === 'circle') {
                 table += `<tr><td>ctr</td><td colspan="2">${element.center}</td></tr>`;
+                const h = document.createElement('div');
+                katex.render(`${element.latex_h}`, h);
+                table += `<tr><td>h</td><td class="latex">${h.innerHTML}</td><td class="decimal">${element.decimal_h}</td></tr>`;
+                const k = document.createElement('div');
+                katex.render(`${element.latex_k}`, k);
+                table += `<tr><td>k</td><td class="latex">${k.innerHTML}</td><td class="decimal">${element.decimal_k}</td></tr>`;
                 const radius = document.createElement('div');
                 katex.render(`${element.latex_radius}`, radius);
-                table += `<tr><td>rad</td><td class="latex">${radius.innerHTML}</td><td class="decimal">${element.decimal_radius}</td></tr>`;
+                table += `<tr><td>r</td><td class="latex">${radius.innerHTML}</td><td class="decimal">${element.decimal_radius}</td></tr>`;
             }
             if (element.type === 'line') {
                 const length = document.createElement('div');
@@ -434,6 +568,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const equation = document.createElement('div');
             katex.render(element.latex_equation, equation);
             table += `<tr><td>eq</td><td colspan="2">${equation.innerHTML}</td></tr>`;
+            if (element.latex_coefficients) {
+                const coefficients = document.createElement('div');
+                katex.render(element.latex_coefficients.join(', '), coefficients);
+                table += `<tr><td>coef</td><td colspan="2">${coefficients.innerHTML}</td></tr>`;
+            }
             if (element.parents && element.parents.length > 0) {
                 table += `<tr><td>pts</td><td colspan="2">${element.parents.join(', ')}</td></tr>`;
             }
@@ -467,7 +606,7 @@ document.addEventListener('DOMContentLoaded', () => {
             content += `<span>${radians.innerHTML}</span> <span class="decimal">(${element.degrees})</span>`;
         } else if (element.type === 'polygon') {
             content += '<hr>';
-            let table = '<table><thead><tr><th>Segment</th><th>Symbolic</th><th>Decimal</th></tr></thead><tbody>';
+            let table = '<table><thead><tr><th>Seg</th><th>Sym</th><th>Dec</th></tr></thead><tbody>';
             for (let i = 0; i < element.parents.length; i++) {
                 const p1 = element.parents[i];
                 const p2 = element.parents[(i + 1) % element.parents.length];
@@ -477,15 +616,16 @@ document.addEventListener('DOMContentLoaded', () => {
             table += '</tbody></table>';
             content += table;
 
-            const angles = document.createElement('div');
-            angles.innerHTML = 'Angles:';
-            for (const [p, a] of Object.entries(element.latex_angles)) {
-                const angle = document.createElement('div');
-                katex.render(`${p}: ${a}`, angle);
-                angle.innerHTML = `<span>${angle.innerHTML}</span> <span class="decimal">(${element.degree_angles[p]})</span>`;
-                angles.appendChild(angle);
+            let angleTable = '<table><thead><tr><th>Vert</th><th>Alg</th><th>Deg</th><th>Spread</th></tr></thead><tbody>';
+            for (const p of element.parents) {
+                const algValue = element.latex_angles[p] || '';
+                const degValue = element.degree_angles[p] || '';
+                const spreadValue = element.spreads[p] || '';
+                
+                angleTable += `<tr><td>${p}</td><td class="latex-angle">${algValue}</td><td class="decimal">${degValue}</td><td class="latex-spread">${spreadValue}</td></tr>`;
             }
-            content += angles.innerHTML;
+            angleTable += '</tbody></table>';
+            content += angleTable;
 
             const area = document.createElement('div');
             katex.render(`Area = ${element.latex_area}`, area);
@@ -494,7 +634,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         GEOMETOR.hoverCard.innerHTML = content;
 
-        // Render LaTeX in the newly created table cells
         if (element.type === 'section') {
             const latexCells = GEOMETOR.hoverCard.querySelectorAll('.latex');
             latexCells.forEach((cell, i) => {
@@ -508,6 +647,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const latexCells = GEOMETOR.hoverCard.querySelectorAll('.latex');
             latexCells.forEach((cell, i) => {
                 katex.render(element.latex_lengths[i], cell);
+            });
+            const latexAngleCells = GEOMETOR.hoverCard.querySelectorAll('.latex-angle');
+            latexAngleCells.forEach(cell => {
+                katex.render(cell.textContent, cell);
+            });
+            const latexSpreadCells = GEOMETOR.hoverCard.querySelectorAll('.latex-spread');
+            latexSpreadCells.forEach(cell => {
+                katex.render(cell.textContent, cell);
             });
         }
 
@@ -533,9 +680,54 @@ document.addEventListener('DOMContentLoaded', () => {
         GEOMETOR.hoverCard.style.display = 'block';
     }
 
+    function getAncestorIds(ancestors) {
+        if (!ancestors) {
+            return [];
+        }
+        let allIds = [];
+        function recurse(ancestorObj) {
+            let ids = Object.keys(ancestorObj);
+            allIds = allIds.concat(ids);
+            ids.forEach(id => {
+                if (ancestorObj[id]) {
+                    recurse(ancestorObj[id]);
+                }
+            });
+        }
+        recurse(ancestors);
+        return allIds;
+    }
+
     GEOMETOR.setElementHover = function(ID, hoverState) {
+        if (!GEOMETOR.modelData.elements) {
+            return;
+        }
         const elementData = GEOMETOR.modelData.elements.find(el => el.ID === ID);
         if (!elementData) return;
+
+        if (ancestorsOnHover) {
+            if (hoverState) {
+                const ancestorIds = getAncestorIds(elementData.ancestors);
+                ancestorIds.push(ID);
+                GEOMETOR.modelData.elements.forEach(el => {
+                    const svgEl = document.getElementById(el.ID);
+                    if (svgEl) {
+                        if (ancestorIds.includes(el.ID)) {
+                            gsap.set(svgEl, { autoAlpha: 1 });
+                        } else {
+                            gsap.set(svgEl, { autoAlpha: 0 });
+                        }
+                    }
+                });
+            } else {
+                GEOMETOR.modelData.elements.forEach(el => {
+                    const svgEl = document.getElementById(el.ID);
+                    if (svgEl) {
+                        gsap.set(svgEl, { autoAlpha: 1 });
+                    }
+                });
+            }
+        }
 
         const svgElement = document.getElementById(ID);
         const pointsRow = GEOMETOR.tables.points.querySelector(`tr[data-id="${ID}"]`);
@@ -549,6 +741,34 @@ document.addEventListener('DOMContentLoaded', () => {
         if (svgElement) {
             svgElement.classList[action]('hover');
             svgElement.classList[action]('hover-target');
+            if (hoverState) {
+                gsap.set(svgElement, { autoAlpha: 1 });
+            } else {
+                if (!animationEnabled && !ancestorsOnHover) {
+                    const category = svgElement.dataset.category;
+                    let table;
+                    if (category === 'points') table = GEOMETOR.tables.points;
+                    if (category === 'elements') table = GEOMETOR.tables.structures;
+                    if (category === 'graphics') table = GEOMETOR.tables.graphics;
+
+                    if (table) {
+                        const section = table.closest('.collapsible-section');
+                        if (section && section.classList.contains('hide-elements')) {
+                            gsap.set(svgElement, { autoAlpha: 0 });
+                        } else {
+                            gsap.set(svgElement, { autoAlpha: 1 });
+                        }
+                    }
+                } else if (animationEnabled) {
+                    const elementIndex = GEOMETOR.modelData.elements.findIndex(el => el.ID === ID);
+                    const currentStep = Math.floor(TL_DRAW.progress() * GEOMETOR.modelData.elements.length);
+                    if (elementIndex >= currentStep) {
+                        gsap.set(svgElement, { autoAlpha: 0 });
+                    } else {
+                        gsap.set(svgElement, { autoAlpha: 1 });
+                    }
+                }
+            }
         }
         if (pointsRow) pointsRow.classList[action]('row-hover');
         if (structuresRow) structuresRow.classList[action]('row-hover');
@@ -556,7 +776,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (chronoRow) chronoRow.classList[action]('row-hover');
         if (highlightElement) highlightElement.style.display = hoverState ? 'inline' : 'none';
 
-        // Handle parents
         let parentIDs = [];
         if (elementData.type === 'line') {
             parentIDs = [elementData.pt1, elementData.pt2];
@@ -564,26 +783,13 @@ document.addEventListener('DOMContentLoaded', () => {
             parentIDs = [elementData.center, elementData.radius_pt];
         }
 
-        parentIDs.forEach(parentID => {
-            if (parentID) {
-                GEOMETOR.setElementHover(parentID, hoverState);
-            }
-        });
-    }
-
-    function highlightElements(elementIds) {
-        elementIds.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) {
-                el.classList.add('group-hover');
-            }
-        });
-    }
-
-    function clearHighlights() {
-        document.querySelectorAll('.group-hover').forEach(el => {
-            el.classList.remove('group-hover');
-        });
+        if (!ancestorsOnHover) {
+            parentIDs.forEach(parentID => {
+                if (parentID) {
+                    GEOMETOR.setElementHover(parentID, hoverState);
+                }
+            });
+        }
     }
 
     function transformPoint(svg, x, y) {
@@ -597,7 +803,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return null;
     }
 
-    // Table hovers
     Object.values(GEOMETOR.tables).forEach(tableBody => {
         tableBody.addEventListener('mouseover', (event) => {
             const row = event.target.closest('tr');
@@ -619,9 +824,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         const pt1 = GEOMETOR.modelData.elements.find(p => p.ID === elementData.pt1);
                         const pt2 = GEOMETOR.modelData.elements.find(p => p.ID === elementData.pt2);
                         if (pt1 && pt2) {
-                            const midX = (pt1.x + pt2.x) / 2;
-                            const midY = (pt1.y + pt2.y) / 2;
-                            screenPoint = transformPoint(GEOMETOR.svg, midX, midY);
+                            const bbx = Math.max(pt1.x, pt2.x);
+                            const bby = Math.max(pt1.y, pt2.y);
+                            screenPoint = transformPoint(GEOMETOR.svg, bbx, bby);
                         }
                     } else if (elementData.type === 'circle') {
                         const center = GEOMETOR.modelData.elements.find(p => p.ID === elementData.center);
@@ -654,7 +859,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         GEOMETOR.hoverCard.style.left = `${screenPoint.x + 15}px`;
                         GEOMETOR.hoverCard.style.top = `${screenPoint.y + 15}px`;
                     } else {
-                        // Fallback for elements without points or if transform fails
                         const elemRect = svgElement.getBoundingClientRect();
                         GEOMETOR.hoverCard.style.left = `${elemRect.right + 10}px`;
                         GEOMETOR.hoverCard.style.top = `${elemRect.top}px`;
@@ -671,12 +875,14 @@ document.addEventListener('DOMContentLoaded', () => {
             GEOMETOR.hoverCard.style.display = 'none';
         });
 
-        // Handle delete button clicks
         tableBody.addEventListener('click', (event) => {
-            if (event.target.classList.contains('delete-btn')) {
-                const ID = event.target.dataset.id;
-                if (!ID) return;
+            const button = event.target.closest('button');
+            if (!button) return;
 
+            const ID = button.dataset.id;
+            if (!ID) return;
+
+            if (button.classList.contains('delete-btn')) {
                 showHourglassCursor();
                 fetch(`/api/model/dependents?ID=${ID}`)
                     .then(response => response.json())
@@ -709,39 +915,45 @@ document.addEventListener('DOMContentLoaded', () => {
                     .catch(() => {
                         hideHourglassCursor();
                     });
-            }
-        });
-
-        // Handle edit button clicks
-        tableBody.addEventListener('click', (event) => {
-            if (event.target.classList.contains('edit-btn')) {
-                const ID = event.target.dataset.id;
-                if (!ID) return;
-
-                const newClass = prompt(`Enter new class for element ${ID}:`);
-                if (newClass) {
-                    showHourglassCursor();
-                    updateStatus('Editing element...');
-                    fetch('/api/model/edit', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ ID: ID, class: newClass }),
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        renderModel(data);
-                        isDirty = true;
-                    })
-                    .finally(() => {
-                        hideHourglassCursor();
-                        updateStatus('Ready');
+            } else if (button.classList.contains('edit-btn')) {
+                const element = GEOMETOR.modelData.elements.find(el => el.ID === ID);
+                if (element) {
+                    const content = `
+                        <form>
+                            <label for="classes">Classes:</label>
+                            <input type="text" id="classes" name="classes" value="${element.classes.join(', ')}">
+                            <label for="guide">Guide:</label>
+                            <input type="checkbox" id="guide" name="guide" ${element.guide ? 'checked' : ''}>
+                            <button type="submit">Save</button>
+                        </form>
+                    `;
+                    modal.show(`Edit Element ${ID}`, content, (data) => {
+                        showHourglassCursor();
+                        updateStatus('Editing element...');
+                        fetch('/api/model/edit', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ 
+                                ID: ID, 
+                                classes: data.classes,
+                                guide: data.guide === 'on'
+                            }),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            renderModel(data);
+                            isDirty = true;
+                        })
+                        .finally(() => {
+                            hideHourglassCursor();
+                            updateStatus('Ready');
+                        });
                     });
                 }
             }
         });
     });
 
-    // Chronological Table selection
     GEOMETOR.tables.chrono.addEventListener('click', (event) => {
         const row = event.target.closest('tr');
         if (row && row.dataset.id) {
@@ -761,7 +973,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     document.addEventListener('mouseout', (event) => {
         const target = event.target;
-        if (target.namespaceURI === SVG_NS && target.id) {
+        if (target.namespaceURI === "http://www.w3.org/2000/svg" && target.id) {
             GEOMETOR.hoverCard.style.display = 'none';
         }
     });
@@ -769,7 +981,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const resizeObserver = new ResizeObserver(scaleCircles);
     resizeObserver.observe(GEOMETOR.svg);
 
-    // Initial fetch
     showHourglassCursor();
     updateStatus('Loading model...');
     fetch('/api/model')
@@ -782,24 +993,65 @@ document.addEventListener('DOMContentLoaded', () => {
             updateStatus('Ready');
         });
 
+    const settingsBtn = document.getElementById('settings-btn');
+    const settingsModal = document.getElementById('settings-modal');
     const themeToggle = document.getElementById('theme-toggle');
-    const darkModeStylesheet = document.getElementById('dark-mode-stylesheet');
+    const ancestorsToggle = document.getElementById('ancestors-toggle');
+    const analysisToggle = document.getElementById('analysis-toggle');
+    const ancestorsBtn = document.getElementById('ancestors-btn');
 
-    themeToggle.addEventListener('click', () => {
-        darkModeStylesheet.disabled = !darkModeStylesheet.disabled;
-        localStorage.setItem('theme', darkModeStylesheet.disabled ? 'light' : 'dark');
+    let ancestorsOnHover = false;
+
+    settingsBtn.addEventListener('click', () => {
+        settingsModal.style.display = 'block';
     });
 
-    // Apply saved theme on load
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        darkModeStylesheet.disabled = (savedTheme === 'light');
-    } else {
-        // Default to light mode if no theme is saved
-        darkModeStylesheet.disabled = true;
+    settingsModal.querySelector('.close-btn').addEventListener('click', () => {
+        settingsModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target == settingsModal) {
+            settingsModal.style.display = 'none';
+        }
+    });
+
+    themeToggle.addEventListener('change', () => {
+        GEOMETOR.svg.classList.toggle('light-theme', themeToggle.checked);
+        localStorage.setItem('svg-theme', themeToggle.checked ? 'light' : 'dark');
+    });
+
+    ancestorsToggle.addEventListener('change', () => {
+        ancestorsOnHover = ancestorsToggle.checked;
+        ancestorsBtn.classList.toggle('active', ancestorsOnHover);
+    });
+
+    ancestorsBtn.addEventListener('click', () => {
+        ancestorsOnHover = !ancestorsOnHover;
+        ancestorsToggle.checked = ancestorsOnHover;
+        ancestorsBtn.classList.toggle('active', ancestorsOnHover);
+    });
+
+    analysisToggle.addEventListener('click', () => {
+        fetch('/api/analysis/toggle', {
+            method: 'POST',
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.analysis_enabled) {
+                analysisToggle.classList.add('active');
+            } else {
+                analysisToggle.classList.remove('active');
+            }
+        });
+    });
+
+    const savedSvgTheme = localStorage.getItem('svg-theme');
+    if (savedSvgTheme === 'light') {
+        GEOMETOR.svg.classList.add('light-theme');
+        themeToggle.checked = true;
     }
 
-    // View Switcher
     const categoryViewBtn = document.getElementById('category-view-btn');
     const chronoViewBtn = document.getElementById('chrono-view-btn');
     const groupsViewBtn = document.getElementById('groups-view-btn');
@@ -834,7 +1086,6 @@ document.addEventListener('DOMContentLoaded', () => {
         chronoViewBtn.classList.remove('active');
     });
 
-    // Collapsible sections
     const collapseBtns = document.querySelectorAll('.collapse-btn');
     collapseBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -849,10 +1100,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Visibility toggle
     const toggleVisBtns = document.querySelectorAll('.toggle-vis-btn');
     toggleVisBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+            if (animationEnabled) return;
+            
             const section = btn.closest('.collapsible-section');
             section.classList.toggle('hide-elements');
             const isHidden = section.classList.contains('hide-elements');
@@ -862,38 +1114,68 @@ document.addEventListener('DOMContentLoaded', () => {
             if (category === 'structures') {
                 category = 'elements';
             }
-            GEOMETOR.svg.classList.toggle(`hide-${category}`);
+
+            const elementsToToggle = document.querySelectorAll(`#drawing [data-category="${category}"]`);
+            gsap.to(elementsToToggle, { autoAlpha: isHidden ? 0 : 1, duration: 0.5 });
         });
     });
 
-
-
-    // File management
     const newBtn = document.getElementById('new-btn');
     const openBtn = document.getElementById('open-btn');
     const saveBtn = document.getElementById('save-btn');
     const saveAsBtn = document.getElementById('save-as-btn');
     const fileInput = document.getElementById('file-input');
+    const newModelModal = document.getElementById('new-model-modal');
+    const newBlankBtn = document.getElementById('new-blank-btn');
+    const newDefaultBtn = document.getElementById('new-default-btn');
+    const newEquidistantBtn = document.getElementById('new-equidistant-btn');
+
+    function showNewModelModal() {
+        newModelModal.style.display = 'block';
+    }
+
+    function hideNewModelModal() {
+        newModelModal.style.display = 'none';
+    }
 
     newBtn.addEventListener('click', () => {
-        if (confirm('Are you sure you want to start a new construction? Any unsaved changes will be lost.')) {
-            showHourglassCursor();
-            updateStatus('Creating new model...');
-            fetch('/api/model/new', { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    renderModel(data);
-                    clearSelection();
-                    currentFilename = 'untitled.json';
-                    updateFilenameDisplay();
-                    isDirty = false;
-                })
-                .finally(() => {
-                    hideHourglassCursor();
-                    updateStatus('Ready');
-                });
+        if (isDirty) {
+            if (confirm('Are you sure you want to start a new construction? Any unsaved changes will be lost.')) {
+                showNewModelModal();
+            }
+        } else {
+            showNewModelModal();
         }
     });
+
+    function createNewModel(template) {
+        hideNewModelModal();
+        showHourglassCursor();
+        updateStatus('Creating new model...');
+        fetch('/api/model/new', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ template: template }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                renderModel(data);
+                clearSelection();
+                currentFilename = 'untitled.json';
+                updateFilenameDisplay();
+                isDirty = false;
+            })
+            .finally(() => {
+                hideHourglassCursor();
+                updateStatus('Ready');
+            });
+    }
+
+    newBlankBtn.addEventListener('click', () => createNewModel('blank'));
+    newDefaultBtn.addEventListener('click', () => createNewModel('default'));
+    newEquidistantBtn.addEventListener('click', () => createNewModel('equidistant'));
+
+    newModelModal.querySelector('.close-btn').addEventListener('click', hideNewModelModal);
 
     openBtn.addEventListener('click', () => {
         fileInput.click();
@@ -931,7 +1213,6 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             reader.readAsText(file);
         }
-        // Reset file input so the same file can be loaded again
         event.target.value = null;
     });
 
@@ -983,4 +1264,265 @@ document.addEventListener('DOMContentLoaded', () => {
     initSvgEventListeners();
     loadConstructions();
     updateFilenameDisplay();
+    updateSelectedPointsDisplay();
+
+    document.addEventListener('keydown', (event) => {
+        if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
+            return;
+        }
+
+        const key = event.key;
+        let btn;
+
+        switch (key) {
+            case 'l':
+                btn = lineBtn;
+                break;
+            case 'c':
+                btn = circleBtn;
+                break;
+            case 'p':
+                btn = pointBtn;
+                break;
+            case 's':
+                btn = segmentBtn;
+                break;
+            case 'S':
+                btn = sectionBtn;
+                break;
+            case 'y':
+                btn = polygonBtn;
+                break;
+            case 'f':
+                fitConstruction();
+                break;
+            case 'ArrowUp':
+                TL_DRAW.progress(0).pause();
+                playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+                break;
+            case 'ArrowDown':
+                TL_DRAW.progress(1).pause();
+                playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+                break;
+            case 'ArrowLeft':
+                stepBackward();
+                break;
+            case 'ArrowRight':
+                stepForward();
+                break;
+        }
+
+        if (btn && !btn.disabled) {
+            btn.click();
+        }
+    });
+
+    const playPauseBtn = document.getElementById('play-pause-btn');
+    const timelineSlider = document.getElementById('timeline-slider');
+    const animationToggle = document.getElementById('animation-toggle');
+    const startBtn = document.getElementById('start-btn');
+    const stepBackBtn = document.getElementById('step-back-btn');
+    const stepFwdBtn = document.getElementById('step-fwd-btn');
+    const endBtn = document.getElementById('end-btn');
+    let animationEnabled = animationToggle.checked;
+
+    function animateConstruction() {
+        const elements = GEOMETOR.modelData.elements;
+        if (!elements || elements.length === 0) return;
+
+        TL_DRAW.clear();
+
+        let scrub = { step: 0 };
+
+        TL_DRAW.to(scrub, {
+            step: elements.length,
+            duration: elements.length * 0.5,
+            ease: `steps(${elements.length})`,
+            onUpdate: () => {
+                const currentStep = Math.floor(scrub.step);
+
+                elements.forEach((el, index) => {
+                    const domElement = document.getElementById(el.ID);
+                    if (domElement) {
+                        const isVisible = index < currentStep;
+                        gsap.set(domElement, { autoAlpha: isVisible ? 1 : 0 });
+
+                        const isHighlighted = index === currentStep - 1;
+                        GEOMETOR.setElementHover(el.ID, isHighlighted);
+                    }
+                });
+            },
+            onComplete: () => {
+                elements.forEach(el => {
+                    const domElement = document.getElementById(el.ID);
+                    if (domElement) gsap.set(domElement, { autoAlpha: 1 });
+                    GEOMETOR.setElementHover(el.ID, false);
+                });
+            },
+            onReverseComplete: () => {
+                elements.forEach(el => {
+                    const domElement = document.getElementById(el.ID);
+                    if (domElement) gsap.set(domElement, { autoAlpha: 0 });
+                    GEOMETOR.setElementHover(el.ID, false);
+                });
+            }
+        });
+
+        timelineSlider.max = 100;
+        TL_DRAW.eventCallback("onUpdate", () => {
+            timelineSlider.value = TL_DRAW.progress() * 100;
+        });
+    }
+
+    playPauseBtn.addEventListener('click', () => {
+        if (TL_DRAW.paused()) {
+            TL_DRAW.play();
+            playPauseBtn.innerHTML = '<span class="material-icons">pause</span>';
+        } else {
+            TL_DRAW.pause();
+            playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+        }
+    });
+
+        timelineSlider.addEventListener('input', () => {
+
+            TL_DRAW.progress(timelineSlider.value / 100).pause();
+
+        });
+
+    
+
+        function stepForward() {
+
+            const elements = GEOMETOR.modelData.elements;
+
+            if (!elements || elements.length === 0) return;
+
+            const numElements = elements.length;
+
+            const currentProgress = TL_DRAW.progress();
+
+            const epsilon = 1e-9;
+
+    
+
+            if (currentProgress === 1) return;
+
+    
+
+            const val = currentProgress * numElements;
+
+            let targetStep = Math.ceil(val);
+
+    
+
+            if (Math.abs(val - Math.round(val)) < epsilon) {
+
+                targetStep = Math.round(val) + 1;
+
+            }
+
+    
+
+            if (targetStep > numElements) {
+
+                targetStep = numElements;
+
+            }
+
+    
+
+            TL_DRAW.progress(targetStep / numElements).pause();
+
+            playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+
+        }
+
+    
+
+        function stepBackward() {
+
+            const elements = GEOMETOR.modelData.elements;
+
+            if (!elements || elements.length === 0) return;
+
+            const numElements = elements.length;
+
+            const currentProgress = TL_DRAW.progress();
+
+            const epsilon = 1e-9;
+
+    
+
+            if (currentProgress === 0) return;
+
+    
+
+            const val = currentProgress * numElements;
+
+            let targetStep = Math.floor(val);
+
+    
+
+            if (Math.abs(val - Math.round(val)) < epsilon) {
+
+                targetStep = Math.round(val) - 1;
+
+            }
+
+    
+
+            if (targetStep < 0) {
+
+                targetStep = 0;
+
+            }
+
+    
+
+            TL_DRAW.progress(targetStep / numElements).pause();
+
+            playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+
+        }
+
+    
+
+        startBtn.addEventListener('click', () => {
+
+            TL_DRAW.progress(0).pause();
+
+            playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+
+        });
+
+    
+
+        stepBackBtn.addEventListener('click', stepBackward);
+
+    
+
+        stepFwdBtn.addEventListener('click', stepForward);
+
+    
+
+        endBtn.addEventListener('click', () => {
+
+            TL_DRAW.progress(1).pause();
+
+            playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+
+        });
+
+    
+
+        animationToggle.addEventListener('change', () => {
+
+            animationEnabled = animationToggle.checked;
+
+            renderModel(GEOMETOR.modelData);
+
+        });
+
+
 });
