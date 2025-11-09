@@ -1,10 +1,10 @@
+:type: log
+:date: 23.110-131951
+:tags: 
+:category: STATUS
+
 Setting up a UI for Explorer
 ============================
-
-.. post::  23.110-131951
-   :tags: 
-   :category: 
-
 
 - Tried to use PyQt6 as the GUI toolkit but faced issues with platform plugins
 - Switched to using Tkinter for GUI development

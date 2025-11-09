@@ -1,3 +1,6 @@
+:navigation: header
+:order: 3
+
 geometor.explorer
 =================
 

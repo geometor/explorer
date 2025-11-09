@@ -1,9 +1,10 @@
+:type: log
+:date: 23.109-110629
+:tags: 
+:category: STATUS
+
 Next steps for Geometor Explorer
 ================================
-
-.. post::  23.109-110629
-   :tags: 
-   :category: 
 
 separate the UI from the logic of model, render, analyze
 
