@@ -1,18 +1,7 @@
 :navigation: header
 :order: 3
 
-geometor.explorer
-=================
+modules
+=======
 
-.. automodule:: geometor.explorer
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-.. toctree::
-   :maxdepth: 2
-
-
-
-
+.. include:: api/index.rst
