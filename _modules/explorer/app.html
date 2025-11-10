@@ -1,0 +1,645 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>explorer.app &mdash; Project name not set  documentation</title>
+  <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=ea5fcf70" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=85f2e26d" />
+  <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <a href="../../index.html">
+        <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+      </a>
+      <div class="org-repo">
+        <span class="org">GEOMETOR</span>
+        •
+        <span class="repo">explorer</span>
+      </div>
+    </div>
+    <nav aria-label="Header">
+      <input type="checkbox" id="nav-Header-toggle" >
+      <label for="nav-Header-toggle" >Header</label>
+      <ul>
+        <li>
+          <a href="../../mission/index.html"  >mission</a>
+        </li>
+        <li>
+          <a href="../../usage/index.html"  >usage</a>
+        </li>
+        <li>
+          <a href="../../modules/index.html"  >modules</a>
+        </li>
+        <li>
+          <a href="../../log/index.html"  >log</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="motto"></div>
+  </header>
+  <main>
+
+    <article>
+      <nav class="context">
+        <div class="prev">
+        </div>
+        <div class="next">
+        </div>
+      </nav>
+      <nav class="breadcrumbs">
+        <span><a href="../../index.html">Home</a></span>
+          <span>/</span>
+        <span><a href="../index.html">Module code</a></span>
+          <span>/</span>
+        <span><a href="../explorer.html">explorer</a></span>
+        <span>/</span>
+        <span>explorer.app</span>
+      </nav>
+      <div class="content">
+          <h1>Source code for explorer.app</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">geometor.explorer.serialize</span><span class="w"> </span><span class="kn">import</span> <span class="n">to_browser_dict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">jsonify</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">geometor.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">save_model</span><span class="p">,</span> <span class="n">load_model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">geometor.divine</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_divine_hook</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">geometor.divine.golden.groups</span><span class="w"> </span><span class="kn">import</span> <span class="n">group_sections_by_size</span><span class="p">,</span> <span class="n">group_sections_by_points</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">geometor.divine.golden.chains</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_chains_in_sections</span><span class="p">,</span> <span class="n">unpack_chains</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">geometor.model.sections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Section</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">geometor.model.chains</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chain</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sympy.geometry</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">spg</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sympy.polys.specialpolys</span><span class="w"> </span><span class="kn">import</span> <span class="n">w_polys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.logging</span><span class="w"> </span><span class="kn">import</span> <span class="n">configure_logging</span>
+
+<div class="viewcode-block" id="app">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.app">[docs]</a>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span></div>
+
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;SEND_FILE_MAX_AGE_DEFAULT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">configure_logging</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+
+<div class="viewcode-block" id="model">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.model">[docs]</a>
+<span class="n">model</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ANALYSIS_ENABLED">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.ANALYSIS_ENABLED">[docs]</a>
+<span class="n">ANALYSIS_ENABLED</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="CONSTRUCTIONS_DIR">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.CONSTRUCTIONS_DIR">[docs]</a>
+<span class="n">CONSTRUCTIONS_DIR</span> <span class="o">=</span> <span class="s1">&#39;./constructions&#39;</span></div>
+
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">CONSTRUCTIONS_DIR</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<div class="viewcode-block" id="new_model">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.new_model">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">new_model</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates a new model based on a template.&quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">model</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="s2">&quot;new&quot;</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ANALYSIS_ENABLED</span><span class="p">:</span>
+        <span class="n">register_divine_hook</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">set_analysis_hook</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">template</span> <span class="o">==</span> <span class="s1">&#39;blank&#39;</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">elif</span> <span class="n">template</span> <span class="o">==</span> <span class="s1">&#39;equidistant&#39;</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">set_point</span><span class="p">(</span><span class="o">-</span><span class="n">sp</span><span class="o">.</span><span class="n">S</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;given&quot;</span><span class="p">])</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">set_point</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">S</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;given&quot;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># default</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">set_point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;given&quot;</span><span class="p">])</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">set_point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;given&quot;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="run">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.run">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">():</span>
+    <span class="n">new_model</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">4444</span><span class="p">)</span></div>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="index">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.index">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">,</span> <span class="n">analysis_enabled</span><span class="o">=</span><span class="n">ANALYSIS_ENABLED</span><span class="p">)</span></div>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/model&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="get_model">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.get_model">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_model</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns the complete model data using the new to_browser_dict method.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">to_browser_dict</span><span class="p">(</span><span class="n">model</span><span class="p">))</span></div>
+
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/analysis/toggle&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="toggle_analysis">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.toggle_analysis">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">toggle_analysis</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">ANALYSIS_ENABLED</span>
+    <span class="n">ANALYSIS_ENABLED</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">ANALYSIS_ENABLED</span>
+    <span class="k">if</span> <span class="n">ANALYSIS_ENABLED</span><span class="p">:</span>
+        <span class="n">register_divine_hook</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">set_analysis_hook</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;analysis_enabled&quot;</span><span class="p">:</span> <span class="n">ANALYSIS_ENABLED</span><span class="p">})</span></div>
+
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/model/save&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="save_model_endpoint">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.save_model_endpoint">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">save_model_endpoint</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Saves the current model to a file in the constructions directory.&quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;filename&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;..&quot;</span> <span class="ow">in</span> <span class="n">filename</span> <span class="ow">or</span> <span class="s2">&quot;/&quot;</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid filename.&quot;</span><span class="p">}),</span> <span class="mi">400</span>
+        
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CONSTRUCTIONS_DIR</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">save_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model saved to </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Model saved to </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;No filename provided.&quot;</span><span class="p">}),</span> <span class="mi">400</span></div>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/model/load&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="load_model_endpoint">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.load_model_endpoint">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_model_endpoint</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Loads a model from file content.&quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">model</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="s1">&#39;content&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.json&quot;</span><span class="p">,</span> <span class="nb">dir</span><span class="o">=</span><span class="n">CONSTRUCTIONS_DIR</span><span class="p">)</span> <span class="k">as</span> <span class="n">tmp</span><span class="p">:</span>
+            <span class="n">tmp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+            <span class="n">tmp_path</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="n">name</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span>
+            <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model loaded from temp file: </span><span class="si">{</span><span class="n">tmp_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ANALYSIS_ENABLED</span><span class="p">:</span>
+                <span class="n">register_divine_hook</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">model</span><span class="o">.</span><span class="n">set_analysis_hook</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">to_browser_dict</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+
+    <span class="k">elif</span> <span class="s1">&#39;filename&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;filename&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;..&quot;</span> <span class="ow">in</span> <span class="n">filename</span> <span class="ow">or</span> <span class="s2">&quot;/&quot;</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid filename.&quot;</span><span class="p">}),</span> <span class="mi">400</span>
+        
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CONSTRUCTIONS_DIR</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="p">)</span>
+            <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model loaded from </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ANALYSIS_ENABLED</span><span class="p">:</span>
+                <span class="n">register_divine_hook</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">model</span><span class="o">.</span><span class="n">set_analysis_hook</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">to_browser_dict</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;File not found.&quot;</span><span class="p">}),</span> <span class="mi">404</span>
+            
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;No content or filename provided.&quot;</span><span class="p">}),</span> <span class="mi">400</span></div>
+
+    
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/constructions&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="list_constructions">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.list_constructions">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_constructions</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lists available construction files.&quot;&quot;&quot;</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">CONSTRUCTIONS_DIR</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.json&#39;</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">files</span><span class="p">)</span></div>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/model/new&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="new_model_endpoint">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.new_model_endpoint">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">new_model_endpoint</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates a new model, optionally based on a template.&quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;template&#39;</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">)</span>
+    <span class="n">new_model</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">to_browser_dict</span><span class="p">(</span><span class="n">model</span><span class="p">))</span></div>
+
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/construct/line&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="construct_line">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.construct_line">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">construct_line</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+        <span class="n">pt1_ID</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pt1&#39;</span><span class="p">)</span>
+        <span class="n">pt2_ID</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pt2&#39;</span><span class="p">)</span>
+
+        <span class="n">pt1</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_element_by_ID</span><span class="p">(</span><span class="n">pt1_ID</span><span class="p">)</span>
+        <span class="n">pt2</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_element_by_ID</span><span class="p">(</span><span class="n">pt2_ID</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">pt1</span> <span class="ow">and</span> <span class="n">pt2</span><span class="p">:</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">construct_line</span><span class="p">(</span><span class="n">pt1</span><span class="p">,</span> <span class="n">pt2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">to_browser_dict</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in construct_line: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;An unexpected error occurred.&quot;</span><span class="p">}),</span> <span class="mi">500</span></div>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/construct/circle&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="construct_circle">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.construct_circle">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">construct_circle</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+        <span class="n">pt1_ID</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pt1&#39;</span><span class="p">)</span>
+        <span class="n">pt2_ID</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pt2&#39;</span><span class="p">)</span>
+
+        <span class="n">pt1</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_element_by_ID</span><span class="p">(</span><span class="n">pt1_ID</span><span class="p">)</span>
+        <span class="n">pt2</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_element_by_ID</span><span class="p">(</span><span class="n">pt2_ID</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">pt1</span> <span class="ow">and</span> <span class="n">pt2</span><span class="p">:</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">construct_circle</span><span class="p">(</span><span class="n">pt1</span><span class="p">,</span> <span class="n">pt2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">to_browser_dict</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in construct_circle: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;An unexpected error occurred.&quot;</span><span class="p">}),</span> <span class="mi">500</span></div>
+
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/construct/perpendicular_bisector&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="construct_perpendicular_bisector">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.construct_perpendicular_bisector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">construct_perpendicular_bisector</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+        <span class="n">pt1_ID</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pt1&#39;</span><span class="p">)</span>
+        <span class="n">pt2_ID</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pt2&#39;</span><span class="p">)</span>
+
+        <span class="n">pt1</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_element_by_ID</span><span class="p">(</span><span class="n">pt1_ID</span><span class="p">)</span>
+        <span class="n">pt2</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_element_by_ID</span><span class="p">(</span><span class="n">pt2_ID</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">pt1</span> <span class="ow">and</span> <span class="n">pt2</span><span class="p">:</span>
+            <span class="n">c1</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">construct_circle</span><span class="p">(</span><span class="n">pt1</span><span class="p">,</span> <span class="n">pt2</span><span class="p">,</span> <span class="n">guide</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">c2</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">construct_circle</span><span class="p">(</span><span class="n">pt2</span><span class="p">,</span> <span class="n">pt1</span><span class="p">,</span> <span class="n">guide</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">intersections</span> <span class="o">=</span> <span class="n">c1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span>
+            <span class="n">intersection_points</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">intersections</span><span class="p">:</span>
+                <span class="n">new_pt</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">set_point</span><span class="p">(</span><span class="n">pt</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pt</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">guide</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">intersection_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_pt</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">intersection_points</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">model</span><span class="o">.</span><span class="n">construct_line</span><span class="p">(</span><span class="n">intersection_points</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">intersection_points</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">classes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;bisector&quot;</span><span class="p">],</span> <span class="n">guide</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">to_browser_dict</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in construct_perpendicular_bisector: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;An unexpected error occurred.&quot;</span><span class="p">}),</span> <span class="mi">500</span></div>
+
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/construct/angle_bisector&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="construct_angle_bisector">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.construct_angle_bisector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">construct_angle_bisector</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+        <span class="n">pt1_ID</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pt1&#39;</span><span class="p">)</span>
+        <span class="n">vertex_ID</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;vertex&#39;</span><span class="p">)</span>
+        <span class="n">pt3_ID</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pt3&#39;</span><span class="p">)</span>
+
+        <span class="n">pt1</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_element_by_ID</span><span class="p">(</span><span class="n">pt1_ID</span><span class="p">)</span>
+        <span class="n">vertex</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_element_by_ID</span><span class="p">(</span><span class="n">vertex_ID</span><span class="p">)</span>
+        <span class="n">pt3</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_element_by_ID</span><span class="p">(</span><span class="n">pt3_ID</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">pt1</span> <span class="ow">and</span> <span class="n">vertex</span> <span class="ow">and</span> <span class="n">pt3</span><span class="p">:</span>
+            <span class="c1"># 1. guide circle</span>
+            <span class="n">guide_circle</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">construct_circle</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">pt1</span><span class="p">,</span> <span class="n">guide</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="c1"># 2. guide line</span>
+            <span class="n">guide_line</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">construct_line</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">pt3</span><span class="p">,</span> <span class="n">guide</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="c1"># 3. intersection</span>
+            <span class="n">intersections</span> <span class="o">=</span> <span class="n">guide_circle</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">guide_line</span><span class="p">)</span>
+
+            <span class="c1"># 4. find the correct intersection point on the ray from vertex to pt3</span>
+            <span class="n">vec_v_pt3</span> <span class="o">=</span> <span class="n">pt3</span> <span class="o">-</span> <span class="n">vertex</span>
+            <span class="n">correct_intersection</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">i_pt</span> <span class="ow">in</span> <span class="n">intersections</span><span class="p">:</span>
+                <span class="n">vec_v_i</span> <span class="o">=</span> <span class="n">i_pt</span> <span class="o">-</span> <span class="n">vertex</span>
+                <span class="k">if</span> <span class="n">vec_v_i</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">vec_v_pt3</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">correct_intersection</span> <span class="o">=</span> <span class="n">i_pt</span>
+                    <span class="k">break</span>
+            
+            <span class="k">if</span> <span class="n">correct_intersection</span><span class="p">:</span>
+                <span class="n">new_pt</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">set_point</span><span class="p">(</span><span class="n">correct_intersection</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">correct_intersection</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">guide</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                <span class="c1"># 5. perpendicular bisector</span>
+                <span class="n">c1</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">construct_circle</span><span class="p">(</span><span class="n">pt1</span><span class="p">,</span> <span class="n">new_pt</span><span class="p">,</span> <span class="n">guide</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">c2</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">construct_circle</span><span class="p">(</span><span class="n">new_pt</span><span class="p">,</span> <span class="n">pt1</span><span class="p">,</span> <span class="n">guide</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                <span class="n">intersections_perp</span> <span class="o">=</span> <span class="n">c1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span>
+                <span class="n">intersection_points_perp</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">intersections_perp</span><span class="p">:</span>
+                    <span class="n">new_pt_perp</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">set_point</span><span class="p">(</span><span class="n">pt</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pt</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">guide</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">intersection_points_perp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_pt_perp</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">intersection_points_perp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">model</span><span class="o">.</span><span class="n">construct_line</span><span class="p">(</span><span class="n">intersection_points_perp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">intersection_points_perp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">classes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;bisector&quot;</span><span class="p">],</span> <span class="n">guide</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">to_browser_dict</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in construct_angle_bisector: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;An unexpected error occurred.&quot;</span><span class="p">}),</span> <span class="mi">500</span></div>
+
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/construct/point&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="construct_point">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.construct_point">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">construct_point</span><span class="p">():</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+    <span class="n">x_str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="n">y_str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">x_str</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">y_str</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Let the model handle the conversion from string</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">set_point</span><span class="p">(</span><span class="n">x_str</span><span class="p">,</span> <span class="n">y_str</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;given&quot;</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error creating point with x=&#39;</span><span class="si">{</span><span class="n">x_str</span><span class="si">}</span><span class="s2">&#39;, y=&#39;</span><span class="si">{</span><span class="n">y_str</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Invalid expression: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}),</span> <span class="mi">400</span>
+
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">to_browser_dict</span><span class="p">(</span><span class="n">model</span><span class="p">))</span></div>
+
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/construct/polynomial&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="construct_polynomial">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.construct_polynomial">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">construct_polynomial</span><span class="p">():</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+    <span class="n">coeffs_str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;coeffs&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">coeffs_str</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Convert comma-separated string to a list of strings</span>
+            <span class="n">coeffs</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">coeffs_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)]</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">add_poly</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error creating polynomial with coeffs=&#39;</span><span class="si">{</span><span class="n">coeffs_str</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Invalid expression for coefficients: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}),</span> <span class="mi">400</span>
+
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">to_browser_dict</span><span class="p">(</span><span class="n">model</span><span class="p">))</span></div>
+
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/model/delete&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="delete_element">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.delete_element">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_element</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deletes an element and its dependents from the model.&quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+    <span class="n">ID</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ID&#39;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ID</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Element ID is required.&quot;</span><span class="p">}),</span> <span class="mi">400</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">delete_element</span><span class="p">(</span><span class="n">ID</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">to_browser_dict</span><span class="p">(</span><span class="n">model</span><span class="p">))</span></div>
+
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/model/dependents&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="get_dependents_endpoint">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.get_dependents_endpoint">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_dependents_endpoint</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns a list of dependent elements for a given element ID.&quot;&quot;&quot;</span>
+    <span class="n">ID</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ID&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ID</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Element ID is required.&quot;</span><span class="p">}),</span> <span class="mi">400</span>
+
+    <span class="n">dependents</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_dependents</span><span class="p">(</span><span class="n">ID</span><span class="p">)</span>
+    <span class="n">dependent_IDs</span> <span class="o">=</span> <span class="p">[</span><span class="n">el</span><span class="o">.</span><span class="n">ID</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">dependents</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">dependent_IDs</span><span class="p">)</span></div>
+
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/model/edit&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="edit_element">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.edit_element">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">edit_element</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Updates the class and guide status of an element in the model.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+        <span class="n">ID</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ID&#39;</span><span class="p">)</span>
+        <span class="n">classes</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;classes&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">guide</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;guide&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ID</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Element ID is required.&quot;</span><span class="p">}),</span> <span class="mi">400</span>
+
+        <span class="n">element</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_element_by_ID</span><span class="p">(</span><span class="n">ID</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">element</span><span class="p">:</span>
+            <span class="c1"># Process classes string into a set for the model</span>
+            <span class="n">model</span><span class="p">[</span><span class="n">element</span><span class="p">]</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">classes</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">strip</span><span class="p">()}</span>
+            <span class="n">model</span><span class="p">[</span><span class="n">element</span><span class="p">]</span><span class="o">.</span><span class="n">guide</span> <span class="o">=</span> <span class="n">guide</span>
+        
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">to_browser_dict</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in edit_element: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;An unexpected error occurred.&quot;</span><span class="p">}),</span> <span class="mi">500</span></div>
+
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/set/segment&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="set_segment">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.set_segment">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_segment</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+        <span class="n">points_IDs</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;points&#39;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">get_element_by_ID</span><span class="p">(</span><span class="n">ID</span><span class="p">)</span> <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">points_IDs</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
+            <span class="n">segment</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">set_segment</span><span class="p">(</span><span class="o">*</span><span class="n">points</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">points_IDs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not find one or more points for segment: </span><span class="si">{</span><span class="n">points_IDs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">to_browser_dict</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in set_segment: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;An unexpected error occurred.&quot;</span><span class="p">}),</span> <span class="mi">500</span></div>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/set/section&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="set_section">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.set_section">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_section</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">get_element_by_ID</span><span class="p">(</span><span class="n">ID</span><span class="p">)</span> <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;points&#39;</span><span class="p">,</span> <span class="p">[])]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">section</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">set_section</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">to_browser_dict</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in set_section: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;An unexpected error occurred.&quot;</span><span class="p">}),</span> <span class="mi">500</span></div>
+
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/set/polygon&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="set_polygon">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.set_polygon">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_polygon</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">get_element_by_ID</span><span class="p">(</span><span class="n">ID</span><span class="p">)</span> <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;points&#39;</span><span class="p">,</span> <span class="p">[])]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">polygon</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">set_polygon</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">to_browser_dict</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in set_polygon: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;An unexpected error occurred.&quot;</span><span class="p">}),</span> <span class="mi">500</span></div>
+
+
+
+<div class="viewcode-block" id="get_golden_sections">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.get_golden_sections">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_golden_sections</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Helper function to retrieve golden sections from the model.&quot;&quot;&quot;</span>
+    <span class="n">golden_sections</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">Section</span><span class="p">)</span> <span class="ow">and</span> <span class="s1">&#39;golden&#39;</span> <span class="ow">in</span> <span class="n">val</span><span class="o">.</span><span class="n">classes</span><span class="p">:</span>
+            <span class="n">key</span><span class="o">.</span><span class="n">ID</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">ID</span>
+            <span class="n">golden_sections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">golden_sections</span></div>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/groups/by_size&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="get_groups_by_size">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.get_groups_by_size">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_groups_by_size</span><span class="p">():</span>
+    <span class="n">sections</span> <span class="o">=</span> <span class="n">get_golden_sections</span><span class="p">()</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">group_sections_by_size</span><span class="p">(</span><span class="n">sections</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span><span class="si">}</span><span class="s2"> groups by size&quot;</span><span class="p">)</span>
+    
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">size</span><span class="p">,</span> <span class="n">section_list</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">size_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="o">.</span><span class="n">evalf</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">size_str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">section</span><span class="o">.</span><span class="n">ID</span> <span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">section_list</span><span class="p">]</span>
+        
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/groups/by_point&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="get_groups_by_point">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.get_groups_by_point">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_groups_by_point</span><span class="p">():</span>
+    <span class="n">sections</span> <span class="o">=</span> <span class="n">get_golden_sections</span><span class="p">()</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">group_sections_by_points</span><span class="p">(</span><span class="n">sections</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span><span class="si">}</span><span class="s2"> groups by point&quot;</span><span class="p">)</span>
+    
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">point</span><span class="p">,</span> <span class="n">section_list</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">point_id</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="n">point</span><span class="p">]</span><span class="o">.</span><span class="n">ID</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">point_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">section</span><span class="o">.</span><span class="n">ID</span> <span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">section_list</span><span class="p">]</span>
+        
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/groups/by_chain&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="get_groups_by_chain">
+<a class="viewcode-back" href="../../modules/api/explorer/app/index.html#explorer.app.get_groups_by_chain">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_groups_by_chain</span><span class="p">():</span>
+    <span class="n">sections</span> <span class="o">=</span> <span class="n">get_golden_sections</span><span class="p">()</span>
+    <span class="n">chain_tree</span> <span class="o">=</span> <span class="n">find_chains_in_sections</span><span class="p">(</span><span class="n">sections</span><span class="p">)</span>
+    <span class="n">chains</span> <span class="o">=</span> <span class="n">unpack_chains</span><span class="p">(</span><span class="n">chain_tree</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">chains</span><span class="p">)</span><span class="si">}</span><span class="s2"> chains&quot;</span><span class="p">)</span>
+    
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chain</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">chains</span><span class="p">):</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Chain </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sections&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">section</span><span class="o">.</span><span class="n">ID</span> <span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">chain</span><span class="o">.</span><span class="n">sections</span><span class="p">]</span>
+        <span class="p">})</span>
+        
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">run</span><span class="p">()</span>
+</pre></div>
+      </div>
+      <footer></footer>
+    </article>
+
+  </main>
+
+<div class="asides">
+    <aside>
+        <h3>Search</h3>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+    </aside>
+    
+<aside>
+    <h3>Recent Logs</h3>
+    <ul>
+        
+            <li><a href="../../log/23.110-131951/index.html">Setting up a UI for Explorer</a></li>
+        
+            <li><a href="../../log/23.109-110629/index.html">Next steps for Geometor Explorer</a></li>
+        
+            <li><a href="../../log/22.348-045718/22.348-045718.html">Welcome to Explorer</a></li>
+        
+    </ul>
+</aside>
+
+</div>
+<footer>
+    <hr/>
+    <div role="contentinfo">
+        <p>
+                &copy; Copyright .
+        </p>
+    </div>
+</footer>
+
+  <script src="../../_static/jquery.js?v=5d32c60e"></script>
+  <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+  <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+  <script src="../../_static/doctools.js?v=9bcbadda"></script>
+  <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+
+
+</body>
+</html>

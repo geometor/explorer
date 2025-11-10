@@ -1,0 +1,62 @@
+explorer
+========
+
+.. py:module:: explorer
+
+.. autoapi-nested-parse::
+
+   explorer
+   ========
+
+   GEOMETOR
+   --------
+
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /modules/api/explorer/__main__/index
+   /modules/api/explorer/app/index
+   /modules/api/explorer/logging/index
+   /modules/api/explorer/serialize/index
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   explorer.__author__
+   explorer.__maintainer__
+   explorer.__email__
+   explorer.__version__
+   explorer.__licence__
+
+
+Package Contents
+----------------
+
+.. py:data:: __author__
+   :value: 'GEOMETOR'
+
+
+.. py:data:: __maintainer__
+   :value: 'GEOMETOR'
+
+
+.. py:data:: __email__
+   :value: 'github@geometor.com'
+
+
+.. py:data:: __version__
+   :value: '0.4.0'
+
+
+.. py:data:: __licence__
+   :value: 'MIT'
+
+

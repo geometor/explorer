@@ -3,11 +3,6 @@ GEOMETOR • explorer
 
 .. include:: ../intro.rst
 
-recent logs
------------
-
-.. postlist:: 5
-   :excerpts:
 
 
 .. toctree::
@@ -19,7 +14,6 @@ recent logs
    modules/index.rst
    demos/index.rst
    refs/index.rst
-   log </log#https://>
    todos.rst
    changelog.rst
    glossary.rst

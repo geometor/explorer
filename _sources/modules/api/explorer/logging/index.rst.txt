@@ -1,0 +1,19 @@
+explorer.logging
+================
+
+.. py:module:: explorer.logging
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   explorer.logging.configure_logging
+
+
+Module Contents
+---------------
+
+.. py:function:: configure_logging(app)
+
