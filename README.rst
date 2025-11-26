@@ -1,4 +1,3 @@
-===================
 GEOMETOR • explorer
 ===================
 
@@ -7,55 +6,44 @@ GEOMETOR • explorer
 .. image:: https://img.shields.io/github/license/geometor/explorer.svg
    :target: https://github.com/geometor/explorer/blob/main/LICENSE
 
-A web-based UI for the GEOMETOR model.
+The interactive interface for GEOMETOR.
 
 Overview
 --------
 
-The `explorer` provides an interactive environment for creating, visualizing, and analyzing geometric constructions. It uses Flask for the backend and SVG for rendering, integrating with `geometor.model` for core geometry and `geometor.divine` for analysis.
+**geometor.explorer** is a web-based application for creating, visualizing, and analyzing geometric constructions. It serves as the primary interface to the GEOMETOR ecosystem, allowing users to visually build models and engage with the underlying symbolic algebra.
 
 Key Features
 ------------
 
-- **Interactive UI:** A vanilla JavaScript frontend provides interactivity, including hover cards and table highlighting.
-- **SVG Visualization:** Geometric constructions are rendered as clean, scalable SVG in the browser.
-- **Analysis Engine:** Integrates with `geometor.divine` to analyze constructions and identify key relationships.
-- **LaTeX Display:** Symbolic coordinates and equations are rendered using the KaTeX library.
-- **Server-Side Logic:** A Python Flask backend manages geometric models and serves data to the frontend.
-
-Key Files
----------
-
--   `app.py`: The main Flask application, handling routing and backend logic.
--   `static/`: Frontend assets, including JavaScript, CSS, and images.
--   `templates/`: HTML templates for the web interface.
--   `serialize.py`: Handles the serialization of construction data.
+- **Interactive Visualization**: Render constructions as scalable SVG.
+- **Real-time Analysis**: Integrates with `geometor.divine` to highlight golden sections and harmonic ranges.
+- **Symbolic Feedback**: Displays exact algebraic coordinates and equations using LaTeX/KaTeX.
+- **Python Backend**: Powered by Flask and `geometor.model`.
 
 Usage
 -----
 
-To run the Explorer application:
+Install and run the explorer:
 
 .. code-block:: bash
 
-   python -m geometor.explorer
+    pip install geometor-explorer
+    python -m geometor.explorer
 
-Then, open a web browser and go to `http://127.0.0.1:4444`.
+    # or simply
+    explorer
 
-Dependencies
-------------
+Open your browser to `http://127.0.0.1:4444`.
 
-- Flask
-- geometor-model
-- geometor-divine
-- sympy
+Resources
+---------
 
-Contributing
-------------
+- **Source Code**: https://github.com/geometor/explorer
+- **Issues**: https://github.com/geometor/explorer/issues
 
-Contributions are welcome! Please see our `GitHub issues <https://github.com/geometor/explorer/issues>`_ for ways to contribute.
+Related Projects
+----------------
 
-License
--------
-
-**geometor-explorer** is licensed under the MIT License. See the `LICENSE` file for more details.
+- `GEOMETOR Model <https://github.com/geometor/model>`_: The core symbolic engine.
+- `GEOMETOR Divine <https://github.com/geometor/divine>`_: Analysis tools.
