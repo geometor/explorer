@@ -3,7 +3,7 @@ Browser-specific serialization for the Model class.
 """
 import sympy as sp
 import sympy.geometry as spg
-from geometor.model.common import *
+
 from geometor.model.sections import Section
 from geometor.model.chains import Chain
 from geometor.model.wedges import Wedge

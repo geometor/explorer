@@ -4,4 +4,4 @@
 modules
 =======
 
-.. include:: api/index.rst
+.. include:: api/geometor/explorer/index.rst

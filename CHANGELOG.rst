@@ -1,6 +1,19 @@
 changelog
 =========
 
+0.4.1
+-----
+*2025-11-28*
+
+**refactor**
+
+.. + Updated model save method call in `app.py`.
+.. + Cleaned up imports in `serialize.py`.
+
+**docs**
+
+.. + Updated module index include path.
+
 0.4.0
 -----
 *2025-10-31*

@@ -1,6 +1,6 @@
 from geometor.explorer.serialize import to_browser_dict
 from flask import Flask, render_template, jsonify, request
-from geometor.model import Model, save_model, load_model
+from geometor.model import Model, load_model
 from geometor.divine import register_divine_hook
 from geometor.divine.golden.groups import group_sections_by_size, group_sections_by_points
 from geometor.divine.golden.chains import find_chains_in_sections, unpack_chains
@@ -78,7 +78,7 @@ def save_model_endpoint():
             return jsonify({"success": False, "message": "Invalid filename."}), 400
         
         file_path = os.path.join(CONSTRUCTIONS_DIR, filename)
-        save_model(model, file_path)
+        model.save(file_path)
         app.logger.info(f"Model saved to {file_path}")
         return jsonify({"success": True, "message": f"Model saved to {file_path}"})
     return jsonify({"success": False, "message": "No filename provided."}), 400
