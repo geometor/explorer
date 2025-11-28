@@ -1,3 +1,4 @@
+from __future__ import annotations
 import logging
 from logging import FileHandler
 from rich.logging import RichHandler

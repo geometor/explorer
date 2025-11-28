@@ -1,6 +1,7 @@
 """
 Browser-specific serialization for the Model class.
 """
+from __future__ import annotations
 import sympy as sp
 import sympy.geometry as spg
 

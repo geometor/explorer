@@ -1,3 +1,4 @@
+from __future__ import annotations
 from geometor.explorer.serialize import to_browser_dict
 from flask import Flask, render_template, jsonify, request
 from geometor.model import Model, load_model
@@ -26,7 +27,12 @@ CONSTRUCTIONS_DIR = './constructions'
 os.makedirs(CONSTRUCTIONS_DIR, exist_ok=True)
 
 def new_model(template='default'):
-    """Creates a new model based on a template."""
+    """
+    Create a new model based on a template.
+
+    Args:
+        template: The name of the template to use ('default', 'blank', 'equidistant').
+    """
     global model
     model = Model("new", logger=app.logger)
     if ANALYSIS_ENABLED:
@@ -53,7 +59,12 @@ def index():
 
 @app.route('/api/model', methods=['GET'])
 def get_model():
-    """Returns the complete model data using the new to_browser_dict method."""
+    """
+    Return the complete model data.
+
+    Returns:
+        JSON response containing the serialized model data.
+    """
     return jsonify(to_browser_dict(model))
 
 
@@ -70,7 +81,14 @@ def toggle_analysis():
 
 @app.route('/api/model/save', methods=['POST'])
 def save_model_endpoint():
-    """Saves the current model to a file in the constructions directory."""
+    """
+    Save the current model to a file.
+
+    Expects a JSON payload with a 'filename' key.
+
+    Returns:
+        JSON response indicating success or failure.
+    """
     data = request.get_json()
     filename = data.get('filename')
     if filename:
@@ -85,7 +103,14 @@ def save_model_endpoint():
 
 @app.route('/api/model/load', methods=['POST'])
 def load_model_endpoint():
-    """Loads a model from file content."""
+    """
+    Load a model from file content or filename.
+
+    Expects a JSON payload with either 'content' or 'filename'.
+
+    Returns:
+        JSON response containing the serialized model data.
+    """
     global model
     data = request.get_json()
     
@@ -128,13 +153,27 @@ def load_model_endpoint():
     
 @app.route('/api/constructions', methods=['GET'])
 def list_constructions():
-    """Lists available construction files."""
+
+    """
+    List available construction files.
+
+    Returns:
+        JSON response containing a list of filenames.
+    """
     files = [f for f in os.listdir(CONSTRUCTIONS_DIR) if f.endswith('.json')]
     return jsonify(files)
 
 @app.route('/api/model/new', methods=['POST'])
 def new_model_endpoint():
-    """Creates a new model, optionally based on a template."""
+
+    """
+    Create a new model.
+
+    Expects a JSON payload with an optional 'template' key.
+
+    Returns:
+        JSON response containing the serialized new model.
+    """
     data = request.get_json()
     template = data.get('template', 'default')
     new_model(template)
@@ -296,7 +335,15 @@ def construct_polynomial():
 
 @app.route('/api/model/delete', methods=['POST'])
 def delete_element():
-    """Deletes an element and its dependents from the model."""
+
+    """
+    Delete an element and its dependents from the model.
+
+    Expects a JSON payload with an 'ID' key.
+
+    Returns:
+        JSON response containing the updated model data.
+    """
     data = request.get_json()
     ID = data.get('ID')
     
@@ -310,7 +357,16 @@ def delete_element():
 
 @app.route('/api/model/dependents', methods=['GET'])
 def get_dependents_endpoint():
-    """Returns a list of dependent elements for a given element ID."""
+
+    """
+    Return a list of dependent elements for a given element ID.
+
+    Args:
+        ID: The ID of the element (passed as query parameter).
+
+    Returns:
+        JSON response containing a list of dependent element IDs.
+    """
     ID = request.args.get('ID')
     if not ID:
         return jsonify({"error": "Element ID is required."}), 400
@@ -323,7 +379,15 @@ def get_dependents_endpoint():
 
 @app.route('/api/model/edit', methods=['POST'])
 def edit_element():
-    """Updates the class and guide status of an element in the model."""
+
+    """
+    Update the class and guide status of an element.
+
+    Expects a JSON payload with 'ID', 'classes', and 'guide'.
+
+    Returns:
+        JSON response containing the updated model data.
+    """
     try:
         data = request.get_json()
         ID = data.get('ID')
@@ -388,7 +452,13 @@ def set_polygon():
 
 
 def get_golden_sections():
-    """Helper function to retrieve golden sections from the model."""
+
+    """
+    Retrieve golden sections from the model.
+
+    Returns:
+        list[Section]: A list of Section objects that are golden sections.
+    """
     golden_sections = []
     for key, val in model.items():
         if isinstance(key, Section) and 'golden' in val.classes:
