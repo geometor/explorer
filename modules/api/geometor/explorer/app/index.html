@@ -1,0 +1,473 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>geometor.explorer.app &mdash; Project name not set  documentation</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=ea5fcf70" />
+  <link rel="stylesheet" type="text/css" href="../../../../../_static/css/styles.css?v=b9bf8c56" />
+  <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
+  <link rel="stylesheet" href="../../../../../_static/css/print.css" type="text/css" media="print" />
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <a href="../../../../../index.html">
+        <img src="../../../../../_static/logo.png" class="logo" alt="Logo"/>
+      </a>
+      <div class="org-repo">
+        <span class="org">GEOMETOR</span>
+        •
+        <span class="repo">explorer</span>
+      </div>
+    </div>
+    <nav aria-label="Header">
+      <input type="checkbox" id="nav-Header-toggle" >
+      <label for="nav-Header-toggle" >Header</label>
+      <ul>
+        <li>
+          <a href="../../../../../mission/index.html"  >mission</a>
+        </li>
+        <li>
+          <a href="../../../../../usage/index.html"  >usage</a>
+        </li>
+        <li>
+          <a href="../../../../../log/index.html"  >log</a>
+        </li>
+        <li>
+          <a href="../../../../index.html"  >modules</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="motto"></div>
+  </header>
+  <main>
+
+    <article>
+      <div class="content">
+      <nav class="breadcrumbs">
+        <span><a href="../../../../../index.html">Home</a></span>
+          <span>/</span>
+        <span><a href="../../../../index.html">modules</a></span>
+        <span>/</span>
+        <span>geometor.explorer.app</span>
+      </nav>
+        <nav class="context">
+          <div class="prev">
+             <a href="../__main__/index.html" class="btn btn-neutral float-left" title="geometor.explorer.__main__" >Prev</a>
+          </div>
+          <div class="next">
+            <a href="../logging/index.html" class="btn btn-neutral float-right" title="geometor.explorer.logging" >Next</a>
+          </div>
+        </nav>
+          <section id="module-geometor.explorer.app">
+<span id="geometor-explorer-app"></span><h1>geometor.explorer.app<a class="headerlink" href="#module-geometor.explorer.app" title="Link to this heading">¶</a></h1>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">¶</a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.app" title="geometor.explorer.app.app"><code class="xref py py-obj docutils literal notranslate"><span class="pre">app</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.model" title="geometor.explorer.app.model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">model</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.ANALYSIS_ENABLED" title="geometor.explorer.app.ANALYSIS_ENABLED"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ANALYSIS_ENABLED</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.CONSTRUCTIONS_DIR" title="geometor.explorer.app.CONSTRUCTIONS_DIR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CONSTRUCTIONS_DIR</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.new_model" title="geometor.explorer.app.new_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_model</span></code></a>([template])</p></td>
+<td><p>Create a new model based on a template.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.run" title="geometor.explorer.app.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.index" title="geometor.explorer.app.index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">index</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.get_model" title="geometor.explorer.app.get_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_model</span></code></a>()</p></td>
+<td><p>Return the complete model data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.toggle_analysis" title="geometor.explorer.app.toggle_analysis"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toggle_analysis</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.save_model_endpoint" title="geometor.explorer.app.save_model_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_model_endpoint</span></code></a>()</p></td>
+<td><p>Save the current model to a file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.load_model_endpoint" title="geometor.explorer.app.load_model_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_model_endpoint</span></code></a>()</p></td>
+<td><p>Load a model from file content or filename.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.list_constructions" title="geometor.explorer.app.list_constructions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_constructions</span></code></a>()</p></td>
+<td><p>List available construction files.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.new_model_endpoint" title="geometor.explorer.app.new_model_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_model_endpoint</span></code></a>()</p></td>
+<td><p>Create a new model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_line" title="geometor.explorer.app.construct_line"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_line</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_circle" title="geometor.explorer.app.construct_circle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_circle</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_perpendicular_bisector" title="geometor.explorer.app.construct_perpendicular_bisector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_perpendicular_bisector</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_angle_bisector" title="geometor.explorer.app.construct_angle_bisector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_angle_bisector</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_point" title="geometor.explorer.app.construct_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_point</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_polynomial" title="geometor.explorer.app.construct_polynomial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_polynomial</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.delete_element" title="geometor.explorer.app.delete_element"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_element</span></code></a>()</p></td>
+<td><p>Delete an element and its dependents from the model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.get_dependents_endpoint" title="geometor.explorer.app.get_dependents_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_dependents_endpoint</span></code></a>()</p></td>
+<td><p>Return a list of dependent elements for a given element ID.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.edit_element" title="geometor.explorer.app.edit_element"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edit_element</span></code></a>()</p></td>
+<td><p>Update the class and guide status of an element.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.set_segment" title="geometor.explorer.app.set_segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_segment</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.set_section" title="geometor.explorer.app.set_section"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_section</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.set_polygon" title="geometor.explorer.app.set_polygon"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_polygon</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.get_golden_sections" title="geometor.explorer.app.get_golden_sections"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_golden_sections</span></code></a>()</p></td>
+<td><p>Retrieve golden sections from the model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.get_groups_by_size" title="geometor.explorer.app.get_groups_by_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groups_by_size</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.get_groups_by_point" title="geometor.explorer.app.get_groups_by_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groups_by_point</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.get_groups_by_chain" title="geometor.explorer.app.get_groups_by_chain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groups_by_chain</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="geometor.explorer.app.app">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">app</span></span><a class="headerlink" href="#geometor.explorer.app.app" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geometor.explorer.app.model">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#geometor.explorer.app.model" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geometor.explorer.app.ANALYSIS_ENABLED">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">ANALYSIS_ENABLED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#geometor.explorer.app.ANALYSIS_ENABLED" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="geometor.explorer.app.CONSTRUCTIONS_DIR">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">CONSTRUCTIONS_DIR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'./constructions'</span></em><a class="headerlink" href="#geometor.explorer.app.CONSTRUCTIONS_DIR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.new_model">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">new_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.new_model" title="Link to this definition">¶</a></dt>
+<dd><p>Create a new model based on a template.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>template</strong> – The name of the template to use (‘default’, ‘blank’, ‘equidistant’).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.run">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.run" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.index">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.index" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.get_model">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">get_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.get_model" title="Link to this definition">¶</a></dt>
+<dd><p>Return the complete model data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSON response containing the serialized model data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.toggle_analysis">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">toggle_analysis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.toggle_analysis" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.save_model_endpoint">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">save_model_endpoint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.save_model_endpoint" title="Link to this definition">¶</a></dt>
+<dd><p>Save the current model to a file.</p>
+<p>Expects a JSON payload with a ‘filename’ key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSON response indicating success or failure.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.load_model_endpoint">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">load_model_endpoint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.load_model_endpoint" title="Link to this definition">¶</a></dt>
+<dd><p>Load a model from file content or filename.</p>
+<p>Expects a JSON payload with either ‘content’ or ‘filename’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSON response containing the serialized model data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.list_constructions">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">list_constructions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.list_constructions" title="Link to this definition">¶</a></dt>
+<dd><p>List available construction files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSON response containing a list of filenames.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.new_model_endpoint">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">new_model_endpoint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.new_model_endpoint" title="Link to this definition">¶</a></dt>
+<dd><p>Create a new model.</p>
+<p>Expects a JSON payload with an optional ‘template’ key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSON response containing the serialized new model.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.construct_line">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">construct_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.construct_line" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.construct_circle">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">construct_circle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.construct_circle" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.construct_perpendicular_bisector">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">construct_perpendicular_bisector</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.construct_perpendicular_bisector" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.construct_angle_bisector">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">construct_angle_bisector</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.construct_angle_bisector" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.construct_point">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">construct_point</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.construct_point" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.construct_polynomial">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">construct_polynomial</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.construct_polynomial" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.delete_element">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">delete_element</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.delete_element" title="Link to this definition">¶</a></dt>
+<dd><p>Delete an element and its dependents from the model.</p>
+<p>Expects a JSON payload with an ‘ID’ key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSON response containing the updated model data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.get_dependents_endpoint">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">get_dependents_endpoint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.get_dependents_endpoint" title="Link to this definition">¶</a></dt>
+<dd><p>Return a list of dependent elements for a given element ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ID</strong> – The ID of the element (passed as query parameter).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON response containing a list of dependent element IDs.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.edit_element">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">edit_element</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.edit_element" title="Link to this definition">¶</a></dt>
+<dd><p>Update the class and guide status of an element.</p>
+<p>Expects a JSON payload with ‘ID’, ‘classes’, and ‘guide’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSON response containing the updated model data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.set_segment">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">set_segment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.set_segment" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.set_section">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">set_section</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.set_section" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.set_polygon">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">set_polygon</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.set_polygon" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.get_golden_sections">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">get_golden_sections</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.get_golden_sections" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieve golden sections from the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of Section objects that are golden sections.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.9/library/stdtypes.html#list" title="(in Python v3.9)">list</a>[Section]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.get_groups_by_size">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">get_groups_by_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.get_groups_by_size" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.get_groups_by_point">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">get_groups_by_point</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.get_groups_by_point" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geometor.explorer.app.get_groups_by_chain">
+<span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">get_groups_by_chain</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geometor.explorer.app.get_groups_by_chain" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+      </div>
+      <footer>
+
+
+        <nav class="context">
+          <div class="prev">
+             <a href="../__main__/index.html" class="btn btn-neutral float-left" title="geometor.explorer.__main__" >Prev</a>
+          </div>
+          <div class="next">
+            <a href="../logging/index.html" class="btn btn-neutral float-right" title="geometor.explorer.logging" >Next</a>
+          </div>
+        </nav></footer>
+    </article>
+
+  </main>
+
+<div class="asides">
+    <aside>
+        <h3>Search</h3>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+    </aside>
+    
+<aside>
+    <h3>Recent Logs</h3>
+    <ul>
+        
+            <li><a href="../../../../../log/23.110-131951/index.html">Setting up a UI for Explorer</a></li>
+        
+            <li><a href="../../../../../log/23.109-110629/index.html">Next steps for Geometor Explorer</a></li>
+        
+            <li><a href="../../../../../log/22.348-045718/22.348-045718.html">Welcome to Explorer</a></li>
+        
+    </ul>
+</aside>
+
+    
+
+<aside class="aside-tags">
+    <h3>Tags</h3>
+    <ul>
+        
+        <li><a href="../../../../../tags/.html"></a></li>
+        
+    </ul>
+</aside>
+
+    
+
+    
+
+<aside class="aside-types">
+    <h3>Types</h3>
+    <ul>
+        
+        <li><a href="../../../../../types/log.html">log</a></li>
+        
+    </ul>
+</aside>
+
+</div>
+<footer>
+    <hr/>
+    <div role="contentinfo">
+        <p>
+                &copy; Copyright .
+        </p>
+    </div>
+</footer>
+
+  <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+  <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+  <script src="../../../../../_static/documentation_options.js?v=5929fcd5"></script>
+  <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
+  <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+  <script src="../../../../../_static/js/collection_controls.js?v=b6b5297a"></script>
+
+
+</body>
+</html>

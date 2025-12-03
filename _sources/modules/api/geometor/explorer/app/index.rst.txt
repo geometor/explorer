@@ -1,0 +1,179 @@
+geometor.explorer.app
+=====================
+
+.. py:module:: geometor.explorer.app
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   geometor.explorer.app.app
+   geometor.explorer.app.model
+   geometor.explorer.app.ANALYSIS_ENABLED
+   geometor.explorer.app.CONSTRUCTIONS_DIR
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   geometor.explorer.app.new_model
+   geometor.explorer.app.run
+   geometor.explorer.app.index
+   geometor.explorer.app.get_model
+   geometor.explorer.app.toggle_analysis
+   geometor.explorer.app.save_model_endpoint
+   geometor.explorer.app.load_model_endpoint
+   geometor.explorer.app.list_constructions
+   geometor.explorer.app.new_model_endpoint
+   geometor.explorer.app.construct_line
+   geometor.explorer.app.construct_circle
+   geometor.explorer.app.construct_perpendicular_bisector
+   geometor.explorer.app.construct_angle_bisector
+   geometor.explorer.app.construct_point
+   geometor.explorer.app.construct_polynomial
+   geometor.explorer.app.delete_element
+   geometor.explorer.app.get_dependents_endpoint
+   geometor.explorer.app.edit_element
+   geometor.explorer.app.set_segment
+   geometor.explorer.app.set_section
+   geometor.explorer.app.set_polygon
+   geometor.explorer.app.get_golden_sections
+   geometor.explorer.app.get_groups_by_size
+   geometor.explorer.app.get_groups_by_point
+   geometor.explorer.app.get_groups_by_chain
+
+
+Module Contents
+---------------
+
+.. py:data:: app
+
+.. py:data:: model
+   :value: None
+
+
+.. py:data:: ANALYSIS_ENABLED
+   :value: True
+
+
+.. py:data:: CONSTRUCTIONS_DIR
+   :value: './constructions'
+
+
+.. py:function:: new_model(template='default')
+
+   Create a new model based on a template.
+
+   :param template: The name of the template to use ('default', 'blank', 'equidistant').
+
+
+.. py:function:: run()
+
+.. py:function:: index()
+
+.. py:function:: get_model()
+
+   Return the complete model data.
+
+   :returns: JSON response containing the serialized model data.
+
+
+.. py:function:: toggle_analysis()
+
+.. py:function:: save_model_endpoint()
+
+   Save the current model to a file.
+
+   Expects a JSON payload with a 'filename' key.
+
+   :returns: JSON response indicating success or failure.
+
+
+.. py:function:: load_model_endpoint()
+
+   Load a model from file content or filename.
+
+   Expects a JSON payload with either 'content' or 'filename'.
+
+   :returns: JSON response containing the serialized model data.
+
+
+.. py:function:: list_constructions()
+
+   List available construction files.
+
+   :returns: JSON response containing a list of filenames.
+
+
+.. py:function:: new_model_endpoint()
+
+   Create a new model.
+
+   Expects a JSON payload with an optional 'template' key.
+
+   :returns: JSON response containing the serialized new model.
+
+
+.. py:function:: construct_line()
+
+.. py:function:: construct_circle()
+
+.. py:function:: construct_perpendicular_bisector()
+
+.. py:function:: construct_angle_bisector()
+
+.. py:function:: construct_point()
+
+.. py:function:: construct_polynomial()
+
+.. py:function:: delete_element()
+
+   Delete an element and its dependents from the model.
+
+   Expects a JSON payload with an 'ID' key.
+
+   :returns: JSON response containing the updated model data.
+
+
+.. py:function:: get_dependents_endpoint()
+
+   Return a list of dependent elements for a given element ID.
+
+   :param ID: The ID of the element (passed as query parameter).
+
+   :returns: JSON response containing a list of dependent element IDs.
+
+
+.. py:function:: edit_element()
+
+   Update the class and guide status of an element.
+
+   Expects a JSON payload with 'ID', 'classes', and 'guide'.
+
+   :returns: JSON response containing the updated model data.
+
+
+.. py:function:: set_segment()
+
+.. py:function:: set_section()
+
+.. py:function:: set_polygon()
+
+.. py:function:: get_golden_sections()
+
+   Retrieve golden sections from the model.
+
+   :returns: A list of Section objects that are golden sections.
+   :rtype: list[Section]
+
+
+.. py:function:: get_groups_by_size()
+
+.. py:function:: get_groups_by_point()
+
+.. py:function:: get_groups_by_chain()
+
