@@ -6,7 +6,7 @@ GEOMETOR • explorer
 .. image:: https://img.shields.io/github/license/geometor/explorer.svg
    :target: https://github.com/geometor/explorer/blob/main/LICENSE
 
-The interactive interface for GEOMETOR.
+An interactive interface for visualizing and analyzing geometric models.
 
 Overview
 --------
