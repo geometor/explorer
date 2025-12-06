@@ -9,7 +9,7 @@ from geometor.model.sections import Section
 from geometor.model.chains import Chain
 from geometor.model.wedges import Wedge
 from geometor.model.utils import clean_expr, spread
-from geometor.model import Polynomial
+from geometor.model.polynomials import Polynomial
 
 def _spread(l1: spg.Line, l2: spg.Line):
     """calculate the spread of two lines"""

@@ -1,6 +1,23 @@
 changelog
 =========
 
+0.4.4
+-----
+*2025-12-06*
+
+**refactor**
+
+.. + Renamed `logging.py` to `log.py` to avoid module name conflicts.
+.. + Updated `app.py` to use the new `log` module.
+
+**fix**
+
+.. + Updated `serialize.py` to import `Polynomial` from `geometor.model.polynomials`.
+
+**test**
+
+.. + Added `tests/test_app.py` for application testing.
+
 0.4.3
 -----
 *2025-12-06*

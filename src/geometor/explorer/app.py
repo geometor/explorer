@@ -13,7 +13,7 @@ from sympy.polys.specialpolys import w_polys
 import os
 import tempfile
 import logging
-from .logging import configure_logging
+from .log import configure_logging
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -50,7 +50,9 @@ def new_model(template='default'):
         model.set_point(1, 0, classes=["given"])
 
 def run():
-    new_model()
+    app.debug = True
+    if os.environ.get("WERKZEUG_RUN_MAIN") == "true" or not app.debug:
+        new_model()
     app.run(debug=True, port=4444)
 
 @app.route('/')
