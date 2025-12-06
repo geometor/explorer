@@ -1,0 +1,19 @@
+geometor.explorer.log
+=====================
+
+.. py:module:: geometor.explorer.log
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   geometor.explorer.log.configure_logging
+
+
+Module Contents
+---------------
+
+.. py:function:: configure_logging(app)
+

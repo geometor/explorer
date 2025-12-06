@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>geometor.explorer.logging &mdash; Project name not set  documentation</title>
+  <title>geometor.explorer.log &mdash; Project name not set  documentation</title>
   <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=ea5fcf70" />
   <link rel="stylesheet" type="text/css" href="../../../_static/css/styles.css?v=bc127b54" />
   <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
@@ -54,7 +54,7 @@
           <span>/</span>
         <span><a href="../explorer.html">geometor.explorer</a></span>
         <span>/</span>
-        <span>geometor.explorer.logging</span>
+        <span>geometor.explorer.log</span>
       </nav>
         <nav class="context">
           <div class="prev">
@@ -62,14 +62,14 @@
           <div class="next">
           </div>
         </nav>
-          <h1>Source code for geometor.explorer.logging</h1><div class="highlight"><pre>
+          <h1>Source code for geometor.explorer.log</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">logging</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileHandler</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">rich.logging</span><span class="w"> </span><span class="kn">import</span> <span class="n">RichHandler</span>
 
 <div class="viewcode-block" id="configure_logging">
-<a class="viewcode-back" href="../../../modules/api/geometor/explorer/logging/index.html#geometor.explorer.logging.configure_logging">[docs]</a>
+<a class="viewcode-back" href="../../../modules/api/geometor/explorer/log/index.html#geometor.explorer.log.configure_logging">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">configure_logging</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
     <span class="c1"># Disable Werkzeug&#39;s default request logger to reduce noise</span>
     <span class="n">werkzeug_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;werkzeug&#39;</span><span class="p">)</span>
