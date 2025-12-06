@@ -7,16 +7,16 @@ changelog
 
 **refactor**
 
-.. + Renamed `logging.py` to `log.py` to avoid module name conflicts.
-.. + Updated `app.py` to use the new `log` module.
+-   Renamed `logging.py` to `log.py` to avoid module name conflicts.
+-   Updated `app.py` to use the new `log` module.
 
 **fix**
 
-.. + Updated `serialize.py` to import `Polynomial` from `geometor.model.polynomials`.
+-   Updated `serialize.py` to import `Polynomial` from `geometor.model.polynomials`.
 
 **test**
 
-.. + Added `tests/test_app.py` for application testing.
+-   Added `tests/test_app.py` for application testing.
 
 0.4.3
 -----
@@ -24,12 +24,12 @@ changelog
 
 **docs**
 
-.. + Updated author metadata in `pyproject.toml`.
-.. + Cleaned up module docstrings.
+-   Updated author metadata in `pyproject.toml`.
+-   Cleaned up module docstrings.
 
 **chore**
 
-.. + Updated `.gitignore`.
+-   Updated `.gitignore`.
 
 0.4.2
 -----
@@ -43,12 +43,12 @@ changelog
 
 **refactor**
 
-.. + Updated model save method call in `app.py`.
-.. + Cleaned up imports in `serialize.py`.
+-   Updated model save method call in `app.py`.
+-   Cleaned up imports in `serialize.py`.
 
 **docs**
 
-.. + Updated module index include path.
+-   Updated module index include path.
 
 0.4.0
 -----
@@ -56,10 +56,10 @@ changelog
 
 **added**
 
-.. + Added `Polynomial` element to the model.
-.. + Added a "Polynomial" button to the UI to construct polynomials.
-.. + Implemented SVG rendering for polynomials using dynamic polylines.
-.. + Added `polynumbers.md` with background information.
+-   Added `Polynomial` element to the model.
+-   Added a "Polynomial" button to the UI to construct polynomials.
+-   Implemented SVG rendering for polynomials using dynamic polylines.
+-   Added `polynumbers.md` with background information.
 
 0.3.17
 ------
@@ -67,7 +67,7 @@ changelog
 
 **fixed**
 
-.. + Fixed an issue where constructing an angle bisector could cause a recursion error.
+-   Fixed an issue where constructing an angle bisector could cause a recursion error.
 
 0.3.16
 ------
@@ -75,12 +75,12 @@ changelog
 
 **feat**
 
-.. + Adds a button to the main toolbar to toggle the 'ancestors on hover' feature.
+-   Adds a button to the main toolbar to toggle the 'ancestors on hover' feature.
 
 **fixed**
 
-.. + Fixes an issue where lines and circles would not be visible during ancestor hover highlighting.
-.. + Adds ancestor data to the model serialization to enable client-side ancestor highlighting.
+-   Fixes an issue where lines and circles would not be visible during ancestor hover highlighting.
+-   Adds ancestor data to the model serialization to enable client-side ancestor highlighting.
 
 0.3.15
 ------
@@ -88,7 +88,7 @@ changelog
 
 **feat**
 
-.. + Adds ancestor highlighting on hover.
+-   Adds ancestor highlighting on hover.
 
 0.3.14
 ------
@@ -96,7 +96,7 @@ changelog
 
 **changed**
 
-.. + Updates documentation.
+-   Updates documentation.
 
 0.3.13
 ------
@@ -104,11 +104,11 @@ changelog
 
 **feat**
 
-.. + Flips the svg y-axis to conform to standard geometry coordinate systems.
+-   Flips the svg y-axis to conform to standard geometry coordinate systems.
 
 **fixed**
 
-.. + Adds error handling to construction endpoints.
+-   Adds error handling to construction endpoints.
 
 0.3.12
 ------
@@ -116,7 +116,7 @@ changelog
 
 **refactor**
 
-.. + Improves dependents retrieval and serialization.
+-   Improves dependents retrieval and serialization.
 
 0.3.11
 ------
@@ -124,7 +124,7 @@ changelog
 
 **changed**
 
-.. + Rethinks the placement of the line hover cards when hovering on the table - it should be outside the bounding box of the defining points fo the line, as we are doing with sections and polygons.
+-   Rethinks the placement of the line hover cards when hovering on the table - it should be outside the bounding box of the defining points fo the line, as we are doing with sections and polygons.
 
 0.3.10
 ------
@@ -132,7 +132,7 @@ changelog
 
 **fixed**
 
-.. + Fixes polygon hover highlight color.
+-   Fixes polygon hover highlight color.
 
 0.3.9
 -----
@@ -140,7 +140,7 @@ changelog
 
 **added**
 
-.. + Adds a settings modal with a theme toggle.
+-   Adds a settings modal with a theme toggle.
 
 0.3.8
 -----
@@ -148,7 +148,7 @@ changelog
 
 **fixed**
 
-.. + Fixes analysis toggle button initial state.
+-   Fixes analysis toggle button initial state.
 
 0.3.7
 -----
@@ -156,7 +156,7 @@ changelog
 
 **added**
 
-.. + Adds a button to the UI to toggle divine analysis.
+-   Adds a button to the UI to toggle divine analysis.
 
 0.3.6
 -----
@@ -164,9 +164,9 @@ changelog
 
 **changed**
 
-.. + Improves visual feedback for enabled and disabled buttons.
-.. + Enabled buttons now have a cyan border.
-.. + All buttons have a cyan background on hover, except when disabled.
+-   Improves visual feedback for enabled and disabled buttons.
+-   Enabled buttons now have a cyan border.
+-   All buttons have a cyan background on hover, except when disabled.
 
 0.3.4
 -----
@@ -174,13 +174,13 @@ changelog
 
 **added**
 
-.. + Adds an angle bisector construction from three selected points.
-.. + Adds a "bisector" class to perpendicular and angle bisector lines.
-.. + Adds a dash-dot style for the "bisector" class.
+-   Adds an angle bisector construction from three selected points.
+-   Adds a "bisector" class to perpendicular and angle bisector lines.
+-   Adds a dash-dot style for the "bisector" class.
 
 **changed**
 
-.. + Changes the guide element color to orange.
+-   Changes the guide element color to orange.
 
 0.3.3
 -----
@@ -188,8 +188,8 @@ changelog
 
 **added**
 
-.. + Adds animation timeline controls: start, end, and step buttons.
-.. + Adds keyboard shortcuts (arrow keys) for timeline controls.
+-   Adds animation timeline controls: start, end, and step buttons.
+-   Adds keyboard shortcuts (arrow keys) for timeline controls.
 
 0.3.2
 ------
@@ -197,11 +197,11 @@ changelog
 
 **added**
 
-.. + Adds a perpendicular bisector construction from two selected points.
+-   Adds a perpendicular bisector construction from two selected points.
 
 **changed**
 
-.. + Updates the guide style to a smaller dot stroke.
+-   Updates the guide style to a smaller dot stroke.
 
 0.3.0
 ------
@@ -209,9 +209,9 @@ changelog
 
 **added**
 
-.. + Added an animation timeline to visualize the construction process step-by-step.
-.. + Added a play/pause button and a scrubbable slider to control the animation.
-.. + Added a checkbox to enable or disable the animation feature.
+-   Added an animation timeline to visualize the construction process step-by-step.
+-   Added a play/pause button and a scrubbable slider to control the animation.
+-   Added a checkbox to enable or disable the animation feature.
 
 0.2.15
 ------
@@ -219,7 +219,7 @@ changelog
 
 **added**
 
-.. + Added GSAP and `Animate.js` to prepare for construction animation.
+-   Added GSAP and `Animate.js` to prepare for construction animation.
 
 0.2.14
 ------
@@ -227,7 +227,7 @@ changelog
 
 **added**
 
-.. + Adds a keymap `f` to fit the construction in the available view.
+-   Adds a keymap `f` to fit the construction in the available view.
 
 0.2.13
 ------
@@ -235,7 +235,7 @@ changelog
 
 **added**
 
-.. + Adds sorting functionality to the 'Sizes', 'Chains', and 'Points' tables in the 'Groups' view.
+-   Adds sorting functionality to the 'Sizes', 'Chains', and 'Points' tables in the 'Groups' view.
 
 0.2.12
 ------
@@ -243,13 +243,13 @@ changelog
 
 **added**
 
-.. + Added spread information to the polygon hover card.
-.. + Added coefficients to the line hover card.
-.. + Added center coordinates (h, k) and radius (r) to the circle hover card.
+-   Added spread information to the polygon hover card.
+-   Added coefficients to the line hover card.
+-   Added center coordinates (h, k) and radius (r) to the circle hover card.
 
 **changed**
 
-.. + Improved the layout and styling of the hover card subtables for a more compact and readable display.
+-   Improved the layout and styling of the hover card subtables for a more compact and readable display.
 
 0.2.11
 ------
@@ -257,13 +257,13 @@ changelog
 
 **fixed**
 
-.. + Fixed a race condition in the UI that could cause an error when hovering over elements before the model data was fully loaded.
-.. + Fixed a bug in the serialization of segments that caused an error when creating new segments.
+-   Fixed a race condition in the UI that could cause an error when hovering over elements before the model data was fully loaded.
+-   Fixed a bug in the serialization of segments that caused an error when creating new segments.
 
 **changed**
 
-.. + Refactored the serialization logic to be more efficient and maintainable.
-.. + Segments are now rendered with markers and a light green stroke to distinguish them from other elements.
+-   Refactored the serialization logic to be more efficient and maintainable.
+-   Segments are now rendered with markers and a light green stroke to distinguish them from other elements.
 
 0.2.10
 ------
@@ -271,14 +271,14 @@ changelog
 
 **added**
 
-.. + Adds keymaps for the following actions:
-.. + `l`: construct line
-.. + `c`: construct circle
-.. + `p`: set point (opens dialog)
-.. + `s`: set segment
-.. + `S`: set section
-.. + `y`: set polygon
-.. + Adds a center panel in the status bar to show the ID of the currently selected points.
+-   Adds keymaps for the following actions:
+-   `l`: construct line
+-   `c`: construct circle
+-   `p`: set point (opens dialog)
+-   `s`: set segment
+-   `S`: set section
+-   `y`: set polygon
+-   Adds a center panel in the status bar to show the ID of the currently selected points.
 
 0.2.9
 -----
@@ -286,12 +286,12 @@ changelog
 
 **added**
 
-.. + Added a modal dialog for creating new models with options for different templates (blank, default, equidistant).
-.. + Added logging for file save and load operations.
+-   Added a modal dialog for creating new models with options for different templates (blank, default, equidistant).
+-   Added logging for file save and load operations.
 
 **fixed**
 
-.. + Fixed an issue where the initial model was loaded twice on startup.
+-   Fixed an issue where the initial model was loaded twice on startup.
 
 0.2.8
 -----
@@ -299,7 +299,7 @@ changelog
 
 **fixed**
 
-.. + Fixed an issue where segment constructions were not being properly loaded and displayed.
+-   Fixed an issue where segment constructions were not being properly loaded and displayed.
 
 0.2.7
 -----
@@ -307,7 +307,7 @@ changelog
 
 **removed**
 
-.. + Removed old construction files to support the updated serialization format from the model library.
+-   Removed old construction files to support the updated serialization format from the model library.
 
 0.2.5
 -----
@@ -315,9 +315,9 @@ changelog
 
 **changed**
 
-.. + Refactored JavaScript codebase to a modular architecture to resolve dependency issues.
-.. + Implemented a dark theme for all modal dialogs.
-.. + Added robust error handling for algebraic expressions in point creation.
+-   Refactored JavaScript codebase to a modular architecture to resolve dependency issues.
+-   Implemented a dark theme for all modal dialogs.
+-   Added robust error handling for algebraic expressions in point creation.
 
 0.2.4
 -----
@@ -325,8 +325,8 @@ changelog
 
 **changed**
 
-.. + Made dark theme the default style.
-.. + Theme toggle now only changes the theme for the svg.
+-   Made dark theme the default style.
+-   Theme toggle now only changes the theme for the svg.
 
 0.2.3
 -----
@@ -334,8 +334,8 @@ changelog
 
 **added**
 
-.. + Added a `guide` property toggle in the UI for points, lines, and circles.
-.. + Added styling for guide elements to distinguish them visually.
+-   Added a `guide` property toggle in the UI for points, lines, and circles.
+-   Added styling for guide elements to distinguish them visually.
 
 0.2.1
 -----
@@ -343,9 +343,9 @@ changelog
 
 **changed**
 
-.. + Implemented a centralized logging system to provide clear, sequential feedback on construction and analysis operations.
-.. + Refactored the application to use the new synchronous analysis hook from the `geometor-model` library.
-.. + Added a file logger (`explorer.log`) for detailed debugging.
+-   Implemented a centralized logging system to provide clear, sequential feedback on construction and analysis operations.
+-   Refactored the application to use the new synchronous analysis hook from the `geometor-model` library.
+-   Added a file logger (`explorer.log`) for detailed debugging.
 
 0.1.0
 -----
@@ -353,5 +353,5 @@ changelog
 
 **changed**
 
-.. + Updated point hover card to use a multi-column layout for algebraic and decimal values.
-.. + Updated line hover card to display segment length.
+-   Updated point hover card to use a multi-column layout for algebraic and decimal values.
+-   Updated line hover card to display segment length.
