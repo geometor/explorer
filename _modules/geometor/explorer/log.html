@@ -37,10 +37,10 @@
           <a href="../../../usage/index.html"  >usage</a>
         </li>
         <li>
-          <a href="../../../modules/index.html"  >modules</a>
+          <a href="../../../log/index.html"  >log</a>
         </li>
         <li>
-          <a href="../../../log/index.html"  >log</a>
+          <a href="../../../modules/index.html"  >modules</a>
         </li>
       </ul>
     </nav>
@@ -71,11 +71,12 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">logging</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileHandler</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">rich.logging</span><span class="w"> </span><span class="kn">import</span> <span class="n">RichHandler</span>
 
+
 <div class="viewcode-block" id="configure_logging">
 <a class="viewcode-back" href="../../../modules/api/geometor/explorer/log/index.html#geometor.explorer.log.configure_logging">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">configure_logging</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
     <span class="c1"># Disable Werkzeug&#39;s default request logger to reduce noise</span>
-    <span class="n">werkzeug_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;werkzeug&#39;</span><span class="p">)</span>
+    <span class="n">werkzeug_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;werkzeug&quot;</span><span class="p">)</span>
     <span class="n">werkzeug_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
 
     <span class="c1"># Clear existing handlers and prevent propagation to avoid duplicate logs</span>
@@ -84,20 +85,22 @@
 
     <span class="c1"># RichHandler for console (message only)</span>
     <span class="n">rich_handler</span> <span class="o">=</span> <span class="n">RichHandler</span><span class="p">(</span>
-        <span class="n">rich_tracebacks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
-        <span class="n">markup</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
-        <span class="n">show_path</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
-        <span class="n">show_time</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
-        <span class="n">show_level</span><span class="o">=</span><span class="kc">False</span>
+        <span class="n">rich_tracebacks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">markup</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">show_path</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">show_time</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">show_level</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">rich_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
-    
+
     <span class="c1"># FileHandler for explorer.log (detailed)</span>
     <span class="n">file_handler</span> <span class="o">=</span> <span class="n">FileHandler</span><span class="p">(</span><span class="s2">&quot;explorer.log&quot;</span><span class="p">)</span>
     <span class="n">file_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
-    <span class="n">file_formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(name)s</span><span class="s1"> - </span><span class="si">%(levelname)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">file_formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+        <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(name)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
     <span class="n">file_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">file_formatter</span><span class="p">)</span>
-    
+
     <span class="c1"># Add handlers to the app&#39;s logger</span>
     <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">rich_handler</span><span class="p">)</span>
     <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">file_handler</span><span class="p">)</span>
