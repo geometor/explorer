@@ -12,6 +12,7 @@ Usage:
 ------
 Run the application using the `run` function or by executing the module directly.
 """
+
 from __future__ import annotations
 
 __version__ = "0.4.4"

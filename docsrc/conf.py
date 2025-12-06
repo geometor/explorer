@@ -3,11 +3,10 @@ import geometor.explorer as module
 
 version = module.__version__
 
-org = 'geometor'
-org_name = 'GEOMETOR'
+org = "geometor"
+org_name = "GEOMETOR"
 
-repo = 'explorer'
-repo_name = 'explorer'
+repo = "explorer"
+repo_name = "explorer"
 
 setup_globals(org, org_name, repo, repo_name)
-
