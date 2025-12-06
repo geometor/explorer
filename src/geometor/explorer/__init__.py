@@ -14,8 +14,4 @@ Run the application using the `run` function or by executing the module directly
 """
 from __future__ import annotations
 
-__author__ = "GEOMETOR"
-__maintainer__ = "GEOMETOR"
-__email__ = "github@geometor.com"
-__version__ = "0.4.2"
-__licence__ = "MIT"
+__version__ = "0.4.3"

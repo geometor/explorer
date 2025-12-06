@@ -1,6 +1,19 @@
 changelog
 =========
 
+0.4.3
+-----
+*2025-12-06*
+
+**docs**
+
+.. + Updated author metadata in `pyproject.toml`.
+.. + Cleaned up module docstrings.
+
+**chore**
+
+.. + Updated `.gitignore`.
+
 0.4.2
 -----
 
