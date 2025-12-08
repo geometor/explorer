@@ -6,9 +6,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>geometor.explorer &mdash; Project name not set  documentation</title>
+  <title>controls &mdash; Project name not set  documentation</title>
   <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=ea5fcf70" />
-  <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=bc127b54" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=dabe459a" />
   <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
   <link rel="stylesheet" href="../../_static/css/print.css" type="text/css" media="print" />
   <link rel="icon" href="../../_static/favicon.ico" />
@@ -34,7 +34,7 @@
           <a href="../../mission/index.html"  >mission</a>
         </li>
         <li>
-          <a href="../../usage/index.html"  >usage</a>
+          <a href="../index.html"  >usage</a>
         </li>
         <li>
           <a href="../../log/index.html"  >log</a>
@@ -53,47 +53,40 @@
       <nav class="breadcrumbs">
         <span><a href="../../index.html">Home</a></span>
           <span>/</span>
-        <span><a href="../index.html">Module code</a></span>
+        <span><a href="../index.html">usage</a></span>
         <span>/</span>
-        <span>geometor.explorer</span>
+        <span>controls</span>
       </nav>
         <nav class="context">
           <div class="prev">
+             <a href="../installation.html" class="btn btn-neutral float-left" title="installation" >Prev</a>
           </div>
           <div class="next">
+            <a href="index.html" class="btn btn-neutral float-right" title="interface" >Next</a>
           </div>
         </nav>
-          <h1>Source code for geometor.explorer</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">The :mod:`geometor.explorer` is a web-based interface for visualizing and interacting with</span>
-<span class="sd">geometric models created using the :mod:`geometor.model` library.</span>
+          <section id="controls">
+<h1>controls<a class="headerlink" href="#controls" title="Link to this heading">¶</a></h1>
+<p>The sidebar contains controls for managing the construction.</p>
+<ul class="simple">
+<li><p><strong>Tools</strong>: Buttons to activate different construction modes (e.g., Line, Circle, Perpendicular).</p></li>
+<li><p><strong>History</strong>: A list of steps in the construction. You can navigate back to previous states.</p></li>
+<li><p><strong>Analysis</strong>: Toggles for turning on/off different analysis layers (e.g., Golden Sections).</p></li>
+</ul>
+</section>
 
-<span class="sd">Key Components:</span>
-<span class="sd">---------------</span>
-<span class="sd">- **App**: The main Flask application (:mod:`~geometor.explorer.app`) that handles API requests and serves the frontend.</span>
-<span class="sd">- **Serialization**: Tools (:mod:`~geometor.explorer.serialize`) to convert model data into JSON format for the browser.</span>
-<span class="sd">- **Logging**: Configuration (:mod:`~geometor.explorer.log`) for application logging.</span>
-
-<span class="sd">Usage:</span>
-<span class="sd">------</span>
-<span class="sd">Run the application using the `run` function or by executing the module directly.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-
-<div class="viewcode-block" id="__version__">
-<a class="viewcode-back" href="../../modules/index.html#geometor.explorer.__version__">[docs]</a>
-<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.4.4&quot;</span></div>
-
-</pre></div>
       </div>
       <footer>
 
+        <div class="meta">
+        </div>
 
         <nav class="context">
           <div class="prev">
+             <a href="../installation.html" class="btn btn-neutral float-left" title="installation" >Prev</a>
           </div>
           <div class="next">
+            <a href="index.html" class="btn btn-neutral float-right" title="interface" >Next</a>
           </div>
         </nav></footer>
     </article>

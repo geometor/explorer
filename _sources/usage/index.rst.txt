@@ -3,3 +3,6 @@
 
 usage
 =====
+
+.. collection::
+   :sort: order
