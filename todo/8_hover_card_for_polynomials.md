@@ -1,1 +1,0 @@
-hover card for polynomials

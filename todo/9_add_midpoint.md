@@ -1,1 +1,0 @@
-add midpoint - like perpendicular bisector but the line is also a guide
