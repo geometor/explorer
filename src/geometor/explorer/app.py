@@ -1,6 +1,13 @@
+"""Main Flask application for the GEOMETOR explorer.
+
+This module initializes the Flask app, configures logging, and defines API routes
+for interacting with the geometric model. It handles model creation, modification,
+analysis, and persistence.
+"""
+
 from __future__ import annotations
 from geometor.explorer.serialize import to_browser_dict
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, Response
 from geometor.model import Model, load_model
 from geometor.divine import register_divine_hook
 from geometor.divine.golden.groups import (
@@ -26,9 +33,8 @@ CONSTRUCTIONS_DIR = "./constructions"
 os.makedirs(CONSTRUCTIONS_DIR, exist_ok=True)
 
 
-def new_model(template="default"):
-    """
-    Create a new model based on a template.
+def new_model(template: str = "default") -> None:
+    """Create a new model based on a template.
 
     Args:
         template: The name of the template to use ('default', 'blank', 'equidistant').
@@ -50,7 +56,7 @@ def new_model(template="default"):
         model.set_point(1, 0, classes=["given"])
 
 
-def run():
+def run() -> None:
     app.debug = True
     if os.environ.get("WERKZEUG_RUN_MAIN") == "true" or not app.debug:
         new_model()
@@ -58,14 +64,13 @@ def run():
 
 
 @app.route("/")
-def index():
+def index() -> str:
     return render_template("index.html", analysis_enabled=ANALYSIS_ENABLED)
 
 
 @app.route("/api/model", methods=["GET"])
-def get_model():
-    """
-    Return the complete model data.
+def get_model() -> Response:
+    """Return the complete model data.
 
     Returns:
         JSON response containing the serialized model data.
@@ -74,7 +79,7 @@ def get_model():
 
 
 @app.route("/api/analysis/toggle", methods=["POST"])
-def toggle_analysis():
+def toggle_analysis() -> Response:
     global ANALYSIS_ENABLED
     ANALYSIS_ENABLED = not ANALYSIS_ENABLED
     if ANALYSIS_ENABLED:
@@ -85,9 +90,8 @@ def toggle_analysis():
 
 
 @app.route("/api/model/save", methods=["POST"])
-def save_model_endpoint():
-    """
-    Save the current model to a file.
+def save_model_endpoint() -> tuple[Response, int] | Response:
+    """Save the current model to a file.
 
     Expects a JSON payload with a 'filename' key.
 
@@ -108,9 +112,8 @@ def save_model_endpoint():
 
 
 @app.route("/api/model/load", methods=["POST"])
-def load_model_endpoint():
-    """
-    Load a model from file content or filename.
+def load_model_endpoint() -> tuple[Response, int] | Response:
+    """Load a model from file content or filename.
 
     Expects a JSON payload with either 'content' or 'filename'.
 
@@ -163,9 +166,8 @@ def load_model_endpoint():
 
 
 @app.route("/api/constructions", methods=["GET"])
-def list_constructions():
-    """
-    List available construction files.
+def list_constructions() -> Response:
+    """List available construction files.
 
     Returns:
         JSON response containing a list of filenames.
@@ -175,9 +177,8 @@ def list_constructions():
 
 
 @app.route("/api/model/new", methods=["POST"])
-def new_model_endpoint():
-    """
-    Create a new model.
+def new_model_endpoint() -> Response:
+    """Create a new model.
 
     Expects a JSON payload with an optional 'template' key.
 
@@ -191,7 +192,16 @@ def new_model_endpoint():
 
 
 @app.route("/api/construct/line", methods=["POST"])
-def construct_line():
+def construct_line() -> tuple[Response, int] | Response:
+    """Construct a line between two points.
+
+    Expects a JSON payload with:
+    - pt1 (str): ID of the first point.
+    - pt2 (str): ID of the second point.
+
+    Returns:
+        JSON response containing the updated model data.
+    """
     try:
         data = request.get_json()
         pt1_ID = data.get("pt1")
@@ -212,7 +222,16 @@ def construct_line():
 
 
 @app.route("/api/construct/circle", methods=["POST"])
-def construct_circle():
+def construct_circle() -> tuple[Response, int] | Response:
+    """Construct a circle from a center point to a radius point.
+
+    Expects a JSON payload with:
+    - pt1 (str): ID of the center point.
+    - pt2 (str): ID of the radius point.
+
+    Returns:
+        JSON response containing the updated model data.
+    """
     try:
         data = request.get_json()
         pt1_ID = data.get("pt1")
@@ -233,7 +252,16 @@ def construct_circle():
 
 
 @app.route("/api/construct/perpendicular_bisector", methods=["POST"])
-def construct_perpendicular_bisector():
+def construct_perpendicular_bisector() -> tuple[Response, int] | Response:
+    """Construct a perpendicular bisector between two points.
+
+    Expects a JSON payload with:
+    - pt1 (str): ID of the first point.
+    - pt2 (str): ID of the second point.
+
+    Returns:
+        JSON response containing the updated model data.
+    """
     try:
         data = request.get_json()
         pt1_ID = data.get("pt1")
@@ -269,7 +297,17 @@ def construct_perpendicular_bisector():
 
 
 @app.route("/api/construct/angle_bisector", methods=["POST"])
-def construct_angle_bisector():
+def construct_angle_bisector() -> tuple[Response, int] | Response:
+    """Construct an angle bisector.
+
+    Expects a JSON payload with:
+    - pt1 (str): ID of a point on the first ray.
+    - vertex (str): ID of the vertex point.
+    - pt3 (str): ID of a point on the second ray.
+
+    Returns:
+        JSON response containing the updated model data.
+    """
     try:
         data = request.get_json()
         pt1_ID = data.get("pt1")
@@ -331,7 +369,16 @@ def construct_angle_bisector():
 
 
 @app.route("/api/construct/point", methods=["POST"])
-def construct_point():
+def construct_point() -> tuple[Response, int] | Response:
+    """Construct a point at specified coordinates.
+
+    Expects a JSON payload with:
+    - x (str): The x-coordinate expression.
+    - y (str): The y-coordinate expression.
+
+    Returns:
+        JSON response containing the updated model data or an error message.
+    """
     data = request.get_json()
     x_str = data.get("x")
     y_str = data.get("y")
@@ -350,7 +397,15 @@ def construct_point():
 
 
 @app.route("/api/construct/polynomial", methods=["POST"])
-def construct_polynomial():
+def construct_polynomial() -> tuple[Response, int] | Response:
+    """Construct a polynomial curve.
+
+    Expects a JSON payload with:
+    - coeffs (str): Comma-separated string of coefficients.
+
+    Returns:
+        JSON response containing the updated model data or an error message.
+    """
     data = request.get_json()
     coeffs_str = data.get("coeffs")
 
@@ -374,9 +429,8 @@ def construct_polynomial():
 
 
 @app.route("/api/model/delete", methods=["POST"])
-def delete_element():
-    """
-    Delete an element and its dependents from the model.
+def delete_element() -> tuple[Response, int] | Response:
+    """Delete an element and its dependents from the model.
 
     Expects a JSON payload with an 'ID' key.
 
@@ -395,9 +449,8 @@ def delete_element():
 
 
 @app.route("/api/model/dependents", methods=["GET"])
-def get_dependents_endpoint():
-    """
-    Return a list of dependent elements for a given element ID.
+def get_dependents_endpoint() -> tuple[Response, int] | Response:
+    """Return a list of dependent elements for a given element ID.
 
     Args:
         ID: The ID of the element (passed as query parameter).
@@ -416,9 +469,8 @@ def get_dependents_endpoint():
 
 
 @app.route("/api/model/edit", methods=["POST"])
-def edit_element():
-    """
-    Update the class and guide status of an element.
+def edit_element() -> tuple[Response, int] | Response:
+    """Update the class and guide status of an element.
 
     Expects a JSON payload with 'ID', 'classes', and 'guide'.
 
@@ -454,7 +506,15 @@ def edit_element():
 
 
 @app.route("/api/set/segment", methods=["POST"])
-def set_segment():
+def set_segment() -> tuple[Response, int] | Response:
+    """Define a segment between two points.
+
+    Expects a JSON payload with:
+    - points (list): A list of 2 point IDs.
+
+    Returns:
+        JSON response containing the updated model data.
+    """
     try:
         data = request.get_json()
         points_IDs = data.get("points", [])
@@ -474,7 +534,15 @@ def set_segment():
 
 
 @app.route("/api/set/section", methods=["POST"])
-def set_section():
+def set_section() -> tuple[Response, int] | Response:
+    """Define a section (collinear sequence) of points.
+
+    Expects a JSON payload with:
+    - points (list): A list of 3 point IDs.
+
+    Returns:
+        JSON response containing the updated model data.
+    """
     try:
         data = request.get_json()
         points = [model.get_element_by_ID(ID) for ID in data.get("points", [])]
@@ -489,7 +557,15 @@ def set_section():
 
 
 @app.route("/api/set/polygon", methods=["POST"])
-def set_polygon():
+def set_polygon() -> tuple[Response, int] | Response:
+    """Define a polygon from a list of points.
+
+    Expects a JSON payload with:
+    - points (list): A list of point IDs (at least 3).
+
+    Returns:
+        JSON response containing the updated model data.
+    """
     try:
         data = request.get_json()
         points = [model.get_element_by_ID(ID) for ID in data.get("points", [])]
@@ -503,9 +579,8 @@ def set_polygon():
         ), 500
 
 
-def get_golden_sections():
-    """
-    Retrieve golden sections from the model.
+def get_golden_sections() -> list[Section]:
+    """Retrieve golden sections from the model.
 
     Returns:
         list[Section]: A list of Section objects that are golden sections.
@@ -519,7 +594,12 @@ def get_golden_sections():
 
 
 @app.route("/api/groups/by_size", methods=["GET"])
-def get_groups_by_size():
+def get_groups_by_size() -> Response:
+    """Group golden sections by their size (length ratio).
+
+    Returns:
+        JSON response mapping size values to lists of section IDs.
+    """
     sections = get_golden_sections()
     groups = group_sections_by_size(sections)
     app.logger.info(f"Found {len(groups)} groups by size")
@@ -533,7 +613,12 @@ def get_groups_by_size():
 
 
 @app.route("/api/groups/by_point", methods=["GET"])
-def get_groups_by_point():
+def get_groups_by_point() -> Response:
+    """Group golden sections by the points they contain.
+
+    Returns:
+        JSON response mapping point IDs to lists of section IDs.
+    """
     sections = get_golden_sections()
     groups = group_sections_by_points(sections)
     app.logger.info(f"Found {len(groups)} groups by point")
@@ -547,7 +632,13 @@ def get_groups_by_point():
 
 
 @app.route("/api/groups/by_chain", methods=["GET"])
-def get_groups_by_chain():
+def get_groups_by_chain() -> Response:
+    """Group golden sections by chains (connected sequences).
+
+    Returns:
+        JSON response containing a list of chains, where each chain has a name and
+        a list of section IDs.
+    """
     sections = get_golden_sections()
     chain_tree = find_chains_in_sections(sections)
     chains = unpack_chains(chain_tree)

@@ -1,5 +1,8 @@
-"""
-Browser-specific serialization for the Model class.
+"""Browser-specific serialization for the geometric model.
+
+This module provides functions to serialize model elements (points, lines, circles, etc.)
+into a dictionary format that can be easily consumed by the frontend application.
+It handles coordinate conversion, LaTeX formatting, and property extraction.
 """
 
 from __future__ import annotations
@@ -10,11 +13,12 @@ from geometor.model.sections import Section
 from geometor.model.chains import Chain
 from geometor.model.wedges import Wedge
 from geometor.model.utils import clean_expr
+from geometor.model import Model
 from geometor.model.polynomials import Polynomial
 
 
-def _spread(l1: spg.Line, l2: spg.Line):
-    """calculate the spread of two lines"""
+def _spread(l1: spg.Line, l2: spg.Line) -> sp.Expr:
+    """Calculate the spread of two lines."""
     a1, a2, a3 = l1.coefficients
     b1, b2, b3 = l2.coefficients
     # only the first two coefficients are used
@@ -22,7 +26,7 @@ def _spread(l1: spg.Line, l2: spg.Line):
     return spread_val
 
 
-def _create_section_from_points(points, model):
+def _create_section_from_points(points: list[spg.Point], model: Model) -> dict:
     """Helper function to create a Section object from points."""
     section = Section(points)
     lengths_val = [length.evalf() for length in section.lengths]
@@ -40,10 +44,8 @@ def _create_section_from_points(points, model):
     }
 
 
-def to_browser_dict(model):
-    """
-    Serializes the model to a dictionary format suitable for a browser-based
-    application, preserving the order of creation.
+def to_browser_dict(model: Model) -> dict:
+    """Serializes the model to a dictionary format suitable for a browser-based application.
 
     This method creates a dictionary containing the model's name and a single
     list of 'elements'. Each item in the list represents a geometric element
@@ -51,6 +53,7 @@ def to_browser_dict(model):
     client to parse and render sequentially.
 
     Each element dictionary includes:
+    
     - A 'type' field (e.g., 'point', 'line').
     - Data relevant to the element type, including floating-point values for
       rendering and LaTeX expressions for display.

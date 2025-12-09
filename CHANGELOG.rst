@@ -1,6 +1,18 @@
 changelog
 =========
 
+0.4.5
+-----
+*2025-12-08*
+
+**docs**
+
+-   Improved docstrings in `app.py` and `__init__.py`.
+
+**refactor**
+
+-   Added type hinting to `app.py`.
+
 0.4.4
 -----
 *2025-12-06*

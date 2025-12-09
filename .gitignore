@@ -6,5 +6,6 @@ dist/
 .doctrees
 .ipynb_checkpoints
 __pycache__
-docs
+docs/
+docsrc/modules/api/
 explorer.log

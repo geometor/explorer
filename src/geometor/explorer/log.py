@@ -1,10 +1,21 @@
+"""Logging configuration for the explorer application.
+
+This module provides functions to configure logging for the Flask app, setting up
+handlers for both console output (using Rich) and file logging.
+"""
+
 from __future__ import annotations
 import logging
 from logging import FileHandler
 from rich.logging import RichHandler
+from flask import Flask
 
 
-def configure_logging(app):
+def configure_logging(app: Flask) -> None:
+    """Configure logging for the application.
+
+    Sets up RichHandler for console output and FileHandler for file logging.
+    """
     # Disable Werkzeug's default request logger to reduce noise
     werkzeug_logger = logging.getLogger("werkzeug")
     werkzeug_logger.setLevel(logging.ERROR)
