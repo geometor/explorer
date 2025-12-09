@@ -283,6 +283,7 @@ div.highlight {
   background: black;
   padding: 1rem;
   border-radius: 4px;
+  margin-bottom: var(--fitz);
 }
 
 /* elements/a *****************************/
@@ -1106,7 +1107,6 @@ article > .gallery.modal > .list > figure > img {
     order: 4;
   }
   article > footer {
-    flex: 1 1 var(--col);
     order: 5;
     flex-flow: column nowrap;
     justify-content: flex-start;
@@ -1116,9 +1116,6 @@ article > .gallery.modal > .list > figure > img {
 @media (min-width: 108em) {
   article > .content {
     flex: 1 1 calc(100% - var(--col-2));
-  }
-  article > figure, article > .gallery, article > footer {
-    flex: 0 0 var(--col-2);
   }
 }
 

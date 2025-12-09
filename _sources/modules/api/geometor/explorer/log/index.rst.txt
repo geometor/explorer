@@ -3,6 +3,14 @@ geometor.explorer.log
 
 .. py:module:: geometor.explorer.log
 
+.. autoapi-nested-parse::
+
+   Logging configuration for the explorer application.
+
+   This module provides functions to configure logging for the Flask app, setting up
+   handlers for both console output (using Rich) and file logging.
+
+
 
 Functions
 ---------
@@ -15,5 +23,10 @@ Functions
 Module Contents
 ---------------
 
-.. py:function:: configure_logging(app)
+.. py:function:: configure_logging(app: flask.Flask) -> None
+
+   Configure logging for the application.
+
+   Sets up RichHandler for console output and FileHandler for file logging.
+
 

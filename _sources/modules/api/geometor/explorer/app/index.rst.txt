@@ -3,6 +3,15 @@ geometor.explorer.app
 
 .. py:module:: geometor.explorer.app
 
+.. autoapi-nested-parse::
+
+   Main Flask application for the GEOMETOR explorer.
+
+   This module initializes the Flask app, configures logging, and defines API routes
+   for interacting with the geometric model. It handles model creation, modification,
+   analysis, and persistence.
+
+
 
 Attributes
 ----------
@@ -64,27 +73,27 @@ Module Contents
    :value: './constructions'
 
 
-.. py:function:: new_model(template='default')
+.. py:function:: new_model(template: str = 'default') -> None
 
    Create a new model based on a template.
 
    :param template: The name of the template to use ('default', 'blank', 'equidistant').
 
 
-.. py:function:: run()
+.. py:function:: run() -> None
 
-.. py:function:: index()
+.. py:function:: index() -> str
 
-.. py:function:: get_model()
+.. py:function:: get_model() -> flask.Response
 
    Return the complete model data.
 
    :returns: JSON response containing the serialized model data.
 
 
-.. py:function:: toggle_analysis()
+.. py:function:: toggle_analysis() -> flask.Response
 
-.. py:function:: save_model_endpoint()
+.. py:function:: save_model_endpoint() -> tuple[flask.Response, int] | flask.Response
 
    Save the current model to a file.
 
@@ -93,7 +102,7 @@ Module Contents
    :returns: JSON response indicating success or failure.
 
 
-.. py:function:: load_model_endpoint()
+.. py:function:: load_model_endpoint() -> tuple[flask.Response, int] | flask.Response
 
    Load a model from file content or filename.
 
@@ -102,14 +111,14 @@ Module Contents
    :returns: JSON response containing the serialized model data.
 
 
-.. py:function:: list_constructions()
+.. py:function:: list_constructions() -> flask.Response
 
    List available construction files.
 
    :returns: JSON response containing a list of filenames.
 
 
-.. py:function:: new_model_endpoint()
+.. py:function:: new_model_endpoint() -> flask.Response
 
    Create a new model.
 
@@ -118,19 +127,73 @@ Module Contents
    :returns: JSON response containing the serialized new model.
 
 
-.. py:function:: construct_line()
+.. py:function:: construct_line() -> tuple[flask.Response, int] | flask.Response
 
-.. py:function:: construct_circle()
+   Construct a line between two points.
 
-.. py:function:: construct_perpendicular_bisector()
+   Expects a JSON payload with:
+   - pt1 (str): ID of the first point.
+   - pt2 (str): ID of the second point.
 
-.. py:function:: construct_angle_bisector()
+   :returns: JSON response containing the updated model data.
 
-.. py:function:: construct_point()
 
-.. py:function:: construct_polynomial()
+.. py:function:: construct_circle() -> tuple[flask.Response, int] | flask.Response
 
-.. py:function:: delete_element()
+   Construct a circle from a center point to a radius point.
+
+   Expects a JSON payload with:
+   - pt1 (str): ID of the center point.
+   - pt2 (str): ID of the radius point.
+
+   :returns: JSON response containing the updated model data.
+
+
+.. py:function:: construct_perpendicular_bisector() -> tuple[flask.Response, int] | flask.Response
+
+   Construct a perpendicular bisector between two points.
+
+   Expects a JSON payload with:
+   - pt1 (str): ID of the first point.
+   - pt2 (str): ID of the second point.
+
+   :returns: JSON response containing the updated model data.
+
+
+.. py:function:: construct_angle_bisector() -> tuple[flask.Response, int] | flask.Response
+
+   Construct an angle bisector.
+
+   Expects a JSON payload with:
+   - pt1 (str): ID of a point on the first ray.
+   - vertex (str): ID of the vertex point.
+   - pt3 (str): ID of a point on the second ray.
+
+   :returns: JSON response containing the updated model data.
+
+
+.. py:function:: construct_point() -> tuple[flask.Response, int] | flask.Response
+
+   Construct a point at specified coordinates.
+
+   Expects a JSON payload with:
+   - x (str): The x-coordinate expression.
+   - y (str): The y-coordinate expression.
+
+   :returns: JSON response containing the updated model data or an error message.
+
+
+.. py:function:: construct_polynomial() -> tuple[flask.Response, int] | flask.Response
+
+   Construct a polynomial curve.
+
+   Expects a JSON payload with:
+   - coeffs (str): Comma-separated string of coefficients.
+
+   :returns: JSON response containing the updated model data or an error message.
+
+
+.. py:function:: delete_element() -> tuple[flask.Response, int] | flask.Response
 
    Delete an element and its dependents from the model.
 
@@ -139,7 +202,7 @@ Module Contents
    :returns: JSON response containing the updated model data.
 
 
-.. py:function:: get_dependents_endpoint()
+.. py:function:: get_dependents_endpoint() -> tuple[flask.Response, int] | flask.Response
 
    Return a list of dependent elements for a given element ID.
 
@@ -148,7 +211,7 @@ Module Contents
    :returns: JSON response containing a list of dependent element IDs.
 
 
-.. py:function:: edit_element()
+.. py:function:: edit_element() -> tuple[flask.Response, int] | flask.Response
 
    Update the class and guide status of an element.
 
@@ -157,13 +220,37 @@ Module Contents
    :returns: JSON response containing the updated model data.
 
 
-.. py:function:: set_segment()
+.. py:function:: set_segment() -> tuple[flask.Response, int] | flask.Response
 
-.. py:function:: set_section()
+   Define a segment between two points.
 
-.. py:function:: set_polygon()
+   Expects a JSON payload with:
+   - points (list): A list of 2 point IDs.
 
-.. py:function:: get_golden_sections()
+   :returns: JSON response containing the updated model data.
+
+
+.. py:function:: set_section() -> tuple[flask.Response, int] | flask.Response
+
+   Define a section (collinear sequence) of points.
+
+   Expects a JSON payload with:
+   - points (list): A list of 3 point IDs.
+
+   :returns: JSON response containing the updated model data.
+
+
+.. py:function:: set_polygon() -> tuple[flask.Response, int] | flask.Response
+
+   Define a polygon from a list of points.
+
+   Expects a JSON payload with:
+   - points (list): A list of point IDs (at least 3).
+
+   :returns: JSON response containing the updated model data.
+
+
+.. py:function:: get_golden_sections() -> list[geometor.model.sections.Section]
 
    Retrieve golden sections from the model.
 
@@ -171,9 +258,25 @@ Module Contents
    :rtype: list[Section]
 
 
-.. py:function:: get_groups_by_size()
+.. py:function:: get_groups_by_size() -> flask.Response
 
-.. py:function:: get_groups_by_point()
+   Group golden sections by their size (length ratio).
 
-.. py:function:: get_groups_by_chain()
+   :returns: JSON response mapping size values to lists of section IDs.
+
+
+.. py:function:: get_groups_by_point() -> flask.Response
+
+   Group golden sections by the points they contain.
+
+   :returns: JSON response mapping point IDs to lists of section IDs.
+
+
+.. py:function:: get_groups_by_chain() -> flask.Response
+
+   Group golden sections by chains (connected sequences).
+
+   :returns: JSON response containing a list of chains, where each chain has a name and
+             a list of section IDs.
+
 
