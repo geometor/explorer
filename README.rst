@@ -6,7 +6,7 @@ GEOMETOR • explorer
 .. image:: https://img.shields.io/github/license/geometor/explorer.svg
    :target: https://github.com/geometor/explorer/blob/main/LICENSE
 
-**Visualizing the invisible.**
+**An interactive interface for visualizing and analyzing geometric models.**
 
 Overview
 --------
