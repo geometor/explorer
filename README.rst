@@ -22,6 +22,7 @@ Key Features
 - **Symbolic Visualization**: Click on any element to see its exact algebraic definition (using LaTeX/KaTeX).
 - **Real-Time Analysis**: Watch as golden sections and harmonic ranges are automatically highlighted by ``geometor.divine`` as you build.
 - **Precise Rendering**: SVG-based rendering ensures infinite scalability and crisp visuals.
+- **SVG Export**: Download your constructions as standalone SVG files with embedded styles for use in other tools.
 
 Installation
 ------------

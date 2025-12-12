@@ -1,5 +1,5 @@
 import { modal } from './modal.js';
-import { fitConstruction, renderElement, renderPoint, scaleCircles, initSvgEventListeners, updatePolynomials } from './svg.js';
+import { fitConstruction, renderElement, renderPoint, scaleCircles, initSvgEventListeners, updatePolynomials, exportSVG } from './svg.js';
 import { initGroupsView, initGroupsEventListeners } from './groups.js';
 import { initResizer } from './resizer.js';
 import { TL_DRAW, setPoint, setLine, setCircle } from './Animate.js';
@@ -21,6 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function hideHourglassCursor() {
         document.body.style.cursor = 'default';
         GEOMETOR.svg.style.cursor = 'default';
+    }
+
+    const exportBtn = document.getElementById('export-svg-btn');
+    if (exportBtn) {
+        exportBtn.addEventListener('click', () => {
+            exportSVG();
+        });
     }
 
     GEOMETOR.svg = document.getElementById('drawing');
@@ -114,10 +121,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
-        
-            document.getElementById('points-count').textContent = GEOMETOR.tables.points.rows.length;
-            document.getElementById('structures-count').textContent = GEOMETOR.tables.structures.rows.length;
-            document.getElementById('graphics-count').textContent = GEOMETOR.tables.graphics.rows.length;
+
+        document.getElementById('points-count').textContent = GEOMETOR.tables.points.rows.length;
+        document.getElementById('structures-count').textContent = GEOMETOR.tables.structures.rows.length;
+        document.getElementById('graphics-count').textContent = GEOMETOR.tables.graphics.rows.length;
         GEOMETOR.selectedPoints.forEach(ID => {
             const svgPoint = document.getElementById(ID);
             const tableRow = GEOMETOR.tables.points.querySelector(`tr[data-id="${ID}"]`);
@@ -216,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const row = GEOMETOR.tables.chrono.insertRow();
         row.dataset.id = el.ID;
         const isGiven = el.classes && el.classes.includes('given');
-        
+
         const IDCell = row.insertCell();
         const classCell = row.insertCell();
         const guideCell = row.insertCell();
@@ -321,16 +328,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ pt1, pt2 }),
             })
-            .then(response => response.json())
-            .then(data => {
-                renderModel(data);
-                clearSelection();
-                isDirty = true;
-            })
-            .finally(() => {
-                hideHourglassCursor();
-                updateStatus('Ready');
-            });
+                .then(response => response.json())
+                .then(data => {
+                    renderModel(data);
+                    clearSelection();
+                    isDirty = true;
+                })
+                .finally(() => {
+                    hideHourglassCursor();
+                    updateStatus('Ready');
+                });
         }
     });
 
@@ -344,16 +351,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ pt1, pt2 }),
             })
-            .then(response => response.json())
-            .then(data => {
-                renderModel(data);
-                clearSelection();
-                isDirty = true;
-            })
-            .finally(() => {
-                hideHourglassCursor();
-                updateStatus('Ready');
-            });
+                .then(response => response.json())
+                .then(data => {
+                    renderModel(data);
+                    clearSelection();
+                    isDirty = true;
+                })
+                .finally(() => {
+                    hideHourglassCursor();
+                    updateStatus('Ready');
+                });
         }
     });
 
@@ -367,16 +374,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ pt1, pt2 }),
             })
-            .then(response => response.json())
-            .then(data => {
-                renderModel(data);
-                clearSelection();
-                isDirty = true;
-            })
-            .finally(() => {
-                hideHourglassCursor();
-                updateStatus('Ready');
-            });
+                .then(response => response.json())
+                .then(data => {
+                    renderModel(data);
+                    clearSelection();
+                    isDirty = true;
+                })
+                .finally(() => {
+                    hideHourglassCursor();
+                    updateStatus('Ready');
+                });
         }
     });
 
@@ -390,16 +397,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ pt1, vertex, pt3 }),
             })
-            .then(response => response.json())
-            .then(data => {
-                renderModel(data);
-                clearSelection();
-                isDirty = true;
-            })
-            .finally(() => {
-                hideHourglassCursor();
-                updateStatus('Ready');
-            });
+                .then(response => response.json())
+                .then(data => {
+                    renderModel(data);
+                    clearSelection();
+                    isDirty = true;
+                })
+                .finally(() => {
+                    hideHourglassCursor();
+                    updateStatus('Ready');
+                });
         }
     });
 
@@ -411,16 +418,16 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ points: points }),
         })
-        .then(response => response.json())
-        .then(data => {
-            renderModel(data);
-            clearSelection();
-            isDirty = true;
-        })
-        .finally(() => {
-            hideHourglassCursor();
-            updateStatus('Ready');
-        });
+            .then(response => response.json())
+            .then(data => {
+                renderModel(data);
+                clearSelection();
+                isDirty = true;
+            })
+            .finally(() => {
+                hideHourglassCursor();
+                updateStatus('Ready');
+            });
     }
 
     segmentBtn.addEventListener('click', () => {
@@ -461,23 +468,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ x: data.x, y: data.y }),
             })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(err => { throw new Error(err.message) });
-                }
-                return response.json();
-            })
-            .then(data => {
-                renderModel(data);
-                isDirty = true;
-                updateStatus('Ready');
-            })
-            .catch(error => {
-                updateStatus(error.message, true);
-            })
-            .finally(() => {
-                hideHourglassCursor();
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.message) });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    renderModel(data);
+                    isDirty = true;
+                    updateStatus('Ready');
+                })
+                .catch(error => {
+                    updateStatus(error.message, true);
+                })
+                .finally(() => {
+                    hideHourglassCursor();
+                });
         });
     });
 
@@ -499,27 +506,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ coeffs: data.coeffs }),
             })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(err => { throw new Error(err.message) });
-                }
-                return response.json();
-            })
-            .then(data => {
-                renderModel(data);
-                isDirty = true;
-                updateStatus('Ready');
-            })
-            .catch(error => {
-                updateStatus(error.message, true);
-            })
-            .finally(() => {
-                hideHourglassCursor();
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.message) });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    renderModel(data);
+                    isDirty = true;
+                    updateStatus('Ready');
+                })
+                .catch(error => {
+                    updateStatus(error.message, true);
+                })
+                .finally(() => {
+                    hideHourglassCursor();
+                });
         });
     });
 
-    GEOMETOR.updateHoverCard = function(element) {
+    GEOMETOR.updateHoverCard = function (element) {
         if (!element) {
             GEOMETOR.hoverCard.style.display = 'none';
             return;
@@ -588,7 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let table = '<table><tbody>';
             for (let i = 0; i < element.parents.length - 1; i++) {
                 const p1 = element.parents[i];
-                const p2 = element.parents[i+1];
+                const p2 = element.parents[i + 1];
                 const decimal = element.decimal_lengths[i];
                 table += `<tr><td>${p1} ${p2}</td><td class="latex"></td><td class="decimal">${decimal}</td></tr>`;
             }
@@ -621,7 +628,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const algValue = element.latex_angles[p] || '';
                 const degValue = element.degree_angles[p] || '';
                 const spreadValue = element.spreads[p] || '';
-                
+
                 angleTable += `<tr><td>${p}</td><td class="latex-angle">${algValue}</td><td class="decimal">${degValue}</td><td class="latex-spread">${spreadValue}</td></tr>`;
             }
             angleTable += '</tbody></table>';
@@ -698,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return allIds;
     }
 
-    GEOMETOR.setElementHover = function(ID, hoverState) {
+    GEOMETOR.setElementHover = function (ID, hoverState) {
         if (!GEOMETOR.modelData.elements) {
             return;
         }
@@ -899,15 +906,15 @@ document.addEventListener('DOMContentLoaded', () => {
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ ID: ID }),
                             })
-                            .then(response => response.json())
-                            .then(data => {
-                                renderModel(data);
-                                isDirty = true;
-                            })
-                            .finally(() => {
-                                hideHourglassCursor();
-                                updateStatus('Ready');
-                            });
+                                .then(response => response.json())
+                                .then(data => {
+                                    renderModel(data);
+                                    isDirty = true;
+                                })
+                                .finally(() => {
+                                    hideHourglassCursor();
+                                    updateStatus('Ready');
+                                });
                         } else {
                             hideHourglassCursor();
                         }
@@ -933,21 +940,21 @@ document.addEventListener('DOMContentLoaded', () => {
                         fetch('/api/model/edit', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ 
-                                ID: ID, 
+                            body: JSON.stringify({
+                                ID: ID,
                                 classes: data.classes,
                                 guide: data.guide === 'on'
                             }),
                         })
-                        .then(response => response.json())
-                        .then(data => {
-                            renderModel(data);
-                            isDirty = true;
-                        })
-                        .finally(() => {
-                            hideHourglassCursor();
-                            updateStatus('Ready');
-                        });
+                            .then(response => response.json())
+                            .then(data => {
+                                renderModel(data);
+                                isDirty = true;
+                            })
+                            .finally(() => {
+                                hideHourglassCursor();
+                                updateStatus('Ready');
+                            });
                     });
                 }
             }
@@ -970,7 +977,7 @@ document.addEventListener('DOMContentLoaded', () => {
             GEOMETOR.hoverCard.style.top = `${event.clientY + 15}px`;
         }
     });
-    
+
     document.addEventListener('mouseout', (event) => {
         const target = event.target;
         if (target.namespaceURI === "http://www.w3.org/2000/svg" && target.id) {
@@ -1036,14 +1043,14 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch('/api/analysis/toggle', {
             method: 'POST',
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.analysis_enabled) {
-                analysisToggle.classList.add('active');
-            } else {
-                analysisToggle.classList.remove('active');
-            }
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.analysis_enabled) {
+                    analysisToggle.classList.add('active');
+                } else {
+                    analysisToggle.classList.remove('active');
+                }
+            });
     });
 
     const savedSvgTheme = localStorage.getItem('svg-theme');
@@ -1091,10 +1098,10 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             const section = btn.closest('.collapsible-section');
             section.classList.toggle('collapsed');
-            
+
             const isCollapsed = section.classList.contains('collapsed');
             btn.querySelector('.material-icons').textContent = isCollapsed ? 'expand_more' : 'expand_less';
-            
+
             const tableContainer = section.querySelector('.table-container');
             tableContainer.style.display = isCollapsed ? 'none' : '';
         });
@@ -1104,7 +1111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleVisBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             if (animationEnabled) return;
-            
+
             const section = btn.closest('.collapsible-section');
             section.classList.toggle('hide-elements');
             const isHidden = section.classList.contains('hide-elements');
@@ -1194,22 +1201,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ content: content }),
                 })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success === false) {
-                        updateStatus(`Error loading file: ${data.message}`, true);
-                    } else {
-                        renderModel(data);
-                        clearSelection();
-                        currentFilename = file.name;
-                        updateFilenameDisplay();
-                        isDirty = false;
-                        updateStatus('Ready');
-                    }
-                })
-                .finally(() => {
-                    hideHourglassCursor();
-                });
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success === false) {
+                            updateStatus(`Error loading file: ${data.message}`, true);
+                        } else {
+                            renderModel(data);
+                            clearSelection();
+                            currentFilename = file.name;
+                            updateFilenameDisplay();
+                            isDirty = false;
+                            updateStatus('Ready');
+                        }
+                    })
+                    .finally(() => {
+                        hideHourglassCursor();
+                    });
             };
             reader.readAsText(file);
         }
@@ -1224,22 +1231,22 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ filename: filename }),
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                updateStatus('File saved successfully.');
-                currentFilename = filename;
-                updateFilenameDisplay();
-                updateFilenameDisplay();
-                loadConstructions();
-                isDirty = false;
-            } else {
-                updateStatus(`Error saving file: ${data.message}`, true);
-            }
-        })
-        .finally(() => {
-            hideHourglassCursor();
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    updateStatus('File saved successfully.');
+                    currentFilename = filename;
+                    updateFilenameDisplay();
+                    updateFilenameDisplay();
+                    loadConstructions();
+                    isDirty = false;
+                } else {
+                    updateStatus(`Error saving file: ${data.message}`, true);
+                }
+            })
+            .finally(() => {
+                hideHourglassCursor();
+            });
     }
 
     function saveAs() {
@@ -1384,145 +1391,145 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-        timelineSlider.addEventListener('input', () => {
+    timelineSlider.addEventListener('input', () => {
 
-            TL_DRAW.progress(timelineSlider.value / 100).pause();
+        TL_DRAW.progress(timelineSlider.value / 100).pause();
 
-        });
+    });
 
-    
 
-        function stepForward() {
 
-            const elements = GEOMETOR.modelData.elements;
+    function stepForward() {
 
-            if (!elements || elements.length === 0) return;
+        const elements = GEOMETOR.modelData.elements;
 
-            const numElements = elements.length;
+        if (!elements || elements.length === 0) return;
 
-            const currentProgress = TL_DRAW.progress();
+        const numElements = elements.length;
 
-            const epsilon = 1e-9;
+        const currentProgress = TL_DRAW.progress();
 
-    
+        const epsilon = 1e-9;
 
-            if (currentProgress === 1) return;
 
-    
 
-            const val = currentProgress * numElements;
+        if (currentProgress === 1) return;
 
-            let targetStep = Math.ceil(val);
 
-    
 
-            if (Math.abs(val - Math.round(val)) < epsilon) {
+        const val = currentProgress * numElements;
 
-                targetStep = Math.round(val) + 1;
+        let targetStep = Math.ceil(val);
 
-            }
 
-    
 
-            if (targetStep > numElements) {
+        if (Math.abs(val - Math.round(val)) < epsilon) {
 
-                targetStep = numElements;
-
-            }
-
-    
-
-            TL_DRAW.progress(targetStep / numElements).pause();
-
-            playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+            targetStep = Math.round(val) + 1;
 
         }
 
-    
 
-        function stepBackward() {
 
-            const elements = GEOMETOR.modelData.elements;
+        if (targetStep > numElements) {
 
-            if (!elements || elements.length === 0) return;
-
-            const numElements = elements.length;
-
-            const currentProgress = TL_DRAW.progress();
-
-            const epsilon = 1e-9;
-
-    
-
-            if (currentProgress === 0) return;
-
-    
-
-            const val = currentProgress * numElements;
-
-            let targetStep = Math.floor(val);
-
-    
-
-            if (Math.abs(val - Math.round(val)) < epsilon) {
-
-                targetStep = Math.round(val) - 1;
-
-            }
-
-    
-
-            if (targetStep < 0) {
-
-                targetStep = 0;
-
-            }
-
-    
-
-            TL_DRAW.progress(targetStep / numElements).pause();
-
-            playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+            targetStep = numElements;
 
         }
 
-    
 
-        startBtn.addEventListener('click', () => {
 
-            TL_DRAW.progress(0).pause();
+        TL_DRAW.progress(targetStep / numElements).pause();
 
-            playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+        playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
 
-        });
+    }
 
-    
 
-        stepBackBtn.addEventListener('click', stepBackward);
 
-    
+    function stepBackward() {
 
-        stepFwdBtn.addEventListener('click', stepForward);
+        const elements = GEOMETOR.modelData.elements;
 
-    
+        if (!elements || elements.length === 0) return;
 
-        endBtn.addEventListener('click', () => {
+        const numElements = elements.length;
 
-            TL_DRAW.progress(1).pause();
+        const currentProgress = TL_DRAW.progress();
 
-            playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+        const epsilon = 1e-9;
 
-        });
 
-    
 
-        animationToggle.addEventListener('change', () => {
+        if (currentProgress === 0) return;
 
-            animationEnabled = animationToggle.checked;
 
-            renderModel(GEOMETOR.modelData);
 
-        });
+        const val = currentProgress * numElements;
+
+        let targetStep = Math.floor(val);
+
+
+
+        if (Math.abs(val - Math.round(val)) < epsilon) {
+
+            targetStep = Math.round(val) - 1;
+
+        }
+
+
+
+        if (targetStep < 0) {
+
+            targetStep = 0;
+
+        }
+
+
+
+        TL_DRAW.progress(targetStep / numElements).pause();
+
+        playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+
+    }
+
+
+
+    startBtn.addEventListener('click', () => {
+
+        TL_DRAW.progress(0).pause();
+
+        playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+
+    });
+
+
+
+    stepBackBtn.addEventListener('click', stepBackward);
+
+
+
+    stepFwdBtn.addEventListener('click', stepForward);
+
+
+
+    endBtn.addEventListener('click', () => {
+
+        TL_DRAW.progress(1).pause();
+
+        playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+
+    });
+
+
+
+    animationToggle.addEventListener('change', () => {
+
+        animationEnabled = animationToggle.checked;
+
+        renderModel(GEOMETOR.modelData);
+
+    });
 
 
 });

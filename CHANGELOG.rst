@@ -1,6 +1,14 @@
 changelog
 =========
 
+0.4.6
+-----
+*2025-12-12*
+
+**feat**
+
+-   Implemented SVG export with embedded styles, allowing users to download the current view as a standalone SVG file.
+
 0.4.5
 -----
 *2025-12-08*

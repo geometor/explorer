@@ -329,3 +329,60 @@ export function initSvgEventListeners() {
         }
     });
 }
+
+export async function exportSVG() {
+    // 1. Clone the SVG element
+    const originalSvg = GEOMETOR.svg;
+    const clonedSvg = originalSvg.cloneNode(true);
+
+    // 2. Embed Styles
+    const styleSheets = ['css/style.css', 'css/svg.css'];
+    let cssContent = '';
+
+    const links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (const link of links) {
+        const href = link.href;
+        if (href.includes('svg.css') || href.includes('style.css')) {
+            try {
+                const response = await fetch(href);
+                const text = await response.text();
+                cssContent += `\n/* ${href} */\n${text}`;
+            } catch (e) {
+                console.error("Failed to fetch CSS for export:", href, e);
+            }
+        }
+    }
+
+    if (document.body.classList.contains('light-theme')) {
+        clonedSvg.classList.add('light-theme');
+    }
+
+    const styleElement = document.createElement('style');
+    styleElement.textContent = cssContent;
+    clonedSvg.insertBefore(styleElement, clonedSvg.firstChild);
+
+    // 3. Serialize
+    const serializer = new XMLSerializer();
+    let source = serializer.serializeToString(clonedSvg);
+
+    // Add XML declaration
+    if (!source.match(/^<xml/)) {
+        source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+    }
+
+    // 4. Download
+    const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
+    const downloadLink = document.createElement("a");
+    downloadLink.href = url;
+
+    // Use filename from status bar or default
+    const filenameDisplay = document.getElementById('status-filename');
+    let name = filenameDisplay ? filenameDisplay.textContent.trim() : 'model';
+    if (!name || name === 'Unsaved Model') name = 'model';
+    if (!name.endsWith('.svg')) name += '.svg';
+
+    downloadLink.download = name;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+}
