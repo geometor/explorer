@@ -386,3 +386,139 @@ export async function exportSVG() {
     downloadLink.click();
     document.body.removeChild(downloadLink);
 }
+
+export async function exportAnimatedSVG() {
+    // 1. Clone the SVG element
+    const originalSvg = GEOMETOR.svg;
+    const clonedSvg = originalSvg.cloneNode(true);
+
+    // 2. Embed Styles
+    const styleSheets = ['css/style.css', 'css/svg.css'];
+    let cssContent = '';
+
+    // Initial opacity 0 for animation elements
+    cssContent += `
+    /* Animation Initial State */
+    #points > *, #elements > *, #graphics > * {
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+    `;
+
+    const links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (const link of links) {
+        const href = link.href;
+        if (href.includes('svg.css') || href.includes('style.css')) {
+            try {
+                const response = await fetch(href);
+                const text = await response.text();
+                cssContent += `\n/* ${href} */\n${text}`;
+            } catch (e) {
+                console.error("Failed to fetch CSS for export:", href, e);
+            }
+        }
+    }
+
+    if (document.body.classList.contains('light-theme')) {
+        clonedSvg.classList.add('light-theme');
+    }
+
+    const styleElement = document.createElement('style');
+    styleElement.textContent = cssContent;
+    clonedSvg.insertBefore(styleElement, clonedSvg.firstChild);
+
+    // 3. Prepare Sequence
+    // Extract IDs from modelData to ensure correct order
+    const sequence = [];
+    if (GEOMETOR.modelData && GEOMETOR.modelData.elements) {
+        GEOMETOR.modelData.elements.forEach(el => {
+            sequence.push(el.ID);
+        });
+    } else {
+        // Fallback if modelData isn't available for some reason
+        const allEls = originalSvg.querySelectorAll('#points > *, #elements > *, #graphics > *');
+        allEls.forEach(el => sequence.push(el.id));
+    }
+
+    // 4. Embed Script
+    const scriptContent = `
+    const sequence = ${JSON.stringify(sequence)};
+    let currentIndex = 0;
+    let isPlaying = true;
+    let timer = null;
+
+    window.onload = function() {
+        const svg = document.querySelector('svg');
+        
+        // Ensure all elements start hidden
+        sequence.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.opacity = '0';
+        });
+
+        function step() {
+            if (!isPlaying) return;
+
+            if (currentIndex < sequence.length) {
+                const id = sequence[currentIndex];
+                const el = document.getElementById(id);
+                if (el) {
+                    el.style.opacity = '1';
+                }
+                currentIndex++;
+                timer = setTimeout(step, 200);
+            } else {
+                isPlaying = false;
+            }
+        }
+
+        // Click to toggle
+        svg.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                // If finished, restart
+                if (currentIndex >= sequence.length) {
+                    currentIndex = 0;
+                    sequence.forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.style.opacity = '0';
+                    });
+                }
+                step();
+            } else {
+                clearTimeout(timer);
+            }
+        });
+
+        // Start automatically
+        setTimeout(step, 1000);
+    };
+    `;
+
+    const scriptElement = document.createElement('script');
+    scriptElement.textContent = scriptContent;
+    clonedSvg.appendChild(scriptElement);
+
+    // 5. Serialize
+    const serializer = new XMLSerializer();
+    let source = serializer.serializeToString(clonedSvg);
+
+    if (!source.match(/^<xml/)) {
+        source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+    }
+
+    // 6. Download
+    const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
+    const downloadLink = document.createElement("a");
+    downloadLink.href = url;
+
+    const filenameDisplay = document.getElementById('status-filename');
+    let name = filenameDisplay ? filenameDisplay.textContent.trim() : 'model-animated';
+    if (!name || name === 'Unsaved Model') name = 'model-animated';
+    if (!name.endsWith('.svg')) name += '.svg';
+
+    downloadLink.download = name;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+}

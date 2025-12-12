@@ -1,5 +1,5 @@
 import { modal } from './modal.js';
-import { fitConstruction, renderElement, renderPoint, scaleCircles, initSvgEventListeners, updatePolynomials, exportSVG } from './svg.js';
+import { fitConstruction, renderElement, renderPoint, scaleCircles, initSvgEventListeners, updatePolynomials, exportSVG, exportAnimatedSVG } from './svg.js';
 import { initGroupsView, initGroupsEventListeners } from './groups.js';
 import { initResizer } from './resizer.js';
 import { TL_DRAW, setPoint, setLine, setCircle } from './Animate.js';
@@ -27,6 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (exportBtn) {
         exportBtn.addEventListener('click', () => {
             exportSVG();
+        });
+    }
+
+    const exportAnimBtn = document.getElementById('export-anim-btn');
+    if (exportAnimBtn) {
+        exportAnimBtn.addEventListener('click', () => {
+            exportAnimatedSVG();
         });
     }
 

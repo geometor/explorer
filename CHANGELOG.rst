@@ -1,6 +1,15 @@
 changelog
 =========
 
+0.4.7
+-----
+*2025-12-12*
+
+**feat**
+
+-   Implemented **Animated SVG Export**. Users can now download an SVG that replays the construction sequence when opened in a browser.
+-   Added click-to-pause/play functionality to the animated SVG.
+
 0.4.6
 -----
 *2025-12-12*
