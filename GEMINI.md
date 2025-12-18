@@ -25,28 +25,4 @@ The backend (Flask) manages the `geometor.model` state, while the frontend rende
 -   `src/geometor/explorer/templates/`: HTML templates.
 -   `serialize.py`: Handles serialization of the model for the frontend.
 
-## Getting Started
 
-### Installation
-
-```bash
-git clone https://github.com/geometor/explorer
-cd explorer
-pip install -e .
-```
-
-### Running the Application
-
-```bash
-# Run the explorer server
-python -m geometor.explorer
-```
-
-Open your browser to [http://127.0.0.1:9000](http://127.0.0.1:9000).
-
-### API Endpoints
-
--   `GET /api/model`: Get current model state.
--   `GET /api/constructions`: List available demo constructions.
--   `POST /api/model/new`: Reset to a new model.
--   `POST /api/construct/...`: Create geometric elements (lines, circles, etc.).

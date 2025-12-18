@@ -1,6 +1,21 @@
 changelog
 =========
 
+0.4.8
+-----
+*2025-12-18*
+
+**feat**
+
+-   Implemented **SVG Export Settings Modal**.
+-   Added **Output Targets**: Choose between "Screen" (non-scaling strokes) and "Print" (scaling strokes).
+-   Added **Sheet Size Selection**: Options for Letter (11x8.5") and Super B (19x13") when printing.
+-   Added **Force Light Mode** option for exports.
+
+**changed**
+
+-   Disabled "Animate" checkbox by default on startup.
+
 0.4.7
 -----
 *2025-12-12*

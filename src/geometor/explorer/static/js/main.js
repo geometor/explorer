@@ -26,7 +26,47 @@ document.addEventListener('DOMContentLoaded', () => {
     const exportBtn = document.getElementById('export-svg-btn');
     if (exportBtn) {
         exportBtn.addEventListener('click', () => {
-            exportSVG();
+            const modal = document.getElementById('export-modal');
+            const closeBtn = modal.querySelector('.close-btn');
+
+            modal.style.display = 'block';
+
+            const form = document.getElementById('export-form');
+            const printOptions = document.getElementById('print-options');
+            const outputRadios = form.querySelectorAll('input[name="output"]');
+
+            const handleOutputChange = () => {
+                const selected = form.querySelector('input[name="output"]:checked').value;
+                printOptions.style.display = selected === 'print' ? 'block' : 'none';
+            };
+
+            outputRadios.forEach(radio => {
+                radio.addEventListener('change', handleOutputChange);
+            });
+            // Initialize state
+            handleOutputChange();
+
+            closeBtn.onclick = () => {
+                modal.style.display = 'none';
+            };
+
+            window.onclick = (event) => {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            };
+
+            form.onsubmit = (e) => {
+                e.preventDefault();
+                const formData = new FormData(form);
+                const options = {
+                    output: formData.get('output'),
+                    theme: formData.get('theme'),
+                    sheet_size: formData.get('sheet_size')
+                };
+                exportSVG(options);
+                modal.style.display = 'none';
+            };
         });
     }
 

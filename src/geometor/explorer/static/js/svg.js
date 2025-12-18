@@ -330,7 +330,7 @@ export function initSvgEventListeners() {
     });
 }
 
-export async function exportSVG() {
+export async function exportSVG(options = {}) {
     // 1. Clone the SVG element
     const originalSvg = GEOMETOR.svg;
     const clonedSvg = originalSvg.cloneNode(true);
@@ -353,8 +353,66 @@ export async function exportSVG() {
         }
     }
 
-    if (document.body.classList.contains('light-theme')) {
+    if (document.body.classList.contains('light-theme') || options.theme === 'light') {
         clonedSvg.classList.add('light-theme');
+    }
+
+    // Handle Print Output
+    if (options.output === 'print') {
+        const viewBox = originalSvg.getAttribute('viewBox').split(' ').map(Number);
+
+        // Handle Sheet Size
+        if (options.sheet_size) {
+            const [w, h] = options.sheet_size.split('x').map(Number);
+            clonedSvg.setAttribute('width', `${w}in`);
+            clonedSvg.setAttribute('height', `${h}in`);
+
+            // Adjust viewBox to center the content in the new aspect ratio
+            const sheetRatio = w / h;
+            const currentW = viewBox[2];
+            const currentH = viewBox[3];
+            const currentRatio = currentW / currentH;
+
+            let newViewW, newViewH, newMinX, newMinY;
+
+            if (currentRatio > sheetRatio) {
+                // Drawing is wider than sheet: fit to width
+                newViewW = currentW;
+                newViewH = currentW / sheetRatio;
+                newMinX = viewBox[0];
+                newMinY = viewBox[1] - (newViewH - currentH) / 2;
+            } else {
+                // Drawing is taller than sheet: fit to height
+                newViewH = currentH;
+                newViewW = currentH * sheetRatio;
+                newMinY = viewBox[1];
+                newMinX = viewBox[0] - (newViewW - currentW) / 2;
+            }
+            clonedSvg.setAttribute('viewBox', `${newMinX} ${newMinY} ${newViewW} ${newViewH}`);
+        }
+
+        // Calculate a reasonable stroke width based on viewbox
+        // We re-read viewBox in case it changed above (it didn't change the scale of content, just the window)
+        // actually for stroke width we want relative to the content size, so original width is fine/safe
+        // but if we zoomed out effectively by adding padding, maybe we want strokes to reference the sheet size?
+        // Let's stick to the visual width of the content for now.
+        const width = viewBox[2];
+        const strokeWidth = width / 800; // e.g. 4 / 800 = 0.005
+
+        cssContent += `
+        /* Print Overrides */
+        * { 
+            vector-effect: none !important; 
+        }
+        line, circle, polyline, path, polygon { 
+            stroke-width: ${strokeWidth}px !important; 
+        }
+        /* Keep points (small circles) visible but scalable */
+        #points circle {
+            r: ${strokeWidth * 3}px !important;
+            stroke-width: ${strokeWidth}px !important;
+        }
+        `;
     }
 
     const styleElement = document.createElement('style');
@@ -379,7 +437,25 @@ export async function exportSVG() {
     const filenameDisplay = document.getElementById('status-filename');
     let name = filenameDisplay ? filenameDisplay.textContent.trim() : 'model';
     if (!name || name === 'Unsaved Model') name = 'model';
-    if (!name.endsWith('.svg')) name += '.svg';
+
+    // Robust extension stripping
+    try {
+        const lastDotIndex = name.lastIndexOf('.');
+        if (lastDotIndex !== -1) {
+            name = name.substring(0, lastDotIndex);
+        }
+    } catch (e) {
+        console.warn('Error processing filename, using default', e);
+        name = 'model';
+    }
+
+    // Append suffix if print
+    if (options && options.output === 'print') name += '-print';
+    if (options && options.theme === 'light') name += '-light';
+
+    name += '.svg';
+
+    console.log('Exporting SVG with filename:', name);
 
     downloadLink.download = name;
     document.body.appendChild(downloadLink);

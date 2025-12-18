@@ -71,7 +71,7 @@
                 <button id="step-back-btn"><span class="material-icons">fast_rewind</span></button>
                 <button id="step-fwd-btn"><span class="material-icons">fast_forward</span></button>
                 <button id="end-btn"><span class="material-icons">skip_next</span></button>
-                <input type="checkbox" id="animation-toggle" checked>
+                <input type="checkbox" id="animation-toggle">
                 <label for="animation-toggle">Animate</label>
             </div>
         </div>
@@ -110,7 +110,8 @@
                 <div class="collapsible-section">
                     <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> <button
                             class="toggle-vis-btn"><span class="material-icons">visibility</span></button> Structures
-                        <span id="structures-count">(0)</span></h3>
+                        <span id="structures-count">(0)</span>
+                    </h3>
                     <div class="table-container">
                         <table id="structures-table">
                             <thead>
@@ -129,7 +130,8 @@
                 <div class="collapsible-section">
                     <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> <button
                             class="toggle-vis-btn"><span class="material-icons">visibility</span></button> Graphics
-                        <span id="graphics-count">(0)</span></h3>
+                        <span id="graphics-count">(0)</span>
+                    </h3>
                     <div class="table-container">
                         <table id="graphics-table">
                             <thead>
@@ -166,7 +168,8 @@
             <div id="groups-view" style="display: none;">
                 <div class="collapsible-section">
                     <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Sizes
-                        <span id="sizes-count">(0)</span></h3>
+                        <span id="sizes-count">(0)</span>
+                    </h3>
                     <div class="table-container">
                         <table id="sizes-table">
                             <thead>
@@ -182,7 +185,8 @@
                 </div>
                 <div class="collapsible-section">
                     <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Chains
-                        <span id="chains-count">(0)</span></h3>
+                        <span id="chains-count">(0)</span>
+                    </h3>
                     <div class="table-container">
                         <table id="chains-table">
                             <thead>
@@ -198,7 +202,8 @@
                 </div>
                 <div class="collapsible-section">
                     <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Points
-                        <span id="points-group-count">(0)</span></h3>
+                        <span id="points-group-count">(0)</span>
+                    </h3>
                     <div class="table-container">
                         <table id="points-group-table">
                             <thead>
@@ -247,6 +252,47 @@
                 <button id="new-blank-btn">Blank</button>
                 <button id="new-default-btn">Default</button>
                 <button id="new-equidistant-btn">Equidistant</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="export-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Export SVG Settings</h2>
+            <div class="modal-body">
+                <form id="export-form">
+                    <fieldset>
+                        <legend>Output Target</legend>
+                        <label>
+                            <input type="radio" name="output" value="screen" checked>
+                            As Screen (optimized for display)
+                        </label>
+                        <br>
+                        <label>
+                            <input type="radio" name="output" value="print">
+                            Print Target (optimized for posters)
+                        </label>
+                    </fieldset>
+
+                    <div id="print-options"
+                        style="display: none; margin-left: 20px; border-left: 2px solid #555; padding-left: 10px; margin-bottom: 10px;">
+                        <label for="sheet-size">Sheet Size:</label>
+                        <select name="sheet_size" id="sheet-size"
+                            style="background: #333; color: #f1f1f1; border: 1px solid #555; padding: 5px; border-radius: 4px;">
+                            <option value="11x8.5">Letter (11" x 8.5")</option>
+                            <option value="19x13">Super B (19" x 13")</option>
+                        </select>
+                    </div>
+
+                    <br>
+                    <label>
+                        <input type="checkbox" name="theme" value="light">
+                        Force Light Mode
+                    </label>
+                    <br><br>
+                    <button type="submit" class="primary-btn">Export</button>
+                </form>
             </div>
         </div>
     </div>

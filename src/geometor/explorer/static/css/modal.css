@@ -81,3 +81,29 @@
 .modal-content button:hover {
     background-color: #6a6a6a;
 }
+
+/* Export Form Specifics */
+.modal-content fieldset {
+    border: 1px solid #555;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.modal-content legend {
+    color: #bbb;
+    padding: 0 5px;
+}
+
+.modal-content label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.modal-content input[type="radio"],
+.modal-content input[type="checkbox"] {
+    margin: 0;
+    cursor: pointer;
+}
