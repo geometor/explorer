@@ -26,7 +26,7 @@ Module Contents
 
 .. py:function:: to_browser_dict(model: geometor.model.Model) -> dict
 
-   Serializes the model to a dictionary format suitable for a browser-based application.
+   Serialize the model to a dictionary format suitable for a browser-based application.
 
    This method creates a dictionary containing the model's name and a single
    list of 'elements'. Each item in the list represents a geometric element
