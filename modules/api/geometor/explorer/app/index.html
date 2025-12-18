@@ -37,10 +37,10 @@
           <a href="../../../../../usage/index.html"  >usage</a>
         </li>
         <li>
-          <a href="../../../../index.html"  >modules</a>
+          <a href="../../../../../log/index.html"  >log</a>
         </li>
         <li>
-          <a href="../../../../../log/index.html"  >log</a>
+          <a href="../../../../index.html"  >modules</a>
         </li>
       </ul>
     </nav>
@@ -167,6 +167,12 @@
           </tr>
           <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.get_groups_by_chain" title="geometor.explorer.app.get_groups_by_chain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groups_by_chain</span></code></a>(→ flask.Response)</p></td>
           <td><p>Group golden sections by chains (connected sequences).</p></td>
+          </tr>
+          <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.process_cli_command" title="geometor.explorer.app.process_cli_command"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_cli_command</span></code></a>(→ dict)</p></td>
+          <td><p>Parse and execute a single command string.</p></td>
+          </tr>
+          <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.cli_command_endpoint" title="geometor.explorer.app.cli_command_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cli_command_endpoint</span></code></a>(→ tuple[flask.Response, ...)</p></td>
+          <td><p>Execute a CLI command.</p></td>
           </tr>
           </tbody>
           </table>
@@ -489,6 +495,39 @@
           </dl>
           </dd></dl>
 
+          <dl class="py function">
+          <dt class="sig sig-object py" id="geometor.explorer.app.process_cli_command">
+          <span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">process_cli_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geometor.model.Model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3.13/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.13/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a></span></span><a class="headerlink" href="#geometor.explorer.app.process_cli_command" title="Link to this definition">¶</a></dt>
+          <dd><p>Parse and execute a single command string.</p>
+          <dl class="field-list simple">
+          <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+          <dd class="field-odd"><ul class="simple">
+          <li><p><strong>model</strong> – The model instance to operate on.</p></li>
+          <li><p><strong>command</strong> – The command string to execute.</p></li>
+          </ul>
+          </dd>
+          <dt class="field-even">Returns<span class="colon">:</span></dt>
+          <dd class="field-even"><p>A dictionary containing ‘success’ (bool) and ‘message’ (str).</p>
+          </dd>
+          <dt class="field-odd">Return type<span class="colon">:</span></dt>
+          <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.13/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a></p>
+          </dd>
+          </dl>
+          </dd></dl>
+
+          <dl class="py function">
+          <dt class="sig sig-object py" id="geometor.explorer.app.cli_command_endpoint">
+          <span class="sig-prename descclassname"><span class="pre">geometor.explorer.app.</span></span><span class="sig-name descname"><span class="pre">cli_command_endpoint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.13/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">flask.Response</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.13/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">flask.Response</span></span></span><a class="headerlink" href="#geometor.explorer.app.cli_command_endpoint" title="Link to this definition">¶</a></dt>
+          <dd><p>Execute a CLI command.</p>
+          <p>Expects a JSON payload with:
+          - command (str): The command string.</p>
+          <dl class="field-list simple">
+          <dt class="field-odd">Returns<span class="colon">:</span></dt>
+          <dd class="field-odd"><p>JSON response with result and updated model.</p>
+          </dd>
+          </dl>
+          </dd></dl>
+
           </section>
           </section>
 
@@ -543,8 +582,8 @@
       <ul>
         <li><a href="../../../../../about.html">about</a></li>
         <li><a href="../../../../../connect.html">connect</a></li>
-        <li><a href="../../../../../changelog.html">changelog</a></li>
         <li><a href="../../../../../todos/index.html">todos</a></li>
+        <li><a href="../../../../../changelog.html">changelog</a></li>
       </ul>
     </div>
     <hr />

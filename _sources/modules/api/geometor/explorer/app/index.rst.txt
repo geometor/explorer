@@ -54,6 +54,8 @@ Functions
    geometor.explorer.app.get_groups_by_size
    geometor.explorer.app.get_groups_by_point
    geometor.explorer.app.get_groups_by_chain
+   geometor.explorer.app.process_cli_command
+   geometor.explorer.app.cli_command_endpoint
 
 
 Module Contents
@@ -287,5 +289,26 @@ Module Contents
 
    :returns: JSON response containing a list of chains, where each chain has a name and
              a list of section IDs.
+
+
+.. py:function:: process_cli_command(model: geometor.model.Model, command: str) -> dict
+
+   Parse and execute a single command string.
+
+   :param model: The model instance to operate on.
+   :param command: The command string to execute.
+
+   :returns: A dictionary containing 'success' (bool) and 'message' (str).
+   :rtype: dict
+
+
+.. py:function:: cli_command_endpoint() -> tuple[flask.Response, int] | flask.Response
+
+   Execute a CLI command.
+
+   Expects a JSON payload with:
+   - command (str): The command string.
+
+   :returns: JSON response with result and updated model.
 
 
