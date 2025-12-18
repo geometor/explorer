@@ -681,5 +681,136 @@ def get_groups_by_chain() -> Response:
     return jsonify(result)
 
 
+def process_cli_command(model: Model, command: str) -> dict:
+    """Parse and execute a single command string.
+
+    Args:
+        model: The model instance to operate on.
+        command: The command string to execute.
+
+    Returns:
+        dict: A dictionary containing 'success' (bool) and 'message' (str).
+    """
+    import re
+    command = command.strip()
+    if not command:
+        return {"success": True, "message": ""}
+
+    # Point: A = 0, 0
+    if match := re.match(r"^([A-Za-z0-9_]+)\s*=\s*([-\d\.]+)\s*,\s*([-\d\.]+)(?:\s+(.*))?$", command):
+        label, x, y, remainder = match.groups()
+        try:
+            model.set_point(float(x), float(y), ID=label, classes=["given"])
+            return {"success": True, "message": f"Created point {label} at ({x}, {y})"}
+        except Exception as e:
+            return {"success": False, "message": f"Error creating point: {e}"}
+
+    # Auto-Label Point: * 0, 0
+    if match := re.match(r"^\*\s*([-\d\.]+)\s*,\s*([-\d\.]+)(?:\s+(.*))?$", command):
+        x, y, remainder = match.groups()
+        try:
+            pt = model.set_point(float(x), float(y), classes=["given"])
+            return {"success": True, "message": f"Created point {pt.ID} at ({x}, {y})"}
+        except Exception as e:
+            return {"success": False, "message": f"Error creating point: {e}"}
+
+    # Line: [ A B ]
+    if match := re.match(r"^\[\s*([A-Za-z0-9_]+)\s+([A-Za-z0-9_]+)\s*\]$", command):
+        pt1, pt2 = match.groups()
+        try:
+            model.construct_line_by_IDs(pt1, pt2)
+            return {"success": True, "message": f"Created line [{pt1} {pt2}]"}
+        except Exception as e:
+            return {"success": False, "message": f"Error creating line: {e}"}
+
+    # Circle: ( A B )
+    if match := re.match(r"^\(\s*([A-Za-z0-9_]+)\s+([A-Za-z0-9_]+)\s*\)$", command):
+        pt1, pt2 = match.groups()
+        try:
+            model.construct_circle_by_IDs(pt1, pt2)
+            return {"success": True, "message": f"Created circle ({pt1} {pt2})"}
+        except Exception as e:
+            return {"success": False, "message": f"Error creating circle: {e}"}
+
+    # Polygon: < A B C >
+    if match := re.match(r"^<\s*([A-Za-z0-9\s]+?)\s*>$", command):
+        pts = match.group(1).split()
+        if len(pts) >= 3:
+            try:
+                model.set_polygon_by_IDs(pts)
+                return {"success": True, "message": f"Created polygon < {' '.join(pts)} >"}
+            except Exception as e:
+                return {"success": False, "message": f"Error creating polygon: {e}"}
+        else:
+            return {"success": False, "message": "Polygon requires at least 3 points"}
+
+    # Linear Division: / A B ... /
+    if match := re.match(r"^/\s*([A-Za-z0-9\s]+?)\s*/$", command):
+        pts = match.group(1).split()
+        if len(pts) == 2:
+            # Segment
+            try:
+                model.set_segment_by_IDs(pts[0], pts[1])
+                return {"success": True, "message": f"Created segment / {pts[0]} {pts[1]} /"}
+            except Exception as e:
+                return {"success": False, "message": f"Error creating segment: {e}"}
+        elif len(pts) == 3:
+            # Section
+            try:
+                model.set_section_by_IDs(pts)
+                return {"success": True, "message": f"Created section / {' '.join(pts)} /"}
+            except Exception as e:
+                return {"success": False, "message": f"Error creating section: {e}"}
+        else:
+            return {"success": False, "message": "Linear division requires 2 or 3 points"}
+
+    # Wedge: < A B E )
+    if match := re.match(r"^<\s*([A-Za-z0-9\s]+?)\s*\)$", command):
+        pts = match.group(1).split()
+        if len(pts) == 3:
+            try:
+                model.set_wedge_by_IDs(pts[0], pts[1], pts[1], pts[2])
+                return {"success": True, "message": f"Created wedge < {pts[0]} {pts[1]} {pts[2]} )"}
+            except Exception as e:
+                return {"success": False, "message": f"Error creating wedge: {e}"}
+        else:
+            return {"success": False, "message": "Wedge requires 3 points"}
+
+    return {"success": False, "message": f"Unknown command: {command}"}
+
+
+@app.route("/api/cli/command", methods=["POST"])
+def cli_command_endpoint() -> tuple[Response, int] | Response:
+    """Execute a CLI command.
+
+    Expects a JSON payload with:
+    - command (str): The command string.
+
+    Returns:
+        JSON response with result and updated model.
+    """
+    try:
+        data = request.get_json()
+        command = data.get("command")
+        
+        if not command:
+            return jsonify({"success": False, "message": "No command provided"}), 400
+
+        result = process_cli_command(model, command)
+        
+        response_data = {
+            "success": result["success"],
+            "message": result["message"],
+            **to_browser_dict(model)
+        }
+        return jsonify(response_data)
+        
+    except Exception as e:
+        app.logger.exception(f"Error executing CLI command: {e}")
+        return jsonify(
+            {"success": False, "message": "An unexpected error occurred."}
+        ), 500
+
+
 if __name__ == "__main__":
     run()

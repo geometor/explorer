@@ -24,6 +24,7 @@ Key Features
 - **Precise Rendering**: SVG-based rendering ensures infinite scalability and crisp visuals.
 - **SVG Export**: Download your constructions as standalone SVG files with embedded styles for use in other tools.
 - **Animated Export**: Create self-playing animations of your geometric constructions sharing the elegance of the process.
+- **CLI Panel**: Interact with the model using text-based commands via the integrated terminal panel.
 
 Installation
 ------------

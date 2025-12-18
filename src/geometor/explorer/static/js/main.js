@@ -3,6 +3,7 @@ import { fitConstruction, renderElement, renderPoint, scaleCircles, initSvgEvent
 import { initGroupsView, initGroupsEventListeners } from './groups.js';
 import { initResizer } from './resizer.js';
 import { TL_DRAW, setPoint, setLine, setCircle } from './Animate.js';
+import { CLI } from './cli.js';
 
 window.GEOMETOR = window.GEOMETOR || {};
 
@@ -12,6 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
     initGroupsEventListeners();
 
     GEOMETOR.tables = {};
+
+    // Initialize CLI
+    GEOMETOR.cli = new CLI((data) => {
+        renderModel(data);
+        isDirty = true;
+    });
 
     function showHourglassCursor() {
         document.body.style.cursor = 'wait';

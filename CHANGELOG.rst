@@ -2,6 +2,17 @@ changelog
 =========
 
 
+0.5.0
+-----
+*2025-12-18*
+
+**feat**
+
+-   Implemented **CLI Panel**: A new text-based interface for interacting with the model.
+-   Added **Terminal Button** to the header and keyboard shortcut (`` ` `` / `~`) to toggle the CLI.
+-   CLI supports commands for points, lines, circles, polygons, segments, and wedges.
+-   Added **Command History** and basic output logging for the CLI.
+
 0.4.9
 -----
 *2025-12-18*
