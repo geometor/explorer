@@ -8,14 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Setting up a UI for Explorer &mdash; Project name not set  documentation</title>
   <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=ea5fcf70" />
-  <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=647d561f" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=38c7a96b" />
   <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
   <link rel="stylesheet" href="../../_static/css/print.css" type="text/css" media="print" />
   <link rel="icon" href="../../_static/favicon.ico" />
 </head>
 
 <body>
-    <header>
+  <header>
     <div class="logo">
       <a href="../../index.html">
         <img src="../../_static/logo.png" class="logo" alt="Logo"/>
@@ -37,49 +37,48 @@
           <a href="../../usage/index.html"  >usage</a>
         </li>
         <li>
-          <a href="../index.html"  >log</a>
+          <a href="../../modules/index.html"  >modules</a>
         </li>
         <li>
-          <a href="../../modules/index.html"  >modules</a>
+          <a href="../index.html"  >log</a>
         </li>
       </ul>
     </nav>
     <div class="motto"></div>
   </header>
   <main>
-    
     <article>
-      <div class="content">
+      <header>
       <nav class="breadcrumbs">
         <span><a href="../../index.html">Home</a></span>
           <span>/</span>
         <span><a href="../index.html">log</a></span>
-        <span>/</span>
-        <span>Setting up a UI for Explorer</span>
       </nav>
         <nav class="context">
           <div class="prev">
-             <a href="../index.html" class="btn btn-neutral float-left" title="log" >Prev</a>
+             <a href="../index.html" title="log" >Prev</a>
           </div>
           <div class="next">
-            <a href="../23.109-110629/index.html" class="btn btn-neutral float-right" title="Next steps for Geometor Explorer" >Next</a>
+            <a href="../23.109-110629/index.html" title="Next steps for Geometor Explorer" >Next</a>
           </div>
         </nav>
-          <section id="setting-up-a-ui-for-explorer">
-<h1>Setting up a UI for Explorer<a class="headerlink" href="#setting-up-a-ui-for-explorer" title="Link to this heading">¶</a></h1>
-<ul class="simple">
-<li><p>Tried to use PyQt6 as the GUI toolkit but faced issues with platform plugins</p></li>
-<li><p>Switched to using Tkinter for GUI development</p></li>
-<li><p>Implemented a modular design with separate classes for the header, footer, and main window</p></li>
-<li><p>Added a <cite>Construction</cite> class to the <cite>geometor.core</cite> package for creating and managing geometric constructions</p></li>
-<li><p>Added <cite>Element</cite>, <cite>Point</cite>, <cite>Line</cite>, and <cite>Circle</cite> classes to the <cite>geometor.core</cite> package for representing geometric elements</p></li>
-<li><p>Added a <cite>MainWindow</cite> class to the <cite>geometor.explorer.ui</cite> package for displaying the construction and interacting with the user</p></li>
-<li><p>Added a <cite>MainPanel</cite> class to the <cite>geometor.explorer.ui</cite> package for managing the three panels of the main window: the element list, the matplotlib view, and the view controls</p></li>
-<li><p>Added a <cite>Footer</cite> class to the <cite>geometor.explorer.ui</cite> package for displaying the details of selected elements and the actions for editing the model</p></li>
-<li><p>Added a <cite>Header</cite> class to the <cite>geometor.explorer.ui</cite> package for displaying key information about the model and buttons for model actions</p></li>
-<li><p>Demonstrated the use of docstrings and type annotations for improving code readability and maintainability</p></li>
-</ul>
-</section>
+      </header>
+      <div class="content">
+        <section id="setting-up-a-ui-for-explorer">
+          <h1>Setting up a UI for Explorer<a class="headerlink" href="#setting-up-a-ui-for-explorer" title="Link to this heading">¶</a></h1>
+          <ul class="simple">
+          <li><p>Tried to use PyQt6 as the GUI toolkit but faced issues with platform plugins</p></li>
+          <li><p>Switched to using Tkinter for GUI development</p></li>
+          <li><p>Implemented a modular design with separate classes for the header, footer, and main window</p></li>
+          <li><p>Added a <cite>Construction</cite> class to the <cite>geometor.core</cite> package for creating and managing geometric constructions</p></li>
+          <li><p>Added <cite>Element</cite>, <cite>Point</cite>, <cite>Line</cite>, and <cite>Circle</cite> classes to the <cite>geometor.core</cite> package for representing geometric elements</p></li>
+          <li><p>Added a <cite>MainWindow</cite> class to the <cite>geometor.explorer.ui</cite> package for displaying the construction and interacting with the user</p></li>
+          <li><p>Added a <cite>MainPanel</cite> class to the <cite>geometor.explorer.ui</cite> package for managing the three panels of the main window: the element list, the matplotlib view, and the view controls</p></li>
+          <li><p>Added a <cite>Footer</cite> class to the <cite>geometor.explorer.ui</cite> package for displaying the details of selected elements and the actions for editing the model</p></li>
+          <li><p>Added a <cite>Header</cite> class to the <cite>geometor.explorer.ui</cite> package for displaying key information about the model and buttons for model actions</p></li>
+          <li><p>Demonstrated the use of docstrings and type annotations for improving code readability and maintainability</p></li>
+          </ul>
+          </section>
 
       </div>
       <footer>
@@ -100,93 +99,72 @@
             <a href="../../tags/.html"></a>
           </span>
         </div>
-
         <nav class="context">
           <div class="prev">
-             <a href="../index.html" class="btn btn-neutral float-left" title="log" >Prev</a>
+             <a href="../index.html" title="log" >Prev</a>
           </div>
           <div class="next">
-            <a href="../23.109-110629/index.html" class="btn btn-neutral float-right" title="Next steps for Geometor Explorer" >Next</a>
+            <a href="../23.109-110629/index.html" title="Next steps for Geometor Explorer" >Next</a>
           </div>
-        </nav></footer>
+        </nav>
+      </footer>
     </article>
-
   </main>
-
   <div class="asides">
     <aside>
-        <h3>Search</h3>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
+      <h3>Search</h3>
+      <div role="search">
+        <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+          <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+      </div>
     </aside>
-    
-<aside>
-    <h3>Recent Logs</h3>
-    <ul>
-        
-            <li><a href="#">Setting up a UI for Explorer</a></li>
-        
-            <li><a href="../23.109-110629/index.html">Next steps for Geometor Explorer</a></li>
-        
-            <li><a href="../22.348-045718/22.348-045718.html">Welcome to Explorer</a></li>
-        
-    </ul>
-</aside>
-
-    
-
-<aside class="aside-tags">
-    <h3>Tags</h3>
-    <ul>
-        
+    <aside>
+      <h3>Recent Logs</h3>
+      <ul>
+        <li><a href="#">Setting up a UI for Explorer</a></li>
+        <li><a href="../23.109-110629/index.html">Next steps for Geometor Explorer</a></li>
+        <li><a href="../22.348-045718/22.348-045718.html">Welcome to Explorer</a></li>
+      </ul>
+    </aside>
+    <aside class="aside-tags">
+      <h3>Tags</h3>
+      <ul>
         <li><a href="../../tags/.html"></a></li>
-        
-    </ul>
-</aside>
-
-    
-
-    
-
-<aside class="aside-types">
-    <h3>Types</h3>
-    <ul>
-        
+      </ul>
+    </aside>
+    <aside class="aside-types">
+      <h3>Types</h3>
+      <ul>
         <li><a href="../../types/log.html">log</a></li>
-        
-    </ul>
-</aside>
-
-</div>
+      </ul>
+    </aside>
+  </div>
   <footer>
     <div class="footer-nav">
-    <ul>
+      <ul>
         <li><a href="../../about.html">about</a></li>
         <li><a href="../../connect.html">connect</a></li>
+        <li><a href="../../todos/index.html">todos</a></li>
         <li><a href="../../changelog.html">changelog</a></li>
-    </ul>
-</div>
-    <hr/>
-    <div role="contentinfo">
-        <p>
-                &copy; Copyright .
-        </p>
+      </ul>
     </div>
-</footer>
-  
+    <hr />
+    <div role="contentinfo">
+      <p>
+        &copy; Copyright .
+      </p>
+    </div>
+  </footer>
+
   <script src="../../_static/jquery.js?v=5d32c60e"></script>
   <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
   <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
   <script src="../../_static/doctools.js?v=9bcbadda"></script>
   <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
   <script src="../../_static/js/collection_controls.js?v=b6b5297a"></script>
-  
 
 </body>
-
 </html>

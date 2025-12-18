@@ -8,14 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>geometor.explorer.serialize &mdash; Project name not set  documentation</title>
   <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=ea5fcf70" />
-  <link rel="stylesheet" type="text/css" href="../../../../../_static/css/styles.css?v=647d561f" />
+  <link rel="stylesheet" type="text/css" href="../../../../../_static/css/styles.css?v=38c7a96b" />
   <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
   <link rel="stylesheet" href="../../../../../_static/css/print.css" type="text/css" media="print" />
   <link rel="icon" href="../../../../../_static/favicon.ico" />
 </head>
 
 <body>
-    <header>
+  <header>
     <div class="logo">
       <a href="../../../../../index.html">
         <img src="../../../../../_static/logo.png" class="logo" alt="Logo"/>
@@ -37,161 +37,139 @@
           <a href="../../../../../usage/index.html"  >usage</a>
         </li>
         <li>
-          <a href="../../../../../log/index.html"  >log</a>
+          <a href="../../../../index.html"  >modules</a>
         </li>
         <li>
-          <a href="../../../../index.html"  >modules</a>
+          <a href="../../../../../log/index.html"  >log</a>
         </li>
       </ul>
     </nav>
     <div class="motto"></div>
   </header>
   <main>
-    
     <article>
-      <div class="content">
+      <header>
       <nav class="breadcrumbs">
         <span><a href="../../../../../index.html">Home</a></span>
           <span>/</span>
         <span><a href="../../../../index.html">modules</a></span>
-        <span>/</span>
-        <span>geometor.explorer.serialize</span>
       </nav>
         <nav class="context">
           <div class="prev">
-             <a href="../log/index.html" class="btn btn-neutral float-left" title="geometor.explorer.log" >Prev</a>
+             <a href="../log/index.html" title="geometor.explorer.log" >Prev</a>
           </div>
           <div class="next">
-            <a href="../../../../../demos/index.html" class="btn btn-neutral float-right" title="demos" >Next</a>
+            <a href="../../../../../demos/index.html" title="demos" >Next</a>
           </div>
         </nav>
-          <section id="module-geometor.explorer.serialize">
-<span id="geometor-explorer-serialize"></span><h1>geometor.explorer.serialize<a class="headerlink" href="#module-geometor.explorer.serialize" title="Link to this heading">¶</a></h1>
-<p>Browser-specific serialization for the geometric model.</p>
-<p>This module provides functions to serialize model elements (points, lines, circles, etc.)
-into a dictionary format that can be easily consumed by the frontend application.
-It handles coordinate conversion, LaTeX formatting, and property extraction.</p>
-<section id="functions">
-<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h2>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.serialize.to_browser_dict" title="geometor.explorer.serialize.to_browser_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_browser_dict</span></code></a>(→ dict)</p></td>
-<td><p>Serializes the model to a dictionary format suitable for a browser-based application.</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="module-contents">
-<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="geometor.explorer.serialize.to_browser_dict">
-<span class="sig-prename descclassname"><span class="pre">geometor.explorer.serialize.</span></span><span class="sig-name descname"><span class="pre">to_browser_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geometor.model.Model</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.13/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a></span></span><a class="headerlink" href="#geometor.explorer.serialize.to_browser_dict" title="Link to this definition">¶</a></dt>
-<dd><p>Serializes the model to a dictionary format suitable for a browser-based application.</p>
-<p>This method creates a dictionary containing the model’s name and a single
-list of ‘elements’. Each item in the list represents a geometric element
-in the order it was added to the model. This format is easy for a web
-client to parse and render sequentially.</p>
-<p>Each element dictionary includes:</p>
-<ul class="simple">
-<li><p>A ‘type’ field (e.g., ‘point’, ‘line’).</p></li>
-<li><p>Data relevant to the element type, including floating-point values for
-rendering and LaTeX expressions for display.</p></li>
-</ul>
-</dd></dl>
+      </header>
+      <div class="content">
+        <section id="module-geometor.explorer.serialize">
+          <span id="geometor-explorer-serialize"></span><h1>geometor.explorer.serialize<a class="headerlink" href="#module-geometor.explorer.serialize" title="Link to this heading">¶</a></h1>
+          <p>Browser-specific serialization for the geometric model.</p>
+          <p>This module provides functions to serialize model elements (points, lines, circles, etc.)
+          into a dictionary format that can be easily consumed by the frontend application.
+          It handles coordinate conversion, LaTeX formatting, and property extraction.</p>
+          <section id="functions">
+          <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h2>
+          <table class="autosummary longtable docutils align-default">
+          <tbody>
+          <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.serialize.to_browser_dict" title="geometor.explorer.serialize.to_browser_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_browser_dict</span></code></a>(→ dict)</p></td>
+          <td><p>Serializes the model to a dictionary format suitable for a browser-based application.</p></td>
+          </tr>
+          </tbody>
+          </table>
+          </section>
+          <section id="module-contents">
+          <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
+          <dl class="py function">
+          <dt class="sig sig-object py" id="geometor.explorer.serialize.to_browser_dict">
+          <span class="sig-prename descclassname"><span class="pre">geometor.explorer.serialize.</span></span><span class="sig-name descname"><span class="pre">to_browser_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geometor.model.Model</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3.13/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a></span></span><a class="headerlink" href="#geometor.explorer.serialize.to_browser_dict" title="Link to this definition">¶</a></dt>
+          <dd><p>Serializes the model to a dictionary format suitable for a browser-based application.</p>
+          <p>This method creates a dictionary containing the model’s name and a single
+          list of ‘elements’. Each item in the list represents a geometric element
+          in the order it was added to the model. This format is easy for a web
+          client to parse and render sequentially.</p>
+          <p>Each element dictionary includes:</p>
+          <ul class="simple">
+          <li><p>A ‘type’ field (e.g., ‘point’, ‘line’).</p></li>
+          <li><p>Data relevant to the element type, including floating-point values for
+          rendering and LaTeX expressions for display.</p></li>
+          </ul>
+          </dd></dl>
 
-</section>
-</section>
+          </section>
+          </section>
 
       </div>
       <footer>
 
-
         <nav class="context">
           <div class="prev">
-             <a href="../log/index.html" class="btn btn-neutral float-left" title="geometor.explorer.log" >Prev</a>
+             <a href="../log/index.html" title="geometor.explorer.log" >Prev</a>
           </div>
           <div class="next">
-            <a href="../../../../../demos/index.html" class="btn btn-neutral float-right" title="demos" >Next</a>
+            <a href="../../../../../demos/index.html" title="demos" >Next</a>
           </div>
-        </nav></footer>
+        </nav>
+      </footer>
     </article>
-
   </main>
-
   <div class="asides">
     <aside>
-        <h3>Search</h3>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
+      <h3>Search</h3>
+      <div role="search">
+        <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+          <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+      </div>
     </aside>
-    
-<aside>
-    <h3>Recent Logs</h3>
-    <ul>
-        
-            <li><a href="../../../../../log/23.110-131951/index.html">Setting up a UI for Explorer</a></li>
-        
-            <li><a href="../../../../../log/23.109-110629/index.html">Next steps for Geometor Explorer</a></li>
-        
-            <li><a href="../../../../../log/22.348-045718/22.348-045718.html">Welcome to Explorer</a></li>
-        
-    </ul>
-</aside>
-
-    
-
-<aside class="aside-tags">
-    <h3>Tags</h3>
-    <ul>
-        
+    <aside>
+      <h3>Recent Logs</h3>
+      <ul>
+        <li><a href="../../../../../log/23.110-131951/index.html">Setting up a UI for Explorer</a></li>
+        <li><a href="../../../../../log/23.109-110629/index.html">Next steps for Geometor Explorer</a></li>
+        <li><a href="../../../../../log/22.348-045718/22.348-045718.html">Welcome to Explorer</a></li>
+      </ul>
+    </aside>
+    <aside class="aside-tags">
+      <h3>Tags</h3>
+      <ul>
         <li><a href="../../../../../tags/.html"></a></li>
-        
-    </ul>
-</aside>
-
-    
-
-    
-
-<aside class="aside-types">
-    <h3>Types</h3>
-    <ul>
-        
+      </ul>
+    </aside>
+    <aside class="aside-types">
+      <h3>Types</h3>
+      <ul>
         <li><a href="../../../../../types/log.html">log</a></li>
-        
-    </ul>
-</aside>
-
-</div>
+      </ul>
+    </aside>
+  </div>
   <footer>
     <div class="footer-nav">
-    <ul>
+      <ul>
         <li><a href="../../../../../about.html">about</a></li>
         <li><a href="../../../../../connect.html">connect</a></li>
+        <li><a href="../../../../../todos/index.html">todos</a></li>
         <li><a href="../../../../../changelog.html">changelog</a></li>
-    </ul>
-</div>
-    <hr/>
-    <div role="contentinfo">
-        <p>
-                &copy; Copyright .
-        </p>
+      </ul>
     </div>
-</footer>
-  
+    <hr />
+    <div role="contentinfo">
+      <p>
+        &copy; Copyright .
+      </p>
+    </div>
+  </footer>
+
   <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
   <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
   <script src="../../../../../_static/documentation_options.js?v=5929fcd5"></script>
   <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
   <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
   <script src="../../../../../_static/js/collection_controls.js?v=b6b5297a"></script>
-  
 
 </body>
-
 </html>
