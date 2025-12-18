@@ -1,6 +1,16 @@
 changelog
 =========
 
+
+0.4.9
+-----
+*2025-12-18*
+
+**refactor**
+
+-   Cleaned up python docstrings and type hints.
+-   Formatted code with ruff.
+
 0.4.8
 -----
 *2025-12-18*
