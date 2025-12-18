@@ -38,6 +38,7 @@ def new_model(template: str = "default") -> None:
 
     Args:
         template: The name of the template to use ('default', 'blank', 'equidistant').
+
     """
     global model
     model = Model("new", logger=app.logger)
@@ -57,6 +58,7 @@ def new_model(template: str = "default") -> None:
 
 
 def run() -> None:
+    """Run the Flask application."""
     app.debug = True
     if os.environ.get("WERKZEUG_RUN_MAIN") == "true" or not app.debug:
         new_model()
@@ -65,6 +67,7 @@ def run() -> None:
 
 @app.route("/")
 def index() -> str:
+    """Render the main index page."""
     return render_template("index.html", analysis_enabled=ANALYSIS_ENABLED)
 
 
@@ -74,12 +77,14 @@ def get_model() -> Response:
 
     Returns:
         JSON response containing the serialized model data.
+
     """
     return jsonify(to_browser_dict(model))
 
 
 @app.route("/api/analysis/toggle", methods=["POST"])
 def toggle_analysis() -> Response:
+    """Toggle the analysis hook enabled state."""
     global ANALYSIS_ENABLED
     ANALYSIS_ENABLED = not ANALYSIS_ENABLED
     if ANALYSIS_ENABLED:
@@ -97,6 +102,7 @@ def save_model_endpoint() -> tuple[Response, int] | Response:
 
     Returns:
         JSON response indicating success or failure.
+
     """
     data = request.get_json()
     filename = data.get("filename")
@@ -119,6 +125,7 @@ def load_model_endpoint() -> tuple[Response, int] | Response:
 
     Returns:
         JSON response containing the serialized model data.
+
     """
     global model
     data = request.get_json()
@@ -171,6 +178,7 @@ def list_constructions() -> Response:
 
     Returns:
         JSON response containing a list of filenames.
+
     """
     files = [f for f in os.listdir(CONSTRUCTIONS_DIR) if f.endswith(".json")]
     return jsonify(files)
@@ -184,6 +192,7 @@ def new_model_endpoint() -> Response:
 
     Returns:
         JSON response containing the serialized new model.
+
     """
     data = request.get_json()
     template = data.get("template", "default")
@@ -201,6 +210,7 @@ def construct_line() -> tuple[Response, int] | Response:
 
     Returns:
         JSON response containing the updated model data.
+
     """
     try:
         data = request.get_json()
@@ -231,6 +241,7 @@ def construct_circle() -> tuple[Response, int] | Response:
 
     Returns:
         JSON response containing the updated model data.
+
     """
     try:
         data = request.get_json()
@@ -261,6 +272,7 @@ def construct_perpendicular_bisector() -> tuple[Response, int] | Response:
 
     Returns:
         JSON response containing the updated model data.
+
     """
     try:
         data = request.get_json()
@@ -307,6 +319,7 @@ def construct_angle_bisector() -> tuple[Response, int] | Response:
 
     Returns:
         JSON response containing the updated model data.
+
     """
     try:
         data = request.get_json()
@@ -378,6 +391,7 @@ def construct_point() -> tuple[Response, int] | Response:
 
     Returns:
         JSON response containing the updated model data or an error message.
+
     """
     data = request.get_json()
     x_str = data.get("x")
@@ -405,6 +419,7 @@ def construct_polynomial() -> tuple[Response, int] | Response:
 
     Returns:
         JSON response containing the updated model data or an error message.
+
     """
     data = request.get_json()
     coeffs_str = data.get("coeffs")
@@ -436,6 +451,7 @@ def delete_element() -> tuple[Response, int] | Response:
 
     Returns:
         JSON response containing the updated model data.
+
     """
     data = request.get_json()
     ID = data.get("ID")
@@ -457,6 +473,7 @@ def get_dependents_endpoint() -> tuple[Response, int] | Response:
 
     Returns:
         JSON response containing a list of dependent element IDs.
+
     """
     ID = request.args.get("ID")
     if not ID:
@@ -476,6 +493,7 @@ def edit_element() -> tuple[Response, int] | Response:
 
     Returns:
         JSON response containing the updated model data.
+
     """
     try:
         data = request.get_json()
@@ -514,6 +532,7 @@ def set_segment() -> tuple[Response, int] | Response:
 
     Returns:
         JSON response containing the updated model data.
+
     """
     try:
         data = request.get_json()
@@ -542,6 +561,7 @@ def set_section() -> tuple[Response, int] | Response:
 
     Returns:
         JSON response containing the updated model data.
+
     """
     try:
         data = request.get_json()
@@ -565,6 +585,7 @@ def set_polygon() -> tuple[Response, int] | Response:
 
     Returns:
         JSON response containing the updated model data.
+
     """
     try:
         data = request.get_json()
@@ -584,6 +605,7 @@ def get_golden_sections() -> list[Section]:
 
     Returns:
         list[Section]: A list of Section objects that are golden sections.
+
     """
     golden_sections = []
     for key, val in model.items():
@@ -599,6 +621,7 @@ def get_groups_by_size() -> Response:
 
     Returns:
         JSON response mapping size values to lists of section IDs.
+
     """
     sections = get_golden_sections()
     groups = group_sections_by_size(sections)
@@ -618,6 +641,7 @@ def get_groups_by_point() -> Response:
 
     Returns:
         JSON response mapping point IDs to lists of section IDs.
+
     """
     sections = get_golden_sections()
     groups = group_sections_by_points(sections)
@@ -638,6 +662,7 @@ def get_groups_by_chain() -> Response:
     Returns:
         JSON response containing a list of chains, where each chain has a name and
         a list of section IDs.
+
     """
     sections = get_golden_sections()
     chain_tree = find_chains_in_sections(sections)

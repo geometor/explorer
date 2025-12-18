@@ -27,7 +27,7 @@ def _spread(l1: spg.Line, l2: spg.Line) -> sp.Expr:
 
 
 def _create_section_from_points(points: list[spg.Point], model: Model) -> dict:
-    """Helper function to create a Section object from points."""
+    """Create a Section object from points."""
     section = Section(points)
     lengths_val = [length.evalf() for length in section.lengths]
     ratio_val = section.ratio.evalf()
@@ -45,7 +45,7 @@ def _create_section_from_points(points: list[spg.Point], model: Model) -> dict:
 
 
 def to_browser_dict(model: Model) -> dict:
-    """Serializes the model to a dictionary format suitable for a browser-based application.
+    """Serialize the model to a dictionary format suitable for a browser-based application.
 
     This method creates a dictionary containing the model's name and a single
     list of 'elements'. Each item in the list represents a geometric element
@@ -53,7 +53,7 @@ def to_browser_dict(model: Model) -> dict:
     client to parse and render sequentially.
 
     Each element dictionary includes:
-    
+
     - A 'type' field (e.g., 'point', 'line').
     - Data relevant to the element type, including floating-point values for
       rendering and LaTeX expressions for display.
