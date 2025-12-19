@@ -12,6 +12,22 @@ document.addEventListener('DOMContentLoaded', () => {
     initResizer();
     initGroupsEventListeners();
 
+    // Global Keydown Listeners
+    document.addEventListener('keydown', (e) => {
+        // Ignore if focus is on an input or textarea
+        if (e.target.matches('input, textarea')) return;
+
+        if (e.key.toLowerCase() === 'v') {
+            document.body.classList.toggle('zen-mode');
+            // Optional: Log to CLI if available, but since it's a hotkey, maybe just visual toggle is enough.
+            // If we want to log, we need access to the CLI instance.
+            if (GEOMETOR.cli) {
+                 const isZen = document.body.classList.contains('zen-mode');
+                 GEOMETOR.cli.log(`Zen Mode: ${isZen ? 'ON' : 'OFF'}`, 'info');
+            }
+        }
+    });
+
     GEOMETOR.tables = {};
 
     // Initialize CLI
@@ -1380,12 +1396,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const playPauseBtn = document.getElementById('play-pause-btn');
     const timelineSlider = document.getElementById('timeline-slider');
-    const animationToggle = document.getElementById('animation-toggle');
+    const timelineContainer = document.getElementById('timeline-container');
+    const animationBtn = document.getElementById('animation-btn');
     const startBtn = document.getElementById('start-btn');
     const stepBackBtn = document.getElementById('step-back-btn');
     const stepFwdBtn = document.getElementById('step-fwd-btn');
     const endBtn = document.getElementById('end-btn');
-    let animationEnabled = animationToggle.checked;
+    let animationEnabled = false;
 
     function animateConstruction() {
         const elements = GEOMETOR.modelData.elements;
@@ -1577,13 +1594,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    animationToggle.addEventListener('change', () => {
-
-        animationEnabled = animationToggle.checked;
-
-        renderModel(GEOMETOR.modelData);
-
-    });
+    if (animationBtn) {
+        animationBtn.addEventListener('click', () => {
+            if (timelineContainer.style.display === 'none') {
+                timelineContainer.style.display = 'flex';
+                animationBtn.classList.add('active');
+                animationEnabled = true;
+            } else {
+                timelineContainer.style.display = 'none';
+                animationBtn.classList.remove('active');
+                animationEnabled = false;
+            }
+            renderModel(GEOMETOR.modelData);
+        });
+    }
 
 
 });

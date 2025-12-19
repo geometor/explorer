@@ -81,6 +81,8 @@ export class CLI {
                 return;
             }
 
+
+
             try {
                 const response = await fetch('/api/cli/command', {
                     method: 'POST',
@@ -107,6 +109,7 @@ export class CLI {
                 this.historyIndex--;
                 this.input.value = this.history[this.historyIndex];
             }
+
         } else if (e.key === 'ArrowDown') {
             e.preventDefault();
             if (this.historyIndex < this.history.length - 1) {

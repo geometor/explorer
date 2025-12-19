@@ -2,6 +2,16 @@ changelog
 =========
 
 
+0.5.1
+-----
+*2025-12-18*
+
+**feat**
+
+-   **UI Redesign**: Replaced the top menu bar with a collapsible **left sidebar**.
+-   **Zen Mode**: Added a toggle (hotkey `v`) to hide all side panels for a distraction-free view.
+-   **Animation Panel Toggle**: Added a sidebar button to toggle the animation panel, replacing the old checkbox. Animation is auto-enabled when the panel is open.
+
 0.5.0
 -----
 *2025-12-18*

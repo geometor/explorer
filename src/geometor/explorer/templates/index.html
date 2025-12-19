@@ -16,7 +16,7 @@
 </head>
 
 <body class="web">
-    <header>
+    <aside id="left-panel">
         <div id="file-manager">
             <button id="new-btn"><span class="material-icons">add_box</span></button>
             <button id="open-btn"><span class="material-icons">folder_open</span></button>
@@ -40,13 +40,16 @@
             <button id="polygon-btn" disabled accesskey="y" title="Set Polygon (y)">Polygon</button>
         </div>
         <input type="file" id="file-input" style="display: none;" />
-        <button id="analysis-toggle" title="Toggle Divine Analysis"
-            class="{{ 'active' if analysis_enabled else '' }}"><span class="material-icons">star</span></button>
-        <button id="ancestors-btn" title="Toggle Ancestors on Hover"><span
-                class="material-icons">account_tree</span></button>
-        <button id="cli-btn" title="Toggle CLI (~)"><span class="material-icons">terminal</span></button>
-        <button id="settings-btn"><span class="material-icons">settings</span></button>
-    </header>
+        <div id="toggles-group">
+            <button id="animation-btn" title="Toggle Animation Panel"><span class="material-icons">movie</span></button>
+            <button id="analysis-toggle" title="Toggle Divine Analysis"
+                class="{{ 'active' if analysis_enabled else '' }}"><span class="material-icons">star</span></button>
+            <button id="ancestors-btn" title="Toggle Ancestors on Hover"><span
+                    class="material-icons">account_tree</span></button>
+            <button id="cli-btn" title="Toggle CLI (~)"><span class="material-icons">terminal</span></button>
+            <button id="settings-btn"><span class="material-icons">settings</span></button>
+        </div>
+    </aside>
     <div id="hover-card"></div>
     <div id="main-container">
         <main>
@@ -64,7 +67,7 @@
                 <g id="points"></g>
             </svg>
         </main>
-        <div id="timeline-container">
+        <div id="timeline-container" style="display: none;">
             <button id="play-pause-btn"><span class="material-icons">play_arrow</span></button>
             <input type="range" id="timeline-slider" min="0" max="100" value="0">
             <div class="animation-controls">
@@ -72,8 +75,6 @@
                 <button id="step-back-btn"><span class="material-icons">fast_rewind</span></button>
                 <button id="step-fwd-btn"><span class="material-icons">fast_forward</span></button>
                 <button id="end-btn"><span class="material-icons">skip_next</span></button>
-                <input type="checkbox" id="animation-toggle">
-                <label for="animation-toggle">Animate</label>
             </div>
         </div>
     </div>
