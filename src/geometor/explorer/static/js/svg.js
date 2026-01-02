@@ -111,6 +111,7 @@ export function renderPoint(el) {
     circle.setAttribute('cy', -el.y);
     circle.setAttribute('r', 0.02);
     circle.dataset.category = 'points';
+    circle.classList.add('point');
     el.classes.forEach(c => circle.classList.add(c));
     if (el.guide) {
         circle.classList.add('guide');

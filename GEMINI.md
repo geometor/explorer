@@ -21,7 +21,7 @@ The backend (Flask) manages the `geometor.model` state, while the frontend rende
 ## Index
 
 -   `app.py`: The main Flask application entry point.
--   `src/geometor/explorer/static/`: Frontend assets.
+-   `src/geometor/explorer/static/`: Frontend assets (styles, modular JS).
 -   `src/geometor/explorer/templates/`: HTML templates.
 -   `serialize.py`: Handles serialization of the model for the frontend.
 -   `static/js/cli.js`: Logic for the integrated CLI panel.

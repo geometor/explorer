@@ -21,6 +21,32 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     transition: background-color 0.3s ease, color 0.3s ease;
+    overflow: hidden; /* Prevent hover cards from forcing window scrollbars */
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--button-hover-bg);
+}
+
+/* For Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) var(--background-color);
 }
 
 /* Zen Mode */
@@ -259,6 +285,7 @@ tbody tr.row-hover {
     background-color: var(--background-color);
     padding: 1em 1em 0.5em 1em;
     z-index: 1;
+    scrollbar-gutter: stable;
 }
 
 #view-container {
@@ -267,6 +294,7 @@ tbody tr.row-hover {
     display: flex;
     flex-direction: column;
     gap: 1em;
+    scrollbar-gutter: stable;
 }
 
 .view-switcher button {
@@ -347,14 +375,25 @@ tbody tr.row-hover {
 }
 
 /* Visibility Toggle */
-#drawing.hide-points #points > *,
-#drawing.hide-structures #elements > *,
-#drawing.hide-graphics #graphics > * {
-    visibility: hidden;
+#drawing.hide-points .point,
+#drawing.hide-lines .line,
+#drawing.hide-circles .circle,
+#drawing.hide-sections .section,
+#drawing.hide-polygons .polygon,
+#drawing.hide-structures .line,
+#drawing.hide-structures .circle,
+#drawing.hide-graphics .section,
+#drawing.hide-graphics .polygon,
+#drawing.hide-graphics .polyline,
+#drawing.hide-graphics .segment {
+    visibility: hidden !important;
+    opacity: 0 !important;
 }
 
-#drawing .hover-target {
+/* Ensure hovered targets always show */
+#drawing .hover-target.hover-target {
     visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .material-icons {

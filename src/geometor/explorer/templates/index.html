@@ -89,8 +89,7 @@
         <div id="view-container">
             <div id="category-view">
                 <div class="collapsible-section">
-                    <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> <button
-                            class="toggle-vis-btn"><span class="material-icons">visibility</span></button> Points <span
+                    <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Points <span
                             id="points-count">(0)</span></h3>
                     <div class="table-container">
                         <table id="points-table">
@@ -110,8 +109,7 @@
                     </div>
                 </div>
                 <div class="collapsible-section">
-                    <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> <button
-                            class="toggle-vis-btn"><span class="material-icons">visibility</span></button> Structures
+                    <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Structures
                         <span id="structures-count">(0)</span>
                     </h3>
                     <div class="table-container">
@@ -130,8 +128,7 @@
                     </div>
                 </div>
                 <div class="collapsible-section">
-                    <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> <button
-                            class="toggle-vis-btn"><span class="material-icons">visibility</span></button> Graphics
+                    <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Graphics
                         <span id="graphics-count">(0)</span>
                     </h3>
                     <div class="table-container">
@@ -234,6 +231,15 @@
                 <br>
                 <label for="ancestors-toggle">Show ancestors on hover</label>
                 <input type="checkbox" id="ancestors-toggle">
+                <hr>
+                <h3>Show on hover only:</h3>
+                <div class="settings-group">
+                    <label><input type="checkbox" id="hover-points"> points</label><br>
+                    <label><input type="checkbox" id="hover-lines"> lines</label><br>
+                    <label><input type="checkbox" id="hover-circles"> circles</label><br>
+                    <label><input type="checkbox" id="hover-sections"> sections</label><br>
+                    <label><input type="checkbox" id="hover-polygons"> polygons</label>
+                </div>
             </div>
         </div>
     </div>

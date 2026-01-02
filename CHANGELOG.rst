@@ -2,6 +2,26 @@ changelog
 =========
 
 
+0.5.2
+-----
+*2026-01-02*
+
+**feat**
+
+-   **Premium Scrollbars**: Implemented custom, slim scrollbars for a more refined look and feel.
+-   **Granular Hover Toggles**: Added a new section in the Settings panel to toggle the "Show on hover only" feature for points, lines, circles, sections, and polygons individually.
+-   **Improved Overflow Handling**: Optimized the main window to prevent hover cards from triggering unwanted scrollbars.
+
+**fix**
+
+-   **Point Class Consistency**: Ensured all point elements in the SVG have the ``point`` class for consistent styling and targeting.
+-   **Visibility Logic**: Refined CSS visibility rules to ensure hovered elements always remain visible, even when their group is hidden.
+
+**removed**
+
+-   Removed redundant visibility toggle buttons from the category panels in favor of the new granular settings.
+
+
 0.5.1
 -----
 *2025-12-18*

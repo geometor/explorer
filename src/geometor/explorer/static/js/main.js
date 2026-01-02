@@ -1109,6 +1109,31 @@ document.addEventListener('DOMContentLoaded', () => {
         ancestorsBtn.classList.toggle('active', ancestorsOnHover);
     });
 
+    const hoverToggles = {
+        'points': 'hover-points',
+        'lines': 'hover-lines',
+        'circles': 'hover-circles',
+        'sections': 'hover-sections',
+        'polygons': 'hover-polygons'
+    };
+
+    Object.entries(hoverToggles).forEach(([type, id]) => {
+        const toggle = document.getElementById(id);
+        if (toggle) {
+            toggle.addEventListener('change', () => {
+                GEOMETOR.svg.classList.toggle(`hide-${type}`, toggle.checked);
+                localStorage.setItem(`hover-only-${type}`, toggle.checked);
+            });
+
+            // Load saved state
+            const saved = localStorage.getItem(`hover-only-${type}`);
+            if (saved === 'true') {
+                toggle.checked = true;
+                GEOMETOR.svg.classList.add(`hide-${type}`);
+            }
+        }
+    });
+
     analysisToggle.addEventListener('click', () => {
         fetch('/api/analysis/toggle', {
             method: 'POST',
@@ -1177,25 +1202,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    const toggleVisBtns = document.querySelectorAll('.toggle-vis-btn');
-    toggleVisBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            if (animationEnabled) return;
-
-            const section = btn.closest('.collapsible-section');
-            section.classList.toggle('hide-elements');
-            const isHidden = section.classList.contains('hide-elements');
-            btn.querySelector('.material-icons').textContent = isHidden ? 'visibility_off' : 'visibility';
-
-            let category = section.querySelector('h3').textContent.toLowerCase().split(' ')[2];
-            if (category === 'structures') {
-                category = 'elements';
-            }
-
-            const elementsToToggle = document.querySelectorAll(`#drawing [data-category="${category}"]`);
-            gsap.to(elementsToToggle, { autoAlpha: isHidden ? 0 : 1, duration: 0.5 });
-        });
-    });
 
     const newBtn = document.getElementById('new-btn');
     const openBtn = document.getElementById('open-btn');
