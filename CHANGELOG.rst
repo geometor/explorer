@@ -2,6 +2,20 @@ changelog
 =========
 
 
+0.5.3
+-----
+*2026-01-03*
+
+**feat**
+
+-   **Reordered Element Panels**: The default view for elements is now the **Chronological (SEQ)** sequence, followed by Category (CAT) and Groups (GRP) views.
+-   **Simplified Navigation Labels**: Rename the element panel switch buttons to abbreviated labels: **SEQ**, **CAT**, and **GRP** for a cleaner, more focused UI.
+
+**changed**
+
+-   Set the Chronological view as the active panel on application startup.
+
+
 0.5.2
 -----
 *2026-01-02*

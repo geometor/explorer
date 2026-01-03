@@ -1,0 +1,1403 @@
+{
+    "name": "new",
+    "last_point_id": "XX",
+    "elements": [
+        {
+            "sympy_obj": "Point2D(Rational(-1, 2), Integer(0))",
+            "ID": "A",
+            "classes": [
+                "given"
+            ],
+            "parents": [
+                "[ A B ]",
+                "( B A )"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Rational(1, 2), Integer(0))",
+            "ID": "B",
+            "classes": [
+                "given"
+            ],
+            "parents": [
+                "[ A B ]",
+                "( A B )"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Line2D(Point2D(Rational(-1, 2), Integer(0)), Point2D(Rational(1, 2), Integer(0)))",
+            "ID": "[ A B ]",
+            "classes": [],
+            "parents": [
+                "A",
+                "B",
+                "C",
+                "D",
+                "G",
+                "H",
+                "Z",
+                "FF",
+                "PP"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Circle(Point2D(Rational(-1, 2), Integer(0)), Integer(1))",
+            "ID": "( A B )",
+            "classes": [],
+            "parents": [
+                "A",
+                "B",
+                "C",
+                "E",
+                "F",
+                "Q",
+                "R",
+                "GG",
+                "HH",
+                "QQ",
+                "RR"
+            ],
+            "guide": false,
+            "pt_radius": "B"
+        },
+        {
+            "sympy_obj": "Point2D(Rational(-3, 2), Integer(0))",
+            "ID": "C",
+            "classes": [],
+            "parents": [
+                "[ A B ]",
+                "( A B )",
+                "[ K L ]",
+                "[ C F ]",
+                "[ E C ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Circle(Point2D(Rational(1, 2), Integer(0)), Integer(1))",
+            "ID": "( B A )",
+            "classes": [],
+            "parents": [
+                "B",
+                "A",
+                "D",
+                "E",
+                "F",
+                "S",
+                "T",
+                "AA",
+                "BB",
+                "II",
+                "JJ",
+                "SS",
+                "TT"
+            ],
+            "guide": false,
+            "pt_radius": "A"
+        },
+        {
+            "sympy_obj": "Point2D(Rational(3, 2), Integer(0))",
+            "ID": "D",
+            "classes": [],
+            "parents": [
+                "[ A B ]",
+                "( B A )",
+                "( A D )",
+                "[ D F ]",
+                "[ D E ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+            "ID": "E",
+            "classes": [],
+            "parents": [
+                "( A B )",
+                "( B A )",
+                "[ E F ]",
+                "[ D E ]",
+                "[ E C ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))",
+            "ID": "F",
+            "classes": [],
+            "parents": [
+                "( A B )",
+                "( B A )",
+                "[ E F ]",
+                "[ D F ]",
+                "[ C F ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Line2D(Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))))",
+            "ID": "[ E F ]",
+            "classes": [],
+            "parents": [
+                "E",
+                "F",
+                "G",
+                "I",
+                "J",
+                "KK",
+                "UU"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Integer(0), Integer(0))",
+            "ID": "G",
+            "classes": [],
+            "parents": [
+                "[ A B ]",
+                "[ E F ]",
+                "[ M G ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Circle(Point2D(Rational(-1, 2), Integer(0)), Integer(2))",
+            "ID": "( A D )",
+            "classes": [],
+            "parents": [
+                "A",
+                "D",
+                "H",
+                "I",
+                "J",
+                "K",
+                "L",
+                "M",
+                "N",
+                "O",
+                "P",
+                "U",
+                "LL"
+            ],
+            "guide": false,
+            "pt_radius": "D"
+        },
+        {
+            "sympy_obj": "Point2D(Rational(-5, 2), Integer(0))",
+            "ID": "H",
+            "classes": [],
+            "parents": [
+                "[ A B ]",
+                "( A D )"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(15), Rational(1, 2))))",
+            "ID": "I",
+            "classes": [],
+            "parents": [
+                "[ E F ]",
+                "( A D )"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(15), Rational(1, 2)))), Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))])",
+            "ID": "/ I E F /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "I",
+                "E",
+                "F"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2))))",
+            "ID": "J",
+            "classes": [],
+            "parents": [
+                "[ E F ]",
+                "( A D )"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2))))])",
+            "ID": "/ E F J /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "E",
+                "F",
+                "J"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Line2D(Point2D(Rational(3, 2), Integer(0)), Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))))",
+            "ID": "[ D F ]",
+            "classes": [],
+            "parents": [
+                "D",
+                "F",
+                "K",
+                "V",
+                "CC",
+                "MM",
+                "VV"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Rational(-3, 2), Pow(Integer(3), Rational(1, 2)))",
+            "ID": "K",
+            "classes": [],
+            "parents": [
+                "( A D )",
+                "[ D F ]",
+                "[ K L ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Line2D(Point2D(Rational(3, 2), Integer(0)), Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))))",
+            "ID": "[ D E ]",
+            "classes": [],
+            "parents": [
+                "D",
+                "E",
+                "L",
+                "W",
+                "DD",
+                "NN"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Rational(-3, 2), Mul(Integer(-1), Pow(Integer(3), Rational(1, 2))))",
+            "ID": "L",
+            "classes": [],
+            "parents": [
+                "( A D )",
+                "[ D E ]",
+                "[ K L ]",
+                "[ N L ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Line2D(Point2D(Rational(-3, 2), Pow(Integer(3), Rational(1, 2))), Point2D(Rational(-3, 2), Mul(Integer(-1), Pow(Integer(3), Rational(1, 2)))))",
+            "ID": "[ K L ]",
+            "classes": [],
+            "parents": [
+                "K",
+                "L",
+                "C",
+                "X",
+                "OO"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Triangle(Point2D(Rational(-3, 2), Mul(Integer(-1), Pow(Integer(3), Rational(1, 2)))), Point2D(Rational(3, 2), Integer(0)), Point2D(Rational(-3, 2), Pow(Integer(3), Rational(1, 2))))",
+            "ID": "< L D K >",
+            "classes": [],
+            "parents": [
+                "L",
+                "D",
+                "K"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Line2D(Point2D(Rational(-3, 2), Integer(0)), Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))))",
+            "ID": "[ C F ]",
+            "classes": [],
+            "parents": [
+                "C",
+                "F",
+                "M",
+                "N"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(5), Rational(1, 2))), Rational(-3, 4)), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+            "ID": "M",
+            "classes": [],
+            "parents": [
+                "( A D )",
+                "[ C F ]",
+                "[ M G ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(5), Rational(1, 2))), Rational(-3, 4)), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Rational(-3, 2), Integer(0)), Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))])",
+            "ID": "/ M C F /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "M",
+                "C",
+                "F"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "N",
+            "classes": [],
+            "parents": [
+                "( A D )",
+                "[ C F ]",
+                "[ N O ]",
+                "[ Y N ]",
+                "[ N L ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Rational(-3, 2), Integer(0)), Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ C F N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "C",
+                "F",
+                "N"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Line2D(Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Rational(-3, 2), Integer(0)))",
+            "ID": "[ E C ]",
+            "classes": [],
+            "parents": [
+                "E",
+                "C",
+                "O",
+                "P",
+                "Y",
+                "WW"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+            "ID": "O",
+            "classes": [],
+            "parents": [
+                "( A D )",
+                "[ E C ]",
+                "[ N O ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Rational(-3, 2), Integer(0)), Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))])",
+            "ID": "/ C E O /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "C",
+                "E",
+                "O"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(5), Rational(1, 2))), Rational(-3, 4)), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "P",
+            "classes": [],
+            "parents": [
+                "( A D )",
+                "[ E C ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(5), Rational(1, 2))), Rational(-3, 4)), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))), Point2D(Rational(-3, 2), Integer(0)), Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2))))])",
+            "ID": "/ P C E /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "P",
+                "C",
+                "E"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Triangle(Point2D(Integer(0), Integer(0)), Point2D(Rational(-1, 2), Integer(0)), Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))))",
+            "ID": "< G A F >",
+            "classes": [],
+            "parents": [
+                "G",
+                "A",
+                "F"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Triangle(Point2D(Integer(0), Integer(0)), Point2D(Rational(-1, 2), Integer(0)), Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "< G A J >",
+            "classes": [],
+            "parents": [
+                "G",
+                "A",
+                "J"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Line2D(Point2D(Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(5), Rational(1, 2))), Rational(-3, 4)), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Integer(0), Integer(0)))",
+            "ID": "[ M G ]",
+            "classes": [],
+            "parents": [
+                "M",
+                "G",
+                "Q",
+                "R",
+                "S",
+                "T",
+                "U",
+                "V",
+                "W",
+                "X",
+                "Y",
+                "EE",
+                "XX"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-39, 124), Mul(Integer(-1), Rational(9, 124), Pow(Integer(5), Rational(1, 2))), Mul(Rational(3, 248), Pow(Integer(15), Rational(1, 2)), Pow(Add(Integer(530), Mul(Integer(-1), Integer(202), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Rational(9, 248), Pow(Integer(3), Rational(1, 2)), Pow(Add(Integer(530), Mul(Integer(-1), Integer(202), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 31), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 62), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 124), Pow(Add(Integer(530), Mul(Integer(-1), Integer(202), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2)))))",
+            "ID": "Q",
+            "classes": [],
+            "parents": [
+                "( A B )",
+                "[ M G ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Mul(Integer(-1), Rational(9, 248), Pow(Integer(3), Rational(1, 2)), Pow(Add(Integer(530), Mul(Integer(-1), Integer(202), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Integer(-1), Rational(3, 248), Pow(Integer(15), Rational(1, 2)), Pow(Add(Integer(530), Mul(Integer(-1), Integer(202), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Rational(-39, 124), Mul(Integer(-1), Rational(9, 124), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 124), Pow(Add(Integer(530), Mul(Integer(-1), Integer(202), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Integer(-1), Rational(3, 31), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 62), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "R",
+            "classes": [],
+            "parents": [
+                "( A B )",
+                "[ M G ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Mul(Rational(9, 124), Pow(Integer(5), Rational(1, 2))), Rational(39, 124), Mul(Rational(3, 248), Pow(Integer(15), Rational(1, 2)), Pow(Add(Integer(530), Mul(Integer(-1), Integer(202), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Rational(9, 248), Pow(Integer(3), Rational(1, 2)), Pow(Add(Integer(530), Mul(Integer(-1), Integer(202), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 62), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 31), Pow(Integer(3), Rational(1, 2))), Mul(Rational(3, 124), Pow(Add(Integer(530), Mul(Integer(-1), Integer(202), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2)))))",
+            "ID": "S",
+            "classes": [],
+            "parents": [
+                "( B A )",
+                "[ M G ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Mul(Integer(-1), Rational(9, 248), Pow(Integer(3), Rational(1, 2)), Pow(Add(Integer(530), Mul(Integer(-1), Integer(202), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Integer(-1), Rational(3, 248), Pow(Integer(15), Rational(1, 2)), Pow(Add(Integer(530), Mul(Integer(-1), Integer(202), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Rational(9, 124), Pow(Integer(5), Rational(1, 2))), Rational(39, 124)), Add(Mul(Integer(-1), Rational(3, 124), Pow(Add(Integer(530), Mul(Integer(-1), Integer(202), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Integer(-1), Rational(1, 62), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 31), Pow(Integer(3), Rational(1, 2)))))",
+            "ID": "T",
+            "classes": [],
+            "parents": [
+                "( B A )",
+                "[ M G ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-39, 124), Mul(Integer(-1), Rational(9, 124), Pow(Integer(5), Rational(1, 2))), Mul(Rational(1, 248), Pow(Integer(15), Rational(1, 2)), Add(Mul(Integer(-1), Integer(43), Pow(Integer(3), Rational(1, 2))), Mul(Integer(33), Pow(Integer(15), Rational(1, 2))))), Mul(Rational(3, 248), Pow(Integer(3), Rational(1, 2)), Add(Mul(Integer(-1), Integer(43), Pow(Integer(3), Rational(1, 2))), Mul(Integer(33), Pow(Integer(15), Rational(1, 2)))))), Add(Mul(Rational(1, 62), Pow(Integer(15), Rational(1, 2))), Mul(Pow(Integer(3), Rational(1, 2)), Add(Rational(-55, 124), Mul(Rational(33, 124), Pow(Integer(5), Rational(1, 2)))))))",
+            "ID": "U",
+            "classes": [],
+            "parents": [
+                "( A D )",
+                "[ M G ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Mul(Rational(3, 20), Pow(Integer(5), Rational(1, 2))), Rational(3, 4)), Add(Mul(Integer(-1), Rational(1, 20), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+            "ID": "V",
+            "classes": [],
+            "parents": [
+                "[ D F ]",
+                "[ M G ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "W",
+            "classes": [],
+            "parents": [
+                "[ D E ]",
+                "[ M G ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Rational(-3, 2), Mul(Integer(-1), Pow(Integer(3), Rational(1, 2)))), Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Rational(3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ L E W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "L",
+                "E",
+                "W"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Rational(3, 2), Integer(0)), Point2D(Add(Rational(3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ E D W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "E",
+                "D",
+                "W"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Rational(-3, 2), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "X",
+            "classes": [],
+            "parents": [
+                "[ K L ]",
+                "[ M G ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Rational(-3, 2), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))), Point2D(Integer(0), Integer(0)), Point2D(Add(Rational(3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ X G W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "X",
+                "G",
+                "W"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-3, 4), Mul(Integer(-1), Rational(3, 20), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 20), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "Y",
+            "classes": [],
+            "parents": [
+                "[ E C ]",
+                "[ M G ]",
+                "[ Y N ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(5), Rational(1, 2))), Rational(-3, 4)), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Integer(-1), Rational(3, 20), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 20), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Mul(Rational(3, 20), Pow(Integer(5), Rational(1, 2))), Rational(3, 4)), Add(Mul(Integer(-1), Rational(1, 20), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))])",
+            "ID": "/ M Y V /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "M",
+                "Y",
+                "V"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Rational(-3, 4), Mul(Integer(-1), Rational(3, 20), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 20), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Mul(Rational(3, 20), Pow(Integer(5), Rational(1, 2))), Rational(3, 4)), Add(Mul(Integer(-1), Rational(1, 20), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Add(Rational(3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ Y V W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "Y",
+                "V",
+                "W"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Line2D(Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))))))",
+            "ID": "[ N O ]",
+            "classes": [],
+            "parents": [
+                "N",
+                "O",
+                "Z",
+                "AA",
+                "BB",
+                "CC",
+                "DD",
+                "EE"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Integer(0))",
+            "ID": "Z",
+            "classes": [],
+            "parents": [
+                "[ A B ]",
+                "[ N O ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Rational(-3, 2), Integer(0)), Point2D(Integer(0), Integer(0)), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Integer(0))])",
+            "ID": "/ C G Z /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "C",
+                "G",
+                "Z"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Integer(0), Integer(0)), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Integer(0)), Point2D(Rational(3, 2), Integer(0))])",
+            "ID": "/ G Z D /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "G",
+                "Z",
+                "D"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Mul(Rational(1, 4), Pow(Add(Integer(-54), Mul(Integer(30), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))))",
+            "ID": "AA",
+            "classes": [],
+            "parents": [
+                "( B A )",
+                "[ N O ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Mul(Integer(-1), Rational(1, 4), Pow(Add(Integer(-54), Mul(Integer(30), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))))",
+            "ID": "BB",
+            "classes": [],
+            "parents": [
+                "( B A )",
+                "[ N O ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 4), Pow(Integer(3), Rational(1, 2)))))",
+            "ID": "CC",
+            "classes": [],
+            "parents": [
+                "[ D F ]",
+                "[ N O ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Rational(-3, 2), Pow(Integer(3), Rational(1, 2))), Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 4), Pow(Integer(3), Rational(1, 2)))))])",
+            "ID": "/ K F CC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "K",
+                "F",
+                "CC"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Rational(3, 2), Integer(0))])",
+            "ID": "/ F CC D /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "F",
+                "CC",
+                "D"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ O CC N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "O",
+                "CC",
+                "N"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "DD",
+            "classes": [],
+            "parents": [
+                "[ D E ]",
+                "[ N O ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Rational(-3, 2), Mul(Integer(-1), Pow(Integer(3), Rational(1, 2)))), Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ L E DD /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "L",
+                "E",
+                "DD"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Rational(-3, 2), Mul(Integer(-1), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Rational(3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ L DD W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "L",
+                "DD",
+                "W"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))), Point2D(Rational(3, 2), Integer(0))])",
+            "ID": "/ E DD D /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "E",
+                "DD",
+                "D"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Rational(3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ E DD W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "E",
+                "DD",
+                "W"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))), Point2D(Rational(3, 2), Integer(0)), Point2D(Add(Rational(3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ DD D W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "DD",
+                "D",
+                "W"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 4), Pow(Integer(3), Rational(1, 2)))))])",
+            "ID": "/ O DD CC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "O",
+                "DD",
+                "CC"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ O DD N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "O",
+                "DD",
+                "N"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ DD CC N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "DD",
+                "CC",
+                "N"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "EE",
+            "classes": [],
+            "parents": [
+                "[ M G ]",
+                "[ N O ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Rational(-3, 2), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Rational(3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ X EE W /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "X",
+                "EE",
+                "W"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Integer(0)), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ DD Z EE /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "DD",
+                "Z",
+                "EE"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Integer(0)), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 4), Pow(Integer(3), Rational(1, 2)))))])",
+            "ID": "/ Z EE CC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "Z",
+                "EE",
+                "CC"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Line2D(Point2D(Add(Rational(-3, 4), Mul(Integer(-1), Rational(3, 20), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 20), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))))",
+            "ID": "[ Y N ]",
+            "classes": [],
+            "parents": [
+                "Y",
+                "N",
+                "FF",
+                "GG",
+                "HH",
+                "II",
+                "JJ",
+                "KK",
+                "LL",
+                "MM",
+                "NN",
+                "OO"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-15, 2), Mul(Integer(3), Pow(Integer(5), Rational(1, 2)))), Integer(0))",
+            "ID": "FF",
+            "classes": [],
+            "parents": [
+                "[ A B ]",
+                "[ Y N ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Mul(Integer(-1), Rational(9, 76), Pow(Add(Mul(Integer(662), Pow(Integer(5), Rational(1, 2))), Integer(1490)), Rational(1, 2))), Rational(-87, 152), Mul(Integer(-1), Rational(3, 152), Pow(Integer(5), Rational(1, 2))), Mul(Rational(9, 152), Pow(Add(Mul(Integer(3310), Pow(Integer(5), Rational(1, 2))), Integer(7450)), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(21, 152), Pow(Integer(3), Rational(1, 2))), Mul(Rational(15, 152), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 152), Pow(Add(Mul(Integer(1986), Pow(Integer(5), Rational(1, 2))), Integer(4470)), Rational(1, 2)))))",
+            "ID": "GG",
+            "classes": [],
+            "parents": [
+                "( A B )",
+                "[ Y N ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Mul(Integer(-1), Rational(9, 152), Pow(Add(Mul(Integer(3310), Pow(Integer(5), Rational(1, 2))), Integer(7450)), Rational(1, 2))), Rational(-87, 152), Mul(Integer(-1), Rational(3, 152), Pow(Integer(5), Rational(1, 2))), Mul(Rational(9, 76), Pow(Add(Mul(Integer(662), Pow(Integer(5), Rational(1, 2))), Integer(1490)), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 152), Pow(Add(Mul(Integer(1986), Pow(Integer(5), Rational(1, 2))), Integer(4470)), Rational(1, 2))), Mul(Integer(-1), Rational(21, 152), Pow(Integer(3), Rational(1, 2))), Mul(Rational(15, 152), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "HH",
+            "classes": [],
+            "parents": [
+                "( A B )",
+                "[ Y N ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(3, 38), Mul(Rational(3, 19), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Pow(Integer(3), Rational(1, 2)), Add(Mul(Rational(13, 304), Pow(Integer(5), Rational(1, 2))), Rational(2, 19))), Mul(Rational(51, 304), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "II",
+            "classes": [],
+            "parents": [
+                "( B A )",
+                "[ Y N ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(3, 8), Mul(Integer(-1), Rational(3, 8), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Pow(Integer(3), Rational(1, 2)), Add(Rational(-1, 8), Mul(Integer(-1), Rational(13, 304), Pow(Integer(5), Rational(1, 2))))), Mul(Rational(51, 304), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "JJ",
+            "classes": [],
+            "parents": [
+                "( B A )",
+                "[ Y N ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Integer(0), Mul(Rational(1, 6), Pow(Integer(15), Rational(1, 2))))",
+            "ID": "KK",
+            "classes": [],
+            "parents": [
+                "[ E F ]",
+                "[ Y N ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Mul(Integer(-1), Rational(15, 19), Pow(Integer(5), Rational(1, 2))), Rational(-15, 38)), Add(Mul(Pow(Integer(3), Rational(1, 2)), Add(Rational(-10, 19), Mul(Integer(-1), Rational(23, 152), Pow(Integer(5), Rational(1, 2))))), Mul(Rational(15, 152), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "LL",
+            "classes": [],
+            "parents": [
+                "( A D )",
+                "[ Y N ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(3, 2), Mul(Integer(-1), Rational(3, 5), Pow(Integer(5), Rational(1, 2)))), Mul(Rational(1, 5), Pow(Integer(15), Rational(1, 2))))",
+            "ID": "MM",
+            "classes": [],
+            "parents": [
+                "[ D F ]",
+                "[ Y N ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Rational(-3, 4), Mul(Integer(-1), Rational(3, 20), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 20), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Rational(3, 2), Mul(Integer(-1), Rational(3, 5), Pow(Integer(5), Rational(1, 2)))), Mul(Rational(1, 5), Pow(Integer(15), Rational(1, 2)))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ Y MM N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "Y",
+                "MM",
+                "N"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Mul(Integer(-1), Rational(3, 2), Pow(Integer(5), Rational(1, 2))), Integer(-3)), Add(Mul(Integer(-1), Rational(3, 2), Pow(Integer(3), Rational(1, 2))), Mul(Integer(-1), Rational(1, 2), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "NN",
+            "classes": [],
+            "parents": [
+                "[ D E ]",
+                "[ Y N ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Mul(Integer(-1), Rational(3, 2), Pow(Integer(5), Rational(1, 2))), Integer(-3)), Add(Mul(Integer(-1), Rational(3, 2), Pow(Integer(3), Rational(1, 2))), Mul(Integer(-1), Rational(1, 2), Pow(Integer(15), Rational(1, 2))))), Point2D(Rational(-3, 2), Mul(Integer(-1), Pow(Integer(3), Rational(1, 2)))), Point2D(Rational(3, 2), Integer(0))])",
+            "ID": "/ NN L D /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "NN",
+                "L",
+                "D"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Mul(Integer(-1), Rational(3, 2), Pow(Integer(5), Rational(1, 2))), Integer(-3)), Add(Mul(Integer(-1), Rational(3, 2), Pow(Integer(3), Rational(1, 2))), Mul(Integer(-1), Rational(1, 2), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Mul(Integer(-1), Rational(15, 19), Pow(Integer(5), Rational(1, 2))), Rational(-15, 38)), Add(Mul(Pow(Integer(3), Rational(1, 2)), Add(Rational(-10, 19), Mul(Integer(-1), Rational(23, 152), Pow(Integer(5), Rational(1, 2))))), Mul(Rational(15, 152), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Rational(3, 38), Mul(Rational(3, 19), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Pow(Integer(3), Rational(1, 2)), Add(Mul(Rational(13, 304), Pow(Integer(5), Rational(1, 2))), Rational(2, 19))), Mul(Rational(51, 304), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ NN LL II /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "NN",
+                "LL",
+                "II"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Rational(-3, 2), Mul(Integer(-1), Rational(1, 3), Pow(Integer(3), Rational(1, 2))))",
+            "ID": "OO",
+            "classes": [],
+            "parents": [
+                "[ K L ]",
+                "[ Y N ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Rational(-3, 2), Mul(Integer(-1), Rational(1, 3), Pow(Integer(3), Rational(1, 2)))), Point2D(Integer(0), Mul(Rational(1, 6), Pow(Integer(15), Rational(1, 2)))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ OO KK N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "OO",
+                "KK",
+                "N"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Line2D(Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2))))), Point2D(Rational(-3, 2), Mul(Integer(-1), Pow(Integer(3), Rational(1, 2)))))",
+            "ID": "[ N L ]",
+            "classes": [],
+            "parents": [
+                "N",
+                "L",
+                "PP",
+                "QQ",
+                "RR",
+                "SS",
+                "TT",
+                "UU",
+                "VV",
+                "WW",
+                "XX"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-3, 2), Mul(Rational(3, 5), Pow(Integer(5), Rational(1, 2)))), Integer(0))",
+            "ID": "PP",
+            "classes": [],
+            "parents": [
+                "[ A B ]",
+                "[ N L ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-9, 8), Mul(Rational(3, 8), Pow(Add(Integer(-2), Mul(Integer(2), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Rational(3, 8), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 8), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 8), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 8), Pow(Add(Integer(-30), Mul(Integer(30), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2)))))",
+            "ID": "QQ",
+            "classes": [],
+            "parents": [
+                "( A B )",
+                "[ N L ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-9, 8), Mul(Integer(-1), Rational(3, 8), Pow(Add(Integer(-2), Mul(Integer(2), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Rational(3, 8), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 8), Pow(Add(Integer(-30), Mul(Integer(30), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Integer(-1), Rational(3, 8), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 8), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "RR",
+            "classes": [],
+            "parents": [
+                "( A B )",
+                "[ N L ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-3, 4), Mul(Rational(3, 8), Pow(Add(Integer(-7), Mul(Integer(4), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Rational(3, 8), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(3, 8), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 8), Pow(Add(Integer(-105), Mul(Integer(60), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "SS",
+            "classes": [],
+            "parents": [
+                "( B A )",
+                "[ N L ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-3, 4), Mul(Integer(-1), Rational(3, 8), Pow(Add(Integer(-7), Mul(Integer(4), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Rational(3, 8), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 8), Pow(Add(Integer(-105), Mul(Integer(60), Pow(Integer(5), Rational(1, 2)))), Rational(1, 2))), Mul(Integer(-1), Rational(3, 8), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "TT",
+            "classes": [],
+            "parents": [
+                "( B A )",
+                "[ N L ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Integer(0), Add(Mul(Integer(-1), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "UU",
+            "classes": [],
+            "parents": [
+                "[ E F ]",
+                "[ N L ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Integer(0), Add(Mul(Integer(-1), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2))))), Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2))))])",
+            "ID": "/ E UU F /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "E",
+                "UU",
+                "F"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Integer(0), Add(Mul(Integer(-1), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2))))), Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2))))])",
+            "ID": "/ E UU J /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "E",
+                "UU",
+                "J"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Integer(0), Add(Mul(Integer(-1), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2))))), Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2))))])",
+            "ID": "/ UU F J /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "UU",
+                "F",
+                "J"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Rational(-3, 2), Mul(Integer(-1), Pow(Integer(3), Rational(1, 2)))), Point2D(Integer(0), Add(Mul(Integer(-1), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ L UU N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "L",
+                "UU",
+                "N"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Integer(-3), Mul(Rational(3, 2), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 2), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 2), Pow(Integer(3), Rational(1, 2)))))",
+            "ID": "VV",
+            "classes": [],
+            "parents": [
+                "[ D F ]",
+                "[ N L ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Rational(-3, 2), Pow(Integer(3), Rational(1, 2))), Point2D(Add(Integer(-3), Mul(Rational(3, 2), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 2), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 2), Pow(Integer(3), Rational(1, 2))))), Point2D(Rational(3, 2), Integer(0))])",
+            "ID": "/ K VV D /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "K",
+                "VV",
+                "D"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Integer(0), Mul(Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Integer(-3), Mul(Rational(3, 2), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 2), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 2), Pow(Integer(3), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 4), Pow(Integer(3), Rational(1, 2)))))])",
+            "ID": "/ F VV CC /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "F",
+                "VV",
+                "CC"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Integer(0), Add(Mul(Integer(-1), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Integer(-3), Mul(Rational(3, 2), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 2), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 2), Pow(Integer(3), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ UU VV N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "UU",
+                "VV",
+                "N"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-9, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))",
+            "ID": "WW",
+            "classes": [],
+            "parents": [
+                "[ E C ]",
+                "[ N L ]"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Rational(-3, 2), Integer(0)), Point2D(Add(Rational(-9, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2))))])",
+            "ID": "/ C WW E /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "C",
+                "WW",
+                "E"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Rational(-3, 2), Integer(0)), Point2D(Add(Rational(-9, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))])",
+            "ID": "/ C WW O /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "C",
+                "WW",
+                "O"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Rational(-9, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Integer(0), Mul(Integer(-1), Rational(1, 2), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Integer(-1), Rational(1, 4), Pow(Integer(3), Rational(1, 2)))))])",
+            "ID": "/ WW E O /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "WW",
+                "E",
+                "O"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Rational(-3, 2), Mul(Integer(-1), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Rational(-9, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Integer(0), Add(Mul(Integer(-1), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ L WW UU /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "L",
+                "WW",
+                "UU"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Rational(-3, 2), Mul(Integer(-1), Pow(Integer(3), Rational(1, 2)))), Point2D(Add(Rational(-9, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ L WW N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "L",
+                "WW",
+                "N"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Rational(-9, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Integer(0), Add(Mul(Integer(-1), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Integer(-3), Mul(Rational(3, 2), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 2), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 2), Pow(Integer(3), Rational(1, 2)))))])",
+            "ID": "/ WW UU VV /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "WW",
+                "UU",
+                "VV"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Rational(-9, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Integer(0), Add(Mul(Integer(-1), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 2), Pow(Integer(15), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ WW UU N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "WW",
+                "UU",
+                "N"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Section([Point2D(Add(Rational(-9, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 4), Pow(Integer(15), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))))), Point2D(Add(Integer(-3), Mul(Rational(3, 2), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(1, 2), Pow(Integer(15), Rational(1, 2))), Mul(Rational(3, 2), Pow(Integer(3), Rational(1, 2))))), Point2D(Add(Rational(-3, 4), Mul(Rational(3, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Rational(1, 4), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))])",
+            "ID": "/ WW VV N /",
+            "classes": [
+                "golden"
+            ],
+            "parents": [
+                "WW",
+                "VV",
+                "N"
+            ],
+            "guide": false
+        },
+        {
+            "sympy_obj": "Point2D(Add(Rational(-3, 4), Mul(Rational(1, 4), Pow(Integer(5), Rational(1, 2)))), Add(Mul(Integer(-1), Rational(7, 12), Pow(Integer(3), Rational(1, 2))), Mul(Rational(1, 4), Pow(Integer(15), Rational(1, 2)))))",
+            "ID": "XX",
+            "classes": [],
+            "parents": [
+                "[ M G ]",
+                "[ N L ]"
+            ],
+            "guide": false
+        }
+    ]
+}

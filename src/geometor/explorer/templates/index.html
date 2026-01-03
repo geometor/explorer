@@ -81,13 +81,30 @@
     <div id="resizer"></div>
     <aside>
         <div class="view-switcher">
-            <button id="category-view-btn" class="active">By Category</button>
-            <button id="chrono-view-btn">Chronological</button>
-            <button id="groups-view-btn">Groups</button>
+            <button id="chrono-view-btn" class="active">SEQ</button>
+            <button id="category-view-btn">CAT</button>
+            <button id="groups-view-btn">GRP</button>
         </div>
 
         <div id="view-container">
-            <div id="category-view">
+            <div id="chronological-view">
+                <div class="table-container">
+                    <table id="chrono-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Class</th>
+                                <th>Guide</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="category-view" style="display: none;">
                 <div class="collapsible-section">
                     <h3><button class="collapse-btn"><span class="material-icons">expand_less</span></button> Points <span
                             id="points-count">(0)</span></h3>
@@ -144,23 +161,6 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-
-            <div id="chronological-view" style="display: none;">
-                <div class="table-container">
-                    <table id="chrono-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Class</th>
-                                <th>Guide</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
                 </div>
             </div>
 
