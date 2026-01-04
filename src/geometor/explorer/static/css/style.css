@@ -477,3 +477,80 @@ button .material-icons {
 #ancestors-btn.active {
     color: cyan;
 }
+
+/* CLI Panel */
+#cli-panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 300px;
+    background-color: rgba(18, 18, 18, 0.95);
+    border-top: 2px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    backdrop-filter: blur(5px);
+    transition: transform 0.3s ease-in-out;
+}
+
+#cli-panel.hidden {
+    display: none !important;
+}
+
+#cli-output {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    color: #0f0;
+}
+
+.cli-input-container {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid var(--border-color);
+    background-color: #000;
+}
+
+.cli-prompt {
+    color: #0f0;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+#cli-input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    outline: none;
+}
+
+.cli-line {
+    margin-bottom: 4px;
+    word-wrap: break-word;
+}
+
+.cli-error { color: #ff5555; }
+.cli-success { color: #55ff55; }
+.cli-command { color: #ffff55; }
+.cli-info { color: #55ffff; }
+
+/* Utility */
+.hidden {
+    display: none !important;
+}
+
+/* Tools Panel Headers */
+.panel-header {
+    font-size: 0.8em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 0.5em;
+    padding-left: 0.2em;
+    user-select: none;
+}

@@ -17,7 +17,7 @@ export function initResizer() {
     function handleMouseMove(e) {
         if (!isResizing) return;
         const newWidth = window.innerWidth - e.clientX;
-        body.style.gridTemplateColumns = `1fr 5px ${newWidth}px`;
+        body.style.gridTemplateColumns = `auto 1fr 5px ${newWidth}px`;
     }
 }
 

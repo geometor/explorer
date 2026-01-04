@@ -2,6 +2,19 @@ changelog
 =========
 
 
+0.5.5
+-----
+*2026-01-04*
+
+**fix**
+
+-   **Panel Resizing**: Fixed a critical layout bug where resizing the elements panel would cause the left sidebar to disappear or the layout to break.
+-   **CLI Panel Layout**: Refactored the CLI panel to be a fixed overlay at the bottom of the screen with a semi-transparent backdrop, resolving previous layout issues.
+
+**feat**
+
+-   **Tools Panel Organization**: Introduced section headers ("FILE", "CONSTRUCT", "SET") to the left sidebar for better tool organization and scalability.
+
 0.5.4
 -----
 *2026-01-03*
