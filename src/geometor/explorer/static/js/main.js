@@ -896,21 +896,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     let screenPoint;
 
                     if (elementData.type === 'point') {
-                        screenPoint = transformPoint(GEOMETOR.svg, elementData.x, elementData.y);
+                        screenPoint = transformPoint(GEOMETOR.svg, elementData.x, -elementData.y);
                     } else if (elementData.type === 'line') {
                         const pt1 = GEOMETOR.modelData.elements.find(p => p.ID === elementData.pt1);
                         const pt2 = GEOMETOR.modelData.elements.find(p => p.ID === elementData.pt2);
                         if (pt1 && pt2) {
                             const bbx = Math.max(pt1.x, pt2.x);
-                            const bby = Math.max(pt1.y, pt2.y);
-                            screenPoint = transformPoint(GEOMETOR.svg, bbx, bby);
+                            const bby = Math.min(pt1.y, pt2.y);
+                            screenPoint = transformPoint(GEOMETOR.svg, bbx, -bby);
                         }
                     } else if (elementData.type === 'circle') {
                         const center = GEOMETOR.modelData.elements.find(p => p.ID === elementData.center);
                         if (center) {
                             const bbx = center.x + elementData.radius * 0.8;
-                            const bby = center.y + elementData.radius * 0.8;
-                            screenPoint = transformPoint(GEOMETOR.svg, bbx, bby);
+                            const bby = center.y - elementData.radius * 0.8;
+                            screenPoint = transformPoint(GEOMETOR.svg, bbx, -bby);
                         }
                     } else if (elementData.type === 'polygon' || elementData.type === 'segment' || elementData.type === 'section') {
                         const parentPoints = elementData.parents.map(pID => GEOMETOR.modelData.elements.find(p => p.ID === pID)).filter(p => p && p.type === 'point');
@@ -918,8 +918,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             const xs = parentPoints.map(p => p.x);
                             const ys = parentPoints.map(p => p.y);
                             const bbx = Math.max(...xs);
-                            const bby = Math.max(...ys);
-                            screenPoint = transformPoint(GEOMETOR.svg, bbx, bby);
+                            const bby = Math.min(...ys);
+                            screenPoint = transformPoint(GEOMETOR.svg, bbx, -bby);
                         }
                     } else if (elementData.parents && elementData.parents.length > 0) {
                         const parentPoints = elementData.parents.map(pID => GEOMETOR.modelData.elements.find(p => p.ID === pID)).filter(p => p && p.type === 'point');
@@ -928,7 +928,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             const totalY = parentPoints.reduce((sum, p) => sum + p.y, 0);
                             const midX = totalX / parentPoints.length;
                             const midY = totalY / parentPoints.length;
-                            screenPoint = transformPoint(GEOMETOR.svg, midX, midY);
+                            screenPoint = transformPoint(GEOMETOR.svg, midX, -midY);
                         }
                     }
 

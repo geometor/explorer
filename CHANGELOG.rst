@@ -2,6 +2,14 @@ changelog
 =========
 
 
+0.5.4
+-----
+*2026-01-03*
+
+**fix**
+
+-   **Hover Card Positioning**: Corrected logic to account for the inverted Y-axis of the SVG. Hover cards now consistently appear in the visual lower-right relative to the element for all types (Points, Lines, Circles, Polygons, Segments, Sections).
+
 0.5.3
 -----
 *2026-01-03*
