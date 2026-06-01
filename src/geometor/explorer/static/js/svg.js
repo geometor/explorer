@@ -309,22 +309,34 @@ export function initSvgEventListeners() {
 
     document.addEventListener('mouseover', (event) => {
         const target = event.target;
-        if (target.namespaceURI === SVG_NS && target.id && target.id !== 'drawing') {
-            if (target.parentElement) {
+        if (
+            target.namespaceURI === SVG_NS &&
+            target.id &&
+            ['circle', 'line', 'polyline', 'polygon'].includes(target.tagName.toLowerCase()) &&
+            !['drawing', 'points', 'elements', 'graphics'].includes(target.id)
+        ) {
+            if (target.parentElement && target.parentElement.lastChild !== target) {
                 target.parentElement.appendChild(target);
             }
             GEOMETOR.isPositionedByTable = false;
             GEOMETOR.setElementHover(target.id, true);
             if (GEOMETOR.modelData.elements) {
                 const elementData = GEOMETOR.modelData.elements.find(el => el.ID === target.id);
-                GEOMETOR.updateHoverCard(elementData);
+                if (elementData) {
+                    GEOMETOR.updateHoverCard(elementData);
+                }
             }
         }
     });
 
     document.addEventListener('mouseout', (event) => {
         const target = event.target;
-        if (target.namespaceURI === SVG_NS && target.id) {
+        if (
+            target.namespaceURI === SVG_NS &&
+            target.id &&
+            ['circle', 'line', 'polyline', 'polygon'].includes(target.tagName.toLowerCase()) &&
+            !['drawing', 'points', 'elements', 'graphics'].includes(target.id)
+        ) {
             GEOMETOR.setElementHover(target.id, false);
             GEOMETOR.hoverCard.style.display = 'none';
         }
@@ -337,6 +349,7 @@ export async function exportSVG(options = {}) {
     const clonedSvg = originalSvg.cloneNode(true);
 
     // 2. Embed Styles
+    // We want all current styles for the SVG itself
     const styleSheets = ['css/style.css', 'css/svg.css'];
     let cssContent = '';
 
@@ -358,32 +371,34 @@ export async function exportSVG(options = {}) {
         clonedSvg.classList.add('light-theme');
     }
 
-    // Handle Print Output
+    // Handle Print Output Logic (adjusting stroke width etc)
     if (options.output === 'print') {
         const viewBox = originalSvg.getAttribute('viewBox').split(' ').map(Number);
+        const width = viewBox[2];
+        const strokeWidth = width / 800; // e.g. 4 / 800 = 0.005
 
-        // Handle Sheet Size
-        if (options.sheet_size) {
+        // If exporting HTML, we can leave the SVG viewBox alone and let the HTML page handle layout
+        // But if exporting raw SVG for print, we might want to adjust the viewBox to match sheet size
+        // For consistency, let's keep the logic similar but wrap styles in @media print
+
+        if (options.format !== 'html' && options.sheet_size) {
             const [w, h] = options.sheet_size.split('x').map(Number);
             clonedSvg.setAttribute('width', `${w}in`);
             clonedSvg.setAttribute('height', `${h}in`);
-
-            // Adjust viewBox to center the content in the new aspect ratio
+            
+            // Adjust viewBox logic (same as before)
             const sheetRatio = w / h;
             const currentW = viewBox[2];
             const currentH = viewBox[3];
             const currentRatio = currentW / currentH;
-
             let newViewW, newViewH, newMinX, newMinY;
 
             if (currentRatio > sheetRatio) {
-                // Drawing is wider than sheet: fit to width
                 newViewW = currentW;
                 newViewH = currentW / sheetRatio;
                 newMinX = viewBox[0];
                 newMinY = viewBox[1] - (newViewH - currentH) / 2;
             } else {
-                // Drawing is taller than sheet: fit to height
                 newViewH = currentH;
                 newViewW = currentH * sheetRatio;
                 newMinY = viewBox[1];
@@ -392,27 +407,27 @@ export async function exportSVG(options = {}) {
             clonedSvg.setAttribute('viewBox', `${newMinX} ${newMinY} ${newViewW} ${newViewH}`);
         }
 
-        // Calculate a reasonable stroke width based on viewbox
-        // We re-read viewBox in case it changed above (it didn't change the scale of content, just the window)
-        // actually for stroke width we want relative to the content size, so original width is fine/safe
-        // but if we zoomed out effectively by adding padding, maybe we want strokes to reference the sheet size?
-        // Let's stick to the visual width of the content for now.
-        const width = viewBox[2];
-        const strokeWidth = width / 800; // e.g. 4 / 800 = 0.005
-
-        cssContent += `
-        /* Print Overrides */
+        const printStyles = `
         * { 
             vector-effect: none !important; 
         }
         line, circle, polyline, path, polygon { 
             stroke-width: ${strokeWidth}px !important; 
         }
-        /* Keep points (small circles) visible but scalable */
         #points circle {
             r: ${strokeWidth * 3}px !important;
             stroke-width: ${strokeWidth}px !important;
         }
+        `;
+
+        // Wrap in @media print for HTML, or apply directly for SVG
+        // Actually, even for raw SVG, having @media print is good practice if opened in browser
+        cssContent += `
+        @media print {
+            ${printStyles}
+        }
+        /* Also apply as default if output=print and format=svg, so it looks right immediately */
+        ${options.format === 'svg' ? printStyles : ''}
         `;
     }
 
@@ -420,17 +435,79 @@ export async function exportSVG(options = {}) {
     styleElement.textContent = cssContent;
     clonedSvg.insertBefore(styleElement, clonedSvg.firstChild);
 
-    // 3. Serialize
-    const serializer = new XMLSerializer();
-    let source = serializer.serializeToString(clonedSvg);
+    // Prepare content based on format
+    let fileContent = '';
+    let fileExtension = 'svg';
+    let mimeType = 'image/svg+xml';
 
-    // Add XML declaration
-    if (!source.match(/^<xml/)) {
-        source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+    const serializer = new XMLSerializer();
+    let svgString = serializer.serializeToString(clonedSvg);
+
+    // Ensure XML declaration
+    if (!svgString.match(/^<xml/)) {
+        // Only strictly needed for standalone SVG files
+        if (options.format !== 'html') {
+             svgString = '<?xml version="1.0" standalone="no"?>\r\n' + svgString;
+        }
     }
 
-    // 4. Download
-    const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
+    if (options.format === 'html') {
+        fileExtension = 'html';
+        mimeType = 'text/html';
+
+        // Base CSS to override global styles from the embedded style.css
+        let pageCss = `
+            body {
+                margin: 0 !important;
+                padding: 0 !important;
+                display: block !important; /* Override potential display: grid from style.css */
+                background-color: white !important;
+            }
+            svg {
+                display: block;
+                width: 100%;
+                height: 100%;
+                overflow: visible;
+            }
+        `;
+        
+        // If specific sheet size is requested, we can enforce it in @page and body
+        if (options.sheet_size) {
+            const [w, h] = options.sheet_size.split('x');
+            pageCss += `
+                @page { 
+                    size: ${w}in ${h}in; 
+                    margin: 0; 
+                }
+                body {
+                    width: ${w}in !important;
+                    height: ${h}in !important;
+                }
+            `;
+        }
+
+        fileContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GEOMETOR Export</title>
+    <style>
+        ${pageCss}
+    </style>
+</head>
+<body>
+    ${svgString}
+</body>
+</html>`;
+
+    } else {
+        // Default SVG
+        fileContent = svgString;
+    }
+
+    // Download
+    const url = `data:${mimeType};charset=utf-8,` + encodeURIComponent(fileContent);
     const downloadLink = document.createElement("a");
     downloadLink.href = url;
 
@@ -439,24 +516,22 @@ export async function exportSVG(options = {}) {
     let name = filenameDisplay ? filenameDisplay.textContent.trim() : 'model';
     if (!name || name === 'Unsaved Model') name = 'model';
 
-    // Robust extension stripping
+    // Strip existing extension
     try {
         const lastDotIndex = name.lastIndexOf('.');
         if (lastDotIndex !== -1) {
             name = name.substring(0, lastDotIndex);
         }
     } catch (e) {
-        console.warn('Error processing filename, using default', e);
         name = 'model';
     }
 
-    // Append suffix if print
     if (options && options.output === 'print') name += '-print';
     if (options && options.theme === 'light') name += '-light';
 
-    name += '.svg';
+    name += `.${fileExtension}`;
 
-    console.log('Exporting SVG with filename:', name);
+    console.log('Exporting with filename:', name);
 
     downloadLink.download = name;
     document.body.appendChild(downloadLink);

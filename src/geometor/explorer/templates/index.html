@@ -274,15 +274,28 @@
             <div class="modal-body">
                 <form id="export-form">
                     <fieldset>
+                        <legend>Format</legend>
+                        <label>
+                            <input type="radio" name="format" value="svg" checked>
+                            SVG File
+                        </label>
+                        <br>
+                        <label>
+                            <input type="radio" name="format" value="html">
+                            HTML Page (Better for printing)
+                        </label>
+                    </fieldset>
+
+                    <fieldset>
                         <legend>Output Target</legend>
                         <label>
                             <input type="radio" name="output" value="screen" checked>
-                            As Screen (optimized for display)
+                            Screen (optimized for display)
                         </label>
                         <br>
                         <label>
                             <input type="radio" name="output" value="print">
-                            Print Target (optimized for posters)
+                            Print (optimized for posters)
                         </label>
                     </fieldset>
 

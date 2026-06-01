@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 const formData = new FormData(form);
                 const options = {
+                    format: formData.get('format'),
                     output: formData.get('output'),
                     theme: formData.get('theme'),
                     sheet_size: formData.get('sheet_size')

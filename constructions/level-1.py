@@ -6,9 +6,9 @@ from geometor.model import *
 
 
 def run():
-    model = Model("level-1")
-    model.set_point(0, 0, classes=["given"])
-    model.set_point(1, 0, classes=["given"])
+    model = Model("level-1", use_point_subscript=True)
+    model.set_point(-1/2, 0, classes=["given"])
+    model.set_point(1/2, 0, classes=["given"])
 
     def fundamental(pt_1: str, pt_2: str):
         model.parse_command(f"[{pt_1} {pt_2}]")

@@ -2,6 +2,22 @@ changelog
 =========
 
 
+0.5.6
+-----
+*2026-06-01*
+
+**fix**
+
+-   **SVG Reordering Event Loop**: Fixed a critical bug where hovering over geometric elements triggered an infinite loop of `mouseover`/`mouseout` events due to rapid DOM detachment/reordering. The reordering is now optimized to only occur when an element is not already the topmost child (`lastChild`), resolving severe interface lag and stuck selection visuals.
+-   **Ignore Non-Geometric Groups**: SVG container groups (`points`, `elements`, `graphics`) are now properly ignored by the hover logic to maintain clean layered hierarchy.
+-   **Robust Filename Handling**: Replaced file extension handling in export code to ensure extensions are stripped and appended correctly.
+
+**feat**
+
+-   **HTML Page Export Format**: Added support for exporting constructions as full HTML pages featuring White/Light backgrounds, specifically optimized for high-quality printing and poster outputs.
+-   **Export Target Overrides**: Wrapped print target styles in CSS `@media print` rules, ensuring correct vector line widths and stroke/scaling overrides when printed from a browser.
+
+
 0.5.5
 -----
 *2026-01-04*
