@@ -29,7 +29,7 @@ Quick reference table of all keyboard shortcuts available in ``geometor.explorer
      - **Fit** construction in viewport
    * - ``v``
      - Toggle **Zen Mode** (hide all sidebars)
-   * - ``~`` / ```` ` ````
+   * - ``~`` / `` ` ``
      - Toggle **CLI Panel** overlay
    * - **Left Arrow**
      - Step backward on animation timeline

@@ -8,7 +8,7 @@ The integrated Command-Line Interface (CLI) provides a keyboard-driven environme
 Accessing the CLI
 -----------------
 
-Press the tilde key (``~`` or ```` ` ````) or click the terminal icon (`terminal`) in the left sidebar to toggle the semi-transparent CLI overlay at the bottom of the screen.
+Press the tilde key (``~`` or `` ` ``) or click the terminal icon (``terminal``) in the left sidebar to toggle the semi-transparent CLI overlay at the bottom of the screen.
 
 Command Syntax
 --------------
