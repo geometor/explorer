@@ -1,3 +1,4 @@
+:type: usage
 :order: 2
 
 getting started

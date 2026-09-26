@@ -5,4 +5,5 @@ usage
 =====
 
 .. collection::
+   :type: usage
    :sort: order

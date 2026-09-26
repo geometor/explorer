@@ -1,3 +1,4 @@
+:type: usage
 :order: 3
 
 interface
