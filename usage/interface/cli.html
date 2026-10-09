@@ -1,0 +1,212 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cli panel &mdash; Project name not set  documentation</title>
+  <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=ea5fcf70" />
+  <link rel="stylesheet" type="text/css" href="../../_static/css/styles.css?v=38c7a96b" />
+  <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+  <link rel="stylesheet" href="../../_static/css/print.css" type="text/css" media="print" />
+  <link rel="icon" href="../../_static/favicon.ico" />
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <a href="../../index.html">
+        <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+      </a>
+      <div class="org-repo">
+        <span class="org">GEOMETOR</span>
+        •
+        <span class="repo">explorer</span>
+      </div>
+    </div>
+    <nav aria-label="Header">
+      <input type="checkbox" id="nav-Header-toggle" >
+      <label for="nav-Header-toggle" >Header</label>
+      <ul>
+        <li>
+          <a href="../../mission/index.html"  >mission</a>
+        </li>
+        <li>
+          <a href="../index.html"  >usage</a>
+        </li>
+        <li>
+          <a href="../../log/index.html"  >log</a>
+        </li>
+        <li>
+          <a href="../../modules/index.html"  >modules</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="motto"></div>
+  </header>
+  <main>
+    <article>
+      <header>
+      <nav class="breadcrumbs">
+        <span><a href="../../index.html">Home</a></span>
+      </nav>
+        <nav class="context">
+          <div class="prev">
+          </div>
+          <div class="next">
+          </div>
+        </nav>
+      </header>
+      <div class="content">
+        <section id="cli-panel">
+          <h1>cli panel<a class="headerlink" href="#cli-panel" title="Link to this heading">¶</a></h1>
+          <p>The integrated Command-Line Interface (CLI) provides a keyboard-driven environment for rapid scriptable geometric construction.</p>
+          <section id="accessing-the-cli">
+          <h2>Accessing the CLI<a class="headerlink" href="#accessing-the-cli" title="Link to this heading">¶</a></h2>
+          <p>Press the tilde key (<code class="docutils literal notranslate"><span class="pre">~</span></code> or `` ` <code class="docutils literal notranslate"><span class="pre">)</span> <span class="pre">or</span> <span class="pre">click</span> <span class="pre">the</span> <span class="pre">terminal</span> <span class="pre">icon</span> <span class="pre">(``terminal</span></code>) in the left sidebar to toggle the semi-transparent CLI overlay at the bottom of the screen.</p>
+          </section>
+          <section id="command-syntax">
+          <h2>Command Syntax<a class="headerlink" href="#command-syntax" title="Link to this heading">¶</a></h2>
+          <p>The CLI supports concise text syntax for defining all geometric primitives and derived structures:</p>
+          <section id="point-assignment">
+          <h3>Point Assignment<a class="headerlink" href="#point-assignment" title="Link to this heading">¶</a></h3>
+          <ul>
+          <li><p><strong>Explicit Label</strong>: Define a point with an explicit identifier:</p>
+          <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>A = 0, 0
+          B = 1, 0
+          C = 0.5, 0.866025
+          </pre></div>
+          </div>
+          </li>
+          <li><p><strong>Auto-Label</strong>: Create a point with auto-generated ID:</p>
+          <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>* 0, 0
+          </pre></div>
+          </div>
+          </li>
+          </ul>
+          </section>
+          <section id="line-construction">
+          <h3>Line Construction<a class="headerlink" href="#line-construction" title="Link to this heading">¶</a></h3>
+          <ul>
+          <li><p><strong>Line Through Points</strong>: Construct an infinite line passing through points <cite>A</cite> and <cite>B</cite>:</p>
+          <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[ A B ]
+          </pre></div>
+          </div>
+          </li>
+          </ul>
+          </section>
+          <section id="circle-construction">
+          <h3>Circle Construction<a class="headerlink" href="#circle-construction" title="Link to this heading">¶</a></h3>
+          <ul>
+          <li><p><strong>Circle Center-Radius</strong>: Construct a circle centered at <cite>A</cite> passing through <cite>B</cite>:</p>
+          <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>( A B )
+          </pre></div>
+          </div>
+          </li>
+          </ul>
+          </section>
+          <section id="polygon-construction">
+          <h3>Polygon Construction<a class="headerlink" href="#polygon-construction" title="Link to this heading">¶</a></h3>
+          <ul>
+          <li><p><strong>Polygon Bounds</strong>: Define a polygon bounded by vertices <cite>A</cite>, <cite>B</cite>, and <cite>C</cite>:</p>
+          <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&lt; A B C &gt;
+          </pre></div>
+          </div>
+          </li>
+          </ul>
+          </section>
+          <section id="linear-divisions-sections">
+          <h3>Linear Divisions &amp; Sections<a class="headerlink" href="#linear-divisions-sections" title="Link to this heading">¶</a></h3>
+          <ul>
+          <li><p><strong>Segment</strong>: Define a segment between <cite>A</cite> and <cite>B</cite>:</p>
+          <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/ A B /
+          </pre></div>
+          </div>
+          </li>
+          <li><p><strong>Section</strong>: Define a collinear section through points <cite>A</cite>, <cite>B</cite>, and <cite>C</cite>:</p>
+          <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/ A B C /
+          </pre></div>
+          </div>
+          </li>
+          </ul>
+          </section>
+          <section id="wedges">
+          <h3>Wedges<a class="headerlink" href="#wedges" title="Link to this heading">¶</a></h3>
+          <ul>
+          <li><p><strong>Wedge Angle</strong>: Define a wedge bounded by points <cite>A</cite>, <cite>B</cite>, and <cite>C</cite>:</p>
+          <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&lt; A B C )
+          </pre></div>
+          </div>
+          </li>
+          </ul>
+          </section>
+          </section>
+          <section id="features-navigation">
+          <h2>Features &amp; Navigation<a class="headerlink" href="#features-navigation" title="Link to this heading">¶</a></h2>
+          <ul class="simple">
+          <li><p><strong>Command History</strong>: Use <strong>Up</strong> and <strong>Down</strong> arrow keys inside the CLI input prompt to navigate through previous command execution history.</p></li>
+          <li><p><strong>Feedback Log</strong>: Success messages or parse errors are instantly reported in the CLI output window.</p></li>
+          </ul>
+          </section>
+          </section>
+
+      </div>
+      <footer>
+
+        <div class="meta">
+        </div>
+        <nav class="context">
+          <div class="prev">
+          </div>
+          <div class="next">
+          </div>
+        </nav>
+      </footer>
+    </article>
+  </main>
+  <div class="asides">
+    <aside>
+      <h3>Search</h3>
+      <div role="search">
+        <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+          <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+      </div>
+    </aside>
+    <aside class="aside-types">
+      <h3>Types</h3>
+      <ul>
+        <li><a href="../../types/usage.html">usage</a></li>
+      </ul>
+    </aside>
+  </div>
+  <footer>
+    <div class="footer-nav">
+      <ul>
+        <li><a href="../../about.html">about</a></li>
+        <li><a href="../../connect.html">connect</a></li>
+        <li><a href="../../todos/index.html">todos</a></li>
+        <li><a href="../../changelog.html">changelog</a></li>
+      </ul>
+    </div>
+    <hr />
+    <div role="contentinfo">
+      <p>
+        &copy; Copyright .
+      </p>
+    </div>
+  </footer>
+
+  <script src="../../_static/jquery.js?v=5d32c60e"></script>
+  <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+  <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+  <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+  <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+  <script src="../../_static/js/collection_controls.js?v=b6b5297a"></script>
+
+</body>
+</html>

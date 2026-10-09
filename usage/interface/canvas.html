@@ -37,10 +37,10 @@
           <a href="../index.html"  >usage</a>
         </li>
         <li>
-          <a href="../../modules/index.html"  >modules</a>
+          <a href="../../log/index.html"  >log</a>
         </li>
         <li>
-          <a href="../../log/index.html"  >log</a>
+          <a href="../../modules/index.html"  >modules</a>
         </li>
       </ul>
     </nav>
@@ -51,27 +51,47 @@
       <header>
       <nav class="breadcrumbs">
         <span><a href="../../index.html">Home</a></span>
-          <span>/</span>
-        <span><a href="../index.html">usage</a></span>
       </nav>
         <nav class="context">
           <div class="prev">
-             <a href="../installation.html" title="installation" >Prev</a>
           </div>
           <div class="next">
-            <a href="../getting_started.html" title="getting started" >Next</a>
           </div>
         </nav>
       </header>
       <div class="content">
         <section id="canvas">
           <h1>canvas<a class="headerlink" href="#canvas" title="Link to this heading">¶</a></h1>
-          <p>The main canvas displays the geometric construction.</p>
+          <p>The central drawing canvas renders the active geometric model as an interactive scalable vector graphic (SVG).</p>
+          <section id="cartesian-coordinate-system">
+          <h2>Cartesian Coordinate System<a class="headerlink" href="#cartesian-coordinate-system" title="Link to this heading">¶</a></h2>
           <ul class="simple">
-          <li><p><strong>Pan</strong>: Click and drag on the background to move the view.</p></li>
-          <li><p><strong>Zoom</strong>: Use the scroll wheel to zoom in and out.</p></li>
-          <li><p><strong>Select</strong>: Click on elements (points, lines, circles) to select them. Selected elements are highlighted and may display additional details.</p></li>
+          <li><p><strong>Flipped Y-Axis</strong>: The canvas uses standard Cartesian coordinates where positive Y extends upwards and positive X extends rightwards.</p></li>
+          <li><p><strong>Infinite Vector Precision</strong>: Crisp vector rendering ensures elements remain sharp at any zoom scale.</p></li>
           </ul>
+          </section>
+          <section id="navigation-viewport-controls">
+          <h2>Navigation &amp; Viewport Controls<a class="headerlink" href="#navigation-viewport-controls" title="Link to this heading">¶</a></h2>
+          <ul class="simple">
+          <li><p><strong>Pan &amp; Zoom</strong>: Click and drag to pan across the model space; use mouse scroll wheel to zoom in and out.</p></li>
+          <li><p><strong>Fit Viewport</strong>: Press the <code class="docutils literal notranslate"><span class="pre">f</span></code> hotkey at any time to automatically calculate the bounding volume of all active elements and fit the construction within your viewport.</p></li>
+          </ul>
+          </section>
+          <section id="hover-cards-symbolic-math">
+          <h2>Hover Cards &amp; Symbolic Math<a class="headerlink" href="#hover-cards-symbolic-math" title="Link to this heading">¶</a></h2>
+          <p>Hovering your cursor over any geometric element triggers a dynamic hover card displaying symbolic algebraic and numerical properties powered by <a class="reference external" href="https://katex.org/">KaTeX</a>:</p>
+          <ul class="simple">
+          <li><p><strong>Points</strong>: Exact SymPy algebraic expressions for X and Y coordinates alongside 6-decimal approximations.</p></li>
+          <li><p><strong>Lines</strong>: Exact polynomial equations, line coefficients, and defining point references.</p></li>
+          <li><p><strong>Circles</strong>: Exact center point <code class="docutils literal notranslate"><span class="pre">(h,</span> <span class="pre">k)</span></code> coordinates and radius <code class="docutils literal notranslate"><span class="pre">r</span></code>.</p></li>
+          <li><p><strong>Segments &amp; Sections</strong>: Length ratios, Golden ratio indicators, and endpoint definitions.</p></li>
+          <li><p><strong>Polygons</strong>: Vertex sequences, area metrics, and angular spreads.</p></li>
+          </ul>
+          </section>
+          <section id="ancestor-dependency-highlighting">
+          <h2>Ancestor Dependency Highlighting<a class="headerlink" href="#ancestor-dependency-highlighting" title="Link to this heading">¶</a></h2>
+          <p>Toggle the Ancestor Highlighting feature via the sidebar button (<cite>account_tree</cite> icon) or Settings. When enabled, hovering over any constructed element highlights all parent elements (points, lines, circles) that were used to construct it, rendering a visual lineage tree directly on the canvas.</p>
+          </section>
           </section>
 
       </div>
@@ -81,10 +101,8 @@
         </div>
         <nav class="context">
           <div class="prev">
-             <a href="../installation.html" title="installation" >Prev</a>
           </div>
           <div class="next">
-            <a href="../getting_started.html" title="getting started" >Next</a>
           </div>
         </nav>
       </footer>
@@ -101,24 +119,10 @@
         </form>
       </div>
     </aside>
-    <aside>
-      <h3>Recent Logs</h3>
-      <ul>
-        <li><a href="../../log/23.110-131951/index.html">Setting up a UI for Explorer</a></li>
-        <li><a href="../../log/23.109-110629/index.html">Next steps for Geometor Explorer</a></li>
-        <li><a href="../../log/22.348-045718/22.348-045718.html">Welcome to Explorer</a></li>
-      </ul>
-    </aside>
-    <aside class="aside-tags">
-      <h3>Tags</h3>
-      <ul>
-        <li><a href="../../tags/.html"></a></li>
-      </ul>
-    </aside>
     <aside class="aside-types">
       <h3>Types</h3>
       <ul>
-        <li><a href="../../types/log.html">log</a></li>
+        <li><a href="../../types/usage.html">usage</a></li>
       </ul>
     </aside>
   </div>
@@ -127,8 +131,8 @@
       <ul>
         <li><a href="../../about.html">about</a></li>
         <li><a href="../../connect.html">connect</a></li>
-        <li><a href="../../changelog.html">changelog</a></li>
         <li><a href="../../todos/index.html">todos</a></li>
+        <li><a href="../../changelog.html">changelog</a></li>
       </ul>
     </div>
     <hr />
@@ -142,8 +146,8 @@
   <script src="../../_static/jquery.js?v=5d32c60e"></script>
   <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
   <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-  <script src="../../_static/doctools.js?v=9bcbadda"></script>
-  <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+  <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+  <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
   <script src="../../_static/js/collection_controls.js?v=b6b5297a"></script>
 
 </body>

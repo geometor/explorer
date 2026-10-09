@@ -37,10 +37,10 @@
           <a href="../index.html"  >usage</a>
         </li>
         <li>
-          <a href="../../modules/index.html"  >modules</a>
+          <a href="../../log/index.html"  >log</a>
         </li>
         <li>
-          <a href="../../log/index.html"  >log</a>
+          <a href="../../modules/index.html"  >modules</a>
         </li>
       </ul>
     </nav>
@@ -51,27 +51,56 @@
       <header>
       <nav class="breadcrumbs">
         <span><a href="../../index.html">Home</a></span>
-          <span>/</span>
-        <span><a href="../index.html">usage</a></span>
       </nav>
         <nav class="context">
           <div class="prev">
-             <a href="../getting_started.html" title="getting started" >Prev</a>
           </div>
           <div class="next">
-            <a href="index.html" title="interface" >Next</a>
           </div>
         </nav>
       </header>
       <div class="content">
         <section id="controls">
           <h1>controls<a class="headerlink" href="#controls" title="Link to this heading">¶</a></h1>
-          <p>The sidebar contains controls for managing the construction.</p>
+          <p>The interface features a left sidebar for construction tools and global options, and a right sidebar for inspecting model history and analytical groupings.</p>
+          <section id="left-sidebar-toolbar">
+          <h2>Left Sidebar (Toolbar)<a class="headerlink" href="#left-sidebar-toolbar" title="Link to this heading">¶</a></h2>
+          <p>The left sidebar is organized into clean functional groups:</p>
           <ul class="simple">
-          <li><p><strong>Tools</strong>: Buttons to activate different construction modes (e.g., Line, Circle, Perpendicular).</p></li>
-          <li><p><strong>History</strong>: A list of steps in the construction. You can navigate back to previous states.</p></li>
-          <li><p><strong>Analysis</strong>: Toggles for turning on/off different analysis layers (e.g., Golden Sections).</p></li>
+          <li><p><strong>File Manager</strong>:
+          - <strong>New</strong>: Open template dialog (Blank, Default, Equidistant).
+          - <strong>Open</strong>: Load saved construction JSON files.
+          - <strong>Save / Save As</strong>: Save current construction state to <cite>./constructions</cite>.
+          - <strong>Export SVG</strong>: Download static SVG or print-optimized HTML pages.
+          - <strong>Export Animated SVG</strong>: Download interactive step-by-step animated vector graphics.</p></li>
+          <li><p><strong>Construct</strong>:
+          - <strong>Point</strong> (<code class="docutils literal notranslate"><span class="pre">p</span></code>): Construct a point at specified algebraic coordinates or numeric values.
+          - <strong>Polynomial</strong> (<code class="docutils literal notranslate"><span class="pre">P</span></code>): Construct a polynomial curve from comma-separated coefficients.
+          - <strong>Line</strong> (<code class="docutils literal notranslate"><span class="pre">l</span></code>): Construct an infinite line passing through two selected points.
+          - <strong>Circle</strong> (<code class="docutils literal notranslate"><span class="pre">c</span></code>): Construct a circle centered at point 1 with radius point 2.
+          - <strong>Perpendicular Bisector</strong> (P B): Construct the perpendicular bisector between two selected points.
+          - <strong>Angle Bisector</strong> (A B): Construct the angle bisector passing through three selected points (point 1, vertex, point 3).</p></li>
+          <li><p><strong>Set</strong>:
+          - <strong>Segment</strong> (<code class="docutils literal notranslate"><span class="pre">s</span></code>): Define a bounded segment between two points.
+          - <strong>Section</strong> (<code class="docutils literal notranslate"><span class="pre">S</span></code>): Define a collinear section of three points.
+          - <strong>Polygon</strong> (<code class="docutils literal notranslate"><span class="pre">y</span></code>): Define a polygon bound from three or more ordered points.</p></li>
+          <li><p><strong>System Toggles</strong>:
+          - <strong>Animation Panel</strong>: Toggle the playback timeline bar.
+          - <strong>Divine Analysis</strong>: Live toggle for golden section and harmonic ratio calculation.
+          - <strong>Ancestor Highlighting</strong>: Toggle visual dependency tree highlighting on hover.
+          - <strong>CLI Overlay</strong> (<code class="docutils literal notranslate"><span class="pre">~</span></code>): Open/close the integrated command terminal panel.
+          - <strong>Settings</strong>: Open global application preferences (Light theme, granular hover toggles).</p></li>
           </ul>
+          </section>
+          <section id="right-sidebar-data-views">
+          <h2>Right Sidebar (Data Views)<a class="headerlink" href="#right-sidebar-data-views" title="Link to this heading">¶</a></h2>
+          <p>The right sidebar provides three views accessible via top tabs:</p>
+          <ul class="simple">
+          <li><p><strong>SEQ (Sequential History)</strong>: The default chronological step-by-step record of all elements. Provides class editing, guide element toggles (orange dotted styling), and deletion controls.</p></li>
+          <li><p><strong>CAT (Categorized View)</strong>: Grouped tables separating Points, Geometric Structures (Lines, Circles, Polynomials), and Graphic Overlays (Segments, Sections, Polygons).</p></li>
+          <li><p><strong>GRP (Divine Groupings)</strong>: Analytical tables generated by <code class="docutils literal notranslate"><span class="pre">geometor.divine</span></code>, organizing golden sections by <strong>Size</strong>, <strong>Chain</strong>, and <strong>Point</strong>.</p></li>
+          </ul>
+          </section>
           </section>
 
       </div>
@@ -81,10 +110,8 @@
         </div>
         <nav class="context">
           <div class="prev">
-             <a href="../getting_started.html" title="getting started" >Prev</a>
           </div>
           <div class="next">
-            <a href="index.html" title="interface" >Next</a>
           </div>
         </nav>
       </footer>
@@ -101,24 +128,10 @@
         </form>
       </div>
     </aside>
-    <aside>
-      <h3>Recent Logs</h3>
-      <ul>
-        <li><a href="../../log/23.110-131951/index.html">Setting up a UI for Explorer</a></li>
-        <li><a href="../../log/23.109-110629/index.html">Next steps for Geometor Explorer</a></li>
-        <li><a href="../../log/22.348-045718/22.348-045718.html">Welcome to Explorer</a></li>
-      </ul>
-    </aside>
-    <aside class="aside-tags">
-      <h3>Tags</h3>
-      <ul>
-        <li><a href="../../tags/.html"></a></li>
-      </ul>
-    </aside>
     <aside class="aside-types">
       <h3>Types</h3>
       <ul>
-        <li><a href="../../types/log.html">log</a></li>
+        <li><a href="../../types/usage.html">usage</a></li>
       </ul>
     </aside>
   </div>
@@ -127,8 +140,8 @@
       <ul>
         <li><a href="../../about.html">about</a></li>
         <li><a href="../../connect.html">connect</a></li>
-        <li><a href="../../changelog.html">changelog</a></li>
         <li><a href="../../todos/index.html">todos</a></li>
+        <li><a href="../../changelog.html">changelog</a></li>
       </ul>
     </div>
     <hr />
@@ -142,8 +155,8 @@
   <script src="../../_static/jquery.js?v=5d32c60e"></script>
   <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
   <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-  <script src="../../_static/doctools.js?v=9bcbadda"></script>
-  <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+  <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+  <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
   <script src="../../_static/js/collection_controls.js?v=b6b5297a"></script>
 
 </body>

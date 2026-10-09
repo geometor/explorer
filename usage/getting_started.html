@@ -37,10 +37,10 @@
           <a href="index.html"  >usage</a>
         </li>
         <li>
-          <a href="../modules/index.html"  >modules</a>
+          <a href="../log/index.html"  >log</a>
         </li>
         <li>
-          <a href="../log/index.html"  >log</a>
+          <a href="../modules/index.html"  >modules</a>
         </li>
       </ul>
     </nav>
@@ -51,27 +51,44 @@
       <header>
       <nav class="breadcrumbs">
         <span><a href="../index.html">Home</a></span>
-          <span>/</span>
-        <span><a href="index.html">usage</a></span>
       </nav>
         <nav class="context">
           <div class="prev">
-             <a href="interface/canvas.html" title="canvas" >Prev</a>
           </div>
           <div class="next">
-            <a href="interface/controls.html" title="controls" >Next</a>
           </div>
         </nav>
       </header>
       <div class="content">
         <section id="getting-started">
           <h1>getting started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h1>
-          <p>To start the <code class="docutils literal notranslate"><span class="pre">explorer</span></code> server, run the following command in your terminal:</p>
+          <section id="launching-the-explorer">
+          <h2>Launching the Explorer<a class="headerlink" href="#launching-the-explorer" title="Link to this heading">¶</a></h2>
+          <p>To start the <code class="docutils literal notranslate"><span class="pre">explorer</span></code> web application server, run the following command in your terminal within your activated virtual environment:</p>
           <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>explorer
           </pre></div>
           </div>
-          <p>This will launch a Flask server, usually accessible at <code class="docutils literal notranslate"><span class="pre">http://127.0.0.1:4444</span></code>.</p>
-          <p>Open this URL in your web browser to access the interface.</p>
+          <p>Alternatively, you can start the application via Python module execution:</p>
+          <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>geometor.explorer
+          </pre></div>
+          </div>
+          </section>
+          <section id="accessing-the-application">
+          <h2>Accessing the Application<a class="headerlink" href="#accessing-the-application" title="Link to this heading">¶</a></h2>
+          <p>Once running, the Flask server starts on port <strong>4444</strong> by default. Open your web browser and navigate to:</p>
+          <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>http://127.0.0.1:4444
+          </pre></div>
+          </div>
+          </section>
+          <section id="starting-model-templates">
+          <h2>Starting Model Templates<a class="headerlink" href="#starting-model-templates" title="Link to this heading">¶</a></h2>
+          <p>Upon initializing a new model (via the <strong>New</strong> button in the File panel), you can choose from three initial templates:</p>
+          <ul class="simple">
+          <li><p><strong>Default</strong>: Initializes the canvas with origin point <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">(0,</span> <span class="pre">0)</span></code> and unit point <code class="docutils literal notranslate"><span class="pre">B</span> <span class="pre">(1,</span> <span class="pre">0)</span></code>.</p></li>
+          <li><p><strong>Blank</strong>: Starts with an empty canvas for custom point placement.</p></li>
+          <li><p><strong>Equidistant</strong>: Places symmetric given points at <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">(-1/2,</span> <span class="pre">0)</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span> <span class="pre">(1/2,</span> <span class="pre">0)</span></code>.</p></li>
+          </ul>
+          </section>
           </section>
 
       </div>
@@ -81,10 +98,8 @@
         </div>
         <nav class="context">
           <div class="prev">
-             <a href="interface/canvas.html" title="canvas" >Prev</a>
           </div>
           <div class="next">
-            <a href="interface/controls.html" title="controls" >Next</a>
           </div>
         </nav>
       </footer>
@@ -101,24 +116,10 @@
         </form>
       </div>
     </aside>
-    <aside>
-      <h3>Recent Logs</h3>
-      <ul>
-        <li><a href="../log/23.110-131951/index.html">Setting up a UI for Explorer</a></li>
-        <li><a href="../log/23.109-110629/index.html">Next steps for Geometor Explorer</a></li>
-        <li><a href="../log/22.348-045718/22.348-045718.html">Welcome to Explorer</a></li>
-      </ul>
-    </aside>
-    <aside class="aside-tags">
-      <h3>Tags</h3>
-      <ul>
-        <li><a href="../tags/.html"></a></li>
-      </ul>
-    </aside>
     <aside class="aside-types">
       <h3>Types</h3>
       <ul>
-        <li><a href="../types/log.html">log</a></li>
+        <li><a href="../types/usage.html">usage</a></li>
       </ul>
     </aside>
   </div>
@@ -127,8 +128,8 @@
       <ul>
         <li><a href="../about.html">about</a></li>
         <li><a href="../connect.html">connect</a></li>
-        <li><a href="../changelog.html">changelog</a></li>
         <li><a href="../todos/index.html">todos</a></li>
+        <li><a href="../changelog.html">changelog</a></li>
       </ul>
     </div>
     <hr />
@@ -142,8 +143,8 @@
   <script src="../_static/jquery.js?v=5d32c60e"></script>
   <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
   <script src="../_static/documentation_options.js?v=5929fcd5"></script>
-  <script src="../_static/doctools.js?v=9bcbadda"></script>
-  <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+  <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+  <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
   <script src="../_static/js/collection_controls.js?v=b6b5297a"></script>
 
 </body>
