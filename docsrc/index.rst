@@ -1,11 +1,9 @@
 GEOMETOR • explorer
 ===================
 
-An interactive interface for visualizing and analyzing geometric models.
+**Interactive web workbench for constructing, visualizing, and analyzing symbolic geometric models.**
 
 .. include:: intro.rst
-
-
 
 .. toctree::
    :hidden:
@@ -14,7 +12,9 @@ An interactive interface for visualizing and analyzing geometric models.
    demos/index.rst
    refs/index.rst
 
-indices
+----
+
+Indices
 -------
 
 * :ref:`genindex`
