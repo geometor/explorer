@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # Completed: Guide Elements
 
 -   **Objective:** Give users more control over the appearance and behavior of elements in the construction.

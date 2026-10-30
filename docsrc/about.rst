@@ -1,15 +1,10 @@
 :navigation: footer
-:order: 1
+:order: 10
 
-.. _about:
-
-
+=====
 about
 =====
 
+``geometor.explorer`` is the interactive web application of the **GEOMETOR** initiative, created and maintained by **phi ARCHITECT**.
 
-I have always been deeply interested in architecture and have had the privilege of practicing it in many different domains. 
-
-Architecture is order. 
-
-.. It can be in the material world. 
+Combining a Flask + Server-Sent Events (SSE) backend with an HTML5, CSS3, Vanilla JavaScript, and GSAP frontend, it renders exact algebraic ``geometor.model`` constructions as interactive, infinite-precision SVGs.

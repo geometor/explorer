@@ -1,8 +1,11 @@
 :navigation: header
-:order: 3
+:order: 30
 
+===
 log
 ===
+
+Chronological development and interface log for ``geometor.explorer``.
 
 .. collection::
    :type: log
