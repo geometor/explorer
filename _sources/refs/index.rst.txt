@@ -1,8 +1,6 @@
 references
 ==========
 
-.. toctree::
-   :glob:
-
-   *
+.. collection::
+   :sort: order
 

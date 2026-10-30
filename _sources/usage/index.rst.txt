@@ -1,9 +1,14 @@
 :navigation: header
-:order: 2
+:order: 20
 
+=====
 usage
 =====
 
-.. .. collection::
-   :type: usage
+``geometor.explorer`` provides a browser-based interactive workspace for creating, inspecting, animating, and exporting symbolic ``geometor.model`` constructions.
+
+Guides
+------
+
+.. collection::
    :sort: order

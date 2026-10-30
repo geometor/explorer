@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Fira+Sans+Condensed:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=ea5fcf70" />
-  <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=3d8cc37d" />
+  <link rel="stylesheet" type="text/css" href="../_static/css/styles.css?v=69acf51f" />
   <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -69,13 +69,90 @@
           <div class="book-nav-center">
           </div>
           <div class="book-nav-next">
-            <a class="book-nav-btn" href="../log/index.html" title="log"><span class="nav-label">Next</span> &rarr;</a>
+            <a class="book-nav-btn" href="getting_started.html" title="getting started"><span class="nav-label">Next</span> &rarr;</a>
           </div>
         </div>
       </header>
       <div class="content body book-content" role="main">
         <section class="level-1" id="usage">
         <h1>usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h1>
+        <p><code class="docutils literal notranslate"><span class="pre">geometor.explorer</span></code> provides a browser-based interactive workspace for creating, inspecting, animating, and exporting symbolic <code class="docutils literal notranslate"><span class="pre">geometor.model</span></code> constructions.</p>
+        <section class="level-2" id="guides">
+        <h2>Guides<a class="headerlink" href="#guides" title="Link to this heading">¶</a></h2>
+            <section class="collection ">
+              <article class="excerpt">
+                <div class="content">
+                  <section>
+                    <h2><a href="getting_started.html">getting started</a></h2>
+                      <p>To start the <code class="docutils literal notranslate"><span class="pre">explorer</span></code> web application server, run the following command in your terminal within your activated virtual environment:</p>
+                  </section>
+                </div>
+              </article>
+              <article class="excerpt">
+                <div class="content">
+                  <section>
+                    <h2><a href="installation.html">installation</a></h2>
+                      <p>PyPI releases for <code class="docutils literal notranslate"><span class="pre">geometor-explorer</span></code> may be out of date. We recommend installing <code class="docutils literal notranslate"><span class="pre">geometor.explorer</span></code> locally alongside its sibling packages <code class="docutils literal notranslate"><span class="pre">geometor.model</span></code> and <code class="docutils literal notranslate"><span class="pre">geometor.divine</span></code> using <span class="reference external">uv</span>.</p>
+                  </section>
+                </div>
+              </article>
+              <article class="excerpt">
+                <div class="content">
+                  <section>
+                    <h2><a href="canvas.html">canvas</a></h2>
+                      <p>The central drawing canvas renders the active geometric model as an interactive scalable vector graphic (SVG).</p>
+                  </section>
+                </div>
+              </article>
+              <article class="excerpt">
+                <div class="content">
+                  <section>
+                    <h2><a href="controls.html">controls</a></h2>
+                      <p>The interface features a left sidebar for construction tools and global options, and a right sidebar for inspecting model history and analytical groupings.</p>
+                  </section>
+                </div>
+              </article>
+              <article class="excerpt">
+                <div class="content">
+                  <section>
+                    <h2><a href="cli.html">cli panel</a></h2>
+                      <p>The integrated Command-Line Interface (CLI) provides a keyboard-driven environment for rapid scriptable geometric construction.</p>
+                  </section>
+                </div>
+              </article>
+              <article class="excerpt">
+                <div class="content">
+                  <section>
+                    <h2><a href="analysis.html">divine analysis</a></h2>
+                      <p><code class="docutils literal notranslate"><span class="pre">geometor.explorer</span></code> integrates directly with <code class="docutils literal notranslate"><span class="pre">geometor.divine</span></code> to provide real-time harmonic and golden section analysis as constructions are built.</p>
+                  </section>
+                </div>
+              </article>
+              <article class="excerpt">
+                <div class="content">
+                  <section>
+                    <h2><a href="animation.html">animation timeline</a></h2>
+                      <p>The interactive timeline panel visualizes geometric constructions as step-by-step sequential animations.</p>
+                  </section>
+                </div>
+              </article>
+              <article class="excerpt">
+                <div class="content">
+                  <section>
+                    <h2><a href="export.html">exporting</a></h2>
+                      <p><code class="docutils literal notranslate"><span class="pre">geometor.explorer</span></code> offers customizable export workflows for high-resolution print output, presentations, web embedding, and self-playing vector animations.</p>
+                  </section>
+                </div>
+              </article>
+              <article class="excerpt">
+                <div class="content">
+                  <section>
+                    <h2><a href="shortcuts.html">keyboard shortcuts</a></h2>
+                      <p>Quick reference table of all keyboard shortcuts available in <code class="docutils literal notranslate"><span class="pre">geometor.explorer</span></code>:</p>
+                  </section>
+                </div>
+              </article>
+            </section></section>
         </section>
 
       </div>
@@ -89,7 +166,7 @@
             <a class="book-toc-link" href="../index.html">GEOMETOR • explorer</a>
           </div>
           <div class="book-nav-next">
-            <a class="book-nav-btn" href="../log/index.html" title="log"><span class="nav-label">log</span> &rarr;</a>
+            <a class="book-nav-btn" href="getting_started.html" title="getting started"><span class="nav-label">getting started</span> &rarr;</a>
           </div>
         </div>
       </footer>
@@ -114,9 +191,32 @@
         </form>
       </div>
     </aside>
+    <aside class="aside-recent-logs">
+      <h3>Recent Logs</h3>
+      <ul>
+        <li><a href="../log/26.302-183700/index.html">Interactive Workspace Guides & Classical Scriptorium Theme Alignment</a></li>
+      </ul>
+    </aside>
+    <aside class="aside-tags">
+      <h3>Tags</h3>
+      <ul>
+        <li><a href="../tags/explorer.html">explorer</a></li>
+        <li><a href="../tags/gsap.html">gsap</a></li>
+        <li><a href="../tags/sse.html">sse</a></li>
+        <li><a href="../tags/svg.html">svg</a></li>
+      </ul>
+    </aside>
+    <aside class="aside-categories">
+      <h3>Categories</h3>
+      <ul>
+        <li><a href="../categories/documentation.html">documentation</a></li>
+        <li><a href="../categories/interface.html">interface</a></li>
+      </ul>
+    </aside>
     <aside class="aside-types">
       <h3>Types</h3>
       <ul>
+        <li><a href="../types/log.html">log</a></li>
         <li><a href="../types/usage.html">usage</a></li>
       </ul>
     </aside>
@@ -126,8 +226,8 @@
       <ul>
         <li><a href="../about.html"  >about</a></li>
         <li><a href="../connect.html"  >connect</a></li>
-        <li><a href="../changelog.html"  >changelog</a></li>
         <li><a href="../todos/index.html"  >todos</a></li>
+        <li><a href="../changelog.html"  >changelog</a></li>
       </ul>
     </div>
     <hr />
