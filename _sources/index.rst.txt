@@ -1,5 +1,9 @@
 :site_title: Interactive Geometry Explorer
 
+.. container:: author-overline
+
+   semantic digital archive • interactive studio
+
 =============================
 Interactive Geometry Explorer
 =============================
