@@ -6,12 +6,32 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>geometor.explorer.app &mdash; GEOMETOR • explorer</title>
+
+  <title>geometor.explorer.app — Interactive Geometry Explorer • GEOMETOR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="canonical" href="https://geometor.github.io/explorer/modules/api/geometor/explorer/app/" />
+  <meta name="description" content="Main Flask application for the GEOMETOR explorer." />
+  <meta property="og:site_name" content="GEOMETOR" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="geometor.explorer.app — Interactive Geometry Explorer • GEOMETOR" />
+  <meta property="og:description" content="Main Flask application for the GEOMETOR explorer." />
+  <meta property="og:url" content="https://geometor.github.io/explorer/modules/api/geometor/explorer/app/" />
+  <meta property="og:image" content="https://geometor.github.io/explorer/_static/social/banner.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Interactive Geometry Explorer — GEOMETOR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="geometor.explorer.app — Interactive Geometry Explorer • GEOMETOR" />
+  <meta name="twitter:description" content="Main Flask application for the GEOMETOR explorer." />
+  <meta name="twitter:image" content="https://geometor.github.io/explorer/_static/social/banner.png" />
+  <meta name="twitter:image:alt" content="Interactive Geometry Explorer — GEOMETOR" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Fira+Sans+Condensed:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=ea5fcf70" />
-  <link rel="stylesheet" type="text/css" href="../../../../../_static/css/styles.css?v=69acf51f" />
+  <link rel="stylesheet" type="text/css" href="../../../../../_static/css/styles.css?v=81e79cc0" />
   <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -23,14 +43,14 @@
 <body class="book-theme-classical-serif">
   <header>
     <div class="logo">
-      <a href="../../../../../index.html">
-        <img src="../../../../../_static/logo.png" class="logo" alt="Logo"/>
+      <a href="../../../../../index.html" title="Home">
+        <img src="../../../../../_static/logo.png" class="logo" alt="GEOMETOR explorer"/>
+        <div class="org-repo">
+          <span class="org">GEOMETOR</span>
+          <span class="sep" aria-hidden="true">&bull;</span>
+          <span class="repo">explorer</span>
+        </div>
       </a>
-      <div class="org-repo">
-        <span class="org">GEOMETOR</span>
-        •
-        <span class="repo">explorer</span>
-      </div>
     </div>
     <nav aria-label="Header">
       <input type="checkbox" id="nav-Header-toggle" >
@@ -56,14 +76,13 @@
     <article class="book-layout book-reading-pane">
       <header class="book-header">
         <div class="book-header-bar">
-          <div class="book-header-identity">
-            <a class="book-portal-link" href="../../../../../index.html" title="Return to Project Portal">&larr; explorer</a>
-            <span class="book-header-sep">/</span>
-            <a class="book-title-link" href="../../../../../index.html">GEOMETOR • explorer</a>
-          </div>
-          <div class="book-header-breadcrumbs book-header-badges" role="navigation" aria-label="Breadcrumbs">
-            <a class="book-crumb-link" href="../../../../index.html">modules</a>
-          </div>
+          <nav class="book-breadcrumbs" aria-label="Breadcrumb">
+            <a class="book-section-home-link" href="../../../../index.html">modules</a>
+            <span class="book-crumb-sep" aria-hidden="true">/</span>
+            <a class="book-crumb-link" href="../../../index.html">API Reference</a>
+            <span class="book-crumb-sep" aria-hidden="true">/</span>
+            <span class="book-crumb-current" aria-current="page">geometor.explorer.app</span>
+          </nav>
         </div>
         <div class="book-header-nav">
           <div class="book-nav-prev">
@@ -106,85 +125,85 @@
         <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h2>
         <table class="autosummary longtable docutils align-default">
         <tbody>
-        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.new_model" title="geometor.explorer.app.new_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_model</span></code></a>(→ None)</p></td>
+        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.new_model" title="geometor.explorer.app.new_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_model</span></code></a>([template]) → None</p></td>
         <td><p>Create a new model based on a template.</p></td>
         </tr>
-        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.run" title="geometor.explorer.app.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(→ None)</p></td>
+        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.run" title="geometor.explorer.app.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>() → None</p></td>
         <td><p>Run the Flask application.</p></td>
         </tr>
-        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.index" title="geometor.explorer.app.index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">index</span></code></a>(→ str)</p></td>
+        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.index" title="geometor.explorer.app.index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">index</span></code></a>() → str</p></td>
         <td><p>Render the main index page.</p></td>
         </tr>
-        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.get_model" title="geometor.explorer.app.get_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_model</span></code></a>(→ flask.Response)</p></td>
+        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.get_model" title="geometor.explorer.app.get_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_model</span></code></a>() → flask.Response</p></td>
         <td><p>Return the complete model data.</p></td>
         </tr>
-        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.toggle_analysis" title="geometor.explorer.app.toggle_analysis"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toggle_analysis</span></code></a>(→ flask.Response)</p></td>
+        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.toggle_analysis" title="geometor.explorer.app.toggle_analysis"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toggle_analysis</span></code></a>() → flask.Response</p></td>
         <td><p>Toggle the analysis hook enabled state.</p></td>
         </tr>
-        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.save_model_endpoint" title="geometor.explorer.app.save_model_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_model_endpoint</span></code></a>(→ tuple[flask.Response, ...)</p></td>
+        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.save_model_endpoint" title="geometor.explorer.app.save_model_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_model_endpoint</span></code></a>() → tuple[flask.Response, int] | flask.Response</p></td>
         <td><p>Save the current model to a file.</p></td>
         </tr>
-        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.load_model_endpoint" title="geometor.explorer.app.load_model_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_model_endpoint</span></code></a>(→ tuple[flask.Response, ...)</p></td>
+        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.load_model_endpoint" title="geometor.explorer.app.load_model_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_model_endpoint</span></code></a>() → tuple[flask.Response, int] | flask.Response</p></td>
         <td><p>Load a model from file content or filename.</p></td>
         </tr>
-        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.list_constructions" title="geometor.explorer.app.list_constructions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_constructions</span></code></a>(→ flask.Response)</p></td>
+        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.list_constructions" title="geometor.explorer.app.list_constructions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_constructions</span></code></a>() → flask.Response</p></td>
         <td><p>List available construction files.</p></td>
         </tr>
-        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.new_model_endpoint" title="geometor.explorer.app.new_model_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_model_endpoint</span></code></a>(→ flask.Response)</p></td>
+        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.new_model_endpoint" title="geometor.explorer.app.new_model_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_model_endpoint</span></code></a>() → flask.Response</p></td>
         <td><p>Create a new model.</p></td>
         </tr>
-        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_line" title="geometor.explorer.app.construct_line"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_line</span></code></a>(→ tuple[flask.Response, ...)</p></td>
+        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_line" title="geometor.explorer.app.construct_line"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_line</span></code></a>() → tuple[flask.Response, int] | flask.Response</p></td>
         <td><p>Construct a line between two points.</p></td>
         </tr>
-        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_circle" title="geometor.explorer.app.construct_circle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_circle</span></code></a>(→ tuple[flask.Response, ...)</p></td>
+        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_circle" title="geometor.explorer.app.construct_circle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_circle</span></code></a>() → tuple[flask.Response, int] | flask.Response</p></td>
         <td><p>Construct a circle from a center point to a radius point.</p></td>
         </tr>
-        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_perpendicular_bisector" title="geometor.explorer.app.construct_perpendicular_bisector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_perpendicular_bisector</span></code></a>(...)</p></td>
+        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_perpendicular_bisector" title="geometor.explorer.app.construct_perpendicular_bisector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_perpendicular_bisector</span></code></a>() → tuple[flask.Response, int] | flask.Response</p></td>
         <td><p>Construct a perpendicular bisector between two points.</p></td>
         </tr>
-        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_angle_bisector" title="geometor.explorer.app.construct_angle_bisector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_angle_bisector</span></code></a>(→ tuple[flask.Response, ...)</p></td>
+        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_angle_bisector" title="geometor.explorer.app.construct_angle_bisector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_angle_bisector</span></code></a>() → tuple[flask.Response, int] | flask.Response</p></td>
         <td><p>Construct an angle bisector.</p></td>
         </tr>
-        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_point" title="geometor.explorer.app.construct_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_point</span></code></a>(→ tuple[flask.Response, ...)</p></td>
+        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_point" title="geometor.explorer.app.construct_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_point</span></code></a>() → tuple[flask.Response, int] | flask.Response</p></td>
         <td><p>Construct a point at specified coordinates.</p></td>
         </tr>
-        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_polynomial" title="geometor.explorer.app.construct_polynomial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_polynomial</span></code></a>(→ tuple[flask.Response, ...)</p></td>
+        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.construct_polynomial" title="geometor.explorer.app.construct_polynomial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_polynomial</span></code></a>() → tuple[flask.Response, int] | flask.Response</p></td>
         <td><p>Construct a polynomial curve.</p></td>
         </tr>
-        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.delete_element" title="geometor.explorer.app.delete_element"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_element</span></code></a>(→ tuple[flask.Response, ...)</p></td>
+        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.delete_element" title="geometor.explorer.app.delete_element"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_element</span></code></a>() → tuple[flask.Response, int] | flask.Response</p></td>
         <td><p>Delete an element and its dependents from the model.</p></td>
         </tr>
-        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.get_dependents_endpoint" title="geometor.explorer.app.get_dependents_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_dependents_endpoint</span></code></a>(→ tuple[flask.Response, ...)</p></td>
+        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.get_dependents_endpoint" title="geometor.explorer.app.get_dependents_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_dependents_endpoint</span></code></a>() → tuple[flask.Response, int] | flask.Response</p></td>
         <td><p>Return a list of dependent elements for a given element ID.</p></td>
         </tr>
-        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.edit_element" title="geometor.explorer.app.edit_element"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edit_element</span></code></a>(→ tuple[flask.Response, int] | flask.Response)</p></td>
+        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.edit_element" title="geometor.explorer.app.edit_element"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edit_element</span></code></a>() → tuple[flask.Response, int] | flask.Response</p></td>
         <td><p>Update the class and guide status of an element.</p></td>
         </tr>
-        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.set_segment" title="geometor.explorer.app.set_segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_segment</span></code></a>(→ tuple[flask.Response, int] | flask.Response)</p></td>
+        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.set_segment" title="geometor.explorer.app.set_segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_segment</span></code></a>() → tuple[flask.Response, int] | flask.Response</p></td>
         <td><p>Define a segment between two points.</p></td>
         </tr>
-        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.set_section" title="geometor.explorer.app.set_section"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_section</span></code></a>(→ tuple[flask.Response, int] | flask.Response)</p></td>
+        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.set_section" title="geometor.explorer.app.set_section"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_section</span></code></a>() → tuple[flask.Response, int] | flask.Response</p></td>
         <td><p>Define a section (collinear sequence) of points.</p></td>
         </tr>
-        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.set_polygon" title="geometor.explorer.app.set_polygon"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_polygon</span></code></a>(→ tuple[flask.Response, int] | flask.Response)</p></td>
+        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.set_polygon" title="geometor.explorer.app.set_polygon"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_polygon</span></code></a>() → tuple[flask.Response, int] | flask.Response</p></td>
         <td><p>Define a polygon from a list of points.</p></td>
         </tr>
-        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.get_golden_sections" title="geometor.explorer.app.get_golden_sections"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_golden_sections</span></code></a>(...)</p></td>
+        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.get_golden_sections" title="geometor.explorer.app.get_golden_sections"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_golden_sections</span></code></a>() → list[geometor.model.sections.Section]</p></td>
         <td><p>Retrieve golden sections from the model.</p></td>
         </tr>
-        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.get_groups_by_size" title="geometor.explorer.app.get_groups_by_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groups_by_size</span></code></a>(→ flask.Response)</p></td>
+        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.get_groups_by_size" title="geometor.explorer.app.get_groups_by_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groups_by_size</span></code></a>() → flask.Response</p></td>
         <td><p>Group golden sections by their size (length ratio).</p></td>
         </tr>
-        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.get_groups_by_point" title="geometor.explorer.app.get_groups_by_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groups_by_point</span></code></a>(→ flask.Response)</p></td>
+        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.get_groups_by_point" title="geometor.explorer.app.get_groups_by_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groups_by_point</span></code></a>() → flask.Response</p></td>
         <td><p>Group golden sections by the points they contain.</p></td>
         </tr>
-        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.get_groups_by_chain" title="geometor.explorer.app.get_groups_by_chain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groups_by_chain</span></code></a>(→ flask.Response)</p></td>
+        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.get_groups_by_chain" title="geometor.explorer.app.get_groups_by_chain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_groups_by_chain</span></code></a>() → flask.Response</p></td>
         <td><p>Group golden sections by chains (connected sequences).</p></td>
         </tr>
-        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.process_cli_command" title="geometor.explorer.app.process_cli_command"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_cli_command</span></code></a>(→ dict)</p></td>
+        <tr class="row-even"><td><p><a class="reference internal" href="#geometor.explorer.app.process_cli_command" title="geometor.explorer.app.process_cli_command"><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_cli_command</span></code></a>(model, command) → dict</p></td>
         <td><p>Parse and execute a single command string.</p></td>
         </tr>
-        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.cli_command_endpoint" title="geometor.explorer.app.cli_command_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cli_command_endpoint</span></code></a>(→ tuple[flask.Response, ...)</p></td>
+        <tr class="row-odd"><td><p><a class="reference internal" href="#geometor.explorer.app.cli_command_endpoint" title="geometor.explorer.app.cli_command_endpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cli_command_endpoint</span></code></a>() → tuple[flask.Response, int] | flask.Response</p></td>
         <td><p>Execute a CLI command.</p></td>
         </tr>
         </tbody>
@@ -549,13 +568,13 @@
         <div class="book-footer-ornament">&#10086;</div>
         <div class="book-footer-nav">
           <div class="book-nav-prev">
-            <a class="book-nav-btn" href="../__main__/index.html" title="geometor.explorer.__main__">&larr; <span class="nav-label">geometor.explorer.__main__</span></a>
+            <a class="book-nav-btn" href="../__main__/index.html" title="geometor.explorer.__main__">&larr; <span class="nav-label">Prev</span></a>
           </div>
           <div class="book-nav-center">
-            <a class="book-toc-link" href="../../../../../index.html">GEOMETOR • explorer</a>
+            <a class="book-toc-link" href="../../../../index.html">modules</a>
           </div>
           <div class="book-nav-next">
-            <a class="book-nav-btn" href="../log/index.html" title="geometor.explorer.log"><span class="nav-label">geometor.explorer.log</span> &rarr;</a>
+            <a class="book-nav-btn" href="../log/index.html" title="geometor.explorer.log"><span class="nav-label">Next</span> &rarr;</a>
           </div>
         </div>
       </footer>
@@ -633,7 +652,7 @@
   <script src="../../../../../_static/doctools.js?v=fd6eb6e6"></script>
   <script src="../../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
   <script src="../../../../../_static/js/collection_controls.js?v=b6b5297a"></script>
-  <script src="../../../../../_static/js/geometor_interactive.js?v=4430a5d4"></script>
+  <script src="../../../../../_static/js/geometor_interactive.js?v=b2892320"></script>
   <script src="../../../../../_static/js/search_highlight.js"></script>
 
 </body>
