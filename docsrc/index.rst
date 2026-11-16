@@ -1,5 +1,8 @@
-GEOMETOR • explorer
-===================
+:site_title: Interactive Geometry Explorer
+
+=============================
+Interactive Geometry Explorer
+=============================
 
 **Interactive web workbench for constructing, visualizing, and analyzing symbolic geometric models.**
 
@@ -9,8 +12,16 @@ GEOMETOR • explorer
    :hidden:
    :maxdepth: 2
 
-   demos/index.rst
-   refs/index.rst
+   mission/index
+   usage/index
+   demos/index
+   refs/index
+   about
+   changelog
+   connect
+   todos/index
+   log/index
+   modules/index
 
 ----
 
