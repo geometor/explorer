@@ -1,60 +1,39 @@
 GEOMETOR • explorer
-====================
+===================
 
-.. image:: https://img.shields.io/github/license/geometor/explorer.svg
-   :target: https://github.com/geometor/explorer/blob/main/LICENSE
+**Visit the Online Archive:** https://geometor.github.io/explorer/
 
-**Interactive web workbench for constructing, visualizing, and analyzing symbolic geometric models.**
+**Geometry Explorer • Interactive SVG workbench and symbolic construction CLI**
 
-Overview
---------
+Mission
+-------
 
-``geometor.explorer`` is the interactive visual workbench for the GEOMETOR initiative. Combining a Flask backend with a high-precision SVG/GSAP frontend, it brings the exact algebraic constructions of `geometor/model <https://github.com/geometor/model>`_ and the golden-ratio analysis of `geometor/divine <https://github.com/geometor/divine>`_ into a real-time graphical and scriptable environment.
+``geometor/explorer`` is part of the interconnected `GEOMETOR <https://geometor.com>`_ semantic digital archive. It provides a real-time interactive vector workbench and symbolic construction environment, bridging the exact algebraic engine of ``geometor.model`` with live golden-ratio harmonic analysis. Through hotkey-driven navigation, timeline animation, and publication-ready SVG rendering, it liberates abstract geometric models into exploratory visual workspaces across the GEOMETOR corpus.
 
-SVG styling, primitive class conventions, and symbolic indications in ``geometor.explorer`` coordinate directly with `photon-platform/publish <https://github.com/photon-platform/publish>`_, enabling models constructed or exported in ``explorer`` (including G-Index propositions in `geometor/elements <https://github.com/geometor/elements>`_ and triangle centers in `geometor/etc <https://github.com/geometor/etc>`_) to render as interactive, theme-aware diagrams in Book Codex documentation.
+Capabilities & Interactive Docs
+-------------------------------
 
-Key Capabilities
-----------------
+- **`Interactive Geometry Explorer <https://geometor.github.io/explorer/>`_** — Real-time SVG workbench, Cartesian navigation, and hotkey controls for geometric modeling.
+- **`Usage & Getting Started <https://geometor.github.io/explorer/usage/>`_** — Guides for canvas navigation, point-and-click construction, and live CLI overlay (``[ A B ]``, ``( A B )``, ``/ A B /``).
+- **`Divine Harmonic Analysis <https://geometor.github.io/explorer/usage/analysis/>`_** — Real-time detection and visual grouping of golden sections, golden chains, and harmonic ranges.
+- **`Animation & Timeline Playback <https://geometor.github.io/explorer/usage/animation/>`_** — Scrubbable step-by-step construction playback and ancestor lineage tracing.
+- **`SVG & Print Exports <https://geometor.github.io/explorer/usage/export/>`_** — Export publication-ready static and animated SVGs calibrated for the Book Codex theme.
 
-- **Interactive SVG Canvas**: Vector canvas with standard Cartesian coordinates, zoom/pan navigation, and fit-to-view (hotkey ``f``).
-- **Point-and-Click & Scripted Construction**: Construct Points, Lines, Circles, Perpendicular Bisectors, Angle Bisectors, Segments, Sections, and Polygons either graphically or via the integrated CLI overlay (hotkey ``~`` / ```` ` ````) using GEOMETOR symbolic syntax (`[ A B ]`, `( A B )`, `/ A B /`, `< A B C >`, `< B A C )`).
-- **Live Divine Analysis**: Automatic detection and visual highlighting of golden sections, golden chains, and harmonic ranges via ``geometor.divine``.
-- **Data & Analysis Views**:
-  - **SEQ**: Chronological step-by-step construction history with visibility and guide toggles.
-  - **CAT**: Categorized tables for Points, Structures (Lines, Circles), and Graphics.
-  - **GRP**: Live Divine Analysis groupings sorted by Size, Chain, and Point.
-- **Animation Timeline & Ancestor Highlighting**: Scrubbable step-by-step playback bar and hover lineage tracing.
-- **Symbolic KaTeX Hover Cards**: Inspect exact SymPy algebraic coordinates, radii, line equations, and spreads on hover.
-- **Publication-Ready Exports**: Export static SVGs, animated self-playing SVGs, and print-ready HTML sheets (Letter, Super B) compatible with `photon-platform/publish`.
+Repository Contents
+-------------------
 
-Installation & Usage
---------------------
+- ``docsrc/`` — RST documentation, guides, and UI reference compiled by `PHOTON publish <https://github.com/photon-platform/publish>`_.
+- ``src/geometor/explorer/`` — Flask backend, interactive SVG canvas templates, and CLI integration.
 
-Install with ``uv`` alongside ``geometor.model`` and ``geometor.divine``:
+Local Build & Verification
+--------------------------
 
 .. code-block:: bash
 
-   uv venv --python 3.13
-   uv pip install -e ../model -e ../divine -e .
-   explorer
+   publish build
+   uv run --no-sync pytest
 
-Then open `http://127.0.0.1:4444 <http://127.0.0.1:4444>`_.
+Part of the GEOMETOR Knowledge Archive
+--------------------------------------
 
-Documentation & Coordination with ``publish``
----------------------------------------------
-
-Project documentation in ``docsrc/`` is built and styled with `photon-platform/publish <https://github.com/photon-platform/publish>`_ in the unified Book Codex theme:
-
-.. code-block:: bash
-
-   publish test
-
-Resources & Related Projects
-----------------------------
-
-- **Documentation**: https://geometor.github.io/explorer
-- **Source Code**: https://github.com/geometor/explorer
-- `GEOMETOR • model <https://github.com/geometor/model>`_: Symbolic geometric construction engine.
-- `GEOMETOR • elements <https://github.com/geometor/elements>`_: G-Index (`G.1`–`G.525`) constructions and 3-track Book Codex.
-- `GEOMETOR • etc <https://github.com/geometor/etc>`_: *Encyclopedia of Triangle Centers* (`x-NNNNN.json` models and SVGs).
-- `PHOTON • publish <https://github.com/photon-platform/publish>`_: Sphinx Book Codex publishing engine and theme.
+Explore all **74 Book Codices** and **11 Mathematical Catalogs** at https://geometor.com/books/.
