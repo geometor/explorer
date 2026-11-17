@@ -3,6 +3,11 @@ GEOMETOR • explorer
 
 **Visit the Online Archive:** https://geometor.github.io/explorer/
 
+.. image:: docsrc/_static/hero.svg
+   :alt: GEOMETOR • explorer featured geometric construction
+   :target: https://geometor.github.io/explorer/
+   :align: center
+
 **Geometry Explorer • Interactive SVG workbench and symbolic construction CLI**
 
 Mission
