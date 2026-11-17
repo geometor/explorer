@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="euclid-graphic" viewBox="0 0 720 420" role="img" aria-label="Interactive symbolic regular pentagon and golden pentagram in geometor.explorer">
+  <title>GEOMETOR Explorer — Interactive Pentagon &amp; Golden Star</title>
+  <style>
+    .euclid-graphic {
+      --svg-bg: #fafaf9;
+      --ink: #1c1917;
+      --muted: #64748b;
+      --grid: rgba(100, 116, 139, 0.14);
+      --circle: #0284c7;
+      --line: #475569;
+      --golden: #d97706;
+      --accent: #0d9488;
+      --poly-fill: rgba(2, 132, 199, 0.08);
+      --golden-fill: rgba(217, 119, 6, 0.12);
+      --pt-given: #0f172a;
+      --pt-found: #0284c7;
+      --pt-golden: #d97706;
+      --halo: rgba(250, 250, 249, 0.92);
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      .euclid-graphic {
+        --svg-bg: #141417;
+        --ink: #f4f4f5;
+        --muted: #94a3b8;
+        --grid: rgba(148, 163, 184, 0.12);
+        --circle: #38bdf8;
+        --line: #94a3b8;
+        --golden: #fbbf24;
+        --accent: #2dd4bf;
+        --poly-fill: rgba(56, 189, 248, 0.09);
+        --golden-fill: rgba(251, 191, 36, 0.12);
+        --pt-given: #f8fafc;
+        --pt-found: #38bdf8;
+        --pt-golden: #fbbf24;
+        --halo: rgba(20, 20, 23, 0.92);
+      }
+    }
+    .svg-bg { fill: var(--svg-bg); }
+    .grid-line { stroke: var(--grid); stroke-width: 1; }
+    .geom-line { fill: none; stroke: var(--line); stroke-width: 1.5; stroke-linecap: round; opacity: 0.72; }
+    .geom-circle { fill: none; stroke: var(--circle); stroke-width: 2; opacity: 0.82; }
+    .geom-circle.sub { stroke-width: 1.3; stroke-dasharray: 5 4; opacity: 0.52; }
+    .geom-poly { fill: var(--poly-fill); stroke: var(--circle); stroke-width: 2.2; stroke-linejoin: round; }
+    .geom-golden { fill: none; stroke: var(--golden); stroke-width: 3.4; stroke-linecap: round; }
+    .geom-accent { fill: none; stroke: var(--accent); stroke-width: 2.2; stroke-linecap: round; }
+    .pt-given { fill: var(--pt-given); stroke: var(--svg-bg); stroke-width: 1.5; }
+    .pt-found { fill: var(--pt-found); stroke: var(--svg-bg); stroke-width: 1.4; }
+    .pt-golden { fill: var(--pt-golden); stroke: var(--svg-bg); stroke-width: 1.5; }
+    .lbl {
+      font-size: 13px;
+      font-weight: 600;
+      fill: var(--ink);
+      paint-order: stroke;
+      stroke: var(--halo);
+      stroke-width: 4px;
+      stroke-linejoin: round;
+    }
+    .caption {
+      font-size: 12px;
+      font-weight: 500;
+      fill: var(--muted);
+      letter-spacing: 0.04em;
+    }
+  </style>
+  <rect class="svg-bg" x="0" y="0" width="720" height="420" rx="10" />
+  <line class="grid-line" x1="40" y1="20" x2="40" y2="384" />
+  <line class="grid-line" x1="80" y1="20" x2="80" y2="384" />
+  <line class="grid-line" x1="120" y1="20" x2="120" y2="384" />
+  <line class="grid-line" x1="160" y1="20" x2="160" y2="384" />
+  <line class="grid-line" x1="200" y1="20" x2="200" y2="384" />
+  <line class="grid-line" x1="240" y1="20" x2="240" y2="384" />
+  <line class="grid-line" x1="280" y1="20" x2="280" y2="384" />
+  <line class="grid-line" x1="320" y1="20" x2="320" y2="384" />
+  <line class="grid-line" x1="360" y1="20" x2="360" y2="384" />
+  <line class="grid-line" x1="400" y1="20" x2="400" y2="384" />
+  <line class="grid-line" x1="440" y1="20" x2="440" y2="384" />
+  <line class="grid-line" x1="480" y1="20" x2="480" y2="384" />
+  <line class="grid-line" x1="520" y1="20" x2="520" y2="384" />
+  <line class="grid-line" x1="560" y1="20" x2="560" y2="384" />
+  <line class="grid-line" x1="600" y1="20" x2="600" y2="384" />
+  <line class="grid-line" x1="640" y1="20" x2="640" y2="384" />
+  <line class="grid-line" x1="680" y1="20" x2="680" y2="384" />
+  <line class="grid-line" x1="20" y1="20" x2="700" y2="20" />
+  <line class="grid-line" x1="20" y1="60" x2="700" y2="60" />
+  <line class="grid-line" x1="20" y1="100" x2="700" y2="100" />
+  <line class="grid-line" x1="20" y1="140" x2="700" y2="140" />
+  <line class="grid-line" x1="20" y1="180" x2="700" y2="180" />
+  <line class="grid-line" x1="20" y1="220" x2="700" y2="220" />
+  <line class="grid-line" x1="20" y1="260" x2="700" y2="260" />
+  <line class="grid-line" x1="20" y1="300" x2="700" y2="300" />
+  <line class="grid-line" x1="20" y1="340" x2="700" y2="340" />
+  <line class="grid-line" x1="20" y1="380" x2="700" y2="380" />
+  <circle class="geom-circle" cx="360.00" cy="214.00" r="145.00" />
+  <circle class="geom-circle sub" cx="360.00" cy="214.00" r="55.39" />
+  <polygon class="geom-poly" points="360.00,69.00 222.10,169.19 274.77,331.31 445.23,331.31 497.90,169.19" />
+  <line class="geom-golden" x1="360.00" y1="69.00" x2="274.77" y2="331.31" />
+  <line class="geom-accent" x1="222.10" y1="169.19" x2="445.23" y2="331.31" />
+  <line class="geom-accent" x1="274.77" y1="331.31" x2="497.90" y2="169.19" />
+  <line class="geom-accent" x1="445.23" y1="331.31" x2="360.00" y2="69.00" />
+  <line class="geom-accent" x1="497.90" y1="169.19" x2="222.10" y2="169.19" />
+  <circle class="pt-given" cx="360.00" cy="214.00" r="4.0" />
+  <text class="lbl" x="368.00" y="228.00">O</text>
+  <circle class="pt-found" cx="360.00" cy="69.00" r="4.5" />
+  <text class="lbl" x="368.00" y="63.00">A</text>
+  <circle class="pt-found" cx="222.10" cy="169.19" r="4.5" />
+  <text class="lbl" x="204.10" y="165.19">B</text>
+  <circle class="pt-found" cx="274.77" cy="331.31" r="4.5" />
+  <text class="lbl" x="258.77" y="347.31">C</text>
+  <circle class="pt-found" cx="445.23" cy="331.31" r="4.5" />
+  <text class="lbl" x="453.23" y="347.31">D</text>
+  <circle class="pt-found" cx="497.90" cy="169.19" r="4.5" />
+  <text class="lbl" x="507.90" y="165.19">E</text>
+  <text class="caption" x="28" y="406">EXPLORER WORKBENCH · REGULAR PENTAGON &amp; GOLDEN DIAGONALS |AC| / |AB| = φ</text>
+</svg>
