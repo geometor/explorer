@@ -1,13 +1,13 @@
+.. image:: docsrc/_static/logo.png
+   :alt: GEOMETOR • explorer Medallion
+   :target: https://geometor.github.io/explorer/
+   :width: 150px
+   :align: right
+
 GEOMETOR • explorer
 ===================
 
 **Visit the Online Archive:** https://geometor.github.io/explorer/
-
-.. image:: docsrc/_static/logo.png
-   :alt: GEOMETOR • explorer Medallion
-   :target: https://geometor.github.io/explorer/
-   :width: 180px
-   :align: center
 
 .. image:: docsrc/_static/hero.svg
    :alt: GEOMETOR • explorer featured geometric construction
