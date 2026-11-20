@@ -8,6 +8,10 @@
 Interactive Geometry Explorer
 =============================
 
+.. image:: _static/medallion.svg
+   :alt: Interactive Geometry Explorer Medallion
+   :class: repo-medallion-hero
+
 **Interactive web workbench for constructing, visualizing, and analyzing symbolic geometric models.**
 
 .. include:: intro.rst
